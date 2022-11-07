@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Pumpy Music/Pumpy Music iOS/Pumpy Music iOS.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pumpy Playlist Manager/Pumpy Playlist Manager.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PumpyLibrary/PumpyLibrary.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PumpyAnalytics/PumpyAnalytics.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PumpyShared/PumpyShared.xcodeproj">
+   </FileRef>
+</Workspace>

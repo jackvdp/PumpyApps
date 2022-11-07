@@ -1,0 +1,93 @@
+mutation Login($email: String!, $password: String!) {
+  loginUser(input: {email: $email, password: $password}) {
+    token
+    refreshToken
+  }
+}
+
+query GetPlaylist($playlistID: ID!) {
+  playlist(id: $playlistID) {
+    name
+    curator {
+        name
+    }
+    display {
+        image {
+            placeholder
+        }
+    }
+    description
+    shortDescription
+    genres(first: 1000) {
+        edges {
+            node {
+                name
+            }
+        }
+    }
+    tracks(first: 1000, market: GB) {
+      edges {
+        node {
+          title
+          artists {
+            name
+          }
+          album {
+            title
+          }
+          explicit
+          id
+          isrc
+          previewUrl
+          recognizability
+          display {
+                image {
+                    placeholder
+                }
+            }
+        shareUrl
+        }
+      }
+    }
+  }
+}
+
+query Search($query: String!, $type: SearchType!) {
+  search(first: 1000, query: $query, type: $type) {
+        edges {
+          node {
+            ...on Playlist {
+                    id
+                    name
+                    display {
+                        image {
+                            placeholder
+                        }
+                    }
+                    shortDescription
+                }
+            }
+        }
+    }
+}
+
+query SearchForArtistStation($query: String!) {
+  search(first: 1, query: $query, type: artist) {
+        edges {
+          node {
+            ...on Artist {
+                    station {
+                        id
+                        name
+                        display {
+                            image {
+                                placeholder
+                            }
+                        }
+                        shortDescription
+                    }
+                }
+            }
+        }
+    }
+}
