@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PumpyAnalytics
 
 public struct K {
     
@@ -57,7 +58,7 @@ public struct K {
         public static let url = "https://api.music.apple.com/v1/"
         public static let musicUserToken = "Music-User-Token"
         public static let authorisation = "Authorization"
-        public static let bearerToken = "Bearer \(K.MusicStore.developerToken)"
+        public static let bearerToken = "Bearer \(PumpyAnalytics.K.MusicStore.developerToken)"
     }
 
     public struct Font {

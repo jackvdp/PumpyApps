@@ -11,6 +11,7 @@ import UserNotifications
 import StoreKit
 import MediaPlayer
 import PumpyLibrary
+import PumpyAnalytics
 
 class CapabilitiesViewModel: ObservableObject {
     
@@ -59,7 +60,7 @@ class CapabilitiesViewModel: ObservableObject {
     }
     
     func getToken() {
-        SKCloudServiceController().requestUserToken(forDeveloperToken: K.MusicStore.developerToken) { token, errror in
+        SKCloudServiceController().requestUserToken(forDeveloperToken: PumpyAnalytics.K.MusicStore.developerToken) { token, errror in
             if let _ = token {
                 self.tokenRecieved = true
             } else {
