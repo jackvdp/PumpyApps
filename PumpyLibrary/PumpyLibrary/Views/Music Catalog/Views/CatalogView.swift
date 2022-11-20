@@ -14,7 +14,9 @@ public struct CatalogView<H:HomeProtocol,
                           B:BlockedTracksProtocol,
                           T:TokenProtocol,
                           Q:QueueProtocol>: View {
+    
     @EnvironmentObject var authManager: AuthorisationManager
+    @StateObject private var viewModel = CatalogSearchViewModel()
     @State var collections = [SuggestedCollection]()
     @State var pageState: PageState = .loading
     @State private var searchText = ""
@@ -22,7 +24,7 @@ public struct CatalogView<H:HomeProtocol,
     public init() {}
     
     public var body: some View {
-        VStack {
+        PumpyList {
             switch pageState {
             case .loading:
                 loadingView
@@ -31,13 +33,14 @@ public struct CatalogView<H:HomeProtocol,
                     }
             case .complete:
                 completeView
-            case .search(let searchTerm):
-                CatalogSearchView<H,P,N,B,T,Q>(term: searchTerm)
+            case .search:
+                CatalogSearchView<H,P,N,B,T,Q>(viewModel: viewModel)
             }
         }
         .navigationTitle("Catalog")
         .listStyle(.plain)
-        .searchable(text: $searchText, prompt: "Playlists, Artists, Songs")
+        .searchable(text: $searchText,
+                    prompt: "Playlists, Artists, Songs")
         .onSubmit(of: .search, runSearch)
         .onChange(of: searchText) { newValue in
             if newValue == "" {
@@ -64,11 +67,8 @@ public struct CatalogView<H:HomeProtocol,
     }
     
     var successView: some View {
-        ScrollView {
-            ForEach(collections, id: \.self) { collection in
-                CollectionView<H,P,N,B,T,Q>(collection: collection)
-                    .padding(.top)
-            }
+        ForEach(collections, id: \.self) { collection in
+            CollectionView<H,P,N,B,T,Q>(collection: collection)
         }
     }
     
@@ -79,6 +79,7 @@ public struct CatalogView<H:HomeProtocol,
             .refreshable {
                 getCollections()
             }
+            .frame(maxWidth: .infinity)
     }
     
     // Methods
@@ -96,13 +97,15 @@ public struct CatalogView<H:HomeProtocol,
     }
     
     func runSearch() {
+        viewModel.pageState = .loading
+        viewModel.runSearch(term: searchText, authManager: authManager)
         withAnimation {
-            pageState = .search(searchText)
+            pageState = .search
         }
     }
     
     enum PageState {
-        case loading, complete, search(String)
+        case loading, complete, search
     }
 }
 

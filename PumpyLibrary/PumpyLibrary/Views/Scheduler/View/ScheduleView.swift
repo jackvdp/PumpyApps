@@ -52,7 +52,7 @@ public struct ScheduleView: View {
     }
     
     var alarmList: some View {
-        List {
+        PumpyList {
             ForEach(scheduleViewModel.alarmsToDisplay, id: \.uuid) { alarm in
                 Button(action: {
                     scheduleViewModel.setAndShowAlarm(alarm)

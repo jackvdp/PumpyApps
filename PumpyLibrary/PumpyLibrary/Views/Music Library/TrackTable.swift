@@ -21,52 +21,62 @@ struct TrackTable<H:HomeProtocol,
     @EnvironmentObject var playlistManager: P
     @EnvironmentObject var homeVM: H
     let playlist: PumpyLibrary.Playlist
-    @State private var tracks = [PumpyLibrary.Track]()
     @State private var showingPlayNextToast = false
+    @State private var searchText = ""
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            ScrollView {
-                LazyVStack(alignment: .leading) {
-                    playlistHeader
-                    tracksList
-                }
-                .padding(.leading)
-            }
+        PumpyList {
+            artwork
+            playlistHeader
             capsuleButtons
+            tracksList
         }
-        .onAppear() {
-            tracks = playlist.tracks
-        }
-        .navigationBarTitle(playlist.name ?? "")
+        .listStyle(.plain)
+        .searchable(text: $searchText, prompt: "Tracks...")
+        .navigationBarTitle(playlist.name ?? "Playlist")
         .toast(isPresenting: $showingPlayNextToast) {
             playNextToast
         }
     }
     
+    // MARK: - Components
+    
+    var artwork: some View {
+        let size: CGFloat = 200
+        return ArtworkView(artworkURL: playlist.artworkURL, size: size)
+            .frame(width: size, height: size)
+            .frame(maxWidth: .infinity, alignment: .center)
+    }
+    
     var playlistHeader: some View {
-        Text(tracks.count == 1 ? "1 song" : "\(tracks.count) songs")
+        Text(playlist.tracks.count == 1 ? "1 song" : "\(playlist.tracks.count) songs")
             .font(.footnote)
             .foregroundColor(Color.gray)
     }
     
     var tracksList: some View {
-        ForEach(tracks.indices, id: \.self) { i in
-            Divider()
-            TrackRow<T,N,B,P,Q>(track: tracks[i])
+        ForEach(filteredTracks.indices, id: \.self) { i in
+            TrackRow<T,N,B,P,Q>(track: filteredTracks[i])
+                .onTapGesture {
+                    playFromPosition(track: filteredTracks[i])
+                }
         }
     }
     
     var capsuleButtons: some View {
-        PlayNextNowRow {
-            playNext()
-        } playNowAction: {
-            playNow()
-        }
+        PlayCapsules(playNext: playNext, playNow: playNow)
     }
     
+    var playNextToast: AlertToast {
+        AlertToast(displayMode: .alert,
+                   type: .systemImage("plus", .pumpyPink),
+                   title: "Playing Next")
+    }
+    
+    // MARK: - Methods
+    
     func playNext() {
-        self.showingPlayNextToast = true
+        showingPlayNextToast = true
         playlistManager.playNext(playlist: playlist,
                                  secondaryPlaylists: [])
     }
@@ -76,10 +86,21 @@ struct TrackTable<H:HomeProtocol,
                                 secondaryPlaylists: [])
     }
     
-    var playNextToast: AlertToast {
-        AlertToast(displayMode: .alert,
-                   type: .systemImage("plus", .pumpyPink),
-                   title: "Playing Next")
+    func playFromPosition(track: Track) {
+        if let playlistIndex = playlist.tracks.firstIndex(where: { $0.playbackStoreID == track.playbackStoreID }) {
+            playlistManager.playPlaylist(playlist: playlist, from: playlistIndex)
+        }
+    }
+    
+    var filteredTracks: [Track] {
+        if searchText.isEmpty {
+            return playlist.tracks
+        } else {
+            return playlist.tracks.filter {
+                ($0.title ?? "").localizedCaseInsensitiveContains(searchText) ||
+                ($0.artist ?? "").localizedCaseInsensitiveContains(searchText)
+            }
+        }
     }
 }
 

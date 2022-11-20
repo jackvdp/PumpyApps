@@ -15,7 +15,6 @@ import PumpyShared
 
 class NowPlayingManager: NowPlayingProtocol {
     @Published var currentTrack: ConstructedTrack?
-    @Published var currentArtwork: UIImage? = nil
     @Published var playButtonState: PlayButton = .notPlaying
     private let respondDebouncer = Debouncer()
     private let itemDebouncer = Debouncer()
@@ -34,31 +33,15 @@ class NowPlayingManager: NowPlayingProtocol {
     
     func updateTrackData() {
         if let nowPlayingItem = musicPlayerController.nowPlayingItem {
-            setArtwork(nowPlayingItem)
             currentTrack = ConstructedTrack(title: nowPlayingItem.title,
                                             artist: nowPlayingItem.artist,
                                             artworkURL: nowPlayingItem.artworkURL,
                                             playbackStoreID: nowPlayingItem.playbackStoreID,
                                             isExplicitItem: nowPlayingItem.isExplicitItem)
         } else {
-            currentArtwork = nil
             currentTrack = nil
         }
         playButtonState = musicPlayerController.playbackState == .playing ? .playing : .notPlaying
-    }
-    
-    private func setArtwork(_ nowPlayingItem: MPMediaItem) {
-        guard let tokenManager = authManager else {
-            DispatchQueue.main.async {
-                self.currentArtwork = nil
-            }
-            return
-        }
-        artworkHandler.getArtwork(from: nowPlayingItem, size: 500, authManager: tokenManager) { image in
-//            DispatchQueue.main.async {
-//                self.currentArtwork = image
-//            }
-        }
     }
     
     func updateTrackOnline(for username: String, playlist: String) {

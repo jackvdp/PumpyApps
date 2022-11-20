@@ -8,12 +8,11 @@
 
 import SwiftUI
 
-struct NavigationBar<B: BlockedTracksProtocol, N:NowPlayingProtocol, H:HomeProtocol, Content: View>: View {
+struct NavigationBar<B: BlockedTracksProtocol, N:NowPlayingProtocol, H:HomeProtocol>: View {
     
     @EnvironmentObject var nowPlayingManager: N
     @EnvironmentObject var blockedTracksManager: B
     @EnvironmentObject var homeVM: H
-    var destinationView: Content
      
     var body: some View {
         HStack {
@@ -30,17 +29,14 @@ struct NavigationBar<B: BlockedTracksProtocol, N:NowPlayingProtocol, H:HomeProto
     
     var menuButton: some View {
         Button(action: {
-            homeVM.showMenu = true
+            homeVM.showPlayer = false
         }) {
-            Image(systemName: "line.horizontal.3")
+            Image(systemName: "chevron.down")
                 .resizable()
-                .foregroundColor(Color.white)
-                .frame(width: 25, height: 25, alignment: .center)
                 .aspectRatio(contentMode: .fit)
-                .font(Font.title.weight(.ultraLight))
-        }
-        .fullScreenCover(isPresented: $homeVM.showMenu) {
-            destinationView
+                .foregroundColor(Color.white)
+                .frame(width: 20, alignment: .center)
+                
         }
     }
     
@@ -50,10 +46,11 @@ struct NavigationBar<B: BlockedTracksProtocol, N:NowPlayingProtocol, H:HomeProto
 #if DEBUG
 struct NavBar_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationBar<MockBlockedTracks, MockNowPlayingManager, MockHomeVM, EmptyView>(destinationView: EmptyView())
+        NavigationBar<MockBlockedTracks, MockNowPlayingManager, MockHomeVM>()
             .environmentObject(MockHomeVM())
             .environmentObject(MockBlockedTracks())
             .environmentObject(MockNowPlayingManager())
+            .preferredColorScheme(.dark)
     }
 }
 #endif

@@ -12,10 +12,10 @@ import SwiftUI
 public protocol HomeProtocol: ObservableObject {
     
     var pageType: PageType { get set }
-    var showMenu: Bool { get set }
+    var showPlayer: Bool { get set }
     
-    func playPause()
-    func coldStart()
+    func playPause(alarmData: AlarmManager, playlistManager: any PlaylistProtocol)
+    func coldStart(alarmData: AlarmManager, playlistManager: any PlaylistProtocol)
     func skipToNextItem()
 }
 
@@ -26,9 +26,9 @@ public enum PageType {
 
 class MockHomeVM: HomeProtocol {
     @Published var pageType: PageType = .artwork
-    @Published var showMenu = false
+    @Published var showPlayer = false
     
-    func playPause() { }
-    func coldStart() { }
+    func playPause(alarmData: AlarmManager, playlistManager: any PlaylistProtocol) { }
+    func coldStart(alarmData: AlarmManager, playlistManager: any PlaylistProtocol) { }
     func skipToNextItem() {}
 }

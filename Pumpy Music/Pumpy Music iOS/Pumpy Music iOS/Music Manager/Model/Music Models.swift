@@ -14,10 +14,11 @@ import PumpyLibrary
 extension MPMediaItem: Track {
     
     public var artworkURL: String? {
+        let name = self.title
         if let catalog = value(forKey: "artworkCatalog") as? NSObject,
-            let token = catalog.value(forKey: "token") as? NSObject,
-            let url = token.value(forKey: "availableArtworkToken") as? String ??
-                        token.value(forKey: "fetchableArtworkToken") as? String {
+           let token = catalog.value(forKey: "token") as? NSObject,
+           let url = token.value(forKey: "availableArtworkToken") as? String ??
+                     token.value(forKey: "fetchableArtworkToken") as? String {
             if url.contains("https:") {
                 return url.replacingOccurrences(of: "600x600", with: "{w}x{w}")
             } else {

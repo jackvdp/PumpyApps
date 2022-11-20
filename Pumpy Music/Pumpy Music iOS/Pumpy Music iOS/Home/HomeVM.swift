@@ -13,23 +13,16 @@ import PumpyLibrary
 class HomeVM: HomeProtocol {
 
     @Published var pageType: PageType = .artwork
-    @Published var showMenu = false
-    let alarmData: AlarmManager
-    let playlistManager: PlaylistManager
+    @Published var showPlayer = true
     
-    init(alarmData: AlarmManager, playlistManager: PlaylistManager) {
-        self.alarmData = alarmData
-        self.playlistManager = playlistManager
-    }
-    
-    func playPause() {
+    func playPause(alarmData: AlarmManager, playlistManager: any PlaylistProtocol) {
         MusicCoreFunctions.togglePlayPause(alarms: alarmData.alarms,
-                                           playlistManager: playlistManager)
+                                           playlistManager: playlistManager as! PlaylistManager)
     }
     
-    func coldStart() {
+    func coldStart(alarmData: AlarmManager, playlistManager: any PlaylistProtocol) {
         MusicCoreFunctions.coldStart(alarms: alarmData.alarms,
-                                     playlistManager: playlistManager)
+                                     playlistManager: playlistManager as! PlaylistManager)
     }
     
     func skipToNextItem() {

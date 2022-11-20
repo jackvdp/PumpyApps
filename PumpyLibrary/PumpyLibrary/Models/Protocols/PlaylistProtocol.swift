@@ -12,6 +12,7 @@ public protocol PlaylistProtocol: ObservableObject {
     var playlistURL: String { get set }
     func playNext(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist])
     func playNow(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist])
+    func playPlaylist(playlist: PumpyLibrary.Playlist, from: Int)
 }
 
 public class MockPlaylistManager: PlaylistProtocol {
@@ -20,4 +21,5 @@ public class MockPlaylistManager: PlaylistProtocol {
     public var playlistURL: String = String()
     public func playNext(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist] = []) {}
     public func playNow(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist] = []) {}
+    public func playPlaylist(playlist: PumpyLibrary.Playlist, from: Int) {}
 }

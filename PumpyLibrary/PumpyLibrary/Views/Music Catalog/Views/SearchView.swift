@@ -15,12 +15,10 @@ struct CatalogSearchView<H:HomeProtocol,
                          T:TokenProtocol,
                          Q:QueueProtocol>: View {
     
-    let term: String
-    
-    @StateObject private var viewModel = CatalogSearchViewModel()
+    @ObservedObject var viewModel: CatalogSearchViewModel
     @EnvironmentObject var authManager: AuthorisationManager
     @State private var pageState: CatalogSearchViewModel.PageState = .loading
-    let playlistRows: [GridItem] = Array(repeating: GridItem(.fixed(150)), count: 2)
+    let playlistRows: [GridItem] = Array(repeating: GridItem(.fixed(200)), count: 2)
     @Namespace var screen
     
     var body: some View {
@@ -30,9 +28,6 @@ struct CatalogSearchView<H:HomeProtocol,
                 ActivityView(activityIndicatorVisible: .constant(true))
                     .transition(.opacity)
                     .id(screen)
-                    .onAppear() {
-                        viewModel.runSearch(term: term, authManager: authManager)
-                    }
             case .success(let playlistSnapshots, let tracks):
                 searchResults(playlistSnapshots, tracks)
                     .transition(.opacity)
@@ -48,22 +43,31 @@ struct CatalogSearchView<H:HomeProtocol,
         }
     }
     
-    func searchResults(_ playlists: [PlaylistSnapshot],_ tracks: [Track]) -> some View {
-        VStack(spacing: 0) {
-            if playlists.isNotEmpty {
-                title("Playlists")
-                    .padding(.top, 6)
-                playlistGrids(playlists)
+    func searchResults(_ playlists: [PlaylistSnapshot],
+                       _ tracks: [Track]) -> some View {
+        ScrollView {
+            Group {
+                if playlists.isNotEmpty {
+                    title("Playlists")
+                        .padding(.vertical)
+                        .padding(.top, 6)
+                    playlistGrids(playlists)
+                        .padding(.horizontal, -20)
+                }
+                if tracks.isNotEmpty {
+                    title("Tracks")
+                        .padding(.vertical)
+                    tracksList(tracks)
+                }
+                if playlists.isEmpty && tracks.isEmpty {
+                    Text("*No Results*\nTry a new search")
+                }
             }
-            if tracks.isNotEmpty {
-                title("Tracks")
-                tracksList(tracks)
-            }
-            if playlists.isEmpty && tracks.isEmpty {
-                Text("*No Results*\nTry a new search")
-            }
+            .padding(.horizontal, 20)
         }
+        .padding(.horizontal, -20)
     }
+    
     
     func playlistGrids(_ playlists: [PlaylistSnapshot]) -> some View {
         ScrollView(.horizontal) {
@@ -78,13 +82,14 @@ struct CatalogSearchView<H:HomeProtocol,
                     .buttonStyle(.plain)
                 }
             }
-            .padding()
+            .padding(.horizontal)
         }
     }
     
     func tracksList(_ tracks: [Track]) -> some View {
-        List(tracks.indices, id: \.self) { i in
+        ForEach(tracks.indices, id: \.self) { i in
             TrackRow<T,N,B,P,Q>(track: tracks[i])
+            Divider()
         }
     }
     
@@ -94,12 +99,12 @@ struct CatalogSearchView<H:HomeProtocol,
                 .font(.title2.bold())
             Divider()
         }
-        .padding(.leading)
+        
     }
     
     var failedView: some View {
         Button("Error occurred. Please try again.") {
-            viewModel.runSearch(term: term, authManager: authManager)
+            viewModel.searchAgain(authManager: authManager)
         }
         .buttonStyle(.bordered)
         .foregroundColor(.gray)
@@ -108,14 +113,35 @@ struct CatalogSearchView<H:HomeProtocol,
 }
 
 struct CatalogSearchView_Previews: PreviewProvider {
+    
+    static var searchView = CatalogSearchView<MockHomeVM,
+                                   MockPlaylistManager,
+                                   MockNowPlayingManager,
+                                   MockBlockedTracks,
+                                   MockTokenManager,
+                                   MockQueueManager>(viewModel: CatalogSearchViewModel())
+    
     static var previews: some View {
-        CatalogSearchView<MockHomeVM,
-                          MockPlaylistManager,
-                          MockNowPlayingManager,
-                          MockBlockedTracks,
-                          MockTokenManager,
-                          MockQueueManager>(term: "Ed Sheeran")
+        PumpyList {
+            Text(snapshots.count.description)
+            searchView.searchResults(snapshots, tracks)
+//                .border(.green)
+        }
+        .listStyle(.plain)
+        .border(.indigo)
             .preferredColorScheme(.dark)
-            .environmentObject(AuthorisationManager())
+            .environmentObject(MockTokenManager())
+            .environmentObject(MockPlaylistManager())
+            .environmentObject(MockNowPlayingManager())
+            .environmentObject(MockQueueManager())
+            .environmentObject(MockBlockedTracks())
+    }
+
+    static var snapshots: [PlaylistSnapshot] {
+        PumpyAnalytics.MockData.snapshots
+    }
+    
+    static var tracks: [Track] {
+        MockData.tracks
     }
 }

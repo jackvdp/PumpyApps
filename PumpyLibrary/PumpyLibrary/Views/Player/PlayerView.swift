@@ -8,33 +8,28 @@
 
 import SwiftUI
 
-public struct HomeView<P: PlaylistProtocol,
-                       Q:QueueProtocol,
-                       N:NowPlayingProtocol,
-                       B: BlockedTracksProtocol,
-                       H:HomeProtocol,
-                       T:TokenProtocol,
-                       V: View>: View {
+public struct PlayerView<P: PlaylistProtocol,
+                         Q:QueueProtocol,
+                         N:NowPlayingProtocol,
+                         B: BlockedTracksProtocol,
+                         H:HomeProtocol,
+                         T:TokenProtocol>: View {
     
-    public init(homeVM: H, menuView: V) {
-        self._homeVM = StateObject(wrappedValue: homeVM)
-        self.menuView = menuView
-    }
-    
-    @StateObject var homeVM: H
+    public init() {}
+
+    @EnvironmentObject var homeVM: H
     @EnvironmentObject var nowPlayingManager: N
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     @Namespace var controls
     @Namespace var labels
     @Namespace var background
-    let menuView: V
     @State private var measureRect = CGRect()
     @State private var notPlaying = true
     
     public var body: some View {
         VStack {
-            NavigationBar<B, N, H, V>(destinationView: menuView)
+            NavigationBar<B, N, H>()
                 .background(GeometryGetter(rect: $measureRect))
             if isPortrait() {
                 portraitView
@@ -47,11 +42,14 @@ public struct HomeView<P: PlaylistProtocol,
         .accentColor(.pumpyPink)
         .background(artwork.background)
         .environmentObject(homeVM)
-        .onChange(of: nowPlayingManager.currentTrack) { newValue in
+        .onReceive(nowPlayingManager.currentTrack.publisher) { _ in
             withAnimation {
-                 notPlaying = newValue == nil
+                 notPlaying = (nowPlayingManager.currentTrack == nil)
             }
         }
+        .gesture(
+            dragGesture
+        )
     }
     
     @ViewBuilder
@@ -92,7 +90,8 @@ public struct HomeView<P: PlaylistProtocol,
             .id(labels)
             .frame(height: 55)
         Spacer(minLength: 20)
-        PlayerControls<P,N,H,Q>(isPortrait: isPortrait(), notPlaying: notPlaying)
+        PlayerControls<P,N,H,Q>(isPortrait: isPortrait(),
+                                notPlaying: notPlaying)
             .id(controls)
         Spacer(minLength: 20)
         VolumeControl()
@@ -102,28 +101,33 @@ public struct HomeView<P: PlaylistProtocol,
         horizontalSizeClass == .compact && verticalSizeClass == .regular
     }
 
+    var dragGesture: _EndedGesture<DragGesture> {
+        DragGesture().onEnded { value in
+            if value.location.y - value.startLocation.y > 150 {
+                homeVM.showPlayer = false
+            }
+        }
+    }
 }
 
 // MARK: - Preview
 #if DEBUG
 struct HomeView_Previews: PreviewProvider {
 
-    static let homeVM = MockHomeVM()
-    
     static var previews: some View {
-        HomeView<MockPlaylistManager,
+        PlayerView<MockPlaylistManager,
                  MockQueueManager,
                  MockNowPlayingManager,
                  MockBlockedTracks,
                  MockHomeVM,
-                 MockTokenManager,
-                 EmptyView>(homeVM: homeVM, menuView: EmptyView())
+                 MockTokenManager>()
             .environmentObject(MockPlaylistManager())
             .environmentObject(MockQueueManager())
             .environmentObject(MockNowPlayingManager())
             .environmentObject(MockBlockedTracks())
             .environmentObject(MockHomeVM())
             .environmentObject(MockTokenManager())
+            .environmentObject(MockHomeVM())
             .preferredColorScheme(.dark)
     }
 }

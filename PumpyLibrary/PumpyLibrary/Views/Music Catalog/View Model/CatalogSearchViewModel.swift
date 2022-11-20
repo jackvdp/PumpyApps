@@ -12,9 +12,10 @@ class CatalogSearchViewModel: ObservableObject {
     
     @Published var pageState = PageState.loading
     private let controller = SearchController()
+    private var lastSearchTerm = String()
     
     func runSearch(term: String, authManager: AuthorisationManager) {
-        
+        lastSearchTerm = term
         var playlistSnapshots = [PlaylistSnapshot]()
         var constructedTracks = [ConstructedTrack]()
         var done = 0
@@ -47,7 +48,6 @@ class CatalogSearchViewModel: ObservableObject {
             constructedTracks = tracks.compactMap { track in
                 ConstructedTrack(title: track.title,
                                  artist: track.artist,
-                                 artwork: nil,
                                  artworkURL: track.artworkURL,
                                  playbackStoreID: track.sourceID,
                                  isExplicitItem: track.isExplicit)
@@ -57,6 +57,10 @@ class CatalogSearchViewModel: ObservableObject {
                 self.pageState = .success(playlistSnapshots, constructedTracks)
             }
         }
+    }
+    
+    func searchAgain(authManager: AuthorisationManager) {
+        runSearch(term: lastSearchTerm, authManager: authManager)
     }
     
     enum PageState: Equatable {

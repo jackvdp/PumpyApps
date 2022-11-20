@@ -27,10 +27,15 @@ struct PlayerControls<P:PlaylistProtocol,
     
     var body: some View {
         HStack(alignment: .center, spacing: 40.0) {
-            changeEnergyButton.disabled(notPlaying)
-            if isPortrait { upNextButton.disabled(notPlaying) }
+            changeEnergyButton
+                .disabled(notPlaying)
+            if isPortrait {
+                upNextButton
+                    .disabled(notPlaying)
+            }
             playButton
-            fastForwardButton.disabled(notPlaying)
+            fastForwardButton
+                .disabled(notPlaying)
         }
     }
     
@@ -41,10 +46,12 @@ struct PlayerControls<P:PlaylistProtocol,
             .frame(width: 40, height: 40, alignment: .center)
             .accentColor(.white)
             .onTapGesture {
-                homeVM.playPause()
+                homeVM.playPause(alarmData: alarmData,
+                                 playlistManager: playlistManager)
             }
             .onLongPressGesture(minimumDuration: 2) {
-                homeVM.coldStart()
+                homeVM.coldStart(alarmData: alarmData,
+                                 playlistManager: playlistManager)
             }
         
     }

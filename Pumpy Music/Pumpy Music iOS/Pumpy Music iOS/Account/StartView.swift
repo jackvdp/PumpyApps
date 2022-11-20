@@ -22,21 +22,30 @@ struct StartView: View {
             } else {
                 switch accountManager.pageState {
                 case .login:
-                    LoginView<AccountManager>(
-                        usernamePlaceholder: "Enter your username",
-                        buttonText: "Log In",
-                        pageSwitchText: "Register"
-                    )
+                    loginView
                 case .register:
-                    LoginView<AccountManager>(
-                        usernamePlaceholder: "Enter your email address",
-                        buttonText: "Register",
-                        pageSwitchText: "Already have an account?"
-                    )
+                    registerView
                 }
             }
         }
     }
+    
+    var loginView: some View {
+        LoginView<AccountManager>(
+            usernamePlaceholder: "Enter your username",
+            buttonText: "Log In",
+            pageSwitchText: "Register"
+        )
+    }
+    
+    var registerView: some View {
+        LoginView<AccountManager>(
+            usernamePlaceholder: "Enter your email address",
+            buttonText: "Register",
+            pageSwitchText: "Already have an account?"
+        )
+    }
+    
 }
 
 #if DEBUG
@@ -47,37 +56,3 @@ struct StartView_Previews: PreviewProvider {
     }
 }
 #endif
-
-private struct UserView: View {
-    
-    @EnvironmentObject var user: User
-    
-    var body: some View {
-        HomeView<PlaylistManager,
-                 QueueManager,
-                 NowPlayingManager,
-                 BlockedTracksManager,
-                 HomeVM,
-                 AuthorisationManager,
-                 MenuView>(
-                    homeVM: HomeVM(
-                        alarmData: user.alarmData,
-                        playlistManager: user.musicManager.playlistManager),
-                    menuView: MenuView())
-                 .environmentObject(user.musicManager)
-                 .environmentObject(user.musicManager.nowPlayingManager)
-                 .environmentObject(user.musicManager.playlistManager)
-                 .environmentObject(user.musicManager.blockedTracksManager)
-                 .environmentObject(user.settingsManager)
-                 .environmentObject(user.alarmData)
-                 .environmentObject(user.musicManager.authManager)
-                 .environmentObject(user.musicManager.queueManager)
-                 .environmentObject(
-                     ExternalDisplayManager(
-                        username: user.username,
-                        playlistManager: user.musicManager.playlistManager
-                     )
-                 )
-    }
-    
-}

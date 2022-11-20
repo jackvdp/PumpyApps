@@ -12,7 +12,6 @@ import MusicKit
 public protocol Track {
     var title: String? { get }
     var artist: String? { get }
-    var artwork: MPMediaItemArtwork? { get }
     var artworkURL: String? { get }
     var playbackStoreID: String { get }
     var isExplicitItem: Bool { get }
@@ -57,10 +56,9 @@ public struct ConstructedPlaylist: Playlist {
 }
 
 public struct ConstructedTrack: Track, Equatable {
-    public init(title: String? = nil, artist: String? = nil, artwork: MPMediaItemArtwork? = nil, artworkURL: String? = nil, playbackStoreID: String, isExplicitItem: Bool) {
+    public init(title: String? = nil, artist: String? = nil, artworkURL: String? = nil, playbackStoreID: String, isExplicitItem: Bool) {
         self.title = title
         self.artist = artist
-        self.artwork = artwork
         self.artworkURL = artworkURL
         self.playbackStoreID = playbackStoreID
         self.isExplicitItem = isExplicitItem
@@ -69,8 +67,6 @@ public struct ConstructedTrack: Track, Equatable {
     public var title: String?
     
     public var artist: String?
-    
-    public var artwork: MPMediaItemArtwork? = nil
     
     public var artworkURL: String?
     

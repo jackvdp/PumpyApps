@@ -45,6 +45,7 @@
 		C07865132619D5CB001FB32B /* ActiveInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07865122619D5CB001FB32B /* ActiveInfo.swift */; };
 		C0798655262D5CC9003A426E /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0798654262D5CC9003A426E /* MusicManager.swift */; };
 		C0A6CAF624A8FA6F00F66187 /* PlaybackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A6CAF524A8FA6F00F66187 /* PlaybackData.swift */; };
+		C0AE9CBB291D260F00142243 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AE9CBA291D260F00142243 /* UserView.swift */; };
 		C0B5BCB52395CF1000102F50 /* Core Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03176922395C69900B5D766 /* Core Functions.swift */; };
 		C0B5BCB82396A59600102F50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03176932395C69900B5D766 /* SceneDelegate.swift */; };
 		C0B5F714251D172700D8073C /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B5F713251D172700D8073C /* Notifications.swift */; };
@@ -109,6 +110,7 @@
 		C078F06423C4D17700190352 /* Pumpy Music.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pumpy Music.entitlements"; sourceTree = "<group>"; };
 		C0798654262D5CC9003A426E /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
 		C0A6CAF524A8FA6F00F66187 /* PlaybackData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackData.swift; sourceTree = "<group>"; };
+		C0AE9CBA291D260F00142243 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		C0B5F713251D172700D8073C /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		C0BE156E25FE28620066B274 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C0D60C5723313D6A0010F653 /* Pumpy Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pumpy Music.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -328,8 +330,9 @@
 			isa = PBXGroup;
 			children = (
 				C0725DDB2617757C0095EDD9 /* AccountManager.swift */,
-				6D45ED9128A5A0C0002EC94C /* StartView.swift */,
 				6D961996288C475D009040A3 /* User.swift */,
+				6D45ED9128A5A0C0002EC94C /* StartView.swift */,
+				C0AE9CBA291D260F00142243 /* UserView.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				C00CA9D52689BF53000BF2DC /* BlockedTracksManager.swift in Sources */,
 				C031EAC826C6F97400D3A18A /* NowPlayingManager.swift in Sources */,
 				6DBA8A9328BBB528000A25FD /* AuthManager.swift in Sources */,
+				C0AE9CBB291D260F00142243 /* UserView.swift in Sources */,
 				C0725DDC2617757D0095EDD9 /* AccountManager.swift in Sources */,
 				6DC5EE07289E866100AB5410 /* PlaylistManager.swift in Sources */,
 				C0035217290D72A30006ACDE /* ScheduleManager.swift in Sources */,

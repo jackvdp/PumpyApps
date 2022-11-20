@@ -8,10 +8,10 @@
 
 import SwiftUI
 
-public struct PlayNextNowRow: View {
-    public init(playNextAction: @escaping () -> Void, playNowAction: @escaping () -> Void) {
-        self.playNextAction = playNextAction
-        self.playNowAction = playNowAction
+public struct PlayCapsules: View {
+    public init(playNext: @escaping () -> Void, playNow: @escaping () -> Void) {
+        self.playNextAction = playNext
+        self.playNowAction = playNow
     }
     
     var playNextAction: () -> Void
@@ -19,12 +19,15 @@ public struct PlayNextNowRow: View {
     
     public var body: some View {
         HStack {
-            Spacer()
-            CapsuleButton(title: "Play Next", iconName: "arrow.turn.down.right", action: playNextAction)
-            Spacer()
-            CapsuleButton(title: "Play Now", iconName: "play.fill", action: playNowAction)
-            Spacer()
-        }.padding()
+            CapsuleButton(title: "Play Next",
+                          iconName: "arrow.turn.down.right",
+                          action: playNextAction)
+                .frame(maxWidth: .infinity)
+            CapsuleButton(title: "Play Now",
+                          iconName: "play.fill",
+                          action: playNowAction)
+                .frame(maxWidth: .infinity)
+        }
     }
 }
 
@@ -45,5 +48,6 @@ struct CapsuleButton: View {
             .clipShape(Capsule())
             .shadow(color: .black, radius:10)
         }
+        .buttonStyle(.plain)
     }
 }

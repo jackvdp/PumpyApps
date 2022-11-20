@@ -28,9 +28,9 @@ public struct TrackRow<T:TokenProtocol,
             ArtworkView(artworkURL: track.artworkURL, size: 60)
             trackDetails
             Spacer()
-            DislikeButton<N,B>(track: track, size: 20).padding(.horizontal)
+            DislikeButton<N,B>(track: track, size: 20)
+                .padding(.horizontal)
         }
-        .padding(.all, 5.0)
         .onAppear() {
             UITableViewCell.appearance().backgroundColor = .clear
             UITableView.appearance().backgroundColor = .clear
@@ -68,7 +68,7 @@ public struct TrackRow<T:TokenProtocol,
         Button {
             queueManager.playTrackNow(id: track.playbackStoreID)
         } label: {
-            Label("Play Now", systemImage: "text.insert")
+            Label("Play Now", systemImage: "play.fill")
         }
         .padding()
         .foregroundColor(.pumpyPink)

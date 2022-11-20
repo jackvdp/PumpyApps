@@ -9,18 +9,6 @@
 import SwiftUI
 
 public struct SongLabels<N: NowPlayingProtocol, P: PlaylistProtocol>: View {
-    public init(size: CGFloat = 17, mainFont: String = K.Font.helvetica, subFont: String = K.Font.helveticaLight, mainFontOpacity: Double = 1.0, subFontOpacity: Double = 1.0, padding: CGFloat = 0, fontWeight: Font.Weight? = nil, showNowPlaying: Bool = false, showPlaylistLabel: Bool = true) {
-        self.size = size
-        self.mainFont = mainFont
-        self.subFont = subFont
-        self.mainFontOpacity = mainFontOpacity
-        self.subFontOpacity = subFontOpacity
-        self.padding = padding
-        self.fontWeight = fontWeight
-        self.showNowPlaying = showNowPlaying
-        self.showPlaylistLabel = showPlaylistLabel
-    }
-    
     @EnvironmentObject var nowPlayingManager: N
     @EnvironmentObject var playlistManager: P
     
@@ -41,48 +29,37 @@ public struct SongLabels<N: NowPlayingProtocol, P: PlaylistProtocol>: View {
     public var body: some View {
         VStack(spacing: 5.0) {
             if showNowPlaying {
-                Text("Now playing")
-                    .foregroundColor(Color.white)
-                    .fontWeight(fontWeight)
-                    .font(.custom(subFont, size: size * 0.75))
-                    .lineLimit(1)
+                label("Now playing", font: subFont, size: size * 0.75)
                     .opacity(subFontOpacity)
-                    .padding(padding)
             }
-            Text(title)
-                .foregroundColor(Color.white)
-                .fontWeight(fontWeight)
-                .font(.custom(mainFont, size: size))
-                .lineLimit(1)
-                .padding(padding)
-            Text(artist)
-                .foregroundColor(Color.white)
-                .fontWeight(fontWeight)
-                .font(.custom(subFont, size: size))
-                .lineLimit(1)
+            label(title, font: mainFont, size: size)
+            label(artist, font: subFont, size: size)
                 .opacity(subFontOpacity)
-                .padding(padding)
             if showPlaylistLabel {
-                Text(playlist)
-                    .foregroundColor(Color.white)
-                    .fontWeight(fontWeight)
-                    .font(.custom(subFont, size: size))
-                    .lineLimit(1)
+                label(playlist, font: subFont, size: size)
                     .opacity(subFontOpacity)
             }
         }
-        .onChange(of: nowPlayingManager.currentTrack) { _ in
+        .onReceive(nowPlayingManager.currentTrack.publisher) { _ in
             withAnimation {
                 title = nowPlayingManager.currentTrack?.title ?? ""
                 artist = nowPlayingManager.currentTrack?.artist ?? ""
             }
         }
-        .onChange(of: playlistManager.playlistLabel) { newValue in
+        .onReceive(playlistManager.playlistLabel.publisher) { _ in
             withAnimation {
-                playlist = newValue
+                playlist = playlistManager.playlistLabel
             }
         }
-        
+    }
+    
+    func label(_ text: String, font: String, size: CGFloat) -> some View {
+        return Text(text)
+            .foregroundColor(Color.white)
+            .fontWeight(fontWeight)
+            .font(.custom(font, size: size))
+            .lineLimit(1)
+            .padding(padding)
     }
 }
 
@@ -101,3 +78,17 @@ struct SongLabels_Previews: PreviewProvider {
     }
 }
 #endif
+
+extension SongLabels {
+    public init(size: CGFloat = 17, mainFont: String = K.Font.helvetica, subFont: String = K.Font.helveticaLight, mainFontOpacity: Double = 1.0, subFontOpacity: Double = 1.0, padding: CGFloat = 0, fontWeight: Font.Weight? = nil, showNowPlaying: Bool = false, showPlaylistLabel: Bool = true) {
+        self.size = size
+        self.mainFont = mainFont
+        self.subFont = subFont
+        self.mainFontOpacity = mainFontOpacity
+        self.subFontOpacity = subFontOpacity
+        self.padding = padding
+        self.fontWeight = fontWeight
+        self.showNowPlaying = showNowPlaying
+        self.showPlaylistLabel = showPlaylistLabel
+    }
+}

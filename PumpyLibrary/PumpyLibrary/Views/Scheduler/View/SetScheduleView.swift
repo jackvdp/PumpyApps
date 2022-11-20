@@ -19,7 +19,7 @@ struct SetScheduleView: View {
     @ViewBuilder
     var body: some View {
         NavigationView {
-            List {
+            PumpyList {
                 playlistDetails
                 secondaryPlaylists
                 externalDisplaySettings

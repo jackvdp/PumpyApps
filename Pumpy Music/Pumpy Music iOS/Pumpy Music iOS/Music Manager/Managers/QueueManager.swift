@@ -59,7 +59,6 @@ class QueueManager: QueueProtocol {
             self.queueTracks = queue.items.map {
                 ConstructedTrack(title: $0.title,
                                  artist: $0.artist,
-                                 artwork: $0.artwork,
                                  artworkURL: $0.artworkURL,
                                  playbackStoreID: $0.playbackStoreID,
                                  isExplicitItem: $0.isExplicitItem)
@@ -78,7 +77,6 @@ class QueueManager: QueueProtocol {
             self.queueTracks = queue.items.map {
                 ConstructedTrack(title: $0.title,
                                  artist: $0.artist,
-                                 artwork: $0.artwork,
                                  artworkURL: $0.artworkURL,
                                  playbackStoreID: $0.playbackStoreID,
                                  isExplicitItem: $0.isExplicitItem)

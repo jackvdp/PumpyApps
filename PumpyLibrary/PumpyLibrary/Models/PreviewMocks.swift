@@ -32,7 +32,6 @@ public struct PreviewPlaylist: Playlist {
 public struct PreviewTrack: Track {
     public var title: String?
     public var artist: String?
-    public var artwork: MPMediaItemArtwork?
     public var artworkURL: String?
     public var playbackStoreID: String
     public var isExplicitItem: Bool

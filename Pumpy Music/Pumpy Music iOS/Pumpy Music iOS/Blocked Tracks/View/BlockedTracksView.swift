@@ -23,7 +23,7 @@ struct BlockedTracksView: View {
                     .foregroundColor(Color.gray)
                     .font(.largeTitle)
             } else {
-                List {
+                PumpyList {
                     ForEach(blockedTracksManager.blockedTracks, id: \.self) { track in
                         BlockedTracksRowView(blockedTrackVM: BlockedTrackViewModel(track,
                                                                                    token: token,

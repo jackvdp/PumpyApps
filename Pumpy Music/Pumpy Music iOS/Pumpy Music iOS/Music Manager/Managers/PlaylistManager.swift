@@ -49,6 +49,13 @@ class PlaylistManager: PlaylistProtocol {
         }
     }
     
+    func playPlaylist(playlist: PumpyLibrary.Playlist, from index: Int) {
+        let tracks = playlist.tracks[index...playlist.tracks.count - 1]
+        let storeIDs = tracks.map { $0.playbackStoreID }
+        let queue = MPMusicPlayerStoreQueueDescriptor(storeIDs: storeIDs)
+        playQueueNow(name: playlist.name ?? "", queue: queue)
+    }
+    
     func playNext(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist] = []) {
         if let mpPlaylist = playlist as? MPMediaPlaylist, let name = mpPlaylist.name {
             playNext(playlistName: name, secondaryPlaylists: secondaryPlaylists)

@@ -182,20 +182,3 @@ extension UpNextView {
         self.showButton = showButton
     }
 }
-
-struct ClearListBackground: ViewModifier {
-    func body(content: Content) -> some View {
-        if #available(iOS 16.0, *) {
-            content
-                .scrollContentBackground(.hidden)
-        } else {
-            content
-        }
-    }
-}
-
-extension View {
-    public func clearListBackgroundIOS16() -> some View {
-        modifier(ClearListBackground())
-    }
-}

@@ -5,24 +5,129 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "46B48BDF-77B7-48B7-94DA-224D0082B0D4"
-            shouldBeEnabled = "Yes"
+            uuid = "D4A3D838-05A3-4284-BA82-9E52B5B1CC26"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            symbolName = "print_cycle"
-            moduleName = "">
+            filePath = "Pumpy Music/Pumpy Music iOS/Pumpy Music iOS/Music Manager/Model/Music Models.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "artworkURL"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "94FF7616-E563-4944-AA8D-1F450891C7B2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PumpyLibrary/PumpyLibrary/Views/Music Catalog/Views/CatalogView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "runSearch()"
+            landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "46B48BDF-77B7-48B7-94DA-224D0082B0D4 - cc86abe8c9557793"
+                  uuid = "94FF7616-E563-4944-AA8D-1F450891C7B2 - 7abff9ee72600ca1"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "AG::Graph::print_cycle(AG::data::ptr&lt;AG::Node&gt;) const"
-                  moduleName = "AttributeGraph"
+                  symbolName = "PumpyLibrary.CatalogView.runSearch() -&gt; ()"
+                  moduleName = "PumpyLibrary"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "0">
+                  urlString = "file:///Users/jackvanderpump/Dropbox/Mac%20(4)/Desktop/Pumpy%20Apps/PumpyApps/PumpyLibrary/PumpyLibrary/Views/Music%20Catalog/Views/CatalogView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "648">
+               </Location>
+               <Location
+                  uuid = "94FF7616-E563-4944-AA8D-1F450891C7B2 - a32aedf1fb00336"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in PumpyLibrary.CatalogView.runSearch() -&gt; ()"
+                  moduleName = "PumpyLibrary"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jackvanderpump/Dropbox/Mac%20(4)/Desktop/Pumpy%20Apps/PumpyApps/PumpyLibrary/PumpyLibrary/Views/Music%20Catalog/Views/CatalogView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "140">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D3149712-E9DD-4019-A079-17E0AB4AB33A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PumpyLibrary/PumpyLibrary/Views/Music Catalog/Views/CatalogView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9C316DBC-9B43-4876-A042-E33FA3CE79D4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PumpyLibrary/PumpyLibrary/Views/Music Catalog/Views/SearchView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "9C316DBC-9B43-4876-A042-E33FA3CE79D4 - 631202a9ffda23d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI._ConditionalContent&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.id&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of PumpyLibrary.CatalogSearchView.failedView : some&gt;&gt;.0&gt; in PumpyLibrary.CatalogSearchView.body.getter : some"
+                  moduleName = "PumpyLibrary"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jackvanderpump/Dropbox/Mac%20(4)/Desktop/Pumpy%20Apps/PumpyApps/PumpyLibrary/PumpyLibrary/Views/Music%20Catalog/Views/SearchView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "2612">
+               </Location>
+               <Location
+                  uuid = "9C316DBC-9B43-4876-A042-E33FA3CE79D4 - 631202a9ffda23d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI._ConditionalContent&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.id&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of PumpyLibrary.CatalogSearchView.failedView : some&gt;&gt;.0&gt; in PumpyLibrary.CatalogSearchView.body.getter : some"
+                  moduleName = "PumpyLibrary"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jackvanderpump/Dropbox/Mac%20(4)/Desktop/Pumpy%20Apps/PumpyApps/PumpyLibrary/PumpyLibrary/Views/Music%20Catalog/Views/SearchView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "4580">
                </Location>
             </Locations>
          </BreakpointContent>

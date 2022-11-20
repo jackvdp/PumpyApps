@@ -20,7 +20,7 @@ public struct AccountView<U:UserProtocol, A:AccountManagerProtocol>: View {
     public init() {}
     
     public var body: some View {
-        List {
+        PumpyList {
             accountButtons
             versionLabel
         }
