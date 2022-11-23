@@ -14,7 +14,6 @@ import PumpyShared
 
 class RemoteManager: ObservableObject {
     
-    let db = Firestore.firestore()
     var remoteListener: ListenerRegistration?
     let username: String
     weak var musicManager: MusicManager?
@@ -33,8 +32,7 @@ class RemoteManager: ObservableObject {
     }
     
     func recieveRemoteCommands() {
-        remoteListener = FireMethods.listen(db: db,
-                                            name: username,
+        remoteListener = FireMethods.listen(name: username,
                                             documentName: K.FStore.remoteData,
                                             dataFieldName: K.FStore.remoteData,
                                             decodeObject: RemoteInfo.self) { remoteInfoDecoded in

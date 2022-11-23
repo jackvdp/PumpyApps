@@ -34,8 +34,7 @@ class BlockedTracksManager: BlockedTracksProtocol {
     }
     
     func listenForBlockedTracks() {
-        remoteListener = FireMethods.listen(db: FirebaseStore.shared.db,
-                                            name: username,
+        remoteListener = FireMethods.listen(name: username,
                                             documentName: K.FStore.blockedTracks,
                                             dataFieldName: K.FStore.blockedTracks,
                                             decodeObject: [BlockedTrack].self) { blocked in

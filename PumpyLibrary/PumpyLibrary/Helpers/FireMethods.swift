@@ -12,7 +12,15 @@ import CodableFirebase
 
 public class FireMethods {
     
-    public static func listen<T>(db: Firestore, name: String, documentName: String, dataFieldName: String, decodeObject: T.Type, completionHandler: @escaping (T) -> Void) -> ListenerRegistration where T: Decodable {
+    static var db: Firestore {
+        return FirebaseStore.shared.db
+    }
+    
+    public static func listen<T>(name: String,
+                                 documentName: String,
+                                 dataFieldName: String,
+                                 decodeObject: T.Type,
+                                 completionHandler: @escaping (T) -> Void) -> ListenerRegistration where T: Decodable {
         return db.collection(name).document(documentName).addSnapshotListener { (documentSnapshot, error) in
             if let e = error {
                 print("error retrieving from Firestore \(documentName) \(dataFieldName), \(e)")
@@ -33,7 +41,11 @@ public class FireMethods {
         }
     }
     
-    public static func get<T>(db: Firestore, name: String, documentName: String, dataFieldName: String, decodeObject: T.Type, completionHandler: @escaping (T) -> Void) where T: Decodable {
+    public static func get<T>(name: String,
+                              documentName: String,
+                              dataFieldName: String,
+                              decodeObject: T.Type,
+                              completionHandler: @escaping (T) -> Void) where T: Decodable {
         db.collection(name).document(documentName).getDocument { (doc, error) in
             if let e = error {
                 print("error retrieving from Firestore \(documentName) \(dataFieldName), \(e)")
@@ -55,9 +67,8 @@ public class FireMethods {
     }
     
     public static func save<T>(object: T, name: String, documentName: String, dataFieldName: String) where T: Codable {
-        let db = Firestore.firestore()
         let firebaseRemoteItem = try! FirebaseEncoder().encode(object)
-        
+
         db.collection(name).document(documentName).setData([
             dataFieldName : firebaseRemoteItem,
         ]) { (error) in
@@ -67,11 +78,9 @@ public class FireMethods {
                 print("Successfully Saved \(documentName) \(dataFieldName)")
             }
         }
-        
     }
     
     public static func save(dict: [String: Any], name: String, documentName: String) {
-        let db = Firestore.firestore()
         db.collection(name).document(documentName).setData(
             dict
         ) { (error) in

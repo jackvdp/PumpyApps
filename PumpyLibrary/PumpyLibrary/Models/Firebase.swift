@@ -53,11 +53,11 @@ public class FirebaseStore {
     
     public func changePassword(newPassword: String,
                                completion: @escaping (Bool)->()) {
-               
-               Auth.auth().currentUser?.updatePassword(to: newPassword, completion: { error in
-                   completion(error == nil)
-               })
-           }
+        
+        Auth.auth().currentUser?.updatePassword(to: newPassword, completion: { error in
+            completion(error == nil)
+        })
+    }
     
 }
 

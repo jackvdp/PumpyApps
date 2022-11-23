@@ -120,8 +120,10 @@ public class ExternalDisplayManager<P:PlaylistProtocol>: ObservableObject {
     }
     
     func downloadSettings() {
-        let db = Firestore.firestore()
-        settingsListener = FireMethods.listen(db: db, name: username, documentName: K.FStore.extDisSettings, dataFieldName: K.FStore.extDisSettings, decodeObject: ExtDisSettings.self) { settings in
+        settingsListener = FireMethods.listen(name: username,
+                                              documentName: K.FStore.extDisSettings,
+                                              dataFieldName: K.FStore.extDisSettings,
+                                              decodeObject: ExtDisSettings.self) { settings in
             self.defaultSettings = settings
         }
     }

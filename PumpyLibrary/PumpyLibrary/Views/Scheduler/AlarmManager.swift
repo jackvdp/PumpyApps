@@ -13,14 +13,12 @@ import UserNotifications
 public class AlarmManager: ObservableObject {
     
     let username: String
-    var db: Firestore!
     var alarmListener: ListenerRegistration?
     @Published public var alarms = [Alarm]()
     
     public init(username: String, preview: Bool = false) {
         self.username = username
         guard !preview else { return }
-        db = Firestore.firestore()
         loadOnlineData()
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
@@ -64,8 +62,7 @@ public class AlarmManager: ObservableObject {
     }
     
     private func loadOnlineData() {
-        alarmListener = FireMethods.listen(db: db,
-                                           name: username,
+        alarmListener = FireMethods.listen(name: username,
                                            documentName: K.FStore.alarmCollection,
                                            dataFieldName: K.FStore.alarmCollection,
                                            decodeObject: [Alarm].self) { [weak self] alarms in
@@ -77,8 +74,7 @@ public class AlarmManager: ObservableObject {
     }
     
     func loadOtherUsersData(from otherUser: String) {
-        FireMethods.get(db: db,
-                        name: otherUser,
+        FireMethods.get(name: otherUser,
                         documentName: K.FStore.alarmCollection,
                         dataFieldName: K.FStore.alarmCollection,
                         decodeObject: [Alarm].self) { [weak self] alarms in

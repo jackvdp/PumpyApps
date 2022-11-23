@@ -33,9 +33,7 @@ public class SettingsManager: ObservableObject {
     }
     
     func downloadSettings() {
-        let db = Firestore.firestore()
-        settingsListener = FireMethods.listen(db: db,
-                                              name: username,
+        settingsListener = FireMethods.listen(name: username,
                                               documentName: K.FStore.settings,
                                               dataFieldName: K.FStore.settings,
                                               decodeObject: SettingsModel.self) { [weak self] settings in
