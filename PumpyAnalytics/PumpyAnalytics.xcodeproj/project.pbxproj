@@ -142,7 +142,7 @@
 		6D4AD154283BE0BC001094F4 /* PumpyAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PumpyAnalytics.h; sourceTree = "<group>"; };
 		6D4F5C3828AFE70A00FA1982 /* AnalyseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyseController.swift; sourceTree = "<group>"; };
 		6D4F5C3B28AFE97E00FA1982 /* AnalyseTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyseTracks.swift; sourceTree = "<group>"; };
-		6D5497E2283C1CE700F3DF59 /* Tokens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
+		6D5497E2283C1CE700F3DF59 /* Tokens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tokens.swift; path = ../../../../Tokens/Tokens.swift; sourceTree = "<group>"; };
 		6D5497E3283C1CE700F3DF59 /* AuthorisationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorisationManager.swift; sourceTree = "<group>"; };
 		6D5497E9283C1D2400F3DF59 /* SpotNextTracks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotNextTracks.swift; sourceTree = "<group>"; };
 		6D5497EA283C1D2400F3DF59 /* SpotPlaylistSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotPlaylistSearch.swift; sourceTree = "<group>"; };
