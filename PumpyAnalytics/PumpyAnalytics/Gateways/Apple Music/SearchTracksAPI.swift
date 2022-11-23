@@ -21,7 +21,8 @@ class SearchTracksGateway: SearchTracksGatewayProtocol {
                         
             guard let results = res.value else {
                 print(res.error?.localizedDescription ?? "Error conducting search")
-                completion(nil, (res.response?.statusCode ?? 400) + 10)
+                debugPrint(res)
+                completion(nil, (res.response?.statusCode ?? 400))
                 return
             }
             

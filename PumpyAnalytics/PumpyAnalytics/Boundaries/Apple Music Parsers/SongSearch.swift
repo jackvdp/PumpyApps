@@ -40,7 +40,8 @@ struct SongSearchResults: Codable {
 
     // MARK: - Songs
     struct Songs: Codable {
-        let href, next: String
+        let href: String
+        let next: String?
         let data: [Datum]
     }
 

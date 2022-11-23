@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import Firebase
 import CodableFirebase
 import PumpyAnalytics
 

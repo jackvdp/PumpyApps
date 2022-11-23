@@ -99,7 +99,7 @@ public struct ErrorMessage: Error {
 extension String {
     func convertJSONStringToModel<T: Decodable>(to: T.Type) -> T? {
         do {
-            var escapedString = self.replacingOccurrences(of: "\n", with: "")
+            let escapedString = self.replacingOccurrences(of: "\n", with: "")
             let data = Data(escapedString.utf8)
             let model = try JSONDecoder().decode(T.self, from: data)
             return model

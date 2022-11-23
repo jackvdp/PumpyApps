@@ -55,6 +55,8 @@ public struct CatalogView<H:HomeProtocol,
     
     var loadingView: some View {
         ActivityView(activityIndicatorVisible: .constant(true))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.vertical, 100)
     }
     
     @ViewBuilder
@@ -76,10 +78,11 @@ public struct CatalogView<H:HomeProtocol,
         Text("Error fetching catalog results. \nPull down to try again.")
             .opacity(0.5)
             .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 100)
             .refreshable {
                 getCollections()
             }
-            .frame(maxWidth: .infinity)
     }
     
     // Methods

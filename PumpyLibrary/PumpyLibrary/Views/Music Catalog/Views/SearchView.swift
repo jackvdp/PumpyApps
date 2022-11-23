@@ -17,15 +17,15 @@ struct CatalogSearchView<H:HomeProtocol,
     
     @ObservedObject var viewModel: CatalogSearchViewModel
     @EnvironmentObject var authManager: AuthorisationManager
+    @EnvironmentObject var playlistManager: P
     @State private var pageState: CatalogSearchViewModel.PageState = .loading
-    let playlistRows: [GridItem] = Array(repeating: GridItem(.fixed(200)), count: 2)
     @Namespace var screen
     
     var body: some View {
         VStack {
             switch pageState {
             case .loading:
-                ActivityView(activityIndicatorVisible: .constant(true))
+                loadingView
                     .transition(.opacity)
                     .id(screen)
             case .success(let playlistSnapshots, let tracks):
@@ -43,34 +43,36 @@ struct CatalogSearchView<H:HomeProtocol,
         }
     }
     
+    // Components
+    
     func searchResults(_ playlists: [PlaylistSnapshot],
                        _ tracks: [Track]) -> some View {
         ScrollView {
             Group {
                 if playlists.isNotEmpty {
                     title("Playlists")
-                        .padding(.vertical)
-                        .padding(.top, 6)
                     playlistGrids(playlists)
-                        .padding(.horizontal, -20)
                 }
                 if tracks.isNotEmpty {
                     title("Tracks")
-                        .padding(.vertical)
                     tracksList(tracks)
                 }
                 if playlists.isEmpty && tracks.isEmpty {
-                    Text("*No Results*\nTry a new search")
+                    emptySearch
                 }
             }
             .padding(.horizontal, 20)
+            .padding(.top, 6)
         }
         .padding(.horizontal, -20)
     }
     
     
     func playlistGrids(_ playlists: [PlaylistSnapshot]) -> some View {
-        ScrollView(.horizontal) {
+        let playlistRows = Array(repeating: GridItem(.fixed(200)),
+                                 count: playlists.count == 1 ? 1 : 2)
+        
+        return ScrollView(.horizontal) {
             LazyHGrid(rows: playlistRows, alignment: .center, spacing: 20) {
                 ForEach(playlists, id: \.sourceID) { item in
                     NavigationLink(destination: ItemDetailView<H,P,N,B,T,Q>(snapshot: item)) {
@@ -84,11 +86,15 @@ struct CatalogSearchView<H:HomeProtocol,
             }
             .padding(.horizontal)
         }
+        .padding(.horizontal, -20)
     }
     
     func tracksList(_ tracks: [Track]) -> some View {
         ForEach(tracks.indices, id: \.self) { i in
             TrackRow<T,N,B,P,Q>(track: tracks[i])
+                .onTapGesture {
+                    playFromPosition(tracks: tracks, index: i)
+                }
             Divider()
         }
     }
@@ -98,16 +104,41 @@ struct CatalogSearchView<H:HomeProtocol,
             Text(title)
                 .font(.title2.bold())
             Divider()
-        }
-        
+        }.padding(.vertical)
+    }
+    
+    var emptySearch: some View {
+        Text("**No Results**\nTry a new search")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .multilineTextAlignment(.center)
+            .padding(.vertical, 100)
+            .opacity(0.5)
     }
     
     var failedView: some View {
-        Button("Error occurred. Please try again.") {
+        Button("Search Error.\n Please try again.") {
             viewModel.searchAgain(authManager: authManager)
         }
         .buttonStyle(.bordered)
         .foregroundColor(.gray)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.vertical, 100)
+    }
+    
+    var loadingView: some View {
+        ActivityView(activityIndicatorVisible: .constant(true))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.vertical, 100)
+    }
+    
+    // Methods
+    
+    func playFromPosition(tracks: [Track], index: Int) {
+        let playlist = ConstructedPlaylist(name: viewModel.lastSearchTerm,
+                                           tracks: tracks,
+                                           cloudGlobalID: nil,
+                                           artworkURL: nil)
+        playlistManager.playPlaylist(playlist: playlist, from: index)
     }
     
 }
@@ -122,19 +153,29 @@ struct CatalogSearchView_Previews: PreviewProvider {
                                    MockQueueManager>(viewModel: CatalogSearchViewModel())
     
     static var previews: some View {
-        PumpyList {
-            Text(snapshots.count.description)
-            searchView.searchResults(snapshots, tracks)
-//                .border(.green)
+        Group {
+            PumpyList {
+                searchView.searchResults(snapshots, tracks)
+            }
+            PumpyList {
+                searchView.searchResults([], [])
+            }
+            PumpyList {
+                searchView.loadingView
+            }
+            PumpyList {
+                searchView.failedView
+            }
         }
         .listStyle(.plain)
-        .border(.indigo)
-            .preferredColorScheme(.dark)
-            .environmentObject(MockTokenManager())
-            .environmentObject(MockPlaylistManager())
-            .environmentObject(MockNowPlayingManager())
-            .environmentObject(MockQueueManager())
-            .environmentObject(MockBlockedTracks())
+        .preferredColorScheme(.dark)
+        .environmentObject(MockTokenManager())
+        .environmentObject(MockPlaylistManager())
+        .environmentObject(MockNowPlayingManager())
+        .environmentObject(MockQueueManager())
+        .environmentObject(MockBlockedTracks())
+        .environmentObject(MockHomeVM())
+        .environmentObject(AuthorisationManager())
     }
 
     static var snapshots: [PlaylistSnapshot] {

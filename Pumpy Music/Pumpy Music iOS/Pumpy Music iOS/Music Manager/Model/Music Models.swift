@@ -14,7 +14,6 @@ import PumpyLibrary
 extension MPMediaItem: Track {
     
     public var artworkURL: String? {
-        let name = self.title
         if let catalog = value(forKey: "artworkCatalog") as? NSObject,
            let token = catalog.value(forKey: "token") as? NSObject,
            let url = token.value(forKey: "availableArtworkToken") as? String ??

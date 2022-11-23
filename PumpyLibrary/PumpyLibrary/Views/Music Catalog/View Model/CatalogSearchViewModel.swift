@@ -12,7 +12,7 @@ class CatalogSearchViewModel: ObservableObject {
     
     @Published var pageState = PageState.loading
     private let controller = SearchController()
-    private var lastSearchTerm = String()
+    var lastSearchTerm = String()
     
     func runSearch(term: String, authManager: AuthorisationManager) {
         lastSearchTerm = term

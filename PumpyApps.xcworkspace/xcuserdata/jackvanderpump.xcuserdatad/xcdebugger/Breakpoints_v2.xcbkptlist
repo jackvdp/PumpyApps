@@ -14,8 +14,8 @@
             filePath = "Pumpy Music/Pumpy Music iOS/Pumpy Music iOS/Music Manager/Model/Music Models.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
             landmarkName = "artworkURL"
             landmarkType = "24">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "PumpyLibrary/PumpyLibrary/Views/Music Catalog/Views/CatalogView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "runSearch()"
             landmarkType = "7">
             <Locations>
