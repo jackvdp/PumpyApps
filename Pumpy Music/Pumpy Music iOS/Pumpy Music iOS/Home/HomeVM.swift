@@ -14,6 +14,7 @@ class HomeVM: HomeProtocol {
 
     @Published var pageType: PageType = .artwork
     @Published var showPlayer = true
+    @Published var triggerNavigation: Bool = false
     
     func playPause(alarmData: AlarmManager, playlistManager: any PlaylistProtocol) {
         MusicCoreFunctions.togglePlayPause(alarms: alarmData.alarms,

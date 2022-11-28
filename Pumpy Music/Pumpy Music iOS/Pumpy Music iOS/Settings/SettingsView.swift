@@ -16,46 +16,61 @@ struct SettingsView: View {
     @State var revealAdminSettings: Bool = false
     
     var body: some View {
-        VStack {
-            Form {
-                Section {
-                    Toggle("Use Crossfade", isOn: $settingsVM.onlineSettings.crossfadeOn)
-                    Toggle("Ban Explicit Content:", isOn: $settingsVM.onlineSettings.banExplicit)
-                    Toggle("Suspend Playlist Schedule \n(until 6am tomorrow):", isOn: $settingsVM.onlineSettings.overrideSchedule)
-                }
-                if revealAdminSettings {
-                    Section {
-                        Toggle("Show Music Library", isOn: $settingsVM.onlineSettings.showMusicLibrary)
-                        Toggle("Show Music Store", isOn: $settingsVM.onlineSettings.showMusicStore)
-                    }
-                    Section {
-                        Toggle("Show Playlist Scheduler:", isOn: $settingsVM.onlineSettings.showScheduler)
-                    }
-                    Section {
-                        Toggle("Show External Display:", isOn: $settingsVM.onlineSettings.showExternalDisplay)
-                    }
-                }
-                Section {
-                    NavigationLink(destination: CapabilitiesView()) {
-                        MenuRow(title: "Capabilities", imageName: "bolt.fill")
-                    }
-                }
+        PumpyList {
+            generalSettings
+            if revealAdminSettings {
+                passwordProtectedSettings
             }
+            capabilitiesRow
             if !revealAdminSettings {
                 Spacer()
-                Button {
-                    lockSettingsAlert()
-                } label: {
-                    HStack {
-                        Image(systemName: "lock.fill").foregroundColor(.white)
-                        Text("Access Admin Settings")
-                    }.padding()
-                }
+                unlockButton
             }
         }
         .toggleStyle(SwitchToggleStyle(tint: Color.pumpyPink))
         .accentColor(.pumpyPink)
         .navigationBarTitle("Settings")
+    }
+    
+    var generalSettings: some View {
+        Section {
+            Toggle("Use Crossfade", isOn: $settingsVM.onlineSettings.crossfadeOn)
+            Toggle("Ban Explicit Content:", isOn: $settingsVM.onlineSettings.banExplicit)
+            Toggle("Suspend Playlist Schedule \n(until 6am tomorrow):", isOn: $settingsVM.onlineSettings.overrideSchedule)
+        }
+    }
+    
+    @ViewBuilder
+    var passwordProtectedSettings: some View {
+        Section {
+            Toggle("Show Music Library", isOn: $settingsVM.onlineSettings.showMusicLibrary)
+            Toggle("Show Music Store", isOn: $settingsVM.onlineSettings.showMusicStore)
+        }
+        Section {
+            Toggle("Show Playlist Scheduler:", isOn: $settingsVM.onlineSettings.showScheduler)
+        }
+        Section {
+            Toggle("Show External Display:", isOn: $settingsVM.onlineSettings.showExternalDisplay)
+        }
+    }
+    
+    var capabilitiesRow: some View {
+        Section {
+            NavigationLink(destination: CapabilitiesView()) {
+                MenuRow(title: "Capabilities", imageName: "bolt.fill")
+            }
+        }
+    }
+    
+    var unlockButton: some View {
+        Button {
+            lockSettingsAlert()
+        } label: {
+            HStack {
+                Image(systemName: "lock.fill").foregroundColor(.white)
+                Text("Access Admin Settings")
+            }.padding()
+        }
     }
 }
 

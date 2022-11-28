@@ -16,7 +16,7 @@ public struct PumpyList<Content: View>: View {
     @ViewBuilder var content: Content
     
     public var body: some View {
-        List {
+        List() {
             content
                 .listRowBackground(Color.clear)
         }

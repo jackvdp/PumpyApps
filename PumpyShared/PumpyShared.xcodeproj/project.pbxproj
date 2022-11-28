@@ -12,6 +12,7 @@
 		C044A52A29112AC700E17A09 /* PumpySharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C044A52929112AC700E17A09 /* PumpySharedTests.swift */; };
 		C044A52B29112AC700E17A09 /* PumpyShared.h in Headers */ = {isa = PBXBuildFile; fileRef = C044A51D29112AC600E17A09 /* PumpyShared.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C08CD138291152F40052FE26 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08CD137291152F40052FE26 /* Debouncer.swift */; };
+		C08E0AF729321A4200D83774 /* PumpyNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08E0AF629321A4200D83774 /* PumpyNavigation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		C044A52429112AC700E17A09 /* PumpySharedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PumpySharedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C044A52929112AC700E17A09 /* PumpySharedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpySharedTests.swift; sourceTree = "<group>"; };
 		C08CD137291152F40052FE26 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
+		C08E0AF629321A4200D83774 /* PumpyNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpyNavigation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				C044A51D29112AC600E17A09 /* PumpyShared.h */,
 				C044A51E29112AC600E17A09 /* PumpyShared.docc */,
 				C08CD137291152F40052FE26 /* Debouncer.swift */,
+				C08E0AF629321A4200D83774 /* PumpyNavigation.swift */,
 			);
 			path = PumpyShared;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C08E0AF729321A4200D83774 /* PumpyNavigation.swift in Sources */,
 				C044A51F29112AC600E17A09 /* PumpyShared.docc in Sources */,
 				C08CD138291152F40052FE26 /* Debouncer.swift in Sources */,
 			);
@@ -365,6 +369,8 @@
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -400,6 +406,8 @@
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

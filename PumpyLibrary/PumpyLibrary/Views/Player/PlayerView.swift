@@ -52,12 +52,14 @@ public struct PlayerView<P: PlaylistProtocol,
         )
     }
     
+    // MARK: - Components
+    
     @ViewBuilder
     var portraitView: some View {
         Spacer()
         switch homeVM.pageType {
         case .artwork:
-            artwork
+            artwork(size: measureRect.width)
         case .upNext:
             UpNextView<Q,N,B,T,P>()
                 .padding(.horizontal, -20)
@@ -69,7 +71,7 @@ public struct PlayerView<P: PlaylistProtocol,
         HStack(spacing: 5) {
             VStack {
                 Spacer()
-                artwork
+                artwork(size: (measureRect.width / 2) - 5)
                 songDetailsAndControls
             }
             VStack {
@@ -78,10 +80,15 @@ public struct PlayerView<P: PlaylistProtocol,
         }
     }
     
-    var artwork: ArtworkView {
-        ArtworkView(artworkURL: nowPlayingManager.currentTrack?.artworkURL,
-                    size: measureRect.width)
+    func artwork(size: CGFloat) -> ArtworkView {
+        let a = ArtworkView(artworkURL: nowPlayingManager.currentTrack?.artworkURL,
+                    size: size)
+        artwork = a
+        return a
     }
+    
+    @State var artwork = ArtworkView(artworkURL: nil,
+                                     size: 500)
     
     @ViewBuilder
     var songDetailsAndControls: some View {
@@ -97,11 +104,13 @@ public struct PlayerView<P: PlaylistProtocol,
         VolumeControl()
     }
     
-    func isPortrait() -> Bool {
+    // MARK: - Methods
+    
+    private func isPortrait() -> Bool {
         horizontalSizeClass == .compact && verticalSizeClass == .regular
     }
 
-    var dragGesture: _EndedGesture<DragGesture> {
+    private var dragGesture: _EndedGesture<DragGesture> {
         DragGesture().onEnded { value in
             if value.location.y - value.startLocation.y > 150 {
                 homeVM.showPlayer = false
@@ -115,12 +124,23 @@ public struct PlayerView<P: PlaylistProtocol,
 struct HomeView_Previews: PreviewProvider {
 
     static var previews: some View {
-        PlayerView<MockPlaylistManager,
-                 MockQueueManager,
-                 MockNowPlayingManager,
-                 MockBlockedTracks,
-                 MockHomeVM,
-                 MockTokenManager>()
+        Group {
+            PlayerView<MockPlaylistManager,
+                     MockQueueManager,
+                     MockNowPlayingManager,
+                     MockBlockedTracks,
+                     MockHomeVM,
+                     MockTokenManager>()
+                .previewDisplayName("Portrait")
+            PlayerView<MockPlaylistManager,
+                     MockQueueManager,
+                     MockNowPlayingManager,
+                     MockBlockedTracks,
+                     MockHomeVM,
+                     MockTokenManager>()
+                .previewInterfaceOrientation(.landscapeLeft)
+                .previewDisplayName("Landscape")
+        }
             .environmentObject(MockPlaylistManager())
             .environmentObject(MockQueueManager())
             .environmentObject(MockNowPlayingManager())

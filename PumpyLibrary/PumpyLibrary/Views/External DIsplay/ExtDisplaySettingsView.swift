@@ -15,7 +15,7 @@ public struct ExtDisplaySettingsView<P: PlaylistProtocol>: View {
     public init() {}
     
     public var body: some View {
-        List {
+        PumpyList {
             Section {
                 ExtDisplaySettingsRows(displayContent: $extDisMgr.defaultSettings.displayContent,
                                        showQRCode: $extDisMgr.defaultSettings.showQRCode,

@@ -28,7 +28,9 @@ extension SettingsView {
         
         alert.addAction(UIAlertAction(title: "Okay", style: .default) { _ in
             if self.passwordField.text == self.savedPassword() {
-                revealAdminSettings = true
+                withAnimation {
+                    revealAdminSettings = true
+                }
             } else {
                 let errorAlert = UIAlertController(title: "Error", message: "Incorrect password.", preferredStyle: .alert)
                 errorAlert.addAction(UIAlertAction(title: "Okay", style: .default))

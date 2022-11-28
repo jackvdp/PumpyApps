@@ -13,6 +13,7 @@ public protocol HomeProtocol: ObservableObject {
     
     var pageType: PageType { get set }
     var showPlayer: Bool { get set }
+    var triggerNavigation: Bool { get set }
     
     func playPause(alarmData: AlarmManager, playlistManager: any PlaylistProtocol)
     func coldStart(alarmData: AlarmManager, playlistManager: any PlaylistProtocol)
@@ -25,8 +26,10 @@ public enum PageType {
 }
 
 class MockHomeVM: HomeProtocol {
+
     @Published var pageType: PageType = .artwork
     @Published var showPlayer = false
+    @Published var triggerNavigation: Bool = false
     
     func playPause(alarmData: AlarmManager, playlistManager: any PlaylistProtocol) { }
     func coldStart(alarmData: AlarmManager, playlistManager: any PlaylistProtocol) { }

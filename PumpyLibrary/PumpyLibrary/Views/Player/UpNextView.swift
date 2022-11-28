@@ -83,6 +83,7 @@ public struct UpNextView<Q: QueueProtocol,
                     .foregroundColor(.white)
                     .id(queueManager.queueTracks[i].playbackStoreID)
             }
+            .listSectionSeparator(Visibility.visible)
             .listRowBackground(Color.clear)
             .animation(.easeIn(duration: 0.5), value: queueManager.queueIndex)
         }
@@ -103,6 +104,7 @@ public struct UpNextView<Q: QueueProtocol,
     var nothingPlaying: some View {
         Section(header: Text("")) {
             Text("Play something!")
+                .padding()
                 .font(.title)
                 .frame(maxWidth: .infinity)
             .deleteDisabled(true)
@@ -123,6 +125,7 @@ public struct UpNextView<Q: QueueProtocol,
            .onDelete { indexSet in
                removeRowsFromUpNext(at: indexSet)
            }
+           .listSectionSeparator(Visibility.visible)
            .listRowBackground(Color.clear)
            .animation(.easeIn(duration: 0.5), value: queueManager.queueIndex)
        }

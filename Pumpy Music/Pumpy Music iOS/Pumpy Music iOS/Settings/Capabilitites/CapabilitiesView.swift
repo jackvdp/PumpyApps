@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PumpyLibrary
 
 struct CapabilitiesView: View {
     
@@ -14,7 +15,7 @@ struct CapabilitiesView: View {
     @EnvironmentObject var accountVM: AccountManager
     
     var body: some View {
-        Form {
+        PumpyList {
             Section {
                 CheckRowView(text: "Music Authorised",
                              granted: capaVM.libraryAccess,

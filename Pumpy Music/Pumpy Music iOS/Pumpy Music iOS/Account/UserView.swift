@@ -8,6 +8,7 @@
 
 import SwiftUI
 import PumpyLibrary
+import PumpyAnalytics
 
 struct UserView: View {
     
@@ -15,7 +16,16 @@ struct UserView: View {
     @StateObject var homeVM = HomeVM()
     
     var body: some View {
-        MenuView()
+        MenuView<
+            HomeVM,
+            PlaylistManager,
+            NowPlayingManager,
+            BlockedTracksManager,
+            AuthorisationManager,
+            QueueManager,
+            User,
+            MenuContent
+        >(content: MenuContent())
             .environmentObject(user.musicManager)
             .environmentObject(user.musicManager.nowPlayingManager)
             .environmentObject(user.musicManager.playlistManager)
@@ -32,7 +42,6 @@ struct UserView: View {
                 )
             )
     }
-    
 }
 
 
