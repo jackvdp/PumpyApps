@@ -10,7 +10,7 @@ import SwiftUI
 public struct ArtworkView: View {
     public init(artworkURL: String? = nil, size: CGFloat? = nil) {
         self.artworkURL = artworkURL
-        self.size = size
+        self.size = max(1, size ?? 0)
     }
     
     let artworkURL: String?

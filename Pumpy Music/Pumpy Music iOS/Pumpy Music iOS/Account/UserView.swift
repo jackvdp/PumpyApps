@@ -35,12 +35,7 @@ struct UserView: View {
             .environmentObject(user.musicManager.authManager)
             .environmentObject(user.musicManager.queueManager)
             .environmentObject(homeVM)
-            .environmentObject(
-                ExternalDisplayManager(
-                   username: user.username,
-                   playlistManager: user.musicManager.playlistManager
-                )
-            )
+            .environmentObject(user.externalDisplayManager)
     }
 }
 
