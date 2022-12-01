@@ -56,10 +56,8 @@ struct TrackTable<H:HomeProtocol,
     
     var tracksList: some View {
         ForEach(filteredTracks.indices, id: \.self) { i in
-            TrackRow<T,N,B,P,Q>(track: filteredTracks[i])
-                .onTapGesture {
-                    playFromPosition(track: filteredTracks[i])
-                }
+            TrackRow<T,N,B,P,Q>(track: filteredTracks[i],
+                                tapAction: { playFromPosition(track: filteredTracks[i]) })
         }
     }
     

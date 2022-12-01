@@ -91,9 +91,9 @@ struct CatalogSearchView<H:HomeProtocol,
     
     func tracksList(_ tracks: [Track]) -> some View {
         ForEach(tracks.indices, id: \.self) { i in
-            TrackRow<T,N,B,P,Q>(track: tracks[i])
+            TrackRow<T,N,B,P,Q>(track: tracks[i], tapAction: {playFromPosition(tracks: tracks, index: i)})
                 .onTapGesture {
-                    playFromPosition(tracks: tracks, index: i)
+                    
                 }
             Divider()
         }

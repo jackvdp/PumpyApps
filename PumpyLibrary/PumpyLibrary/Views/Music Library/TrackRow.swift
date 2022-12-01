@@ -18,12 +18,27 @@ public struct TrackRow<T:TokenProtocol,
     @EnvironmentObject var tokenManager: T
     @EnvironmentObject var queueManager: Q
     let track: Track
+    let tapAction: (()->())?
 
-    public init(track: Track) {
+    public init(track: Track, tapAction: (()->())? = nil) {
         self.track = track
+        self.tapAction = tapAction
     }
     
     public var body: some View {
+        if let action = tapAction {
+            Button {
+                action()
+            } label: {
+                label
+            }
+            .buttonStyle(.plain)
+        } else {
+            label
+        }
+    }
+    
+    var label: some View {
         HStack(alignment: .center, spacing: 20.0) {
             ArtworkView(artworkURL: track.artworkURL, size: 60)
             trackDetails
