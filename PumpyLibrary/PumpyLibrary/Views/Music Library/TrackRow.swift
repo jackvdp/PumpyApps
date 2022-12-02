@@ -19,6 +19,7 @@ public struct TrackRow<T:TokenProtocol,
     @EnvironmentObject var queueManager: Q
     let track: Track
     let tapAction: (()->())?
+    @State private var buttonTapped = false
 
     public init(track: Track, tapAction: (()->())? = nil) {
         self.track = track
@@ -28,11 +29,13 @@ public struct TrackRow<T:TokenProtocol,
     public var body: some View {
         if let action = tapAction {
             Button {
+                flashRow()
                 action()
             } label: {
                 label
             }
             .buttonStyle(.plain)
+            .foregroundColor(buttonTapped ? Color.pumpyPink : Color.primary)
         } else {
             label
         }
@@ -96,6 +99,12 @@ public struct TrackRow<T:TokenProtocol,
         .foregroundColor(.pumpyPink)
     }
 
+    func flashRow() {
+        buttonTapped = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            buttonTapped = false
+        }
+    }
 }
 
 
@@ -108,7 +117,7 @@ struct TrackRow_Previews: PreviewProvider {
                  MockNowPlayingManager,
                  MockBlockedTracks,
                  MockPlaylistManager,
-                 MockQueueManager>(track: track)
+                 MockQueueManager>(track: track, tapAction: {})
             .environmentObject(MockTokenManager())
             .environmentObject(MockNowPlayingManager())
             .environmentObject(MockBlockedTracks())
