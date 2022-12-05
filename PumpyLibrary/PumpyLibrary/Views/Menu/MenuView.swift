@@ -32,6 +32,7 @@ public struct MenuView<H:HomeProtocol,
     @EnvironmentObject var user: U
     @EnvironmentObject var externalDisplayManager: ExternalDisplayManager<P>
     let content: Content
+    @State private var showPlayer = true
     
     public var body: some View {
         ZStack(alignment: .bottom) {
@@ -39,8 +40,11 @@ public struct MenuView<H:HomeProtocol,
             nowPlayingTrack
         }
         .ignoresSafeArea(edges: .bottom)
-        .fullScreenCover(isPresented: $homeVM.showPlayer) {
+        .fullScreenCover(isPresented: $showPlayer) {
             playerView
+        }
+        .onChange(of: homeVM.showPlayer) { newValue in
+            showPlayer = newValue
         }
     }
     
