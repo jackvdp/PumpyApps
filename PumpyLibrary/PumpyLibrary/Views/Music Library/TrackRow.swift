@@ -8,6 +8,7 @@
 
 import SwiftUI
 import MediaPlayer
+import PumpyShared
 
 public struct TrackRow<T:TokenProtocol,
                        N:NowPlayingProtocol,
@@ -15,11 +16,11 @@ public struct TrackRow<T:TokenProtocol,
                        P:PlaylistProtocol,
                        Q:QueueProtocol>: View {
     
-    @EnvironmentObject var tokenManager: T
-    @EnvironmentObject var queueManager: Q
     let track: Track
     let tapAction: (()->())?
     @State private var buttonTapped = false
+    @EnvironmentObject var tokenManager: T
+    @EnvironmentObject var queueManager: Q
 
     public init(track: Track, tapAction: (()->())? = nil) {
         self.track = track
@@ -41,6 +42,8 @@ public struct TrackRow<T:TokenProtocol,
         }
     }
     
+    // MARK: - Components
+    
     var label: some View {
         HStack(alignment: .center, spacing: 20.0) {
             ArtworkView(artworkURL: track.artworkURL, size: 60)
@@ -57,7 +60,8 @@ public struct TrackRow<T:TokenProtocol,
         .contextWithPreview {
             menu
         } preview: {
-            TrackPreview(track: track)
+            print(track)
+            return TrackPreview(track: track)
                 .environmentObject(tokenManager)
         }
     }
@@ -84,6 +88,7 @@ public struct TrackRow<T:TokenProtocol,
     @ViewBuilder
     var menu: some View {
         Button {
+            
             queueManager.playTrackNow(id: track.playbackStoreID)
         } label: {
             Label("Play Now", systemImage: "play.fill")
@@ -99,9 +104,13 @@ public struct TrackRow<T:TokenProtocol,
         .foregroundColor(.pumpyPink)
     }
 
+    // MARK: - Flash Methods
+    
+    let flashDebouncer = Debouncer()
+    
     func flashRow() {
         buttonTapped = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        flashDebouncer.handle() {
             buttonTapped = false
         }
     }

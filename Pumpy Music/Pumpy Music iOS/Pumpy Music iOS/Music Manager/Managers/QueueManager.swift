@@ -89,14 +89,14 @@ class QueueManager: QueueProtocol {
     // MARK: - Track
     
     func addTrackToQueue(ids: [String]) {
-        recieveDebouncer.handler = {
+        recieveDebouncer.handle() {
             let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: ids)
             self.controller.prepend(descriptor)
         }
     }
     
     func playTrackNow(id: String) {
-        recieveDebouncer.handler = {
+        recieveDebouncer.handle() {
             let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [id])
             if !(self.queueTracks.isEmpty) {
                 self.controller.prepend(descriptor)
@@ -115,14 +115,14 @@ class QueueManager: QueueProtocol {
     
     func conductQueuePerform(queueTransaction: @escaping (MPMusicPlayerControllerMutableQueue)->(),
                                      completion: @escaping (MPMusicPlayerControllerQueue, Error?)->()) {
-        recieveDebouncer.handler = {
+        recieveDebouncer.handle() {
             self.controller.perform(queueTransaction: queueTransaction, completionHandler: completion)
         }
         
     }
     
     func saveNewQueue(_ items: [MPMediaItem]) {
-        respondDebouncer.handler = {
+        respondDebouncer.handle() {
             PlaybackData.saveCurrentQueueOnline(items: items, for: self.username)
         }
     }

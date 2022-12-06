@@ -22,7 +22,7 @@ struct CatalogSearchView<H:HomeProtocol,
     @Namespace var screen
     
     var body: some View {
-        VStack {
+        PumpyList {
             switch pageState {
             case .loading:
                 loadingView
@@ -43,28 +43,23 @@ struct CatalogSearchView<H:HomeProtocol,
         }
     }
     
-    // Components
+    // MARK: - Components
     
     func searchResults(_ playlists: [PlaylistSnapshot],
                        _ tracks: [Track]) -> some View {
-        ScrollView {
-            Group {
-                if playlists.isNotEmpty {
-                    title("Playlists")
-                    playlistGrids(playlists)
-                }
-                if tracks.isNotEmpty {
-                    title("Tracks")
-                    tracksList(tracks)
-                }
-                if playlists.isEmpty && tracks.isEmpty {
-                    emptySearch
-                }
+        Group {
+            if playlists.isNotEmpty {
+                title("Playlists")
+                playlistGrids(playlists)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 6)
+            if tracks.isNotEmpty {
+                title("Tracks")
+                tracksList(tracks)
+            }
+            if playlists.isEmpty && tracks.isEmpty {
+                emptySearch
+            }
         }
-        .padding(.horizontal, -20)
     }
     
     
@@ -92,19 +87,12 @@ struct CatalogSearchView<H:HomeProtocol,
     func tracksList(_ tracks: [Track]) -> some View {
         ForEach(tracks.indices, id: \.self) { i in
             TrackRow<T,N,B,P,Q>(track: tracks[i], tapAction: {playFromPosition(tracks: tracks, index: i)})
-                .onTapGesture {
-                    
-                }
-            Divider()
         }
     }
     
     func title(_ title: String) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(title)
-                .font(.title2.bold())
-            Divider()
-        }.padding(.vertical)
+        Text(title)
+            .font(.title2.bold())
     }
     
     var emptySearch: some View {
@@ -113,6 +101,8 @@ struct CatalogSearchView<H:HomeProtocol,
             .multilineTextAlignment(.center)
             .padding(.vertical, 100)
             .opacity(0.5)
+            .background(ArtworkView().background)
+            .edgesIgnoringSafeArea(.all)
     }
     
     var failedView: some View {

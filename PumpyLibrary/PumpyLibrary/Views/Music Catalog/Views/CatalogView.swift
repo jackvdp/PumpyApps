@@ -24,7 +24,7 @@ public struct CatalogView<H:HomeProtocol,
     public init() {}
     
     public var body: some View {
-        PumpyList {
+        VStack {
             switch pageState {
             case .loading:
                 loadingView
@@ -57,6 +57,8 @@ public struct CatalogView<H:HomeProtocol,
         ActivityView(activityIndicatorVisible: .constant(true))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, 100)
+            .background(ArtworkView().background)
+            .edgesIgnoringSafeArea(.all)
     }
     
     @ViewBuilder
@@ -69,8 +71,10 @@ public struct CatalogView<H:HomeProtocol,
     }
     
     var successView: some View {
-        ForEach(collections, id: \.self) { collection in
-            CollectionView<H,P,N,B,T,Q>(collection: collection)
+        PumpyList {
+            ForEach(collections, id: \.self) { collection in
+                CollectionView<H,P,N,B,T,Q>(collection: collection)
+            }
         }
     }
     
@@ -78,11 +82,12 @@ public struct CatalogView<H:HomeProtocol,
         Text("Error fetching catalog results. \nPull down to try again.")
             .opacity(0.5)
             .multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 100)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .refreshable {
                 getCollections()
             }
+            .background(ArtworkView().background)
+            .edgesIgnoringSafeArea(.all)
     }
     
     // Methods
@@ -124,6 +129,16 @@ struct CatalogView_Previews: PreviewProvider {
                         MockBlockedTracks,
                         MockTokenManager,
                         MockQueueManager>()
+        }
+        .environmentObject(authManager)
+        .preferredColorScheme(.dark)
+        NavigationView {
+            CatalogView<MockHomeVM,
+                        MockPlaylistManager,
+                        MockNowPlayingManager,
+                        MockBlockedTracks,
+                        MockTokenManager,
+                        MockQueueManager>().loadingView
         }
         .environmentObject(authManager)
         .preferredColorScheme(.dark)

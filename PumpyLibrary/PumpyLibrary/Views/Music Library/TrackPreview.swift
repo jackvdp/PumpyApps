@@ -10,9 +10,9 @@ import PumpyAnalytics
 
 struct TrackPreview: View {
     
-    var track: Track
+    let track: Track
     @State var analysedTrack: PumpyAnalytics.Track?
-    let controller = AnalyseController()
+    private let controller = AnalyseController()
     @EnvironmentObject var authManager: AuthorisationManager
     
     var body: some View {

@@ -45,7 +45,7 @@ class NowPlayingManager: NowPlayingProtocol {
     }
     
     func updateTrackOnline(for username: String, playlist: String) {
-        respondDebouncer.handler = {
+        respondDebouncer.handle() {
             PlaybackData.updatePlaybackInfoOnline(for: username,
                                                   item: self.currentTrack,
                                                   index: self.musicPlayerController.indexOfNowPlayingItem,

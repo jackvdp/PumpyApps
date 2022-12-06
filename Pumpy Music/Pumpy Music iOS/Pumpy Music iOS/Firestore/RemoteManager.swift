@@ -51,7 +51,7 @@ class RemoteManager: ObservableObject {
             return
         }
         
-        debouncer.handler = {
+        debouncer.handle() {
             if let command = remoteInfo.remoteCommand {
                 self.actOnRemoteCommand(command)
             }
