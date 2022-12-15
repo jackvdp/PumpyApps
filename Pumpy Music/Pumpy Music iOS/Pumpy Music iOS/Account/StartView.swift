@@ -12,7 +12,7 @@ import PumpyAnalytics
 
 struct StartView: View {
     
-    @EnvironmentObject var accountManager: AccountManager
+    @StateObject var accountManager = AccountManager()
     
     var body: some View {
         VStack {
@@ -28,6 +28,7 @@ struct StartView: View {
                 }
             }
         }
+        .environmentObject(accountManager)
     }
     
     var loginView: some View {

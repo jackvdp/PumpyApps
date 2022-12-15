@@ -14,12 +14,16 @@ public class AuthorisationManager: ObservableObject {
     private let clientID = K.Spotify.clientID
     private let clientSecret = K.Spotify.clientSecret
     private var renewTokenTimer: Timer?
+    private let storeController = SKCloudServiceController()
     @Published public var spotifyToken: String?
     @Published public var appleMusicToken: String?
     @Published public var storefront: String?
-    let storeController = SKCloudServiceController()
     
     public init() {}
+    
+    deinit {
+        print("deiniting AM")
+    }
     
     public func fetchTokens() {
         getSpotifyToken()
@@ -29,8 +33,11 @@ public class AuthorisationManager: ObservableObject {
     
     // MARK: - Spotify
     
+    let spotifyAPI = SpotifyTokenAPI()
+    
     public func getSpotifyToken() {
-        SpotifyTokenAPI().getSpotifyToken(clientID: clientID, clientSecret: clientSecret) { token, renewTime in
+        spotifyAPI.getSpotifyToken(clientID: clientID, clientSecret: clientSecret) { [weak self] token, renewTime in
+            guard let self else { return }
             print("Spotify Token: " + (token ?? "N/A"))
             DispatchQueue.main.async {
                 self.spotifyToken = token
@@ -40,22 +47,22 @@ public class AuthorisationManager: ObservableObject {
     }
     
     private func renewToken(time: Int) {
-        print(time)
-        renewTokenTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(time-60), repeats: false) { timer in
-            self.getSpotifyToken()
+        renewTokenTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(time-60), repeats: false) { [weak self] timer in
+            self?.getSpotifyToken()
         }
     }
     
     // MARK: - AM
 
     public func checkIfAuthorised() {
-        SKCloudServiceController.requestAuthorization { status in
-            self.getAppleMusicToken()
+        SKCloudServiceController.requestAuthorization { [weak self] status in
+            self?.getAppleMusicToken()
         }
     }
     
     public func getAppleMusicToken() {
-        storeController.requestUserToken(forDeveloperToken: K.MusicStore.developerToken) { (receivedToken, error) in
+        storeController.requestUserToken(forDeveloperToken: K.MusicStore.developerToken) { [weak self] (receivedToken, error) in
+            guard let self else { return }
             guard error == nil else {
                 print(error.debugDescription)
                 return
@@ -68,7 +75,8 @@ public class AuthorisationManager: ObservableObject {
     }
     
     public func getStoreFrontID() {
-        storeController.requestStorefrontCountryCode { store, error in
+        storeController.requestStorefrontCountryCode { [weak self] store, error in
+            guard let self else { return }
             if let e = error {
                 print(e)
             } else {
@@ -80,4 +88,8 @@ public class AuthorisationManager: ObservableObject {
         }
     }
     
+    public func removeTimer() {
+        renewTokenTimer?.invalidate()
+        renewTokenTimer = nil
+    }
 }

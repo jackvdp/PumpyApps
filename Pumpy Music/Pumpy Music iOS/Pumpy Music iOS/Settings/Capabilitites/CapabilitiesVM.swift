@@ -21,12 +21,12 @@ class CapabilitiesViewModel: ObservableObject {
     @Published var tokenRecieved: Bool = false
     
     init() {
-        checkNotificationsAllowed { (status) in
-            self.notificationsAllowed = true
+        checkNotificationsAllowed { [weak self] (status) in
+            self?.notificationsAllowed = true
         }
         libraryAccess = checkLibraryAccess()
-        checkAppleMusicSub { (status) in
-            self.storeAccess = status
+        checkAppleMusicSub { [weak self] (status) in
+            self?.storeAccess = status
         }
         getToken()
     }
@@ -71,11 +71,13 @@ class CapabilitiesViewModel: ObservableObject {
         }
     }
     
+    let notificationCentre = UNUserNotificationCenter.current()
+    
     func getNotificationAccesss() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .carPlay]) { (granted, error) in
+        notificationCentre.requestAuthorization(options: [.alert, .sound, .badge, .carPlay]) { [weak self] (granted, error) in
             if granted {
-                self.checkNotificationsAllowed { (status) in
-                    self.notificationsAllowed = true
+                self?.checkNotificationsAllowed { (status) in
+                    self?.notificationsAllowed = true
                 }
             } else {
                 print("Not allowed.")
@@ -84,7 +86,8 @@ class CapabilitiesViewModel: ObservableObject {
     }
     
     func getLibraryAccess() {
-        MPMediaLibrary.requestAuthorization { (status) in
+        MPMediaLibrary.requestAuthorization { [weak self] (status) in
+            guard let self else { return }
             if status == .authorized {
                 self.libraryAccess = self.checkLibraryAccess()
             } else {

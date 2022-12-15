@@ -35,9 +35,10 @@ extension QueueManager {
     private func analyseQueue(completion: @escaping ([PumpyAnalytics.Track])->()) {
         analysingEnergy = true
         guard queueIndex + 1 < queueTracks.count && queueIndex >= 0 else { return }
+        guard let authManager = authManager else { return }
         let ids = queueTracks[queueIndex+1..<queueTracks.count].map { $0.playbackStoreID }
         AnalyseController().analyseMediaPlayerTracks(amIDs: ids,
-                                                     authManager: self.authManager) { [weak self] analysedTracks in
+                                                     authManager: authManager) { [weak self] analysedTracks in
             DispatchQueue.main.async {
                 self?.analysingEnergy = false
             }

@@ -27,8 +27,7 @@ class NowPlayingManager: NowPlayingProtocol {
     }
     
     deinit {
-        print("deiniting")
-        DeinitCounter.count += 1
+        print("deiniting NPM")
     }
     
     func updateTrackData() {

@@ -36,7 +36,7 @@ class PlaylistManager: PlaylistProtocol {
     }
     
     deinit {
-        DeinitCounter.count += 1
+        print("deiniting PM")
     }
     
     // MARK: - Public Functions
@@ -78,8 +78,8 @@ class PlaylistManager: PlaylistProtocol {
             return
         }
         
-        let queueDescriptor = self.getQueueFromPlaylists(playlist: playlistName,
-                                                         secondaryPlaylists: secondaryPlaylists)
+        let queueDescriptor = getQueueFromPlaylists(playlist: playlistName,
+                                                    secondaryPlaylists: secondaryPlaylists)
         playQueueNext(name: playlistName, queue: queueDescriptor)
     }
     

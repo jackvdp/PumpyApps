@@ -82,7 +82,7 @@ struct SelectPlaylistView_Previews: PreviewProvider {
     
     static var previews: some View {
         SetScheduleView.SelectPlaylistView(schVM: SetScheduleViewModel(alarm: nil,
-                                                                       alarmManager: AlarmManager(username: "Test", preview: true),
+                                                                       alarmManager: AlarmManager(username: "Test"),
                                                                        getPlists: {return[]}))
     }
 }

@@ -29,7 +29,7 @@ public class SettingsManager: ObservableObject {
     }
     
     deinit {
-        print("deiniting")
+        print("deiniting SM")
     }
     
     func downloadSettings() {

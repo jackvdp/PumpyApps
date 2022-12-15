@@ -10,8 +10,8 @@ import SwiftUI
 
 public struct PlayCapsules: View {
     public init(playNext: @escaping () -> Void, playNow: @escaping () -> Void) {
-        self.playNextAction = playNext
-        self.playNowAction = playNow
+        playNextAction = playNext
+        playNowAction = playNow
     }
     
     var playNextAction: () -> Void

@@ -19,7 +19,7 @@ class QueueManager: QueueProtocol {
     let controller: MPMusicPlayerApplicationController
     let recieveDebouncer = Debouncer()
     let respondDebouncer = Debouncer()
-    let authManager: AuthorisationManager
+    weak var authManager: AuthorisationManager?
     @Published var queueTracks = [ConstructedTrack]()
     @Published var queueIndex = 0
     @Published var analysingEnergy = false
@@ -33,7 +33,7 @@ class QueueManager: QueueProtocol {
     }
     
     deinit {
-        DeinitCounter.count += 1
+        print("deiniting QM")
     }
     
     // MARK: - Core Queue Methods

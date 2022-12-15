@@ -17,7 +17,7 @@ public protocol MusicProtocol: ObservableObject {
     var playlistManager: P { get }
     var queueManager: Q { get }
     var blockedTracksManager: B { get }
-    var settingsManager: SettingsManager { get }
+    var settingsManager: SettingsManager? { get }
     var username: String { get }
 }
 
@@ -38,7 +38,7 @@ class MockMusicMananger: MusicProtocol {
     
     var blockedTracksManager: MockBlockedTracks = MockBlockedTracks()
     
-    var settingsManager: SettingsManager = SettingsManager(username: "Test")
+    var settingsManager: SettingsManager? = SettingsManager(username: "Test")
     
     var username: String = "Test"
     

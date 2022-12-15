@@ -18,7 +18,7 @@ class BlockedTracksManager: BlockedTracksProtocol {
             saveBlockedTracks(blockedTracks: blockedTracks)
         }
     }
-    let queueManager: QueueManager
+    weak var queueManager: QueueManager?
     var remoteListener: FirebaseListener?
     let username: String
     
@@ -29,16 +29,15 @@ class BlockedTracksManager: BlockedTracksProtocol {
     }
     
     deinit {
-        print("deiniting")
-        DeinitCounter.count += 1
+        print("deiniting BTM")
     }
     
     func listenForBlockedTracks() {
         remoteListener = FireMethods.listen(name: username,
                                             documentName: K.FStore.blockedTracks,
                                             dataFieldName: K.FStore.blockedTracks,
-                                            decodeObject: [BlockedTrack].self) { blocked in
-            self.blockedTracks = blocked
+                                            decodeObject: [BlockedTrack].self) { [weak self] blocked in
+            self?.blockedTracks = blocked
         }
     }
     
@@ -60,7 +59,7 @@ class BlockedTracksManager: BlockedTracksProtocol {
     
     func addTrackToBlockedList(_ track: BlockedTrack) {
         blockedTracks.append(track)
-        queueManager.removeFromQueue(id: track.playbackID)
+        queueManager?.removeFromQueue(id: track.playbackID)
     }
     
     func removeTrack(id: String) {

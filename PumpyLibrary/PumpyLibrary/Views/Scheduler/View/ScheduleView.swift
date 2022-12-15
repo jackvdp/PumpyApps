@@ -100,7 +100,7 @@ struct ScheduleView_Previews: PreviewProvider {
             scheduleView
         }
         .padding()
-        .environmentObject(AlarmManager(username: "Test", preview: true))
+        .environmentObject(AlarmManager(username: "Test"))
     }
 }
 #endif

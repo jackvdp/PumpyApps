@@ -15,7 +15,7 @@ import PumpyLibrary
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var accountManager = AccountManager.shared
+//    var accountManager = AccountManager()
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

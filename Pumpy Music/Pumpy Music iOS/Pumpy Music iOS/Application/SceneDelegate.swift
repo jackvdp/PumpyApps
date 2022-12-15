@@ -17,14 +17,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var additionalWindows = [UIWindow]()
     
-    var accountManager = AccountManager.shared
-    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor(.pumpyPink)
     
         
         let contentView = StartView()
-            .environmentObject(accountManager)
             .onReceive(
                 screenDidConnectPublisher,
                 perform: screenDidConnect
@@ -44,9 +41,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
-        if let username = accountManager.user?.username {
-            ActiveInfo.save(.loggedIn, for: username)
-        }
+//        if let username = accountManager.user?.username {
+//            ActiveInfo.save(.loggedIn, for: username)
+//        }
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -75,19 +72,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .first { ($0 as? UIWindowScene)?.screen == screen }
             as? UIWindowScene
         
-        let view = ExternalDisplayView<
-            AccountManager,
-            PlaylistManager,
-            NowPlayingManager,
-            QueueManager,
-            BlockedTracksManager,
-            AuthorisationManager
-        >()
-            .environmentObject(accountManager)
-        let controller = UIHostingController(rootView: view)
-        window.rootViewController = controller
-        window.isHidden = false
-        additionalWindows.append(window)
+//        let view = ExternalDisplayView<
+//            AccountManager,
+//            PlaylistManager,
+//            NowPlayingManager,
+//            QueueManager,
+//            BlockedTracksManager,
+//            AuthorisationManager
+//        >()
+//            .environmentObject(accountManager)
+//        let controller = UIHostingController(rootView: view)
+//        window.rootViewController = controller
+//        window.isHidden = false
+//        additionalWindows.append(window)
     }
     
     private func screenDidDisconnect(_ screen: UIScreen) {

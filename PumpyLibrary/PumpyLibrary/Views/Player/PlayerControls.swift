@@ -130,7 +130,7 @@ struct PlayerControls_Previews: PreviewProvider {
             .environmentObject(MockNowPlayingManager())
             .environmentObject(MockQueueManager())
             .environmentObject(MockPlaylistManager())
-            .environmentObject(AlarmManager(username: "Text", preview: true))
+            .environmentObject(AlarmManager(username: "Text"))
             .preferredColorScheme(.dark)
         PlayerControls<MockPlaylistManager,
                        MockNowPlayingManager,
@@ -140,7 +140,7 @@ struct PlayerControls_Previews: PreviewProvider {
             .environmentObject(MockNowPlayingManager())
             .environmentObject(MockQueueManager())
             .environmentObject(MockPlaylistManager())
-            .environmentObject(AlarmManager(username: "Text", preview: true))
+            .environmentObject(AlarmManager(username: "Text"))
             .preferredColorScheme(.dark)
     }
 }

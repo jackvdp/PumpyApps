@@ -13,13 +13,14 @@ import PumpyAnalytics
 
 class MusicManager: ObservableObject, MusicProtocol {
     let musicPlayerController = MPMusicPlayerController.applicationQueuePlayer
+    let username: String
+    
     let authManager = AuthorisationManager()
     let nowPlayingManager: NowPlayingManager
     let playlistManager: PlaylistManager
     let queueManager: QueueManager
     let blockedTracksManager: BlockedTracksManager
-    let settingsManager: SettingsManager
-    let username: String
+    weak var settingsManager: SettingsManager?
     
     init(username: String, settingsManager: SettingsManager) {
         self.username = username
@@ -37,8 +38,8 @@ class MusicManager: ObservableObject, MusicProtocol {
     }
     
     deinit {
+        print("deiniting MM")
         endNotifications()
-        DeinitCounter.count += 1
     }
     
     // MARK: - Setup Notifications

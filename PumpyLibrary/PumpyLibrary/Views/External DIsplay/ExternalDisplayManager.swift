@@ -14,7 +14,7 @@ import FirebaseFirestore
 public class ExternalDisplayManager<P:PlaylistProtocol>: ObservableObject {
     
     let username: String
-    let playlistManager: P
+    weak var playlistManager: P?
     
     public init(username: String, playlistManager: P) {
         self.username = username
@@ -70,7 +70,7 @@ public class ExternalDisplayManager<P:PlaylistProtocol>: ObservableObject {
     func getCorrectURL() -> String {
         switch liveSettings.qrType  {
         case .playlist:
-            return playlistManager.playlistURL
+            return playlistManager?.playlistURL ?? ""
         case .custom:
             return liveSettings.qrURL
         }
@@ -123,8 +123,8 @@ public class ExternalDisplayManager<P:PlaylistProtocol>: ObservableObject {
         settingsListener = FireMethods.listen(name: username,
                                               documentName: K.FStore.extDisSettings,
                                               dataFieldName: K.FStore.extDisSettings,
-                                              decodeObject: ExtDisSettings.self) { settings in
-            self.defaultSettings = settings
+                                              decodeObject: ExtDisSettings.self) { [weak self] settings in
+            self?.defaultSettings = settings
         }
     }
     
@@ -133,6 +133,9 @@ public class ExternalDisplayManager<P:PlaylistProtocol>: ObservableObject {
     }
     
     func saveSettings(settings: ExtDisSettings) {
-        FireMethods.save(object: settings, name: username, documentName: K.FStore.extDisSettings, dataFieldName: K.FStore.extDisSettings)
+        FireMethods.save(object: settings,
+                         name: username,
+                         documentName: K.FStore.extDisSettings,
+                         dataFieldName: K.FStore.extDisSettings)
     }
 }

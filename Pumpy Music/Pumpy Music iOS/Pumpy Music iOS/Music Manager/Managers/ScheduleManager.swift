@@ -22,6 +22,7 @@ class ScheduleManager: NSObject {
     }
     
     deinit {
+        print("deiniting SM")
         timer?.invalidate()
         removeObservers()
     }

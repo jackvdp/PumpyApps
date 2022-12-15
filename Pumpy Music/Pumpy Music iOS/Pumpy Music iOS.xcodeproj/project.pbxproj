@@ -19,7 +19,6 @@
 		6DC5EE07289E866100AB5410 /* PlaylistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC5EE06289E866100AB5410 /* PlaylistManager.swift */; };
 		6DC5EE09289EB20F00AB5410 /* QueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC5EE08289EB20F00AB5410 /* QueueManager.swift */; };
 		6DC5EE0D289ED80000AB5410 /* Music Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC5EE0C289ED80000AB5410 /* Music Extensions.swift */; };
-		6DEAAC5528C8B4870033ED19 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6DEAAC5428C8B4870033ED19 /* SDWebImageSwiftUI */; };
 		6DEAAC5828C8B4950033ED19 /* Siren in Frameworks */ = {isa = PBXBuildFile; productRef = 6DEAAC5728C8B4950033ED19 /* Siren */; };
 		6DEAAC5B28C8B4A30033ED19 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 6DEAAC5A28C8B4A30033ED19 /* Charts */; };
 		C0035217290D72A30006ACDE /* ScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0035216290D72A30006ACDE /* ScheduleManager.swift */; };
@@ -35,12 +34,16 @@
 		C031EAC826C6F97400D3A18A /* NowPlayingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C031EAC726C6F97400D3A18A /* NowPlayingManager.swift */; };
 		C04600A023895E0B008151A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C046009E23895DC9008151A5 /* QuartzCore.framework */; };
 		C04A655923DF4F6300DD5FBB /* RemoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04A655823DF4F6300DD5FBB /* RemoteManager.swift */; };
+		C0500677294A676E00A8B50E /* PumpyAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0500676294A676E00A8B50E /* PumpyAnalytics.framework */; };
+		C0500679294A676E00A8B50E /* PumpyLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0500678294A676E00A8B50E /* PumpyLibrary.framework */; };
+		C050067B294A676E00A8B50E /* PumpyShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C050067A294A676E00A8B50E /* PumpyShared.framework */; };
 		C05D340626281B94009DFC2A /* CapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D340526281B94009DFC2A /* CapabilitiesView.swift */; };
 		C05D340B26281BA4009DFC2A /* CapabilitiesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D340A26281BA4009DFC2A /* CapabilitiesVM.swift */; };
 		C05FD22226E29E6A001370FF /* SpotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05FD22126E29E6A001370FF /* SpotifyAPI.swift */; };
 		C061CB7824AA949200E18F98 /* LockAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C061CB7724AA949200E18F98 /* LockAlertView.swift */; };
 		C068FB19252F85A5006F7349 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C068FB18252F85A5006F7349 /* NetworkExtension.framework */; };
 		C0725DDC2617757D0095EDD9 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0725DDB2617757C0095EDD9 /* AccountManager.swift */; };
+		C075CC6D2947602B002A8F30 /* Pumpy_MusicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C075CC6C2947602B002A8F30 /* Pumpy_MusicTests.swift */; };
 		C07865132619D5CB001FB32B /* ActiveInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07865122619D5CB001FB32B /* ActiveInfo.swift */; };
 		C0798655262D5CC9003A426E /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0798654262D5CC9003A426E /* MusicManager.swift */; };
 		C08E0AEC2931760000D83774 /* MenuContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08E0AEB2931760000D83774 /* MenuContent.swift */; };
@@ -56,6 +59,16 @@
 		C0E6E0012631B9B000265B9E /* Music Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6E0002631B9B000265B9E /* Music Models.swift */; };
 		C0FCE335260B07BA00D4E608 /* AppleMusicAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FCE334260B07BA00D4E608 /* AppleMusicAPI.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C075CC6E2947602B002A8F30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0D60C4F23313D6A0010F653 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C0D60C5623313D6A0010F653;
+			remoteInfo = "Pumpy Music iOS";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		6D8C2F0328C86A59009260A7 /* Embed Frameworks */ = {
@@ -99,12 +112,17 @@
 		C031EAC726C6F97400D3A18A /* NowPlayingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingManager.swift; sourceTree = "<group>"; };
 		C046009E23895DC9008151A5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C04A655823DF4F6300DD5FBB /* RemoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteManager.swift; sourceTree = "<group>"; };
+		C0500676294A676E00A8B50E /* PumpyAnalytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyAnalytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0500678294A676E00A8B50E /* PumpyLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C050067A294A676E00A8B50E /* PumpyShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C05D340526281B94009DFC2A /* CapabilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CapabilitiesView.swift; path = "Pumpy Music iOS/Settings/Capabilitites/CapabilitiesView.swift"; sourceTree = SOURCE_ROOT; };
 		C05D340A26281BA4009DFC2A /* CapabilitiesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesVM.swift; sourceTree = "<group>"; };
 		C05FD22126E29E6A001370FF /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
 		C061CB7724AA949200E18F98 /* LockAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockAlertView.swift; sourceTree = "<group>"; };
 		C068FB18252F85A5006F7349 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		C0725DDB2617757C0095EDD9 /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
+		C075CC6A2947602B002A8F30 /* Pumpy MusicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pumpy MusicTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C075CC6C2947602B002A8F30 /* Pumpy_MusicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pumpy_MusicTests.swift; sourceTree = "<group>"; };
 		C07865122619D5CB001FB32B /* ActiveInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveInfo.swift; sourceTree = "<group>"; };
 		C078F06423C4D17700190352 /* Pumpy Music.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pumpy Music.entitlements"; sourceTree = "<group>"; };
 		C0798654262D5CC9003A426E /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
@@ -123,11 +141,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C075CC672947602B002A8F30 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0500677294A676E00A8B50E /* PumpyAnalytics.framework in Frameworks */,
+				C0500679294A676E00A8B50E /* PumpyLibrary.framework in Frameworks */,
+				C050067B294A676E00A8B50E /* PumpyShared.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C0D60C5423313D6A0010F653 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DEAAC5528C8B4870033ED19 /* SDWebImageSwiftUI in Frameworks */,
 				6D8C2F0E28C86BEF009260A7 /* PumpyLibrary.framework in Frameworks */,
 				6D8C2F0B28C86BEB009260A7 /* PumpyAnalytics.framework in Frameworks */,
 				C020E4F9291518B100811488 /* PumpyShared.framework in Frameworks */,
@@ -212,6 +239,9 @@
 		C046009D23895DC9008151A5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C0500676294A676E00A8B50E /* PumpyAnalytics.framework */,
+				C0500678294A676E00A8B50E /* PumpyLibrary.framework */,
+				C050067A294A676E00A8B50E /* PumpyShared.framework */,
 				C020E4F8291518B100811488 /* PumpyShared.framework */,
 				6D8C2F0D28C86BEF009260A7 /* PumpyLibrary.framework */,
 				6D8C2F0A28C86BEB009260A7 /* PumpyAnalytics.framework */,
@@ -268,6 +298,14 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		C075CC6B2947602B002A8F30 /* Pumpy MusicTests */ = {
+			isa = PBXGroup;
+			children = (
+				C075CC6C2947602B002A8F30 /* Pumpy_MusicTests.swift */,
+			);
+			path = "Pumpy MusicTests";
+			sourceTree = "<group>";
+		};
 		C0A6CAFC24A8FE0A00F66187 /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				C0D60C5923313D6A0010F653 /* Pumpy Music iOS */,
+				C075CC6B2947602B002A8F30 /* Pumpy MusicTests */,
 				C0D60C5823313D6A0010F653 /* Products */,
 				C046009D23895DC9008151A5 /* Frameworks */,
 			);
@@ -302,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				C0D60C5723313D6A0010F653 /* Pumpy Music.app */,
+				C075CC6A2947602B002A8F30 /* Pumpy MusicTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -340,6 +380,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C075CC692947602B002A8F30 /* Pumpy MusicTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C075CC722947602B002A8F30 /* Build configuration list for PBXNativeTarget "Pumpy MusicTests" */;
+			buildPhases = (
+				C075CC662947602B002A8F30 /* Sources */,
+				C075CC672947602B002A8F30 /* Frameworks */,
+				C075CC682947602B002A8F30 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C075CC6F2947602B002A8F30 /* PBXTargetDependency */,
+			);
+			name = "Pumpy MusicTests";
+			productName = "Pumpy MusicTests";
+			productReference = C075CC6A2947602B002A8F30 /* Pumpy MusicTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C0D60C5623313D6A0010F653 /* Pumpy Music iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C0D60C7F23313D6C0010F653 /* Build configuration list for PBXNativeTarget "Pumpy Music iOS" */;
@@ -355,7 +413,6 @@
 			);
 			name = "Pumpy Music iOS";
 			packageProductDependencies = (
-				6DEAAC5428C8B4870033ED19 /* SDWebImageSwiftUI */,
 				6DEAAC5728C8B4950033ED19 /* Siren */,
 				6DEAAC5A28C8B4A30033ED19 /* Charts */,
 			);
@@ -369,10 +426,14 @@
 		C0D60C4F23313D6A0010F653 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1340;
 				ORGANIZATIONNAME = "Jack Vanderpump";
 				TargetAttributes = {
+					C075CC692947602B002A8F30 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = C0D60C5623313D6A0010F653;
+					};
 					C0D60C5623313D6A0010F653 = {
 						CreatedOnToolsVersion = 10.3;
 					};
@@ -398,11 +459,19 @@
 			projectRoot = "";
 			targets = (
 				C0D60C5623313D6A0010F653 /* Pumpy Music iOS */,
+				C075CC692947602B002A8F30 /* Pumpy MusicTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C075CC682947602B002A8F30 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C0D60C5523313D6A0010F653 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -416,6 +485,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C075CC662947602B002A8F30 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C075CC6D2947602B002A8F30 /* Pumpy_MusicTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C0D60C5323313D6A0010F653 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -459,6 +536,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		C075CC6F2947602B002A8F30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C0D60C5623313D6A0010F653 /* Pumpy Music iOS */;
+			targetProxy = C075CC6E2947602B002A8F30 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		C0D60C6323313D6B0010F653 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -471,6 +556,56 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C075CC702947602B002A8F30 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F9U8894XR3;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pumpy.Pumpy-MusicTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pumpy Music.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pumpy Music";
+			};
+			name = Debug;
+		};
+		C075CC712947602B002A8F30 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F9U8894XR3;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pumpy.Pumpy-MusicTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pumpy Music.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Pumpy Music";
+			};
+			name = Release;
+		};
 		C0D60C7D23313D6C0010F653 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -656,6 +791,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C075CC722947602B002A8F30 /* Build configuration list for PBXNativeTarget "Pumpy MusicTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C075CC702947602B002A8F30 /* Debug */,
+				C075CC712947602B002A8F30 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C0D60C5223313D6A0010F653 /* Build configuration list for PBXProject "Pumpy Music iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -712,11 +856,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6DEAAC5428C8B4870033ED19 /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6DEAAC5328C8B4870033ED19 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
-		};
 		6DEAAC5728C8B4950033ED19 /* Siren */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6DEAAC5628C8B4950033ED19 /* XCRemoteSwiftPackageReference "Siren" */;

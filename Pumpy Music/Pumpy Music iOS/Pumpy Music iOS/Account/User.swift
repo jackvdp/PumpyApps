@@ -27,6 +27,7 @@ class User: ObservableObject, UserProtocol {
         settingsManager = SettingsManager(username: username)
         musicManager = MusicManager(username: username, settingsManager: settingsManager)
         alarmData = AlarmManager(username: username)
+        alarmData.setUp()
         remoteDataManager = RemoteManager(username: username, musicManager: musicManager, alarmManager: alarmData)
         externalDisplayManager = ExternalDisplayManager(username: username, playlistManager: musicManager.playlistManager)
         PlaybackData.savePlaylistsOnline(for: username)
@@ -34,7 +35,7 @@ class User: ObservableObject, UserProtocol {
     }
     
     deinit {
-        DeinitCounter.count += 1
+        print("Deinit")
     }
     
     func signOut() {
@@ -44,21 +45,21 @@ class User: ObservableObject, UserProtocol {
         remoteDataManager.removeListener()
         musicManager.blockedTracksManager.removeListener()
         musicManager.playlistManager.scheduleManager.removeObservers()
+        musicManager.authManager.removeTimer()
         musicManager.endNotifications()
         settingsManager.removeSettingsListener()
         externalDisplayManager.removeSettingsListener()
+        print(CFGetRetainCount(musicManager))
+        print(CFGetRetainCount(musicManager.authManager))
+        print(CFGetRetainCount(musicManager.blockedTracksManager))
+        print(CFGetRetainCount(musicManager.playlistManager))
+        print(CFGetRetainCount(musicManager.queueManager))
+        print(CFGetRetainCount(settingsManager))
+        
     }
     
     func firebaseSignOut() {
         FirebaseStore.shared.signOut()
     }
     
-}
-
-struct DeinitCounter {
-    static var count = 0 {
-        didSet {
-            print("*****  " + count.description)
-        }
-    }
 }

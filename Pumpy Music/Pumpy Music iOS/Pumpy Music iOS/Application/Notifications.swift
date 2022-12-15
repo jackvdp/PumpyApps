@@ -34,7 +34,7 @@ extension AppDelegate {
             if let data = Data(base64Encoded: dataString) {
                 let jsonDecoder = JSONDecoder()
                 if let action = try? jsonDecoder.decode(RemoteInfo.self, from: data) {
-                    accountManager.user?.remoteDataManager.respondToRemoteInfo(action)
+//                    accountManager.user?.remoteDataManager.respondToRemoteInfo(action)
                 }
             }
         }

@@ -10,7 +10,6 @@ import Foundation
 import PumpyLibrary
 
 class AccountManager: AccountManagerProtocol {
-    static let shared = AccountManager()
     @Published var pageState: SignType = .login
     @Published var usernameTF = String()
     @Published var passwordTF = String()
@@ -24,6 +23,10 @@ class AccountManager: AccountManagerProtocol {
     
     init() {
         loadSavedDetails()
+    }
+    
+    deinit {
+        print("deinit Account Manager")
     }
     
     func loadSavedDetails() {
@@ -83,8 +86,8 @@ class AccountManager: AccountManagerProtocol {
     
     func loginSucceed(_ email: String) {
         user = User(username: email.lowercased())
-        self.defaults.set(self.usernameTF.lowercased(), forKey: K.username)
-        self.defaults.set(self.passwordTF, forKey: K.password)
+        defaults.set(usernameTF.lowercased(), forKey: K.username)
+        defaults.set(passwordTF, forKey: K.password)
     }
     
     func signOut() {

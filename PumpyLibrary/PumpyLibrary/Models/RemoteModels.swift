@@ -10,7 +10,7 @@ import Foundation
 
 public struct RemoteInfo: Codable {
     public init(command: RemoteEnum) {
-        self.remoteCommand = command
+        remoteCommand = command
     }
     
     public init() {}

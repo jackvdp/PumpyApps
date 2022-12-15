@@ -9,7 +9,6 @@
 import Foundation
 import Firebase
 import PumpyLibrary
-import UIKit
 import PumpyShared
 
 class RemoteManager: ObservableObject {
@@ -28,16 +27,16 @@ class RemoteManager: ObservableObject {
     }
     
     deinit {
-        DeinitCounter.count += 1
+        print("deinit")
     }
     
     func recieveRemoteCommands() {
         remoteListener = FireMethods.listen(name: username,
                                             documentName: K.FStore.remoteData,
                                             dataFieldName: K.FStore.remoteData,
-                                            decodeObject: RemoteInfo.self) { remoteInfoDecoded in
+                                            decodeObject: RemoteInfo.self) { [weak self] remoteInfoDecoded in
             
-            self.respondToRemoteInfo(remoteInfoDecoded)
+            self?.respondToRemoteInfo(remoteInfoDecoded)
         }
     }
     

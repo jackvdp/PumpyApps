@@ -16,9 +16,11 @@ public class AlarmManager: ObservableObject {
     var alarmListener: ListenerRegistration?
     @Published public var alarms = [Alarm]()
     
-    public init(username: String, preview: Bool = false) {
+    public init(username: String) {
         self.username = username
-        guard !preview else { return }
+    }
+    
+    public func setUp() {
         loadOnlineData()
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
@@ -66,10 +68,9 @@ public class AlarmManager: ObservableObject {
                                            documentName: K.FStore.alarmCollection,
                                            dataFieldName: K.FStore.alarmCollection,
                                            decodeObject: [Alarm].self) { [weak self] alarms in
-            guard let self = self else { return }
-            self.alarms = alarms
-            self.sortAlarms()
-            self.saveDataOffline()
+            self?.alarms = alarms
+            self?.sortAlarms()
+            self?.saveDataOffline()
         }
     }
     
