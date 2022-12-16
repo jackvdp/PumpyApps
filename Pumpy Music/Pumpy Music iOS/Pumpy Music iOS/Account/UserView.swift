@@ -14,7 +14,11 @@ struct UserView: View {
     
     @EnvironmentObject var user: User
     @StateObject var homeVM = HomeVM()
-    
+    @StateObject var musicManager = MusicManager()
+    @StateObject var authManager = AuthorisationManager()
+    @StateObject var nowPlayingManager = NowPlayingManager()
+    @StateObject var playlistManager = PlaylistManager()
+
     var body: some View {
         MenuView<
             HomeVM,
@@ -36,6 +40,18 @@ struct UserView: View {
             .environmentObject(user.musicManager.queueManager)
             .environmentObject(homeVM)
             .environmentObject(user.externalDisplayManager)
+            .onChange(of: musicManager.musicPlayerManagerDidUpdate) { _ in
+                queueManager.getIndex()
+                nowPlayingManager.updateTrackData()
+                nowPlayingManager.updateTrackOnline(for: user.username,
+                                                    playlist: playlistManager.playlistLabel)
+            }
+            .onChange(of: musicManager.queueDidUpdate) { _ in
+                queueManager.getUpNext()
+            }
+            .onAppear() {
+                authManager.fetchTokens()
+            }
     }
 }
 
