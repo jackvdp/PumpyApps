@@ -7,14 +7,13 @@
 
 import SwiftUI
 
-public struct AccountView<U:UserProtocol, A:AccountManagerProtocol>: View {
+public struct AccountView<A:AccountManagerProtocol>: View {
     @State private var showingLogOutAlert = false
     @State var showError = false
     @State var errorMessage = String()
     @State var errorTitle = String()
     @State var passwordField = UITextField()
     @State var newPasswordField = UITextField()
-    @EnvironmentObject var user: U
     @EnvironmentObject var accountVM: A
     
     public init() {}
@@ -44,7 +43,7 @@ public struct AccountView<U:UserProtocol, A:AccountManagerProtocol>: View {
     }
     
     var versionLabel: some View {
-        Text("Account: \(user.username) | v\(K.versionNumber)")
+        Text("Account: \("user.username") | v\(K.versionNumber)")
             .foregroundColor(.gray)
             .lineLimit(1)
             .padding(.horizontal)
@@ -82,6 +81,6 @@ public struct AccountView<U:UserProtocol, A:AccountManagerProtocol>: View {
 
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView<MockUser,MockAccountManager>()
+        AccountView<MockAccountManager>()
     }
 }

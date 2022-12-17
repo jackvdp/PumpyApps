@@ -252,6 +252,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C050067C294C871E00A8B50E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				C0725DDB2617757C0095EDD9 /* AccountManager.swift */,
+				6D961996288C475D009040A3 /* User.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		C050067D294C872A00A8B50E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6D45ED9128A5A0C0002EC94C /* StartView.swift */,
+				C0AE9CBA291D260F00142243 /* UserView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		C0510802262E09790008B73D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,10 +387,8 @@
 		C0D60C9E2333C1490010F653 /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				C0725DDB2617757C0095EDD9 /* AccountManager.swift */,
-				6D961996288C475D009040A3 /* User.swift */,
-				6D45ED9128A5A0C0002EC94C /* StartView.swift */,
-				C0AE9CBA291D260F00142243 /* UserView.swift */,
+				C050067C294C871E00A8B50E /* Managers */,
+				C050067D294C872A00A8B50E /* Views */,
 			);
 			path = Account;
 			sourceTree = "<group>";

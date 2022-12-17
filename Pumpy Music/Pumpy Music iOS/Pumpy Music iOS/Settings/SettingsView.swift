@@ -79,6 +79,6 @@ struct SettingsView_Previews: PreviewProvider {
     
     static var previews: some View {
         settingsView
-            .environmentObject(SettingsManager(username: "Test"))
+            .environmentObject(SettingsManager())
     }
 }

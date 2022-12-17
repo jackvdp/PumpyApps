@@ -14,15 +14,20 @@ import PumpyShared
 class RemoteManager: ObservableObject {
     
     var remoteListener: ListenerRegistration?
-    let username: String
-    weak var musicManager: MusicManager?
+    var username: String?
     weak var alarmManager: AlarmManager?
+    weak var playlistManager: PlaylistManager?
+    weak var queueManager: QueueManager?
     let debouncer = Debouncer()
     
-    init(username: String, musicManager: MusicManager?, alarmManager: AlarmManager?) {
+    func setUp(username: String,
+               queueManager: QueueManager,
+               alarmManager: AlarmManager,
+               playlistManager: PlaylistManager) {
         self.username = username
-        self.musicManager = musicManager
+        self.queueManager = queueManager
         self.alarmManager = alarmManager
+        self.playlistManager = playlistManager
         recieveRemoteCommands()
     }
     
@@ -31,12 +36,14 @@ class RemoteManager: ObservableObject {
     }
     
     func recieveRemoteCommands() {
-        remoteListener = FireMethods.listen(name: username,
-                                            documentName: K.FStore.remoteData,
-                                            dataFieldName: K.FStore.remoteData,
-                                            decodeObject: RemoteInfo.self) { [weak self] remoteInfoDecoded in
-            
-            self?.respondToRemoteInfo(remoteInfoDecoded)
+        if let username {
+            remoteListener = FireMethods.listen(name: username,
+                                                documentName: K.FStore.remoteData,
+                                                dataFieldName: K.FStore.remoteData,
+                                                decodeObject: RemoteInfo.self) { [weak self] remoteInfoDecoded in
+                
+                self?.respondToRemoteInfo(remoteInfoDecoded)
+            }
         }
     }
     
@@ -59,41 +66,46 @@ class RemoteManager: ObservableObject {
     }
     
     private func actOnRemoteCommand(_ remoteData: RemoteEnum) {
-        guard let musicManager = musicManager, let alarmManager = alarmManager else { return }
+        guard let playlistManager,
+              let alarmManager,
+              let queueManager,
+              let username else { return }
 
         switch remoteData {
         case .playPause:
-            MusicCoreFunctions.togglePlayPause(alarms: alarmManager.alarms, playlistManager: musicManager.playlistManager)
+            MusicCoreFunctions.togglePlayPause(alarms: alarmManager.alarms, playlistManager: playlistManager)
         case .skipTrack:
             MusicCoreFunctions.skipToNextItem()
         case .previousTrack:
             MusicCoreFunctions.skipBackToBeginningOrPreviousItem()
         case .playPlaylistNow(let playlist):
-            musicManager.playlistManager.playNow(playlistName: playlist)
+            playlistManager.playNow(playlistName: playlist)
         case .playPlaylistNext(let playlist):
-            musicManager.playlistManager.playNext(playlistName: playlist)
+            playlistManager.playNext(playlistName: playlist)
         case .getLibraryPlaylists:
             PlaybackData.savePlaylistsOnline(for: username)
         case .getTracksFromPlaylist(let playlist):
             PlaybackData.saveTracksOnline(playlist: playlist, for: username)
         case .removeTrackFromQueue(let id):
-            musicManager.queueManager.removeFromQueue(id: id)
+            queueManager.removeFromQueue(id: id)
         case .addToQueue(let queueIDs):
-            musicManager.queueManager.addTrackToQueue(ids: queueIDs)
+            queueManager.addTrackToQueue(ids: queueIDs)
         case .activeInfo:
             ActiveInfo.save(.loggedIn, for: username)
         case .increaseEnergy:
-            musicManager.queueManager.increaseEnergy()
+            queueManager.increaseEnergy()
         case .decreaseEnergy:
-            musicManager.queueManager.decreaseEnergy()
+            queueManager.decreaseEnergy()
         }
     }
     
     private func resetRemoteInfo() {
-        FireMethods.save(object: RemoteInfo(),
-                         name: username,
-                         documentName: K.FStore.remoteData,
-                         dataFieldName: K.FStore.remoteData)
+        if let username {
+            FireMethods.save(object: RemoteInfo(),
+                             name: username,
+                             documentName: K.FStore.remoteData,
+                             dataFieldName: K.FStore.remoteData)
+        }
     }
     
 }

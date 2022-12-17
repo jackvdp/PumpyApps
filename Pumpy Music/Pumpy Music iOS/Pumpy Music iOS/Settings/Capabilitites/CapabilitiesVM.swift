@@ -59,10 +59,12 @@ class CapabilitiesViewModel: ObservableObject {
         
     }
     
+    let storeController = SKCloudServiceController()
+    
     func getToken() {
-        SKCloudServiceController().requestUserToken(forDeveloperToken: PumpyAnalytics.K.MusicStore.developerToken) { token, errror in
+        storeController.requestUserToken(forDeveloperToken: PumpyAnalytics.K.MusicStore.developerToken) { [weak self] token, errror in
             if let _ = token {
-                self.tokenRecieved = true
+                self?.tokenRecieved = true
             } else {
                 if let e = errror {
                     print(e)

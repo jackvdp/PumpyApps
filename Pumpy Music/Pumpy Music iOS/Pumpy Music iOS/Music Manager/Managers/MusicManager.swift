@@ -13,33 +13,39 @@ import PumpyAnalytics
 
 class MusicManager: ObservableObject, MusicProtocol {
     let musicPlayerController = MPMusicPlayerController.applicationQueuePlayer
-    let username: String
-    
-    let authManager = AuthorisationManager()
-    let nowPlayingManager: NowPlayingManager
-    let playlistManager: PlaylistManager
-    let queueManager: QueueManager
-    let blockedTracksManager: BlockedTracksManager
+    var username: String?
+    weak var nowPlayingManager: NowPlayingManager?
+    weak var playlistManager: PlaylistManager?
+    weak var queueManager: QueueManager?
+    weak var blockedTracksManager: BlockedTracksManager?
     weak var settingsManager: SettingsManager?
+    weak var authManager: AuthorisationManager?
+    weak var remoteManager: RemoteManager?
     
-    init(username: String, settingsManager: SettingsManager) {
-        self.username = username
-        self.settingsManager = settingsManager
-        nowPlayingManager = NowPlayingManager(authManager: authManager)
-        queueManager = QueueManager(name: username, authManager: authManager, controller: musicPlayerController)
-        blockedTracksManager = BlockedTracksManager(username: username, queueManager: queueManager)
-        playlistManager = PlaylistManager(blockedTracksManager: blockedTracksManager,
-                                          settingsManager: settingsManager,
-                                          tokenManager: authManager,
-                                          queueManager: queueManager,
-                                          controller: musicPlayerController)
+    init() {
         setUpNotifications()
-        authManager.fetchTokens()
     }
     
     deinit {
         print("deiniting MM")
         endNotifications()
+    }
+    
+    func setUpConnection(nowPlayingManager: NowPlayingManager,
+                         playlistManager: PlaylistManager,
+                         queueManager: QueueManager,
+                         blockedTracksManager: BlockedTracksManager,
+                         settingsManager: SettingsManager,
+                         authManager: AuthorisationManager,
+                         username: String, remoteManager: RemoteManager) {
+        self.nowPlayingManager = nowPlayingManager
+        self.playlistManager = playlistManager
+        self.queueManager = queueManager
+        self.blockedTracksManager = blockedTracksManager
+        self.settingsManager = settingsManager
+        self.authManager = authManager
+        self.username = username
+        self.remoteManager = remoteManager
     }
     
     // MARK: - Setup Notifications
@@ -69,18 +75,22 @@ class MusicManager: ObservableObject, MusicProtocol {
     // MARK: - Respond to Notifications
     
     @objc func handleMusicPlayerManagerDidUpdateState(_ notification: Notification) {
-        queueManager.getIndex()
-        nowPlayingManager.updateTrackData()
-        nowPlayingManager.updateTrackOnline(for: username,
-                                            playlist: playlistManager.playlistLabel)
+        queueManager?.getIndex()
+        nowPlayingManager?.updateTrackData()
+        if let playlistManager, let username {
+            nowPlayingManager?.updateTrackOnline(for: username,
+                                                 playlist: playlistManager.playlistLabel)
+        }
     }
     
     @objc func handleQueueDidUpdateState(_ notification: Notification) {
-        queueManager.getUpNext()
+        queueManager?.getUpNext()
     }
     
     @objc func handleLibraryDidChangeState(_ notification: Notification) {
-        PlaybackData.savePlaylistsOnline(for: username)
+        if let username {
+            PlaybackData.savePlaylistsOnline(for: username)
+        }
     }
     
 }

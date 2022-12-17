@@ -127,7 +127,7 @@ struct TrackTable_Previews: PreviewProvider {
         .environmentObject(MockBlockedTracks())
         .environmentObject(MockTokenManager())
         .environmentObject(MockQueueManager())
-        .environmentObject(AlarmManager(username: "test"))
+        .environmentObject(AlarmManager())
     }
 }
 #endif

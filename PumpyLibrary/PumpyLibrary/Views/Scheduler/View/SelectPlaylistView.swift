@@ -75,14 +75,9 @@ extension SetScheduleView {
 #if DEBUG
 struct SelectPlaylistView_Previews: PreviewProvider {
     
-    struct TestUser: ScheduledUser {
-        var username: String = "Test"
-        var alarmData = AlarmManager(username: "Test")
-    }
-    
     static var previews: some View {
         SetScheduleView.SelectPlaylistView(schVM: SetScheduleViewModel(alarm: nil,
-                                                                       alarmManager: AlarmManager(username: "Test"),
+                                                                       alarmManager: AlarmManager(),
                                                                        getPlists: {return[]}))
     }
 }

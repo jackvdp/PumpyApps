@@ -30,7 +30,9 @@ public struct MenuView<H:HomeProtocol,
     @EnvironmentObject var playlistManager: P
     @EnvironmentObject var homeVM: H
     @EnvironmentObject var user: U
-    @EnvironmentObject var externalDisplayManager: ExternalDisplayManager<P>
+    @EnvironmentObject var alarmManager: AlarmManager
+    @EnvironmentObject var authManager: AuthorisationManager
+    @EnvironmentObject var queueManager: Q
     let content: Content
     @State private var showPlayer = true
     
@@ -85,11 +87,10 @@ public struct MenuView<H:HomeProtocol,
                  .environmentObject(playlistManager)
                  .environmentObject(blockedTracksManager)
                  .environmentObject(settings)
-                 .environmentObject(user.alarmData)
-                 .environmentObject(user.musicManager.authManager)
-                 .environmentObject(user.musicManager.queueManager)
+                 .environmentObject(alarmManager)
+                 .environmentObject(authManager)
+                 .environmentObject(queueManager)
                  .environmentObject(homeVM)
-                 .environmentObject(externalDisplayManager)
     }
     
     func isLandscape(geo: GeometryProxy) -> Bool {
@@ -114,13 +115,12 @@ struct MenuView_Previews: PreviewProvider {
                 .previewDevice(PreviewDevice(rawValue: "iPad (9th generation)"))
         }
         .environmentObject(user)
-        .environmentObject(user.musicManager)
+        .environmentObject(MockMusicMananger())
         .environmentObject(MockNowPlayingManager())
         .environmentObject(MockPlaylistManager())
         .environmentObject(MockBlockedTracks())
-        .environmentObject(user.settingsManager)
-        .environmentObject(user.externalDisplayManager)
-        .environmentObject(user.alarmData)
+        .environmentObject(SettingsManager())
+        .environmentObject(AlarmManager())
         .environmentObject(MockTokenManager())
         .environmentObject(MockQueueManager())
         .environmentObject(MockHomeVM())

@@ -146,7 +146,7 @@ struct MenuTrack_Previews: PreviewProvider {
         .environmentObject(MockBlockedTracks())
         .environmentObject(MockTokenManager())
         .environmentObject(MockHomeVM())
-        .environmentObject(AlarmManager(username: "test"))
+        .environmentObject(AlarmManager())
     }
     
     static var np: MockNowPlayingManager {

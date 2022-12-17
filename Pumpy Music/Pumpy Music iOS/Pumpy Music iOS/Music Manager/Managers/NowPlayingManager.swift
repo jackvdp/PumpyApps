@@ -22,7 +22,7 @@ class NowPlayingManager: NowPlayingProtocol {
     private let artworkHandler = ArtworkHandler()
     weak var authManager: AuthorisationManager?
     
-    init(authManager: AuthorisationManager) {
+    func setUpConnection(authManager: AuthorisationManager) {
         self.authManager = authManager
     }
     
@@ -44,7 +44,8 @@ class NowPlayingManager: NowPlayingProtocol {
     }
     
     func updateTrackOnline(for username: String, playlist: String) {
-        respondDebouncer.handle() {
+        respondDebouncer.handle() { [weak self] in
+            guard let self else { return }
             PlaybackData.updatePlaybackInfoOnline(for: username,
                                                   item: self.currentTrack,
                                                   index: self.musicPlayerController.indexOfNowPlayingItem,

@@ -9,7 +9,7 @@ import Foundation
 
 class SetScheduleViewModel: ObservableObject {
     
-    var alarmData: AlarmManager
+    weak var alarmData: AlarmManager?
     var getPlaylists: () -> [ScheduledPlaylist]
     let alarm: Alarm?
     
@@ -78,9 +78,9 @@ class SetScheduleViewModel: ObservableObject {
         let newAlarm = createNewAlarm(playlistIndex: i)
         
         if alarm == nil {
-            alarmData.addAlarm(alarm: newAlarm)
+            alarmData?.addAlarm(alarm: newAlarm)
         } else {
-            alarmData.updateAlarm(alarm: newAlarm)
+            alarmData?.updateAlarm(alarm: newAlarm)
         }
     }
     

@@ -70,7 +70,7 @@ class AccountManager: AccountManagerProtocol {
     }
     
     func respondToLogin(_ email: String?, _ error: Error?) {
-        self.activityIndicatorVisible = false
+        activityIndicatorVisible = false
         if let e = error {
             errorAlert = e.localizedDescription
             showingAlert = true

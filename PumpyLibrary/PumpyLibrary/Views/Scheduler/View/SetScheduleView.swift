@@ -121,7 +121,7 @@ struct SetScheduleView_Previews: PreviewProvider {
     static var previews: some View {
         return SetScheduleView(schVM:
                                 SetScheduleViewModel(alarm: nil,
-                                                     alarmManager: AlarmManager(username: "Test"),
+                                                     alarmManager: AlarmManager(),
                                                      getPlists: {return []})
         )
     }

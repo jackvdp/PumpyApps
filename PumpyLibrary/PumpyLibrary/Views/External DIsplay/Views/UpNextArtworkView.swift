@@ -61,7 +61,8 @@ struct UpNextArtworkView<N:NowPlayingProtocol,
 
 struct UpNextArtworkView_Previews: PreviewProvider {
     static let musicManager = MockMusicMananger()
-    static let extDisManger = ExternalDisplayManager(username: "Test", playlistManager: musicManager.playlistManager)
+    static let extDisManger = ExternalDisplayManager(username: "Test",
+                                                     playlistManager: MockPlaylistManager())
     
     static var previews: some View {
         extDisManger.liveSettings.showQRCode = true

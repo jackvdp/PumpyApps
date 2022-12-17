@@ -36,8 +36,9 @@ class AppleMusicAPI {
                     musicRequest.httpMethod = "GET"
                     musicRequest.addValue(K.MusicStore.bearerToken, forHTTPHeaderField: K.MusicStore.authorisation)
                     
-                    URLSession.shared.dataTask(with: musicRequest) { (data, response, error) in
+                    URLSession.shared.dataTask(with: musicRequest) { [weak self] (data, response, error) in
                         guard error == nil else { return }
+                        guard let self else { return }
                         if let d = data {
                             if let urlString = self.parsePlaylisrForURL(data: d) {
                                 completionHandler(urlString)

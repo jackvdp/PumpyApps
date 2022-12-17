@@ -16,6 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     var additionalWindows = [UIWindow]()
+    weak var user: User?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor(.pumpyPink)
@@ -41,9 +42,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
-//        if let username = accountManager.user?.username {
-//            ActiveInfo.save(.loggedIn, for: username)
-//        }
+        if let username = user?.username {
+            ActiveInfo.save(.loggedIn, for: username)
+        }
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {

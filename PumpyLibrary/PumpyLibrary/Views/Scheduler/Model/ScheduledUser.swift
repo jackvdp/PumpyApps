@@ -9,17 +9,19 @@ import Foundation
 
 public protocol ScheduledUser {
     var username: String { get }
-    var alarmData: AlarmManager { get }
+    var alarmManager: AlarmManager? { get }
 }
 
 class MockUser: UserProtocol {
+    typealias P = MockPlaylistManager
     typealias M = MockMusicMananger
 
     var username: String = "Test"
-    var alarmData: AlarmManager = AlarmManager(username: "Test")
-    var settingsManager: SettingsManager = SettingsManager(username: "Test")
-    var externalDisplayManager: ExternalDisplayManager<MockPlaylistManager> = ExternalDisplayManager(username: "Test", playlistManager: MockPlaylistManager())
-    var musicManager: MockMusicMananger = MockMusicMananger()
+    var alarmManager: AlarmManager? = AlarmManager()
+    var externalDisplayManager: ExternalDisplayManager<MockPlaylistManager>? = ExternalDisplayManager(username: "Test",
+                                                                                                      playlistManager: MockPlaylistManager())
+    var settingsManager: SettingsManager? = SettingsManager()
+    var musicManager: MockMusicMananger? = MockMusicMananger()
 }
 
 public protocol ScheduledPlaylist {

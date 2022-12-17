@@ -13,7 +13,7 @@ import PumpyAnalytics
 
 class PlaylistManager: PlaylistProtocol {
     
-    let musicPlayerController: MPMusicPlayerApplicationController
+    private let musicPlayerController = MPMusicPlayerApplicationController.applicationQueuePlayer
     @Published var playlistLabel = String()
     @Published var playlistURL = String()
     weak var blockedTracksManager: BlockedTracksManager?
@@ -22,21 +22,22 @@ class PlaylistManager: PlaylistProtocol {
     weak var queueManager: QueueManager?
     let scheduleManager = ScheduleManager()
     
-    init(blockedTracksManager: BlockedTracksManager,
-         settingsManager: SettingsManager,
-         tokenManager: AuthorisationManager,
-         queueManager: QueueManager,
-         controller: MPMusicPlayerApplicationController) {
-        self.blockedTracksManager = blockedTracksManager
-        self.settingsManager = settingsManager
-        self.tokenManager = tokenManager
-        self.queueManager = queueManager
-        self.musicPlayerController = controller
+    init() {
         scheduleManager.playlistManager = self
     }
     
     deinit {
         print("deiniting PM")
+    }
+    
+    func setUpConnection(blockedTracksManager: BlockedTracksManager,
+                         settingsManager: SettingsManager,
+                         tokenManager: AuthorisationManager,
+                         queueManager: QueueManager) {
+        self.blockedTracksManager = blockedTracksManager
+        self.settingsManager = settingsManager
+        self.tokenManager = tokenManager
+        self.queueManager = queueManager
     }
     
     // MARK: - Public Functions

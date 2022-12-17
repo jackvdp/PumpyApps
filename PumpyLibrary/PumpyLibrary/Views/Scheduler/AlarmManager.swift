@@ -12,15 +12,14 @@ import UserNotifications
 
 public class AlarmManager: ObservableObject {
     
-    let username: String
+    var username: String?
     var alarmListener: ListenerRegistration?
     @Published public var alarms = [Alarm]()
     
-    public init(username: String) {
-        self.username = username
-    }
+    public init() {}
     
-    public func setUp() {
+    public func setUp(username: String) {
+        self.username = username
         loadOnlineData()
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
@@ -34,10 +33,12 @@ public class AlarmManager: ObservableObject {
     }
     
     private func saveDataOnline() {
-        FireMethods.save(object: alarms,
-                         name: username,
-                         documentName: K.FStore.alarmCollection,
-                         dataFieldName: K.FStore.alarmCollection)
+        if let username {
+            FireMethods.save(object: alarms,
+                             name: username,
+                             documentName: K.FStore.alarmCollection,
+                             dataFieldName: K.FStore.alarmCollection)
+        }
     }
     
     private func saveDataOffline() {
@@ -64,13 +65,15 @@ public class AlarmManager: ObservableObject {
     }
     
     private func loadOnlineData() {
-        alarmListener = FireMethods.listen(name: username,
-                                           documentName: K.FStore.alarmCollection,
-                                           dataFieldName: K.FStore.alarmCollection,
-                                           decodeObject: [Alarm].self) { [weak self] alarms in
-            self?.alarms = alarms
-            self?.sortAlarms()
-            self?.saveDataOffline()
+        if let username {
+            alarmListener = FireMethods.listen(name: username,
+                                               documentName: K.FStore.alarmCollection,
+                                               dataFieldName: K.FStore.alarmCollection,
+                                               decodeObject: [Alarm].self) { [weak self] alarms in
+                self?.alarms = alarms
+                self?.sortAlarms()
+                self?.saveDataOffline()
+            }
         }
     }
     

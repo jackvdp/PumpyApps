@@ -13,7 +13,7 @@ extension SettingsView {
     
     func lockSettingsAlert() {
         let alert = UIAlertController(title: "Show Admin Settings",
-                                      message: "Enter password for the account \(savedUsername()) to access admin settings",
+                                      message: "Enter password for the account \(savedUsername() ?? "") to access admin settings",
                                       preferredStyle: .alert)
        
         alert.addTextField() { textField in
@@ -81,9 +81,10 @@ extension SettingsView {
         return controller
     }
     
-    func savedUsername() -> String {
+    func savedUsername() -> String? {
         return settingsVM.username
     }
+    
     func savedPassword() -> String {
         return UserDefaults.standard.string(forKey: K.password) ?? ""
     }

@@ -20,9 +20,9 @@ class BlockedTracksManager: BlockedTracksProtocol {
     }
     weak var queueManager: QueueManager?
     var remoteListener: FirebaseListener?
-    let username: String
+    var username: String?
     
-    init(username: String, queueManager: QueueManager) {
+    func setUpConnection(username: String, queueManager: QueueManager) {
         self.username = username
         self.queueManager = queueManager
         listenForBlockedTracks()
@@ -33,19 +33,23 @@ class BlockedTracksManager: BlockedTracksProtocol {
     }
     
     func listenForBlockedTracks() {
-        remoteListener = FireMethods.listen(name: username,
-                                            documentName: K.FStore.blockedTracks,
-                                            dataFieldName: K.FStore.blockedTracks,
-                                            decodeObject: [BlockedTrack].self) { [weak self] blocked in
-            self?.blockedTracks = blocked
+        if let username {
+            remoteListener = FireMethods.listen(name: username,
+                                                documentName: K.FStore.blockedTracks,
+                                                dataFieldName: K.FStore.blockedTracks,
+                                                decodeObject: [BlockedTrack].self) { [weak self] blocked in
+                self?.blockedTracks = blocked
+            }
         }
     }
     
     func saveBlockedTracks(blockedTracks: [BlockedTrack]) {
-        FireMethods.save(object: blockedTracks,
-                         name: username,
-                         documentName: K.FStore.blockedTracks,
-                         dataFieldName: K.FStore.blockedTracks)
+        if let username {
+            FireMethods.save(object: blockedTracks,
+                             name: username,
+                             documentName: K.FStore.blockedTracks,
+                             dataFieldName: K.FStore.blockedTracks)
+        }
     }
     
     func unblockTrackOrAskToBlock(track: BlockedTrack) -> Bool {

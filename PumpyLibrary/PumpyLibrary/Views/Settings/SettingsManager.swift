@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 public class SettingsManager: ObservableObject {
     
-    public let username: String
+    public var username: String?
     var settingsListener: ListenerRegistration?
     private var overrideTimer: Timer?
     
@@ -23,7 +23,9 @@ public class SettingsManager: ObservableObject {
         }
     }
     
-    public init(username: String) {
+    public init() {}
+    
+    public func setUp(username: String) {
         self.username = username
         downloadSettings()
     }
@@ -33,11 +35,13 @@ public class SettingsManager: ObservableObject {
     }
     
     func downloadSettings() {
-        settingsListener = FireMethods.listen(name: username,
-                                              documentName: K.FStore.settings,
-                                              dataFieldName: K.FStore.settings,
-                                              decodeObject: SettingsModel.self) { [weak self] settings in
-            self?.onlineSettings = settings
+        if let username {
+            settingsListener = FireMethods.listen(name: username,
+                                                  documentName: K.FStore.settings,
+                                                  dataFieldName: K.FStore.settings,
+                                                  decodeObject: SettingsModel.self) { [weak self] settings in
+                self?.onlineSettings = settings
+            }
         }
     }
     
@@ -47,10 +51,12 @@ public class SettingsManager: ObservableObject {
     }
     
     func saveSettings(settings: SettingsModel) {
-        FireMethods.save(object: settings,
-                         name: username,
-                         documentName: K.FStore.settings,
-                         dataFieldName: K.FStore.settings)
+        if let username {
+            FireMethods.save(object: settings,
+                             name: username,
+                             documentName: K.FStore.settings,
+                             dataFieldName: K.FStore.settings)
+        }
     }
     
     func postSettings() {

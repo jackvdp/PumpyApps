@@ -13,12 +13,12 @@ public protocol MusicProtocol: ObservableObject {
     associatedtype Q: QueueProtocol
     associatedtype B: BlockedTracksProtocol
     
-    var authManager: T { get }
-    var playlistManager: P { get }
-    var queueManager: Q { get }
-    var blockedTracksManager: B { get }
+    var authManager: T? { get }
+    var playlistManager: P? { get }
+    var queueManager: Q? { get }
+    var blockedTracksManager: B? { get }
     var settingsManager: SettingsManager? { get }
-    var username: String { get }
+    var username: String? { get }
 }
 
 class MockMusicMananger: MusicProtocol {
@@ -30,16 +30,16 @@ class MockMusicMananger: MusicProtocol {
     
     typealias B = MockBlockedTracks
     
-    var authManager: MockTokenManager = MockTokenManager()
+    var authManager: MockTokenManager? = MockTokenManager()
     
-    var playlistManager: MockPlaylistManager = MockPlaylistManager()
+    var playlistManager: MockPlaylistManager? = MockPlaylistManager()
     
-    var queueManager: MockQueueManager = MockQueueManager()
+    var queueManager: MockQueueManager? = MockQueueManager()
     
-    var blockedTracksManager: MockBlockedTracks = MockBlockedTracks()
+    var blockedTracksManager: MockBlockedTracks? = MockBlockedTracks()
     
-    var settingsManager: SettingsManager? = SettingsManager(username: "Test")
+    var settingsManager: SettingsManager? = SettingsManager()
     
-    var username: String = "Test"
+    var username: String? = "Test"
     
 }

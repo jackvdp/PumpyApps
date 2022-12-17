@@ -23,7 +23,7 @@ class ItemDetailViewModel: ObservableObject {
     private func getPlaylist(snapshot: PlaylistSnapshot, authManager: AuthorisationManager) {
         
         PlaylistController().get(libraryPlaylist: snapshot,
-                       authManager: authManager) { [weak self] playlist, error in
+                                 authManager: authManager) { [weak self] playlist, error in
             
             guard let self = self else { return }
             
