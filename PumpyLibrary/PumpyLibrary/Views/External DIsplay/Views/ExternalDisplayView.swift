@@ -16,9 +16,10 @@ public struct ExternalDisplayView<A: AccountManagerProtocol, P:PlaylistProtocol,
     
     public var body: some View {
         if let user = accountManager.user {
-            ExtHomeView<P,N,Q,B,T>()
-                .environmentObject(user.musicManager)
-                .environmentObject(user.externalDisplayManager)
+//            ExtHomeView<P,N,Q,B,T>()
+//                .environmentObject(user.musicManager)
+//                .environmentObject(user.externalDisplayManager)
+            ExtLoggedOffView()
         } else {
             ExtLoggedOffView()
         }

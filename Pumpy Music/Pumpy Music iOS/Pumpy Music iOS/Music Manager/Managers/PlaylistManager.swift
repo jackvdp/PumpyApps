@@ -30,7 +30,7 @@ class PlaylistManager: PlaylistProtocol {
         print("deiniting PM")
     }
     
-    func setUpConnection(blockedTracksManager: BlockedTracksManager,
+    func setUp(blockedTracksManager: BlockedTracksManager,
                          settingsManager: SettingsManager,
                          tokenManager: AuthorisationManager,
                          queueManager: QueueManager) {

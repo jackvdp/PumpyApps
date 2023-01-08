@@ -324,14 +324,14 @@
 			path = "Pumpy MusicTests";
 			sourceTree = "<group>";
 		};
-		C0A6CAFC24A8FE0A00F66187 /* Firestore */ = {
+		C0A6CAFC24A8FE0A00F66187 /* Remote Manager */ = {
 			isa = PBXGroup;
 			children = (
 				C0A6CAF524A8FA6F00F66187 /* PlaybackData.swift */,
 				C04A655823DF4F6300DD5FBB /* RemoteManager.swift */,
 				C07865122619D5CB001FB32B /* ActiveInfo.swift */,
 			);
-			path = Firestore;
+			path = "Remote Manager";
 			sourceTree = "<group>";
 		};
 		C0B5F6F2251D15A100D8073C /* Application */ = {
@@ -374,7 +374,7 @@
 				C0130B4A26CBD1440056E5F6 /* Blocked Tracks */,
 				C0725DFE2618479C0095EDD9 /* Settings */,
 				C00EA26524EB1FDC00D0C107 /* Music Manager */,
-				C0A6CAFC24A8FE0A00F66187 /* Firestore */,
+				C0A6CAFC24A8FE0A00F66187 /* Remote Manager */,
 				C0D60C6123313D6B0010F653 /* Assets.xcassets */,
 				C0D60C6323313D6B0010F653 /* LaunchScreen.storyboard */,
 				C078F06423C4D17700190352 /* Pumpy Music.entitlements */,

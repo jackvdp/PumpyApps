@@ -19,20 +19,28 @@ public struct MenuView<H:HomeProtocol,
                        U:UserProtocol,
                        Content:View>: View {
     
-    public init(content: Content) {
+    public init(settings: SettingsManager, blockedTracksManager: B, nowPlayingManager: N, playlistManager: P, homeVM: H, user: U, alarmManager: AlarmManager, authManager: AuthorisationManager, queueManager: Q, content: Content) {
+        self.settings = settings
+        self.blockedTracksManager = blockedTracksManager
+        self.nowPlayingManager = nowPlayingManager
+        self.playlistManager = playlistManager
+        self.homeVM = homeVM
+        self.user = user
+        self.alarmManager = alarmManager
+        self.authManager = authManager
+        self.queueManager = queueManager
         self.content = content
     }
     
-    @EnvironmentObject var settings: SettingsManager
-    @EnvironmentObject var tokenManager: T
-    @EnvironmentObject var blockedTracksManager: B
-    @EnvironmentObject var nowPlayingManager: N
-    @EnvironmentObject var playlistManager: P
-    @EnvironmentObject var homeVM: H
-    @EnvironmentObject var user: U
-    @EnvironmentObject var alarmManager: AlarmManager
-    @EnvironmentObject var authManager: AuthorisationManager
-    @EnvironmentObject var queueManager: Q
+    @ObservedObject var settings: SettingsManager
+    @ObservedObject var blockedTracksManager: B
+    @ObservedObject var nowPlayingManager: N
+    @ObservedObject var playlistManager: P
+    @ObservedObject var homeVM: H
+    @ObservedObject var user: U
+    @ObservedObject var alarmManager: AlarmManager
+    @ObservedObject var authManager: AuthorisationManager
+    @ObservedObject var queueManager: Q
     let content: Content
     @State private var showPlayer = true
     
@@ -50,11 +58,13 @@ public struct MenuView<H:HomeProtocol,
         }
     }
     
+    // MARK: Components
+    
     var mainMenu: some View {
         GeometryReader { geo in
             NavigationView {
                 PumpyList() {
-                    content
+                    menuContent
                 }
                 .listStyle(.insetGrouped)
                 .toolbar {
@@ -79,6 +89,14 @@ public struct MenuView<H:HomeProtocol,
         MenuTrackView<T,N,B,P,H>()
             .padding()
             .padding(.bottom)
+            .environmentObject(nowPlayingManager)
+            .environmentObject(playlistManager)
+            .environmentObject(blockedTracksManager)
+            .environmentObject(settings)
+            .environmentObject(alarmManager)
+            .environmentObject(authManager)
+            .environmentObject(queueManager)
+            .environmentObject(homeVM)
     }
     
     var playerView: some View {
@@ -93,6 +111,21 @@ public struct MenuView<H:HomeProtocol,
                  .environmentObject(homeVM)
     }
     
+    var menuContent: some View {
+        content
+            .environmentObject(nowPlayingManager)
+            .environmentObject(playlistManager)
+            .environmentObject(blockedTracksManager)
+            .environmentObject(settings)
+            .environmentObject(alarmManager)
+            .environmentObject(authManager)
+            .environmentObject(queueManager)
+            .environmentObject(homeVM)
+            .environmentObject(user)
+    }
+    
+    // MARK: Functions
+    
     func isLandscape(geo: GeometryProxy) -> Bool {
         geo.size.width > geo.size.height
     }
@@ -106,26 +139,17 @@ public struct MenuView<H:HomeProtocol,
 
 // MARK: - Preview
 
+#if DEBUG
 struct MenuView_Previews: PreviewProvider {
 
     static var previews: some View {
         Group {
-            MenuV(content: EmptyView())
-            MenuV(content: EmptyView())
+            menuView
+            menuView
                 .previewDevice(PreviewDevice(rawValue: "iPad (9th generation)"))
         }
-        .environmentObject(user)
-        .environmentObject(MockMusicMananger())
-        .environmentObject(MockNowPlayingManager())
-        .environmentObject(MockPlaylistManager())
-        .environmentObject(MockBlockedTracks())
-        .environmentObject(SettingsManager())
-        .environmentObject(AlarmManager())
-        .environmentObject(MockTokenManager())
-        .environmentObject(MockQueueManager())
-        .environmentObject(MockHomeVM())
     }
-    
+
     static let user = MockUser()
     static var playlist: MockPlaylistManager {
         let pm = MockPlaylistManager()
@@ -137,7 +161,7 @@ struct MenuView_Previews: PreviewProvider {
         v.showPlayer = false
         return v
     }
-    
+
     typealias MenuV = MenuView<MockHomeVM,
                                MockPlaylistManager,
                                MockNowPlayingManager,
@@ -147,5 +171,16 @@ struct MenuView_Previews: PreviewProvider {
                                MockUser,
                                EmptyView>
     
-}
+    static var menuView = MenuV(settings: SettingsManager(),
+                                blockedTracksManager: MockBlockedTracks(),
+                                nowPlayingManager: MockNowPlayingManager(),
+                                playlistManager: playlist,
+                                homeVM: homeVM,
+                                user: user,
+                                alarmManager: AlarmManager(),
+                                authManager: AuthorisationManager(),
+                                queueManager: MockQueueManager(),
+                                content: EmptyView())
 
+}
+#endif

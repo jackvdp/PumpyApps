@@ -31,7 +31,7 @@ class MusicManager: ObservableObject, MusicProtocol {
         endNotifications()
     }
     
-    func setUpConnection(nowPlayingManager: NowPlayingManager,
+    func setUp(nowPlayingManager: NowPlayingManager,
                          playlistManager: PlaylistManager,
                          queueManager: QueueManager,
                          blockedTracksManager: BlockedTracksManager,

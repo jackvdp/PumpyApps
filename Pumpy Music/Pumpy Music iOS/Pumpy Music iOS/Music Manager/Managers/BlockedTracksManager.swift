@@ -22,7 +22,7 @@ class BlockedTracksManager: BlockedTracksProtocol {
     var remoteListener: FirebaseListener?
     var username: String?
     
-    func setUpConnection(username: String, queueManager: QueueManager) {
+    func setUp(username: String, queueManager: QueueManager) {
         self.username = username
         self.queueManager = queueManager
         listenForBlockedTracks()

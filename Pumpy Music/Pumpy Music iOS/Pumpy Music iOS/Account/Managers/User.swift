@@ -33,7 +33,7 @@ class User: ObservableObject, UserProtocol {
     }
     
     deinit {
-        print("Deinit")
+        print("Deinit user")
     }
     
     func setUp(alarmManager: AlarmManager,

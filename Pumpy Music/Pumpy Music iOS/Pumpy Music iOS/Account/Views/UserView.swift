@@ -12,7 +12,7 @@ import PumpyAnalytics
 
 struct UserView: View {
     
-    @EnvironmentObject var user: User
+    @ObservedObject var user: User
     @StateObject private var homeVM = HomeVM()
     @StateObject private var musicManager = MusicManager()
     @StateObject private var authManager = AuthorisationManager()
@@ -42,36 +42,36 @@ struct UserView: View {
             QueueManager,
             User,
             MenuContent
-        >(content: MenuContent())
-            .environmentObject(musicManager)
-            .environmentObject(nowPlayingManager)
-            .environmentObject(playlistManager)
-            .environmentObject(blockedTracksManager)
-            .environmentObject(settingsManager)
-            .environmentObject(alarmManager)
-            .environmentObject(authManager)
-            .environmentObject(queueManager)
-            .environmentObject(homeVM)
+        >(settings: settingsManager,
+          blockedTracksManager: blockedTracksManager,
+          nowPlayingManager: nowPlayingManager,
+          playlistManager: playlistManager,
+          homeVM: homeVM,
+          user: user,
+          alarmManager: alarmManager,
+          authManager: authManager,
+          queueManager: queueManager,
+          content: MenuContent())
     }
     
     func setUp() {
-        musicManager.setUpConnection(nowPlayingManager: nowPlayingManager,
-                                     playlistManager: playlistManager,
-                                     queueManager: queueManager,
-                                     blockedTracksManager: blockedTracksManager,
-                                     settingsManager: settingsManager,
-                                     authManager: authManager,
-                                     username: user.username,
-                                     remoteManager: remoteManager)
-        nowPlayingManager.setUpConnection(authManager: authManager)
-        playlistManager.setUpConnection(blockedTracksManager: blockedTracksManager,
-                                        settingsManager: settingsManager,
-                                        tokenManager: authManager,
-                                        queueManager: queueManager)
-        queueManager.setUpConnection(name: user.username,
-                                     authManager: authManager)
-        blockedTracksManager.setUpConnection(username: user.username,
-                                             queueManager: queueManager)
+        musicManager.setUp(nowPlayingManager: nowPlayingManager,
+                           playlistManager: playlistManager,
+                           queueManager: queueManager,
+                           blockedTracksManager: blockedTracksManager,
+                           settingsManager: settingsManager,
+                           authManager: authManager,
+                           username: user.username,
+                           remoteManager: remoteManager)
+        nowPlayingManager.setUp(authManager: authManager)
+        playlistManager.setUp(blockedTracksManager: blockedTracksManager,
+                              settingsManager: settingsManager,
+                              tokenManager: authManager,
+                              queueManager: queueManager)
+        queueManager.setUp(name: user.username,
+                           authManager: authManager)
+        blockedTracksManager.setUp(username: user.username,
+                                   queueManager: queueManager)
         settingsManager.setUp(username: user.username)
         alarmManager.setUp(username: user.username)
         remoteManager.setUp(username: user.username,
@@ -87,7 +87,7 @@ struct UserView: View {
 #if DEBUG
 struct UserView_Previews: PreviewProvider {
     static var previews: some View {
-        UserView()
+        UserView(user: User(username: "Test"))
     }
 }
 #endif

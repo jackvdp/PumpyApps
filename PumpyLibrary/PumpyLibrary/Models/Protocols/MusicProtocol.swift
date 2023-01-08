@@ -21,25 +21,25 @@ public protocol MusicProtocol: ObservableObject {
     var username: String? { get }
 }
 
-class MockMusicMananger: MusicProtocol {
-    typealias T = MockTokenManager
+public class MockMusicMananger: MusicProtocol {
+    public typealias T = MockTokenManager
+     
+    public typealias P = MockPlaylistManager
     
-    typealias P = MockPlaylistManager
+    public typealias Q = MockQueueManager
     
-    typealias Q = MockQueueManager
+    public typealias B = MockBlockedTracks
     
-    typealias B = MockBlockedTracks
+    public var authManager: MockTokenManager? = MockTokenManager()
     
-    var authManager: MockTokenManager? = MockTokenManager()
+    public var playlistManager: MockPlaylistManager? = MockPlaylistManager()
     
-    var playlistManager: MockPlaylistManager? = MockPlaylistManager()
+    public var queueManager: MockQueueManager? = MockQueueManager()
     
-    var queueManager: MockQueueManager? = MockQueueManager()
+    public var blockedTracksManager: MockBlockedTracks? = MockBlockedTracks()
     
-    var blockedTracksManager: MockBlockedTracks? = MockBlockedTracks()
+    public var settingsManager: SettingsManager? = SettingsManager()
     
-    var settingsManager: SettingsManager? = SettingsManager()
-    
-    var username: String? = "Test"
+    public var username: String? = "Test"
     
 }

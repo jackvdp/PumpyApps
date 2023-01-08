@@ -32,7 +32,7 @@ class RemoteManager: ObservableObject {
     }
     
     deinit {
-        print("deinit")
+        print("deinit RM")
     }
     
     func recieveRemoteCommands() {

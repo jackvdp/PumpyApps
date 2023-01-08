@@ -12,16 +12,18 @@ public protocol ScheduledUser {
     var alarmManager: AlarmManager? { get }
 }
 
-class MockUser: UserProtocol {
-    typealias P = MockPlaylistManager
-    typealias M = MockMusicMananger
+public class MockUser: UserProtocol {
+    public init() {}
+    
+    public typealias P = MockPlaylistManager
+    public typealias M = MockMusicMananger
 
-    var username: String = "Test"
-    var alarmManager: AlarmManager? = AlarmManager()
-    var externalDisplayManager: ExternalDisplayManager<MockPlaylistManager>? = ExternalDisplayManager(username: "Test",
-                                                                                                      playlistManager: MockPlaylistManager())
-    var settingsManager: SettingsManager? = SettingsManager()
-    var musicManager: MockMusicMananger? = MockMusicMananger()
+    public var username: String = "Test"
+    public var alarmManager: AlarmManager? = AlarmManager()
+    public var externalDisplayManager: ExternalDisplayManager<MockPlaylistManager>? = ExternalDisplayManager(username: "Test",
+                                                                                                             playlistManager: MockPlaylistManager())
+    public var settingsManager: SettingsManager? = SettingsManager()
+    public var musicManager: MockMusicMananger? = MockMusicMananger()
 }
 
 public protocol ScheduledPlaylist {

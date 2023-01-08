@@ -18,13 +18,13 @@ public protocol QueueProtocol: ObservableObject {
     func playTrackNow(id: String)
 }
 
-class MockQueueManager: QueueProtocol {
-    var queueIndex = 0
-    var queueTracks = [ConstructedTrack]()
-    var analysingEnergy: Bool = false
-    func removeFromQueue(id: String) {}
-    func increaseEnergy() {}
-    func decreaseEnergy() {}
-    func addTrackToQueue(ids: [String]) {}
-    func playTrackNow(id: String) {}
+public class MockQueueManager: QueueProtocol {
+    public var queueIndex = 0
+    public var queueTracks = [ConstructedTrack]()
+    public var analysingEnergy: Bool = false
+    public func removeFromQueue(id: String) {}
+    public func increaseEnergy() {}
+    public func decreaseEnergy() {}
+    public func addTrackToQueue(ids: [String]) {}
+    public func playTrackNow(id: String) {}
 }

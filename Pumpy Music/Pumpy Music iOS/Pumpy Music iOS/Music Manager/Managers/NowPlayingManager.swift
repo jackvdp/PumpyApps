@@ -22,7 +22,7 @@ class NowPlayingManager: NowPlayingProtocol {
     private let artworkHandler = ArtworkHandler()
     weak var authManager: AuthorisationManager?
     
-    func setUpConnection(authManager: AuthorisationManager) {
+    func setUp(authManager: AuthorisationManager) {
         self.authManager = authManager
     }
     

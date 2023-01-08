@@ -54,7 +54,7 @@ struct MenuContent: View {
             }
         }
     }
-    
+
     var scheduleAndBlocked: some View {
         Section {
             if settings.onlineSettings.showScheduler {
@@ -68,11 +68,11 @@ struct MenuContent: View {
                         MenuRow(title: "Blocked Tracks", imageName: "hand.thumbsdown")
                     }
                 }
-                
+
             }
         }
     }
-    
+
     var settingsAndExtDisplay: some View {
         Section {
             NavigationLink(destination: SettingsView()) {
@@ -88,12 +88,11 @@ struct MenuContent: View {
     
     var account: some View {
         Section {
-            NavigationLink(destination: AccountView<User,AccountManager>()) {
+            NavigationLink(destination: AccountView<AccountManager>()) {
                 MenuRow(title: "Account", imageName: "person.fill")
             }
         }
     }
-    
     
 }
 

@@ -17,8 +17,7 @@ struct StartView: View {
     var body: some View {
         VStack {
             if let user = accountManager.user {
-                UserView()
-                    .environmentObject(user)
+                UserView(user: user)
             } else {
                 switch accountManager.pageState {
                 case .login:
