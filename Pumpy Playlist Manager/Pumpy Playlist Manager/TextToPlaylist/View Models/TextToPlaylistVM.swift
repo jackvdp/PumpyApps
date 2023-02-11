@@ -17,7 +17,7 @@ class TextToPlaylistViewModel: ObservableObject {
     private var debouncer = Debouncer()
     
     func convertTextToTracks(authManager: AuthorisationManager) {
-        debouncer.handler = { [weak self] in
+        debouncer.handle { [weak self] in
             guard let self = self else { return }
             let trackStrings = self.seperateBulkTextIntoTrackText(self.inputedText)
             let tracksToFetch = self.prepareDictionaryAndReturnTracksToGet(trackStrings)

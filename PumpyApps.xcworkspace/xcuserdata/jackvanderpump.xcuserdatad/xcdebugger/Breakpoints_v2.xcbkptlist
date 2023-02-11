@@ -135,22 +135,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2DDF6D8C-3409-47A6-8BC1-20F88B86C3C6"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PumpyLibrary/PumpyLibrary/Views/Music Library/TrackRow.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "label"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "BB294FD8-3375-4925-BFCE-272E78619366"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -161,22 +145,6 @@
             startingLineNumber = "26"
             endingLineNumber = "26"
             landmarkName = "ScheduleManager"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C27510F3-237F-4FF5-9200-410FBBE40159"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pumpy Music/Pumpy Music iOS/Pumpy Music iOS/Music Manager/Managers/QueueManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "QueueManager"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -200,7 +168,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "B0B31486-07BA-4622-9A78-91062A622FC2"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pumpy Music/Pumpy Music iOS/Pumpy Music iOS/Account/Managers/User.swift"
@@ -232,7 +200,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "0DDC895E-C1C3-4F1A-8AF7-E3D35CDE2E16"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pumpy Music/Pumpy Music iOS/Pumpy Music iOS/Music Manager/Managers/MusicManager.swift"
@@ -248,7 +216,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "D56E1AC2-E320-4E6D-AE5C-4AB225C5ECE4"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pumpy Music/Pumpy Music iOS/Pumpy Music iOS/Music Manager/Managers/NowPlayingManager.swift"
@@ -264,7 +232,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "036E4C8A-6EEB-46DB-9368-1CCE6E80D2AB"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pumpy Music/Pumpy Music iOS/Pumpy Music iOS/Music Manager/Managers/PlaylistManager.swift"
@@ -280,7 +248,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "3A6551FD-C42D-4EB9-9CE8-79E0E866C85D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pumpy Music/Pumpy Music iOS/Pumpy Music iOS/Music Manager/Managers/BlockedTracksManager.swift"
@@ -296,7 +264,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "D5A74072-D783-4B82-8DEF-E8C66EA721BA"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pumpy Music/Pumpy Music iOS/Pumpy Music iOS/Music Manager/Managers/ScheduleManager.swift"

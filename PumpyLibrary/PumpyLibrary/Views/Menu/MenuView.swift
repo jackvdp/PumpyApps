@@ -19,7 +19,7 @@ public struct MenuView<H:HomeProtocol,
                        U:UserProtocol,
                        Content:View>: View {
     
-    public init(settings: SettingsManager, blockedTracksManager: B, nowPlayingManager: N, playlistManager: P, homeVM: H, user: U, alarmManager: AlarmManager, authManager: AuthorisationManager, queueManager: Q, content: Content) {
+    public init(settings: SettingsManager, blockedTracksManager: B, nowPlayingManager: N, playlistManager: P, homeVM: H, user: U, alarmManager: AlarmManager, authManager: AuthorisationManager, queueManager: Q, content: @escaping () -> Content) {
         self.settings = settings
         self.blockedTracksManager = blockedTracksManager
         self.nowPlayingManager = nowPlayingManager
@@ -41,7 +41,7 @@ public struct MenuView<H:HomeProtocol,
     @ObservedObject var alarmManager: AlarmManager
     @ObservedObject var authManager: AuthorisationManager
     @ObservedObject var queueManager: Q
-    let content: Content
+    let content: () -> Content
     @State private var showPlayer = true
     
     public var body: some View {
@@ -63,16 +63,11 @@ public struct MenuView<H:HomeProtocol,
     var mainMenu: some View {
         GeometryReader { geo in
             NavigationView {
-                PumpyList() {
-                    menuContent
+                PumpyList {
+                    content()
                 }
                 .listStyle(.insetGrouped)
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        PumpyView()
-                            .frame(width: 120, height: 40)
-                    }
-                }
+                .toolbar { logo }
             }
             .accentColor(.pumpyPink)
             .pumpyNavigation(isLandscape: isLandscape(geo: geo))
@@ -82,6 +77,15 @@ public struct MenuView<H:HomeProtocol,
             .onChange(of: geo.size.width) { _ in
                 activatePage(geo)
             }
+            .environmentObject(nowPlayingManager)
+            .environmentObject(playlistManager)
+            .environmentObject(blockedTracksManager)
+            .environmentObject(settings)
+            .environmentObject(alarmManager)
+            .environmentObject(authManager)
+            .environmentObject(queueManager)
+            .environmentObject(homeVM)
+            .environmentObject(user)
         }
     }
     
@@ -110,18 +114,12 @@ public struct MenuView<H:HomeProtocol,
                  .environmentObject(queueManager)
                  .environmentObject(homeVM)
     }
-    
-    var menuContent: some View {
-        content
-            .environmentObject(nowPlayingManager)
-            .environmentObject(playlistManager)
-            .environmentObject(blockedTracksManager)
-            .environmentObject(settings)
-            .environmentObject(alarmManager)
-            .environmentObject(authManager)
-            .environmentObject(queueManager)
-            .environmentObject(homeVM)
-            .environmentObject(user)
+
+    var logo: ToolbarItem<(), some View> {
+        ToolbarItem(placement: .principal) {
+            PumpyView()
+                .frame(width: 120, height: 40)
+        }
     }
     
     // MARK: Functions
@@ -180,7 +178,7 @@ struct MenuView_Previews: PreviewProvider {
                                 alarmManager: AlarmManager(),
                                 authManager: AuthorisationManager(),
                                 queueManager: MockQueueManager(),
-                                content: EmptyView())
+                                content: {EmptyView()})
 
 }
 #endif

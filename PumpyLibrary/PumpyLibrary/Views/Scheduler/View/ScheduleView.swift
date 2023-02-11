@@ -29,11 +29,6 @@ public struct ScheduleView: View {
         }
         .navigationTitle("Schedule" + (scheduleViewModel.alarmDays != nil ? " – \(scheduleViewModel.alarmDays!.rawValue)" : ""))
         .navigationBarItems(trailing: addAlarmButton)
-        .sheet(isPresented: $scheduleViewModel.showSetScheduleSheet) {
-            SetScheduleView(schVM: SetScheduleViewModel(alarm: scheduleViewModel.selectedAlarm,
-                                                        alarmManager: alarmManager,
-                                                        getPlists: getPlists))
-        }
         .onChange(of: scheduleViewModel.alarmDays) { _ in
             scheduleViewModel.filterAlarms(alarmArray: alarmManager.alarms)
         }
@@ -54,22 +49,24 @@ public struct ScheduleView: View {
     var alarmList: some View {
         PumpyList {
             ForEach(scheduleViewModel.alarmsToDisplay, id: \.uuid) { alarm in
-                Button(action: {
-                    scheduleViewModel.setAndShowAlarm(alarm)
-                }) {
-                    ScheduleRow(alarm: alarm)
-                }
+                alarmRow(alarm)
             }
             .onDelete(perform: delete)
         }
         .listStyle(.plain)
     }
     
-    func delete(at offsets: IndexSet) {
-        offsets.forEach { i in
-            let alarm = scheduleViewModel.alarmsToDisplay[i]
-            scheduleViewModel.alarmsToDisplay.remove(at: i)
-            alarmManager.deleteAlarm(alarm: alarm)
+    func alarmRow(_ alarm: Alarm) -> some View {
+        NavigationLink(isActive: $scheduleViewModel.showSetScheduleSheet) {
+            SetScheduleView(schVM: SetScheduleViewModel(alarm: scheduleViewModel.selectedAlarm,
+                                                        alarmManager: alarmManager,
+                                                        getPlists: getPlists))
+        } label: {
+            Button(action: {
+                scheduleViewModel.setAndShowAlarm(alarm)
+            }) {
+                ScheduleRow(alarm: alarm)
+            }
         }
     }
     
@@ -86,6 +83,16 @@ public struct ScheduleView: View {
             scheduleViewModel.setAndShowAlarm(nil)
         }) {
             Image(systemName: "plus")
+        }
+    }
+    
+//  MARK: Functions
+    
+    func delete(at offsets: IndexSet) {
+        offsets.forEach { i in
+            let alarm = scheduleViewModel.alarmsToDisplay[i]
+            scheduleViewModel.alarmsToDisplay.remove(at: i)
+            alarmManager.deleteAlarm(alarm: alarm)
         }
     }
     

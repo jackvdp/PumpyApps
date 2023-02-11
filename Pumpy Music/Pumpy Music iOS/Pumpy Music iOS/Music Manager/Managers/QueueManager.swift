@@ -25,7 +25,7 @@ class QueueManager: QueueProtocol {
     @Published var analysingEnergy = false
     
     func setUp(name: String,
-                         authManager: AuthorisationManager) {
+               authManager: AuthorisationManager) {
         username = name
         self.authManager = authManager
     }

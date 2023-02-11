@@ -27,7 +27,6 @@
 		C0130B4C26CBD2140056E5F6 /* BlockedTracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0130B4B26CBD2140056E5F6 /* BlockedTracksView.swift */; };
 		C0130B5026CBD5040056E5F6 /* BlockedTracksRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0130B4F26CBD5040056E5F6 /* BlockedTracksRowView.swift */; };
 		C0130B5226CBD52B0056E5F6 /* BlockedTrackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0130B5126CBD52B0056E5F6 /* BlockedTrackViewModel.swift */; };
-		C01720C528F3230B003BA158 /* CacheCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01720C428F3230B003BA158 /* CacheCleaner.swift */; };
 		C020E4F9291518B100811488 /* PumpyShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020E4F8291518B100811488 /* PumpyShared.framework */; };
 		C020E4FA291518B100811488 /* PumpyShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C020E4F8291518B100811488 /* PumpyShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C031993523BFD105007B1A4D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C031993423BFD105007B1A4D /* GoogleService-Info.plist */; };
@@ -104,7 +103,6 @@
 		C0130B4B26CBD2140056E5F6 /* BlockedTracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedTracksView.swift; sourceTree = "<group>"; };
 		C0130B4F26CBD5040056E5F6 /* BlockedTracksRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedTracksRowView.swift; sourceTree = "<group>"; };
 		C0130B5126CBD52B0056E5F6 /* BlockedTrackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedTrackViewModel.swift; sourceTree = "<group>"; };
-		C01720C428F3230B003BA158 /* CacheCleaner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheCleaner.swift; sourceTree = "<group>"; };
 		C020E4F8291518B100811488 /* PumpyShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C03176922395C69900B5D766 /* Core Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core Functions.swift"; sourceTree = "<group>"; };
 		C03176932395C69900B5D766 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -340,7 +338,6 @@
 				C0D60C5A23313D6A0010F653 /* AppDelegate.swift */,
 				C0B5F713251D172700D8073C /* Notifications.swift */,
 				C03176932395C69900B5D766 /* SceneDelegate.swift */,
-				C01720C428F3230B003BA158 /* CacheCleaner.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -541,7 +538,6 @@
 				6D45ED9228A5A0C0002EC94C /* StartView.swift in Sources */,
 				C0D60C5B23313D6A0010F653 /* AppDelegate.swift in Sources */,
 				C04A655923DF4F6300DD5FBB /* RemoteManager.swift in Sources */,
-				C01720C528F3230B003BA158 /* CacheCleaner.swift in Sources */,
 				C0130B5026CBD5040056E5F6 /* BlockedTracksRowView.swift in Sources */,
 				6D972DC328A307A300CFD9D7 /* HomeVM.swift in Sources */,
 				C0E6E0012631B9B000265B9E /* Music Models.swift in Sources */,

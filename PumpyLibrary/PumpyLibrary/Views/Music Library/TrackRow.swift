@@ -9,6 +9,7 @@
 import SwiftUI
 import MediaPlayer
 import PumpyShared
+import PumpyAnalytics
 
 public struct TrackRow<T:TokenProtocol,
                        N:NowPlayingProtocol,
@@ -19,7 +20,7 @@ public struct TrackRow<T:TokenProtocol,
     let track: Track
     let tapAction: (()->())?
     @State private var buttonTapped = false
-    @EnvironmentObject var tokenManager: T
+    @EnvironmentObject var tokenManager: AuthorisationManager
     @EnvironmentObject var queueManager: Q
 
     public init(track: Track, tapAction: (()->())? = nil) {
@@ -60,8 +61,7 @@ public struct TrackRow<T:TokenProtocol,
         .contextWithPreview {
             menu
         } preview: {
-            print(track)
-            return TrackPreview(track: track)
+            TrackPreview(track: track)
                 .environmentObject(tokenManager)
         }
     }
@@ -88,7 +88,6 @@ public struct TrackRow<T:TokenProtocol,
     @ViewBuilder
     var menu: some View {
         Button {
-            
             queueManager.playTrackNow(id: track.playbackStoreID)
         } label: {
             Label("Play Now", systemImage: "play.fill")

@@ -51,7 +51,7 @@ struct UserView: View {
           alarmManager: alarmManager,
           authManager: authManager,
           queueManager: queueManager,
-          content: MenuContent())
+          content: {MenuContent()})
     }
     
     func setUp() {

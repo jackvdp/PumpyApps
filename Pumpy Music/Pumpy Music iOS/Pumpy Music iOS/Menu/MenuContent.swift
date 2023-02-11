@@ -13,10 +13,8 @@ import PumpyAnalytics
 struct MenuContent: View {
     @EnvironmentObject var settings: SettingsManager
     @EnvironmentObject var tokenManager: AuthorisationManager
-    @EnvironmentObject var nowPlayingManager: NowPlayingManager
     @EnvironmentObject var homeVM: HomeVM
     @EnvironmentObject var user: User
-    @Namespace private var animation
     
     var body: some View {
         music

@@ -16,20 +16,16 @@ struct SetScheduleView: View {
     @State private var showingAlert: Bool = false
     @State private var showingSecondaryPlaylists = true
     
-    @ViewBuilder
     var body: some View {
-        NavigationView {
-            PumpyList {
-                playlistDetails
-                secondaryPlaylists
-                externalDisplaySettings
-            }
-            .listStyle(InsetGroupedListStyle())
-            .navigationTitle("Set Event")
-            .navigationBarItems(leading: CancelButton(action: cancelPressed),
-                                trailing: SaveButton(action: saveAlarm))
+        PumpyList {
+            playlistDetails
+            secondaryPlaylists
+            externalDisplaySettings
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .listStyle(InsetGroupedListStyle())
+        .navigationTitle("Set Event")
+        .navigationBarItems(leading: CancelButton(action: cancelPressed),
+                            trailing: SaveButton(action: saveAlarm))
         .accentColor(.pumpyPink)
         .alert(isPresented: $showingAlert) {
             playlistAlert
@@ -49,17 +45,18 @@ struct SetScheduleView: View {
     }
     
     var secondaryPlaylists: some View {
-        Section(header:
-                    HStack {
-                        Text("Secondary Playlists")
-                        Spacer()
-                             Button(action: {
-                                 schVM.createNewSecondaryPlaylist()
-                             }, label: {
-                                 Image(systemName: "plus.circle")
-                             })
-                    }
-                    ) {
+        Section(
+            header:
+                HStack {
+                    Text("Secondary Playlists")
+                    Spacer()
+                    Button(action: {
+                        schVM.createNewSecondaryPlaylist()
+                    }, label: {
+                        Image(systemName: "plus.circle")
+                    })
+                }
+        ) {
             ForEach($schVM.secondaryPlaylists) { playlist in
                 Section {
                     VStack {
