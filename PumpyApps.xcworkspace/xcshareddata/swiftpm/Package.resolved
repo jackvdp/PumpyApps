@@ -15,7 +15,7 @@
       "location" : "https://github.com/exyte/ActivityIndicatorView.git",
       "state" : {
         "branch" : "master",
-        "revision" : "0fb57e69b6130b4beb8ba49eaafe13563f2f6bd6"
+        "revision" : "9970fd0bb7a05dad0b6566ae1f56937716686b24"
       }
     },
     {
@@ -33,7 +33,7 @@
       "location" : "https://github.com/elai950/AlertToast.git",
       "state" : {
         "branch" : "master",
-        "revision" : "a437862bb6605080a5816e866cbd4ac8c8657b49"
+        "revision" : "638f38f9daf08e17b7caea22d2fcb9c0a418d1b6"
       }
     },
     {
@@ -222,7 +222,7 @@
       "location" : "https://github.com/siteline/SwiftUI-Introspect.git",
       "state" : {
         "branch" : "master",
-        "revision" : "d3cbf32788250741d397cfb5bcd532c37aa1096d"
+        "revision" : "0ee6d36368422aa2fef62fc41a86a179abe46ef1"
       }
     },
     {

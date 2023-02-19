@@ -92,7 +92,7 @@
 		C0000EA828D124C700F909FD /* ItemDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000EA728D124C700F909FD /* ItemDetailViewModel.swift */; };
 		C0000EAF28D2663600F909FD /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000EAE28D2663600F909FD /* SearchView.swift */; };
 		C0000EB328D2677300F909FD /* CatalogSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0000EB228D2677300F909FD /* CatalogSearchViewModel.swift */; };
-		C003521F290D7FD40006ACDE /* PumpyLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C003521E290D7FD40006ACDE /* PumpyLibraryTests.swift */; };
+		C003521F290D7FD40006ACDE /* AlarmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C003521E290D7FD40006ACDE /* AlarmTests.swift */; };
 		C0035220290D7FD40006ACDE /* PumpyLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D851514288D3A3F006397CC /* PumpyLibrary.framework */; platformFilter = ios; };
 		C01720BF28F17B9B003BA158 /* TrackPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01720BE28F17B9B003BA158 /* TrackPreview.swift */; };
 		C01720C328F17EE7003BA158 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01720C228F17EE7003BA158 /* ArtworkView.swift */; };
@@ -215,7 +215,7 @@
 		C0000EAE28D2663600F909FD /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		C0000EB228D2677300F909FD /* CatalogSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogSearchViewModel.swift; sourceTree = "<group>"; };
 		C003521C290D7FD40006ACDE /* PumpyLibraryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PumpyLibraryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C003521E290D7FD40006ACDE /* PumpyLibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpyLibraryTests.swift; sourceTree = "<group>"; };
+		C003521E290D7FD40006ACDE /* AlarmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTests.swift; sourceTree = "<group>"; };
 		C01720BE28F17B9B003BA158 /* TrackPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPreview.swift; sourceTree = "<group>"; };
 		C01720C228F17EE7003BA158 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
 		C06668BF28D0DEF800B4E679 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
@@ -546,7 +546,7 @@
 		C003521D290D7FD40006ACDE /* PumpyLibraryTests */ = {
 			isa = PBXGroup;
 			children = (
-				C003521E290D7FD40006ACDE /* PumpyLibraryTests.swift */,
+				C003521E290D7FD40006ACDE /* AlarmTests.swift */,
 			);
 			path = PumpyLibraryTests;
 			sourceTree = "<group>";
@@ -779,7 +779,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C003521F290D7FD40006ACDE /* PumpyLibraryTests.swift in Sources */,
+				C003521F290D7FD40006ACDE /* AlarmTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

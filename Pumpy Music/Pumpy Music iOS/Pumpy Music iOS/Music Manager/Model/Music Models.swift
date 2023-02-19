@@ -28,10 +28,10 @@ extension MPMediaItem: Track {
     }
 
     public func getBlockedTrack() -> BlockedTrack {
-        return BlockedTrack(title: self.title,
-                            artist: self.artist,
-                            isExplicit: self.isExplicitItem,
-                            playbackID: self.playbackStoreID)
+        BlockedTrack(title: self.title,
+                     artist: self.artist,
+                     isExplicit: self.isExplicitItem,
+                     playbackID: self.playbackStoreID)
     }
 }
 

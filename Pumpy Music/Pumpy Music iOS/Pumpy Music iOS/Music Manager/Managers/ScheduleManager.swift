@@ -41,7 +41,8 @@ class ScheduleManager: NSObject {
                   let self,
                   let playlistManager = self.playlistManager else { return }
             
-            playlistManager.changePlaylistForSchedule(alarm: nextAlarm)
+            playlistManager
+                .changePlaylistForSchedule(alarm: nextAlarm)
             self.setUpPlaylistChangeTimer()
         }
         

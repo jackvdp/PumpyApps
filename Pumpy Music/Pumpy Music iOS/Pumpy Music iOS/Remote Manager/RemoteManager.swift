@@ -35,6 +35,8 @@ class RemoteManager: ObservableObject {
         print("deinit RM")
     }
     
+    // MARK: - Public functions
+    
     func recieveRemoteCommands() {
         if let username {
             remoteListener = FireMethods.listen(name: username,
@@ -51,6 +53,8 @@ class RemoteManager: ObservableObject {
         remoteListener?.remove()
     }
     
+    // MARK: - Private functions
+    
     func respondToRemoteInfo(_ remoteInfo: RemoteInfo) {
         guard abs(remoteInfo.updateTime.timeIntervalSinceNow) < 5 else {
             resetRemoteInfo()
@@ -65,6 +69,7 @@ class RemoteManager: ObservableObject {
         }
     }
     
+    /// Only gets called if passes debouncer and time constraint
     private func actOnRemoteCommand(_ remoteData: RemoteEnum) {
         guard let playlistManager,
               let alarmManager,
@@ -96,6 +101,10 @@ class RemoteManager: ObservableObject {
             queueManager.increaseEnergy()
         case .decreaseEnergy:
             queueManager.decreaseEnergy()
+        case .playCatalogPlaylistNow(id: let id):
+            playlistManager.playNow(playlistID: id)
+        case .playCatalogPlaylistNext(id: let id):
+            playlistManager.playNext(playlistID: id)
         }
     }
     

@@ -25,6 +25,8 @@ public enum RemoteEnum {
     case previousTrack
     case playPlaylistNow(playlist: String)
     case playPlaylistNext(playlist: String)
+    case playCatalogPlaylistNow(id: String)
+    case playCatalogPlaylistNext(id: String)
     case getLibraryPlaylists
     case getTracksFromPlaylist(playlist: String)
     case removeTrackFromQueue(id: String)
@@ -89,6 +91,14 @@ extension RemoteEnum: Codable {
             
         case .decreaseEnergy:
             try container.encode("decreaseEnergy", forKey: .rawValue)
+            
+        case .playCatalogPlaylistNow(id: let id):
+            try container.encode("playCatalogPlaylistNow", forKey: .rawValue)
+            try container.encode(id, forKey: .associatedValue)
+            
+        case .playCatalogPlaylistNext(id: let id):
+            try container.encode("playCatalogPlaylistNext", forKey: .rawValue)
+            try container.encode(id, forKey: .associatedValue)
         }
         
     }

@@ -21,6 +21,7 @@ class PlaylistManager: PlaylistProtocol {
     weak var tokenManager: AuthorisationManager?
     weak var queueManager: QueueManager?
     let scheduleManager = ScheduleManager()
+    private let playlistController = PlaylistController()
     
     init() {
         scheduleManager.playlistManager = self
@@ -84,6 +85,25 @@ class PlaylistManager: PlaylistProtocol {
         playQueueNext(name: playlistName, queue: queueDescriptor)
     }
     
+    // MARK: - Play From Catalog ID
+    
+    func playNow(playlistID: String) {
+        getQueueFromPlaylist(id: playlistID) { [weak self] name, queue in
+            self?.playQueueNow(name: name, queue: queue)
+        }
+    }
+    
+    func playNext(playlistID: String) {
+        guard musicPlayerController.playbackState == .playing else {
+            playNow(playlistID: playlistID)
+            return
+        }
+        
+        getQueueFromPlaylist(id: playlistID) { [weak self] name, queue in
+            self?.playQueueNext(name: name, queue: queue)
+        }
+    }
+    
     // MARK: - Play From Items
     
     private func playNow(catalogPlaylist: PumpyLibrary.Playlist) {
@@ -142,6 +162,23 @@ class PlaylistManager: PlaylistProtocol {
         }
         
         return Array(removeUnwantedMPMediaItems(items: items).shuffled().prefix(number))
+    }
+    
+    // MARK: - Get items from playlist ID
+    
+    private func getQueueFromPlaylist(id: String, completion: @escaping (String, MPMusicPlayerStoreQueueDescriptor)->())  {
+        guard let tokenManager else { return }
+        
+        let snapshot = PlaylistSnapshot(sourceID: id, type: .am(id: id))
+        playlistController.get(libraryPlaylist: snapshot,
+                               authManager: tokenManager) { playlist, error in
+            
+            guard let playlist, !playlist.tracks.isEmpty else { return }
+            let totalNumberOfTracks = 150
+            let trackIDs = playlist.tracks.compactMap(\.appleMusicItem?.id)
+            let shuffledAndCutIDs = Array(trackIDs.shuffled().prefix(150))
+            completion(playlist.name ?? "", MPMusicPlayerStoreQueueDescriptor(storeIDs: shuffledAndCutIDs))
+        }
     }
     
     // MARK: - Get items from catalog playlist

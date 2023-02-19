@@ -42,7 +42,7 @@
 		C061CB7824AA949200E18F98 /* LockAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C061CB7724AA949200E18F98 /* LockAlertView.swift */; };
 		C068FB19252F85A5006F7349 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C068FB18252F85A5006F7349 /* NetworkExtension.framework */; };
 		C0725DDC2617757D0095EDD9 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0725DDB2617757C0095EDD9 /* AccountManager.swift */; };
-		C075CC6D2947602B002A8F30 /* Pumpy_MusicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C075CC6C2947602B002A8F30 /* Pumpy_MusicTests.swift */; };
+		C075CC6D2947602B002A8F30 /* MusicManagerLeakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C075CC6C2947602B002A8F30 /* MusicManagerLeakTests.swift */; };
 		C07865132619D5CB001FB32B /* ActiveInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07865122619D5CB001FB32B /* ActiveInfo.swift */; };
 		C0798655262D5CC9003A426E /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0798654262D5CC9003A426E /* MusicManager.swift */; };
 		C08E0AEC2931760000D83774 /* MenuContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08E0AEB2931760000D83774 /* MenuContent.swift */; };
@@ -120,7 +120,7 @@
 		C068FB18252F85A5006F7349 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		C0725DDB2617757C0095EDD9 /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		C075CC6A2947602B002A8F30 /* Pumpy MusicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pumpy MusicTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C075CC6C2947602B002A8F30 /* Pumpy_MusicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pumpy_MusicTests.swift; sourceTree = "<group>"; };
+		C075CC6C2947602B002A8F30 /* MusicManagerLeakTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManagerLeakTests.swift; sourceTree = "<group>"; };
 		C07865122619D5CB001FB32B /* ActiveInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveInfo.swift; sourceTree = "<group>"; };
 		C078F06423C4D17700190352 /* Pumpy Music.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pumpy Music.entitlements"; sourceTree = "<group>"; };
 		C0798654262D5CC9003A426E /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
@@ -317,7 +317,7 @@
 		C075CC6B2947602B002A8F30 /* Pumpy MusicTests */ = {
 			isa = PBXGroup;
 			children = (
-				C075CC6C2947602B002A8F30 /* Pumpy_MusicTests.swift */,
+				C075CC6C2947602B002A8F30 /* MusicManagerLeakTests.swift */,
 			);
 			path = "Pumpy MusicTests";
 			sourceTree = "<group>";
@@ -502,7 +502,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C075CC6D2947602B002A8F30 /* Pumpy_MusicTests.swift in Sources */,
+				C075CC6D2947602B002A8F30 /* MusicManagerLeakTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
