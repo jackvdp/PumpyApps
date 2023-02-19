@@ -43,7 +43,7 @@ public struct AccountView<A:AccountManagerProtocol>: View {
     }
     
     var versionLabel: some View {
-        Text("Account: \("user.username") | v\(K.versionNumber)")
+        Text("Account: \(accountVM.user?.username ?? "") | v\(K.versionNumber)")
             .foregroundColor(.gray)
             .lineLimit(1)
             .padding(.horizontal)
