@@ -101,11 +101,9 @@
 		C077977928D355AA00EC9D5F /* ItemGridComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C077977828D355AA00EC9D5F /* ItemGridComponent.swift */; };
 		C08E0AF5293209F100D83774 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08E0AF4293209F100D83774 /* MenuView.swift */; };
 		C08E0AF929321E1E00D83774 /* PumpyShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08E0AF829321E1E00D83774 /* PumpyShared.framework */; };
-		C08E0AFA29321E1E00D83774 /* PumpyShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C08E0AF829321E1E00D83774 /* PumpyShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C0A861C029212F2200D75A8D /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A861BF29212F2200D75A8D /* List.swift */; };
 		C0BBEFA8291806ED008200DB /* ContextiOS16.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BBEFA7291806ED008200DB /* ContextiOS16.swift */; };
 		C0CBA99729151BCB001A90AE /* PumpyAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */; };
-		C0CBA99829151BCB001A90AE /* PumpyAnalytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,21 +115,6 @@
 			remoteInfo = PumpyLibrary;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		6D5B67CE28C49CC80040B439 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C0CBA99829151BCB001A90AE /* PumpyAnalytics.framework in Embed Frameworks */,
-				C08E0AFA29321E1E00D83774 /* PumpyShared.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6D1577BF28BE19BC004BAB47 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -583,7 +566,6 @@
 				6D851510288D3A3F006397CC /* Sources */,
 				6D851511288D3A3F006397CC /* Frameworks */,
 				6D851512288D3A3F006397CC /* Resources */,
-				6D5B67CE28C49CC80040B439 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
