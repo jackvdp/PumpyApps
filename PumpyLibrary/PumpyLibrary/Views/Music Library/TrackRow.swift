@@ -17,15 +17,23 @@ public struct TrackRow<T:TokenProtocol,
                        P:PlaylistProtocol,
                        Q:QueueProtocol>: View {
     
-    let track: Track
+    let track: PumpyAnalytics.Track
     let tapAction: (()->())?
     @State private var buttonTapped = false
     @EnvironmentObject var tokenManager: AuthorisationManager
     @EnvironmentObject var queueManager: Q
 
-    public init(track: Track, tapAction: (()->())? = nil) {
+    public init(track: PumpyAnalytics.Track, tapAction: (()->())? = nil) {
         self.track = track
         self.tapAction = tapAction
+    }
+    
+    var amTrack: ConstructedTrack? {
+        if let am = track.appleMusicItem {
+            return ConstructedTrack(playbackStoreID: am.id,
+                                    isExplicitItem: false)
+        }
+        return nil
     }
     
     public var body: some View {
@@ -50,8 +58,10 @@ public struct TrackRow<T:TokenProtocol,
             ArtworkView(artworkURL: track.artworkURL, size: 60)
             trackDetails
             Spacer()
-            DislikeButton<N,B>(track: track, size: 20)
-                .padding(.horizontal)
+            if let amTrack {
+                DislikeButton<N,B>(track: amTrack, size: 20)
+                    .padding(.horizontal)
+            }
         }
         .onAppear() {
             UITableViewCell.appearance().backgroundColor = .clear
@@ -69,17 +79,17 @@ public struct TrackRow<T:TokenProtocol,
     var trackDetails: some View {
         VStack(alignment: .leading, spacing: 5.0) {
             HStack(alignment: .center, spacing: 10.0) {
-                Text(track.title ?? "")
+                Text(track.title)
                     .font(.headline)
                     .lineLimit(1)
-                if track.isExplicitItem {
+                if let amTrack, amTrack.isExplicitItem {
                     Image(systemName: "e.square")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 12, height: 12, alignment: .center)
                 }
             }
-            Text(track.artist ?? "N/A")
+            Text(track.artist)
                 .font(.subheadline)
                 .lineLimit(1)
         }
@@ -87,20 +97,22 @@ public struct TrackRow<T:TokenProtocol,
     
     @ViewBuilder
     var menu: some View {
-        Button {
-            queueManager.playTrackNow(id: track.playbackStoreID)
-        } label: {
-            Label("Play Now", systemImage: "play.fill")
+        if let amTrack {
+            Button {
+                queueManager.playTrackNow(id: amTrack.playbackStoreID)
+            } label: {
+                Label("Play Now", systemImage: "play.fill")
+            }
+            .padding()
+            .foregroundColor(.pumpyPink)
+            Button {
+                queueManager.addTrackToQueue(ids: [amTrack.playbackStoreID])
+            } label: {
+                Label("Play Next", systemImage: "text.insert")
+            }
+            .padding()
+            .foregroundColor(.pumpyPink)
         }
-        .padding()
-        .foregroundColor(.pumpyPink)
-        Button {
-            queueManager.addTrackToQueue(ids: [track.playbackStoreID])
-        } label: {
-            Label("Play Next", systemImage: "text.insert")
-        }
-        .padding()
-        .foregroundColor(.pumpyPink)
     }
 
     // MARK: - Flash Methods
@@ -118,7 +130,7 @@ public struct TrackRow<T:TokenProtocol,
 
 struct TrackRow_Previews: PreviewProvider {
     
-    static let track = MockData.track
+    static let track = PumpyAnalytics.MockData.trackWithFeatures
     
     static var previews: some View {
         TrackRow<MockTokenManager,

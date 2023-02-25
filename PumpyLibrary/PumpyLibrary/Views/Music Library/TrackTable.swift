@@ -10,6 +10,7 @@ import SwiftUI
 import Combine
 import MediaPlayer
 import AlertToast
+import PumpyAnalytics
 
 struct TrackTable<H:HomeProtocol,
                   P:PlaylistProtocol,
@@ -20,7 +21,7 @@ struct TrackTable<H:HomeProtocol,
     
     @EnvironmentObject var playlistManager: P
     @EnvironmentObject var homeVM: H
-    let playlist: PumpyLibrary.Playlist
+    let playlist: PumpyAnalytics.Playlist
     @State private var showingPlayNextToast = false
     @State private var searchText = ""
     
@@ -75,28 +76,47 @@ struct TrackTable<H:HomeProtocol,
     
     func playNext() {
         showingPlayNextToast = true
-        playlistManager.playNext(playlist: playlist,
+        
+        playlistManager.playNext(playlist: libPlaylist,
                                  secondaryPlaylists: [])
     }
     
     func playNow() {
-        playlistManager.playNow(playlist: playlist,
+        playlistManager.playNow(playlist: libPlaylist,
                                 secondaryPlaylists: [])
     }
     
     func playFromPosition(track: Track) {
-        if let playlistIndex = playlist.tracks.firstIndex(where: { $0.playbackStoreID == track.playbackStoreID }) {
-            playlistManager.playPlaylist(playlist: playlist, from: playlistIndex)
+        if let playlistIndex = libPlaylist.tracks.firstIndex(where: { $0.playbackStoreID == track.playbackStoreID }) {
+            playlistManager.playPlaylist(playlist: libPlaylist, from: playlistIndex)
         }
     }
     
-    var filteredTracks: [Track] {
+    var libPlaylist: ConstructedPlaylist {
+        
+        let tracks: [ConstructedTrack] = playlist.tracks.compactMap {
+            guard let amItem = $0.appleMusicItem else { return nil }
+            return ConstructedTrack(title: amItem.name,
+                                    artist: amItem.artistName,
+                                    artworkURL: amItem.artworkURL,
+                                    playbackStoreID: amItem.id,
+                                    isExplicitItem: false)
+        }
+        
+        return ConstructedPlaylist(name: playlist.name,
+                                   tracks: tracks,
+                                   cloudGlobalID: nil,
+                                   artworkURL: playlist.artworkURL)
+        
+    }
+    
+    var filteredTracks: [PumpyAnalytics.Track] {
         if searchText.isEmpty {
             return playlist.tracks
         } else {
             return playlist.tracks.filter {
-                ($0.title ?? "").localizedCaseInsensitiveContains(searchText) ||
-                ($0.artist ?? "").localizedCaseInsensitiveContains(searchText)
+                ($0.title).localizedCaseInsensitiveContains(searchText) ||
+                ($0.artist).localizedCaseInsensitiveContains(searchText)
             }
         }
     }

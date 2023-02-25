@@ -10,25 +10,24 @@ import PumpyAnalytics
 
 struct TrackPreview: View {
     
-    let track: Track
-    @State var analysedTrack: PumpyAnalytics.Track?
+    @ObservedObject var track: PumpyAnalytics.Track
     private let controller = AnalyseController()
     @EnvironmentObject var authManager: AuthorisationManager
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             trackDetails
-            if let spotItem = analysedTrack?.spotifyItem,
-               let amItem = analysedTrack?.appleMusicItem {
+            if let spotItem = track.spotifyItem,
+               let amItem = track.appleMusicItem {
                 Divider()
                 trackFeatures(amItem, spotItem: spotItem)
-                    .animation(.easeIn, value: analysedTrack)
+                    .animation(.easeIn, value: track)
             }
             
-            if let analysis = analysedTrack?.audioFeatures {
+            if let analysis = track.audioFeatures {
                 Divider()
                 trackAnalysis(analysis)
-                    .animation(.easeIn, value: analysedTrack)
+                    .animation(.easeIn, value: track)
             }
         }
         .padding()
@@ -38,20 +37,15 @@ struct TrackPreview: View {
     }
     
     private func analyseTrack() {
-        controller.analyseMediaPlayerTracks(amIDs: [track.playbackStoreID],
-                                            authManager: authManager) { tracks in
-            guard let track = tracks.first else { return }
-            withAnimation {
-                analysedTrack = track
-            }
-        }
+        let playlist = RecommendedPlaylist(tracks: [track], authManager: authManager, sourceID: "")
+        playlist.getTracksData()
     }
     
     private var trackDetails: some View {
         VStack(alignment: .leading) {
             ArtworkView(artworkURL: track.artworkURL, size: 200)
-            Text(track.title ?? "N/A")
-            Text(track.artist ?? "N/A")
+            Text(track.title)
+            Text(track.artist)
                 .opacity(0.5)
         }
     }
@@ -101,12 +95,12 @@ struct TrackPreview_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            TrackPreview(track: MockData.track, analysedTrack: analysedTrack)
+            TrackPreview(track: analysedTrack)
                 .preferredColorScheme(.dark)
                 .padding(100)
                 .background(Color.indigo)
                 .environmentObject(AuthorisationManager())
-            TrackPreview(track: MockData.track).trackAnalysis(analysedTrack.audioFeatures!)
+            TrackPreview(track: analysedTrack).trackAnalysis(analysedTrack.audioFeatures!)
                 .preferredColorScheme(.dark)
                 .padding(100)
                 .background(Color.indigo)
