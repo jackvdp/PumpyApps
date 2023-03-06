@@ -26,13 +26,6 @@ extension MPMediaItem: Track {
         }
         return nil
     }
-
-    public func getBlockedTrack() -> BlockedTrack {
-        BlockedTrack(title: self.title,
-                     artist: self.artist,
-                     isExplicit: self.isExplicitItem,
-                     playbackID: self.playbackStoreID)
-    }
 }
 
 extension MPMediaPlaylist: Playlist, ScheduledPlaylist {

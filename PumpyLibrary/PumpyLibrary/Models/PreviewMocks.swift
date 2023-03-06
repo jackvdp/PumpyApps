@@ -35,11 +35,4 @@ public struct PreviewTrack: Track {
     public var artworkURL: String?
     public var playbackStoreID: String
     public var isExplicitItem: Bool
-    
-    public func getBlockedTrack() -> BlockedTrack {
-        return BlockedTrack(title: self.title,
-                            artist: self.artist,
-                            isExplicit: self.isExplicitItem,
-                            playbackID: self.playbackStoreID)
-    }
 }
