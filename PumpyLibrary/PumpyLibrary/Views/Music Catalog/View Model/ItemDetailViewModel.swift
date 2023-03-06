@@ -13,10 +13,15 @@ class ItemDetailViewModel: ObservableObject {
     @Published var pageState = PageState.loading
     
     func getItem(snapshot: PlaylistSnapshot, authManager: AuthorisationManager) {
-        if snapshot.sourceID.contains("pl") {
+        switch snapshot.type {
+        case .am(id: let id):
+            if id.contains("pl") {
+                getPlaylist(snapshot: snapshot, authManager: authManager)
+            } else {
+                getAlbum(id: id, authManager: authManager)
+            }
+        default:
             getPlaylist(snapshot: snapshot, authManager: authManager)
-        } else {
-            getAlbum(id: snapshot.sourceID, authManager: authManager)
         }
     }
     
@@ -32,6 +37,8 @@ class ItemDetailViewModel: ObservableObject {
                 self.pageState = .failed
                 return
             }
+            
+            playlist.getTracksData()
             
             DispatchQueue.main.async {
                 self.pageState = .success(playlist)

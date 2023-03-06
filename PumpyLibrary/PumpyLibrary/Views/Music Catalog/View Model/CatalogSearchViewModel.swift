@@ -16,10 +16,13 @@ class CatalogSearchViewModel: ObservableObject {
     
     func runSearch(term: String, authManager: AuthorisationManager) {
         lastSearchTerm = term
-        var playlistSnapshots = [PlaylistSnapshot]()
-        var constructedTracks = [ConstructedTrack]()
+        var amSnapshots = [PlaylistSnapshot]()
+        var spotifySnapshots = [PlaylistSnapshot]()
+        var sybSnapshots = [PlaylistSnapshot]()
+        var searchedTracks = [ConstructedTrack]()
         var done = 0
         
+        // MARK: - AM Playlists
         controller.searchAppleMusic(term, authManager: authManager) { [weak self] snapshots, error in
             done += 1
             
@@ -29,13 +32,17 @@ class CatalogSearchViewModel: ObservableObject {
                 self.pageState = .failed
                 return
             }
-            playlistSnapshots = snapshots
+            amSnapshots = snapshots
             
-            if done == 2 {
-                self.pageState = .success(playlistSnapshots, constructedTracks)
+            if done == 4 {
+                self.pageState = .success(am: amSnapshots,
+                                          spotify: spotifySnapshots,
+                                          syb: sybSnapshots,
+                                          tracks: searchedTracks)
             }
         }
         
+        // MARK: - AM Tracks
         controller.searchAMTracks(term, authManager: authManager) { [weak self] tracks, error in
             done += 1
             
@@ -45,7 +52,7 @@ class CatalogSearchViewModel: ObservableObject {
                 self.pageState = .failed
                 return
             }
-            constructedTracks = tracks.compactMap { track in
+            searchedTracks = tracks.compactMap { track in
                 ConstructedTrack(title: track.title,
                                  artist: track.artist,
                                  artworkURL: track.artworkURL,
@@ -53,10 +60,58 @@ class CatalogSearchViewModel: ObservableObject {
                                  isExplicitItem: track.isExplicit)
             }
             
-            if done == 2 {
-                self.pageState = .success(playlistSnapshots, constructedTracks)
+            if done == 4 {
+                self.pageState = .success(am: amSnapshots,
+                                          spotify: spotifySnapshots,
+                                          syb: sybSnapshots,
+                                          tracks: searchedTracks)
             }
         }
+        
+        // MARK: - Spotfy Playlists
+        controller.searchSpotify(term, authManager: authManager) { [weak self] snapshots, error in
+            done += 1
+            
+            guard let self = self else { return }
+            guard let snapshots = snapshots else {
+                print("Error conducting search \(error?.message ?? "")")
+                self.pageState = .failed
+                return
+            }
+            
+            spotifySnapshots = snapshots
+            
+            if done == 4 {
+                self.pageState = .success(am: amSnapshots,
+                                          spotify: spotifySnapshots,
+                                          syb: sybSnapshots,
+                                          tracks: searchedTracks)
+            }
+        }
+        
+        // MARK: - SYB Playlists
+        controller.searchSYB(term) { [weak self] snapshots, error in
+            done += 1
+            
+            guard let self = self else { return }
+            guard let snapshots = snapshots else {
+                print("Error conducting search \(error?.message ?? "")")
+                self.pageState = .failed
+                return
+            }
+            
+            sybSnapshots = snapshots
+            print("*** '\(snapshots.count)")
+            print("*** '\(sybSnapshots.count)")
+            
+            if done == 4 {
+                self.pageState = .success(am: amSnapshots,
+                                          spotify: spotifySnapshots,
+                                          syb: sybSnapshots,
+                                          tracks: searchedTracks)
+            }
+        }
+        
     }
     
     func searchAgain(authManager: AuthorisationManager) {
@@ -64,13 +119,16 @@ class CatalogSearchViewModel: ObservableObject {
     }
     
     enum PageState: Equatable {
-        case loading, success([PlaylistSnapshot], [Track]), failed
+        case loading, success(am: [PlaylistSnapshot],
+                              spotify: [PlaylistSnapshot],
+                              syb: [PlaylistSnapshot],
+                              tracks: [Track]), failed
         
         static func == (lhs: CatalogSearchViewModel.PageState, rhs: CatalogSearchViewModel.PageState) -> Bool {
             switch (lhs, rhs) {
             case (.loading, .loading):
                 return true
-            case (.success(let a, _), .success(let b, _)):
+            case (.success(let a, _, _, _), .success(let b, _, _, _)):
                 return a == b
             case (.failed, .failed):
                 return true

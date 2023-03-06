@@ -32,10 +32,12 @@ public class ArtworkHandler {
     }
     
     public static func makeMusicStoreURL(_ urlString: String, size: Int) -> URL? {
+        let biggerSize = size * 2
         let string = urlString
-            .replacingOccurrences(of: "{w}", with: String(size))
-            .replacingOccurrences(of: "{h}", with: String(size))
-            .replacingOccurrences(of: "%w", with: String(size))
+            .replacingOccurrences(of: "{w}", with: String(biggerSize))
+            .replacingOccurrences(of: "{h}", with: String(biggerSize))
+            .replacingOccurrences(of: "%w", with: String(biggerSize))
+            .replacingOccurrences(of: "%h", with: String(biggerSize))
             .replacingOccurrences(of: ArtworkHandler.key.description, with: String(size))
         
         if let url = URL(string: string) {

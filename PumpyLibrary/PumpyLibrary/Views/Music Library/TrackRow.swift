@@ -53,7 +53,7 @@ public struct TrackRow<T:TokenProtocol,
             DislikeButton<N,B>(track: track, size: 20)
                 .padding(.horizontal)
         }
-        .opacity(track.amStoreID != nil ? 1 : 0.5)
+        .opacity(track.amStoreID != nil ? 1 : 0.3)
         .onAppear() {
             UITableViewCell.appearance().backgroundColor = .clear
             UITableView.appearance().backgroundColor = .clear
@@ -129,6 +129,7 @@ public struct TrackRow<T:TokenProtocol,
     }
 }
 
+// MARK: - Preview
 
 struct TrackRow_Previews: PreviewProvider {
     

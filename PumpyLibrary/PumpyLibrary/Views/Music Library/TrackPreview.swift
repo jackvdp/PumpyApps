@@ -38,12 +38,18 @@ struct TrackPreview: View {
     }
     
     private func analyseTrack() {
-        guard let id = track.amStoreID else { return }
-        controller.analyseMediaPlayerTracks(amIDs: [id],
-                                            authManager: authManager) { tracks in
-            guard let track = tracks.first else { return }
+        if let anlysdTrack = track as? PumpyAnalytics.Track {
             withAnimation {
-                analysedTrack = track
+                analysedTrack = anlysdTrack
+            }
+        } else {
+            guard let id = track.amStoreID else { return }
+            controller.analyseMediaPlayerTracks(amIDs: [id],
+                                                authManager: authManager) { tracks in
+                guard let track = tracks.first else { return }
+                withAnimation {
+                    analysedTrack = track
+                }
             }
         }
     }

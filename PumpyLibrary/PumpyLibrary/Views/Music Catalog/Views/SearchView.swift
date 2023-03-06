@@ -28,8 +28,8 @@ struct CatalogSearchView<H:HomeProtocol,
                 loadingView
                     .transition(.opacity)
                     .id(screen)
-            case .success(let playlistSnapshots, let tracks):
-                searchResults(playlistSnapshots, tracks)
+            case .success(am: let am, spotify: let spot, syb: let syb, tracks: let tracks):
+                searchResults(am, spot, syb, tracks)
                     .transition(.opacity)
                     .id(screen)
             case .failed:
@@ -45,18 +45,31 @@ struct CatalogSearchView<H:HomeProtocol,
     
     // MARK: - Components
     
-    func searchResults(_ playlists: [PlaylistSnapshot],
+    func searchResults(_ amPlaylists: [PlaylistSnapshot],
+                       _ spotPlaylists: [PlaylistSnapshot],
+                       _ sybPlaylists: [PlaylistSnapshot],
                        _ tracks: [Track]) -> some View {
         Group {
-            if playlists.isNotEmpty {
-                title("Playlists")
-                playlistGrids(playlists)
+            if sybPlaylists.isNotEmpty {
+                title("Pumpy Playlists")
+                playlistGrids(sybPlaylists)
+            }
+            if amPlaylists.isNotEmpty {
+                title("Apple Music Playlists")
+                playlistGrids(amPlaylists)
+            }
+            if spotPlaylists.isNotEmpty {
+                title("Spotify Playlists")
+                playlistGrids(spotPlaylists)
             }
             if tracks.isNotEmpty {
                 title("Tracks")
                 tracksList(tracks)
             }
-            if playlists.isEmpty && tracks.isEmpty {
+            if amPlaylists.isEmpty &&
+                spotPlaylists.isEmpty &&
+                sybPlaylists.isEmpty &&
+                tracks.isEmpty {
                 emptySearch
             }
         }
@@ -145,10 +158,10 @@ struct CatalogSearchView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             PumpyList {
-                searchView.searchResults(snapshots, tracks)
+                searchView.searchResults(snapshots, snapshots, snapshots, tracks)
             }
             PumpyList {
-                searchView.searchResults([], [])
+                searchView.searchResults([], [], [], [])
             }
             PumpyList {
                 searchView.loadingView
