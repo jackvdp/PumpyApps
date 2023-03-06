@@ -124,8 +124,8 @@ struct CatalogSearchView<H:HomeProtocol,
     // Methods
     
     func playFromPosition(tracks: [Track], index: Int) {
-        let playlist = ConstructedPlaylist(name: viewModel.lastSearchTerm,
-                                           tracks: tracks,
+        let playlist = ConstructedPlaylist(title: viewModel.lastSearchTerm,
+                                           songs: tracks,
                                            cloudGlobalID: nil,
                                            artworkURL: nil)
         playlistManager.playPlaylist(playlist: playlist, from: index)

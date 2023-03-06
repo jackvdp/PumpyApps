@@ -58,7 +58,7 @@ struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
     }
     
     func createAlert() -> Alert {
-        return Alert(title: Text("Block \(track.title ?? "") by \(track.artist ?? "")"),
+        return Alert(title: Text("Block \(track.name) by \(track.artistName)"),
                      message: Text("Blocked tracks will be removed from playback."),
                      primaryButton: .default(Text("Cancel"), action: {}),
                      secondaryButton: .destructive(Text("Block"),

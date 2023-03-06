@@ -55,8 +55,8 @@ class QueueManager: QueueProtocol {
         } completion: { [weak self] queue, error in
             guard error == nil else { return }
             self?.queueTracks = queue.items.map {
-                ConstructedTrack(title: $0.title,
-                                 artist: $0.artist,
+                ConstructedTrack(title: $0.name,
+                                 artist: $0.artistName,
                                  artworkURL: $0.artworkURL,
                                  playbackStoreID: $0.playbackStoreID,
                                  isExplicitItem: $0.isExplicitItem)
@@ -73,8 +73,8 @@ class QueueManager: QueueProtocol {
             }
         } completion: { [weak self] queue, _ in
             self?.queueTracks = queue.items.map {
-                ConstructedTrack(title: $0.title,
-                                 artist: $0.artist,
+                ConstructedTrack(title: $0.name,
+                                 artist: $0.artistName,
                                  artworkURL: $0.artworkURL,
                                  playbackStoreID: $0.playbackStoreID,
                                  isExplicitItem: $0.isExplicitItem)

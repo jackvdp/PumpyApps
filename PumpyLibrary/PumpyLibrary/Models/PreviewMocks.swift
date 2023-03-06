@@ -11,7 +11,10 @@ import MediaPlayer
 import MusicKit
 
 public struct MockData {
-    public static let playlist = PreviewPlaylist(name: "Test", tracks: [], cloudGlobalID: "", representativeItem: nil)
+    public static let playlist = PreviewPlaylist(title: "Test",
+                                                 songs: [],
+                                                 cloudGlobalID: "",
+                                                 representativeItem: nil)
     public static let tracks = Array(repeating: MockData.track, count: 20)
     public static let track = ConstructedTrack(title: "Test",
                                                artist: "Test",
@@ -21,17 +24,17 @@ public struct MockData {
 }
 
 public struct PreviewPlaylist: Playlist {
-    public var name: String?
+    public var title: String?
     public var artwork: UIImage?
-    public var tracks: [Track]
+    public var songs: [Track]
     public var cloudGlobalID: String?
     public var representativeItem: MPMediaItem?
     public var artworkURL: String?
 }
 
 public struct PreviewTrack: Track {
-    public var title: String?
-    public var artist: String?
+    public var name: String
+    public var artistName: String
     public var artworkURL: String?
     public var playbackStoreID: String
     public var isExplicitItem: Bool

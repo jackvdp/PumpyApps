@@ -32,8 +32,8 @@ class NowPlayingManager: NowPlayingProtocol {
     
     func updateTrackData() {
         if let nowPlayingItem = musicPlayerController.nowPlayingItem {
-            currentTrack = ConstructedTrack(title: nowPlayingItem.title,
-                                            artist: nowPlayingItem.artist,
+            currentTrack = ConstructedTrack(title: nowPlayingItem.name,
+                                            artist: nowPlayingItem.artistName,
                                             artworkURL: nowPlayingItem.artworkURL,
                                             playbackStoreID: nowPlayingItem.playbackStoreID,
                                             isExplicitItem: nowPlayingItem.isExplicitItem)

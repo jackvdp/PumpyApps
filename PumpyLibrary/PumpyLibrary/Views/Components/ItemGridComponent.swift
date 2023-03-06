@@ -45,14 +45,14 @@ struct ItemGridComponent_Previews: PreviewProvider {
 
     static var previews: some View {
         VStack {
-            ItemGridComponent(name: MockData.track.title ?? "",
-                              curator: MockData.track.artist ?? "",
+            ItemGridComponent(name: MockData.track.name,
+                              curator: MockData.track.artistName,
                               itemArtworkURL: MockData.track.artworkURL ?? "",
                               size: 300)
             .frame(height: 300)
             .border(.red)
-            ItemGridComponent(name: MockData.track.title ?? "",
-                              curator: MockData.track.artist ?? "",
+            ItemGridComponent(name: MockData.track.name,
+                              curator: MockData.track.artistName,
                               itemArtworkURL: MockData.track.artworkURL ?? "",
                               size: 200)
             .frame(height: 200)

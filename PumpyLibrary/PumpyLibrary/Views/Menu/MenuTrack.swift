@@ -94,7 +94,7 @@ public struct MenuTrackView<T:TokenProtocol,
     func songDetails(_ track: ConstructedTrack) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center, spacing: 10.0) {
-                Text(track.title ?? "N/A")
+                Text(track.name)
                     .font(.headline)
                     .lineLimit(1)
                 if track.isExplicitItem {
@@ -104,7 +104,7 @@ public struct MenuTrackView<T:TokenProtocol,
                         .frame(width: 12, height: 12, alignment: .center)
                 }
             }
-            Text(track.artist ?? "N/A")
+            Text(track.artistName)
                 .font(.subheadline)
                 .lineLimit(1)
             if playlistManager.playlistLabel != "" {

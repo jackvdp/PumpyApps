@@ -8,48 +8,54 @@
 import Foundation
 import MediaPlayer
 import MusicKit
+import PumpyAnalytics
 
 // MARK: - Protocols
 
 public protocol Playlist {
-    var name: String? { get }
+    var title: String? { get }
     var artworkURL: String? { get }
-    var tracks: [Track] { get }
+    var songs: [Track] { get }
     var cloudGlobalID: String? { get }
 }
 
 public protocol Track {
-    var title: String? { get }
-    var artist: String? { get }
+    var name: String { get }
+    var artistName: String { get }
     var artworkURL: String? { get }
-    var playbackStoreID: String { get }
+    var playbackStoreID: String? { get }
     var isExplicitItem: Bool { get }
+}
+
+extension Track {
+    public var playbackStoreID: String? { return nil }
 }
 
 // MARK: - Constructed
 
 public struct ConstructedPlaylist: Playlist {
-    public var name: String?
-    public var tracks: [Track]
+    public var title: String?
+    public var songs: [Track]
     public var cloudGlobalID: String?
     public var artworkURL: String? = nil
 }
 
 public struct ConstructedTrack: Track, Equatable {
-    public init(title: String? = nil,
-                artist: String? = nil,
+    
+    public init(title: String = "",
+                artist: String = "",
                 artworkURL: String? = nil,
                 playbackStoreID: String,
                 isExplicitItem: Bool) {
-        self.title = title
-        self.artist = artist
+        self.name = title
+        self.artistName = artist
         self.artworkURL = artworkURL
         self.playbackStoreID = playbackStoreID
         self.isExplicitItem = isExplicitItem
     }
     
-    public var title: String?
-    public var artist: String?
+    public var name: String
+    public var artistName: String
     public var artworkURL: String?
     public var playbackStoreID: String
     public var isExplicitItem: Bool
@@ -76,10 +82,10 @@ public struct BlockedTrack: Codable, Hashable {
 
 extension Track {
     public func getBlockedTrack() -> BlockedTrack {
-        BlockedTrack(title: title,
-                     artist: artist,
+        BlockedTrack(title: name,
+                     artist: artistName,
                      isExplicit: isExplicitItem,
-                     playbackID: playbackStoreID)
+                     playbackID: playbackStoreID ?? "")
     }
 }
 
@@ -88,4 +94,66 @@ extension Track {
 public enum PlayButton: String {
     case playing = "Pause"
     case notPlaying = "Play"
+}
+
+// MARK: - Extend Anlaytics Models
+
+extension AMPlaylist: PumpyLibrary.Playlist {
+    public var title: String? {
+        self.name
+    }
+    
+    public var songs: [Track] {
+        self.tracks
+    }
+
+    public var cloudGlobalID: String? {
+        self.sourceID
+    }
+}
+
+extension SpotifyPlaylist: PumpyLibrary.Playlist {
+    public var title: String? {
+        self.name
+    }
+    
+    public var songs: [Track] {
+        self.tracks
+    }
+
+    public var cloudGlobalID: String? {
+        nil
+    }
+}
+
+extension SYBPlaylist: PumpyLibrary.Playlist {
+    public var title: String? {
+        self.name
+    }
+    
+    public var songs: [Track] {
+        self.tracks
+    }
+
+    public var cloudGlobalID: String? {
+        nil
+    }
+}
+
+extension PumpyAnalytics.Track: Track {
+    public var name: String {
+        self.title
+    }
+    
+    public var artistName: String {
+        self.artist
+    }
+    
+    public var playbackStoreID: String? {
+        self.appleMusicItem?.id
+    }
+    
+    public var isExplicitItem: Bool {
+        self.isExplicit
+    }
 }

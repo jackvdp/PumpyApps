@@ -38,7 +38,8 @@ struct TrackPreview: View {
     }
     
     private func analyseTrack() {
-        controller.analyseMediaPlayerTracks(amIDs: [track.playbackStoreID],
+        guard let id = track.playbackStoreID else { return }
+        controller.analyseMediaPlayerTracks(amIDs: [id],
                                             authManager: authManager) { tracks in
             guard let track = tracks.first else { return }
             withAnimation {
@@ -50,8 +51,8 @@ struct TrackPreview: View {
     private var trackDetails: some View {
         VStack(alignment: .leading) {
             ArtworkView(artworkURL: track.artworkURL, size: 200)
-            Text(track.title ?? "N/A")
-            Text(track.artist ?? "N/A")
+            Text(track.name)
+            Text(track.artistName)
                 .opacity(0.5)
         }
     }

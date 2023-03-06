@@ -13,6 +13,14 @@ import PumpyLibrary
 
 extension MPMediaItem: Track {
     
+    public var name: String {
+        self.title ?? ""
+    }
+    
+    public var artistName: String {
+        self.artist ?? ""
+    }
+    
     public var artworkURL: String? {
         if let catalog = value(forKey: "artworkCatalog") as? NSObject,
            let token = catalog.value(forKey: "token") as? NSObject,
@@ -26,10 +34,15 @@ extension MPMediaItem: Track {
         }
         return nil
     }
+
 }
 
 extension MPMediaPlaylist: Playlist, ScheduledPlaylist {
-    public var tracks: [Track] {
+    public var title: String? {
+        self.name
+    }
+    
+    public var songs: [Track] {
         return items
     }
 }

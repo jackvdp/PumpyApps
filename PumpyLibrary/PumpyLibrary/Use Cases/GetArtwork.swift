@@ -16,15 +16,17 @@ public class ArtworkHandler {
     
     private let gateway = ArtworkGateway()
 
-    public func getArtwork(from track: Track, size: Int, authManager: any TokenProtocol, completion: @escaping (URL?) -> Void) {
-        if let storefront = authManager.appleMusicStoreFront {
-            if let artworkString = track.artworkURL {
+    public func getArtwork(from track: Track,
+                           size: Int,
+                           authManager: any TokenProtocol,
+                           completion: @escaping (URL?) -> Void) {
+        if let artworkString = track.artworkURL {
+            completion(Self.makeMusicStoreURL(artworkString, size: size))
+        } else {
+            guard let id = track.playbackStoreID,
+                  let storefront = authManager.appleMusicStoreFront else { return }
+            gateway.getArtworkURL(id: id, storeFront: storefront) { (artworkString) in
                 completion(Self.makeMusicStoreURL(artworkString, size: size))
-            } else {
-                let id = track.playbackStoreID
-                gateway.getArtworkURL(id: id, storeFront: storefront) { (artworkString) in
-                    completion(Self.makeMusicStoreURL(artworkString, size: size))
-                }
             }
         }
     }

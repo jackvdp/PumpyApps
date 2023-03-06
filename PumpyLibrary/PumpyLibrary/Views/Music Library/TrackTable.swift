@@ -33,7 +33,7 @@ struct TrackTable<H:HomeProtocol,
         }
         .listStyle(.plain)
         .searchable(text: $searchText, prompt: "Tracks...")
-        .navigationBarTitle(playlist.name ?? "Playlist")
+        .navigationBarTitle(playlist.title ?? "Playlist")
         .toast(isPresenting: $showingPlayNextToast) {
             playNextToast
         }
@@ -49,7 +49,7 @@ struct TrackTable<H:HomeProtocol,
     }
     
     var playlistHeader: some View {
-        Text(playlist.tracks.count == 1 ? "1 song" : "\(playlist.tracks.count) songs")
+        Text(playlist.songs.count == 1 ? "1 song" : "\(playlist.songs.count) songs")
             .font(.footnote)
             .foregroundColor(Color.gray)
     }
@@ -85,18 +85,18 @@ struct TrackTable<H:HomeProtocol,
     }
     
     func playFromPosition(track: Track) {
-        if let playlistIndex = playlist.tracks.firstIndex(where: { $0.playbackStoreID == track.playbackStoreID }) {
+        if let playlistIndex = playlist.songs.firstIndex(where: { $0.playbackStoreID == track.playbackStoreID }) {
             playlistManager.playPlaylist(playlist: playlist, from: playlistIndex)
         }
     }
     
     var filteredTracks: [Track] {
         if searchText.isEmpty {
-            return playlist.tracks
+            return playlist.songs
         } else {
-            return playlist.tracks.filter {
-                ($0.title ?? "").localizedCaseInsensitiveContains(searchText) ||
-                ($0.artist ?? "").localizedCaseInsensitiveContains(searchText)
+            return playlist.songs.filter {
+                ($0.name).localizedCaseInsensitiveContains(searchText) ||
+                ($0.artistName).localizedCaseInsensitiveContains(searchText)
             }
         }
     }

@@ -44,7 +44,7 @@ public struct PlaylistTable<H:HomeProtocol,
         if searchText.isEmpty {
             return playlists
         } else {
-            return playlists.filter { ($0.name ?? "").localizedCaseInsensitiveContains(searchText) }
+            return playlists.filter { ($0.title ?? "").localizedCaseInsensitiveContains(searchText) }
         }
     }
     

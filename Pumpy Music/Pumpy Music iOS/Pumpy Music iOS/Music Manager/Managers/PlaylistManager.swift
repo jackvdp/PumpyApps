@@ -52,10 +52,10 @@ class PlaylistManager: PlaylistProtocol {
     }
     
     func playPlaylist(playlist: PumpyLibrary.Playlist, from index: Int) {
-        let tracks = playlist.tracks[index...playlist.tracks.count - 1]
-        let storeIDs = tracks.map { $0.playbackStoreID }
+        let tracks = playlist.songs[index...playlist.songs.count - 1]
+        let storeIDs = tracks.compactMap { $0.playbackStoreID }
         let queue = MPMusicPlayerStoreQueueDescriptor(storeIDs: storeIDs)
-        playQueueNow(name: playlist.name ?? "", queue: queue)
+        playQueueNow(name: playlist.title ?? "", queue: queue)
     }
     
     func playNext(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist] = []) {
@@ -108,7 +108,7 @@ class PlaylistManager: PlaylistProtocol {
     
     private func playNow(catalogPlaylist: PumpyLibrary.Playlist) {
         let queue = getQueueFromCatalogPlaylist(catalogPlaylist: catalogPlaylist)
-        playQueueNow(name: catalogPlaylist.name ?? "", queue: queue)
+        playQueueNow(name: catalogPlaylist.title ?? "", queue: queue)
     }
     
     private func playNext(catalogPlaylist: PumpyLibrary.Playlist) {
@@ -118,7 +118,7 @@ class PlaylistManager: PlaylistProtocol {
         }
         
         let queue = getQueueFromCatalogPlaylist(catalogPlaylist: catalogPlaylist)
-        playQueueNext(name: catalogPlaylist.name ?? "", queue: queue)
+        playQueueNext(name: catalogPlaylist.title ?? "", queue: queue)
     }
     
     // MARK: - Play Queue
@@ -184,7 +184,7 @@ class PlaylistManager: PlaylistProtocol {
     // MARK: - Get items from catalog playlist
     
     private func getQueueFromCatalogPlaylist(catalogPlaylist: PumpyLibrary.Playlist) -> MPMusicPlayerStoreQueueDescriptor {
-        let wantedTracks = removeUnwantedTracks(items: catalogPlaylist.tracks)
+        let wantedTracks = removeUnwantedTracks(items: catalogPlaylist.songs)
         let storeIDs = wantedTracks.compactMap { $0.playbackStoreID }
         let shuffledAndCutIDs = Array(storeIDs.shuffled().prefix(150))
         return MPMusicPlayerStoreQueueDescriptor(storeIDs: shuffledAndCutIDs)

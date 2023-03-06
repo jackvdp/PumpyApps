@@ -44,9 +44,11 @@ class PlaybackData {
     }
     
     static func saveCurrentQueueOnline(items: [Track], for username: String) {
-        let tracks = items.map { TrackOnline(name: $0.title ?? "",
-                                             artist: $0.artist ?? "",
-                                             id: $0.playbackStoreID)}
+        let tracks: [TrackOnline] = items.compactMap {
+            TrackOnline(name: $0.name,
+                        artist: $0.artistName,
+                        id: $0.playbackStoreID ?? "")
+        }
         FireMethods.save(object: tracks,
                          name: username,
                          documentName: K.FStore.upNext,
@@ -59,8 +61,8 @@ class PlaybackData {
         var id = String()
         
         if let nowPlayingItem = item {
-            currentArtist = nowPlayingItem.artist ?? ""
-            currentTrack = nowPlayingItem.title ?? "Not Available"
+            currentArtist = nowPlayingItem.artistName
+            currentTrack = nowPlayingItem.name
             id = nowPlayingItem.playbackStoreID
         }
         

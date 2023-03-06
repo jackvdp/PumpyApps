@@ -35,8 +35,8 @@ class ItemDetailViewModel: ObservableObject {
             
             let tracks = self.convertTracksToConstructedTracks(playlist.tracks)
             
-            let constructedPlaylist = ConstructedPlaylist(name: playlist.name,
-                                                          tracks: tracks,
+            let constructedPlaylist = ConstructedPlaylist(title: playlist.name,
+                                                          songs: tracks,
                                                           cloudGlobalID: playlist.sourceID,
                                                           artworkURL: playlist.artworkURL)
             
@@ -60,8 +60,8 @@ class ItemDetailViewModel: ObservableObject {
             
             let tracks = self.convertTracksToConstructedTracks(amAlbum.tracks)
             
-            let constructedPlaylist = ConstructedPlaylist(name: amAlbum.name,
-                                                          tracks: tracks,
+            let constructedPlaylist = ConstructedPlaylist(title: amAlbum.name,
+                                                          songs: tracks,
                                                           cloudGlobalID: amAlbum.sourceID,
                                                           artworkURL: amAlbum.artworkURL)
             

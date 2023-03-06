@@ -69,7 +69,7 @@ public struct TrackRow<T:TokenProtocol,
     var trackDetails: some View {
         VStack(alignment: .leading, spacing: 5.0) {
             HStack(alignment: .center, spacing: 10.0) {
-                Text(track.title ?? "")
+                Text(track.name)
                     .font(.headline)
                     .lineLimit(1)
                 if track.isExplicitItem {
@@ -79,7 +79,7 @@ public struct TrackRow<T:TokenProtocol,
                         .frame(width: 12, height: 12, alignment: .center)
                 }
             }
-            Text(track.artist ?? "N/A")
+            Text(track.artistName)
                 .font(.subheadline)
                 .lineLimit(1)
         }
@@ -87,20 +87,33 @@ public struct TrackRow<T:TokenProtocol,
     
     @ViewBuilder
     var menu: some View {
+        if let id = track.playbackStoreID {
+            trackMenu(appleId: id)
+        } else {
+            missingTrackMenu
+        }
+    }
+    
+    @ViewBuilder
+    func trackMenu(appleId: String) -> some View {
         Button {
-            queueManager.playTrackNow(id: track.playbackStoreID)
+            queueManager.playTrackNow(id: appleId)
         } label: {
             Label("Play Now", systemImage: "play.fill")
         }
         .padding()
         .foregroundColor(.pumpyPink)
         Button {
-            queueManager.addTrackToQueue(ids: [track.playbackStoreID])
+            queueManager.addTrackToQueue(ids: [appleId])
         } label: {
             Label("Play Next", systemImage: "text.insert")
         }
         .padding()
         .foregroundColor(.pumpyPink)
+    }
+    
+    var missingTrackMenu: some View {
+        Text("track not matched to Apple Music").opacity(0.5)
     }
 
     // MARK: - Flash Methods

@@ -42,8 +42,8 @@ public struct SongLabels<N: NowPlayingProtocol, P: PlaylistProtocol>: View {
         }
         .onReceive(nowPlayingManager.currentTrack.publisher) { _ in
             withAnimation {
-                title = nowPlayingManager.currentTrack?.title ?? ""
-                artist = nowPlayingManager.currentTrack?.artist ?? ""
+                title = nowPlayingManager.currentTrack?.name ?? ""
+                artist = nowPlayingManager.currentTrack?.artistName ?? ""
             }
         }
         .onReceive(playlistManager.playlistLabel.publisher) { _ in
