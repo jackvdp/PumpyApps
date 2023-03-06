@@ -36,6 +36,6 @@ public struct PreviewTrack: Track {
     public var name: String
     public var artistName: String
     public var artworkURL: String?
-    public var playbackStoreID: String
+    public var amStoreID: String?
     public var isExplicitItem: Bool
 }

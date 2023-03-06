@@ -58,7 +58,7 @@ public struct UpNextView<Q: QueueProtocol,
     func scroll(_ proxy: ScrollViewProxy) {
         if let track = queueManager.queueTracks[safe: queueManager.queueIndex + 1] {
             withAnimation {
-                proxy.scrollTo(track.playbackStoreID, anchor: .top)
+                proxy.scrollTo(track.amStoreID, anchor: .top)
             }
         }
     }
@@ -66,9 +66,10 @@ public struct UpNextView<Q: QueueProtocol,
     func removeRowsFromUpNext(at offsets: IndexSet) {
         for i in offsets {
             if queueManager.queueTracks.indices.contains(i) {
-                let track = queueManager.queueTracks[i]
-                queueManager.queueTracks.remove(at: i)
-                queueManager.removeFromQueue(id: track.playbackStoreID)
+                if let id = queueManager.queueTracks[i].amStoreID {
+                    queueManager.queueTracks.remove(at: i)
+                    queueManager.removeFromQueue(id: id)
+                }
             }
         }
     }
@@ -81,7 +82,7 @@ public struct UpNextView<Q: QueueProtocol,
                 TrackRow<T,N,B,P,Q>(track: queueManager.queueTracks[i])
                     .deleteDisabled(true)
                     .foregroundColor(.white)
-                    .id(queueManager.queueTracks[i].playbackStoreID)
+                    .id(queueManager.queueTracks[i].amStoreID)
             }
             .listSectionSeparator(Visibility.visible)
             .listRowBackground(Color.clear)
@@ -94,7 +95,7 @@ public struct UpNextView<Q: QueueProtocol,
             TrackRow<T,N,B,P,Q>(track: queueManager.queueTracks[queueManager.queueIndex])
                 .deleteDisabled(true)
                 .foregroundColor(.white)
-                .id(queueManager.queueTracks[queueManager.queueIndex].playbackStoreID)
+                .id(queueManager.queueTracks[queueManager.queueIndex].amStoreID)
         }
         .listSectionSeparator(Visibility.visible)
         .listRowBackground(Color.clear)
@@ -120,7 +121,7 @@ public struct UpNextView<Q: QueueProtocol,
            ForEach(queueManager.queueIndex + 1..<queueManager.queueTracks.count, id: \.self) { i in
                TrackRow<T,N,B,P,Q>(track: queueManager.queueTracks[i])
                    .foregroundColor(.white)
-                   .id(queueManager.queueTracks[i].playbackStoreID)
+                   .id(queueManager.queueTracks[i].amStoreID)
            }
            .onDelete { indexSet in
                removeRowsFromUpNext(at: indexSet)

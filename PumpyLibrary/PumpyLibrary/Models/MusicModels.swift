@@ -23,12 +23,8 @@ public protocol Track {
     var name: String { get }
     var artistName: String { get }
     var artworkURL: String? { get }
-    var playbackStoreID: String? { get }
+    var amStoreID: String? { get }
     var isExplicitItem: Bool { get }
-}
-
-extension Track {
-    public var playbackStoreID: String? { return nil }
 }
 
 // MARK: - Constructed
@@ -50,14 +46,14 @@ public struct ConstructedTrack: Track, Equatable {
         self.name = title
         self.artistName = artist
         self.artworkURL = artworkURL
-        self.playbackStoreID = playbackStoreID
+        self.amStoreID = playbackStoreID
         self.isExplicitItem = isExplicitItem
     }
     
     public var name: String
     public var artistName: String
     public var artworkURL: String?
-    public var playbackStoreID: String
+    public var amStoreID: String?
     public var isExplicitItem: Bool
 }
 
@@ -85,7 +81,7 @@ extension Track {
         BlockedTrack(title: name,
                      artist: artistName,
                      isExplicit: isExplicitItem,
-                     playbackID: playbackStoreID ?? "")
+                     playbackID: amStoreID ?? "")
     }
 }
 
@@ -149,7 +145,7 @@ extension PumpyAnalytics.Track: Track {
         self.artist
     }
     
-    public var playbackStoreID: String? {
+    public var amStoreID: String? {
         self.appleMusicItem?.id
     }
     

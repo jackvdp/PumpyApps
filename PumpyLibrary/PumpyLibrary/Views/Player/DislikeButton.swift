@@ -47,7 +47,7 @@ struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
     
     func setButton() {
         withAnimation {
-            if blockedTracksManager.blockedTracks.contains(where: { $0.playbackID == track.playbackStoreID}) {
+            if blockedTracksManager.blockedTracks.contains(where: { $0.playbackID == track.amStoreID}) {
                 rotation = 180
                 colour = .red
             } else {

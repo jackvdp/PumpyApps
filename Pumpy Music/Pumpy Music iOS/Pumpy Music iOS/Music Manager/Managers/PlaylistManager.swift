@@ -53,7 +53,7 @@ class PlaylistManager: PlaylistProtocol {
     
     func playPlaylist(playlist: PumpyLibrary.Playlist, from index: Int) {
         let tracks = playlist.songs[index...playlist.songs.count - 1]
-        let storeIDs = tracks.compactMap { $0.playbackStoreID }
+        let storeIDs = tracks.compactMap { $0.amStoreID }
         let queue = MPMusicPlayerStoreQueueDescriptor(storeIDs: storeIDs)
         playQueueNow(name: playlist.title ?? "", queue: queue)
     }
@@ -185,7 +185,7 @@ class PlaylistManager: PlaylistProtocol {
     
     private func getQueueFromCatalogPlaylist(catalogPlaylist: PumpyLibrary.Playlist) -> MPMusicPlayerStoreQueueDescriptor {
         let wantedTracks = removeUnwantedTracks(items: catalogPlaylist.songs)
-        let storeIDs = wantedTracks.compactMap { $0.playbackStoreID }
+        let storeIDs = wantedTracks.compactMap { $0.amStoreID }
         let shuffledAndCutIDs = Array(storeIDs.shuffled().prefix(150))
         return MPMusicPlayerStoreQueueDescriptor(storeIDs: shuffledAndCutIDs)
     }
@@ -202,7 +202,7 @@ class PlaylistManager: PlaylistProtocol {
         if let blockedTracksManager {
             itemsToKeep.removeAll(where: { item in
                 blockedTracksManager.blockedTracks.contains(where: {
-                    $0.playbackID == item.playbackStoreID
+                    $0.playbackID == item.amStoreID
                 })
             })
         }

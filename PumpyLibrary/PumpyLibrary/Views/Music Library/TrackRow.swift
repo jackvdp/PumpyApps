@@ -53,6 +53,7 @@ public struct TrackRow<T:TokenProtocol,
             DislikeButton<N,B>(track: track, size: 20)
                 .padding(.horizontal)
         }
+        .opacity(track.amStoreID != nil ? 1 : 0.5)
         .onAppear() {
             UITableViewCell.appearance().backgroundColor = .clear
             UITableView.appearance().backgroundColor = .clear
@@ -87,7 +88,7 @@ public struct TrackRow<T:TokenProtocol,
     
     @ViewBuilder
     var menu: some View {
-        if let id = track.playbackStoreID {
+        if let id = track.amStoreID {
             trackMenu(appleId: id)
         } else {
             missingTrackMenu

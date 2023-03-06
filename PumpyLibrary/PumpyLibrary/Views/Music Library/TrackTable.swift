@@ -85,7 +85,7 @@ struct TrackTable<H:HomeProtocol,
     }
     
     func playFromPosition(track: Track) {
-        if let playlistIndex = playlist.songs.firstIndex(where: { $0.playbackStoreID == track.playbackStoreID }) {
+        if let playlistIndex = playlist.songs.firstIndex(where: { $0.amStoreID == track.amStoreID }) {
             playlistManager.playPlaylist(playlist: playlist, from: playlistIndex)
         }
     }

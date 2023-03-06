@@ -29,9 +29,7 @@ struct ItemDetailView<H:HomeProtocol,
                     .transition(.opacity)
                     .id(screen)
             case .success(let playlist):
-                TrackTable<H,P,N,B,T,Q>(playlist: playlist)
-                    .transition(.opacity)
-                    .id(screen)
+                successView(playlist)
             case .failed:
                 failedView
             }
@@ -56,6 +54,16 @@ struct ItemDetailView<H:HomeProtocol,
         .foregroundColor(.gray)
     }
     
+    @ViewBuilder
+    func successView(_ playlist: PumpyAnalytics.Playlist) -> some View {
+        if let plist = playlist as? Playlist {
+            TrackTable<H,P,N,B,T,Q>(playlist: plist)
+                .transition(.opacity)
+                .id(screen)
+        } else {
+            failedView
+        }
+    }
 }
 
 struct ItemDetailView_Previews: PreviewProvider {

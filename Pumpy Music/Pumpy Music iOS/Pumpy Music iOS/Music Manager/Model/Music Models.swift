@@ -21,6 +21,10 @@ extension MPMediaItem: Track {
         self.artist ?? ""
     }
     
+    public var amStoreID: String? {
+        self.playbackStoreID
+    }
+    
     public var artworkURL: String? {
         if let catalog = value(forKey: "artworkCatalog") as? NSObject,
            let token = catalog.value(forKey: "token") as? NSObject,

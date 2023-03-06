@@ -7,8 +7,7 @@
 
 import Foundation
 
-public class AMAlbum {
-    
+public class AMAlbum: Playlist {
     public var name: String?
     public var curator: String
     public var tracks: [Track]
@@ -18,6 +17,7 @@ public class AMAlbum {
     public var sourceID: String
     public var authManager: AuthorisationManager
     public var uuid = UUID()
+    public var snapshot: PlaylistSnapshot
     
     public init(name: String? = nil, curator: String, tracks: [Track], artworkURL: String? = nil, description: String? = nil, shortDescription: String? = nil, sourceID: String, authManager: AuthorisationManager) {
         self.name = name
@@ -28,10 +28,16 @@ public class AMAlbum {
         self.shortDescription = shortDescription
         self.sourceID = sourceID
         self.authManager = authManager
+        // Needs to be developed to properly support album
+        self.snapshot = .init(sourceID: sourceID, type: .am(id: sourceID))
     }
     
     public func getTracksData() {
         GetAudioFeaturesAndSpotifyItem().forPlaylist(tracks: tracks, authManager: authManager)
+    }
+    
+    public func removeDuplicates() {
+        //
     }
     
 }

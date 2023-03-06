@@ -38,7 +38,7 @@ struct TrackPreview: View {
     }
     
     private func analyseTrack() {
-        guard let id = track.playbackStoreID else { return }
+        guard let id = track.amStoreID else { return }
         controller.analyseMediaPlayerTracks(amIDs: [id],
                                             authManager: authManager) { tracks in
             guard let track = tracks.first else { return }

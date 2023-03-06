@@ -33,15 +33,8 @@ class ItemDetailViewModel: ObservableObject {
                 return
             }
             
-            let tracks = self.convertTracksToConstructedTracks(playlist.tracks)
-            
-            let constructedPlaylist = ConstructedPlaylist(title: playlist.name,
-                                                          songs: tracks,
-                                                          cloudGlobalID: playlist.sourceID,
-                                                          artworkURL: playlist.artworkURL)
-            
             DispatchQueue.main.async {
-                self.pageState = .success(constructedPlaylist)
+                self.pageState = .success(playlist)
             }
         }
         
@@ -58,15 +51,8 @@ class ItemDetailViewModel: ObservableObject {
                 return
             }
             
-            let tracks = self.convertTracksToConstructedTracks(amAlbum.tracks)
-            
-            let constructedPlaylist = ConstructedPlaylist(title: amAlbum.name,
-                                                          songs: tracks,
-                                                          cloudGlobalID: amAlbum.sourceID,
-                                                          artworkURL: amAlbum.artworkURL)
-            
             DispatchQueue.main.async {
-                self.pageState = .success(constructedPlaylist)
+                self.pageState = .success(amAlbum)
             }
         }
         
@@ -83,7 +69,7 @@ class ItemDetailViewModel: ObservableObject {
     }
     
     enum PageState: Equatable {
-        case loading, success(ConstructedPlaylist), failed
+        case loading, success(PumpyAnalytics.Playlist), failed
         
         static func == (lhs: ItemDetailViewModel.PageState, rhs: ItemDetailViewModel.PageState) -> Bool {
             switch (lhs, rhs) {

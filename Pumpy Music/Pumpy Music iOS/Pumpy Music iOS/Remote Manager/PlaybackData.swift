@@ -47,7 +47,7 @@ class PlaybackData {
         let tracks: [TrackOnline] = items.compactMap {
             TrackOnline(name: $0.name,
                         artist: $0.artistName,
-                        id: $0.playbackStoreID ?? "")
+                        id: $0.amStoreID ?? "")
         }
         FireMethods.save(object: tracks,
                          name: username,
@@ -63,7 +63,7 @@ class PlaybackData {
         if let nowPlayingItem = item {
             currentArtist = nowPlayingItem.artistName
             currentTrack = nowPlayingItem.name
-            id = nowPlayingItem.playbackStoreID
+            id = nowPlayingItem.amStoreID ?? ""
         }
         
         let playbackInfo = PlaybackItem(

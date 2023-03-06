@@ -23,7 +23,7 @@ public class ArtworkHandler {
         if let artworkString = track.artworkURL {
             completion(Self.makeMusicStoreURL(artworkString, size: size))
         } else {
-            guard let id = track.playbackStoreID,
+            guard let id = track.amStoreID,
                   let storefront = authManager.appleMusicStoreFront else { return }
             gateway.getArtworkURL(id: id, storeFront: storefront) { (artworkString) in
                 completion(Self.makeMusicStoreURL(artworkString, size: size))
