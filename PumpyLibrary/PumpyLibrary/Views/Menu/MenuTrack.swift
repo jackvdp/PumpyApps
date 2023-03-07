@@ -18,8 +18,8 @@ public struct MenuTrackView<T:TokenProtocol,
     @EnvironmentObject var playlistManager: P
     @EnvironmentObject var homeVM: H
     @EnvironmentObject var alarmManager: AlarmManager
-    private let size: CGFloat = 55
-    private let cornerRadius: CGFloat = 10
+    private let size: CGFloat = 50
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
     
     public init() {}
     
@@ -32,10 +32,10 @@ public struct MenuTrackView<T:TokenProtocol,
             }
         }
         .frame(height: size)
-        .padding(12)
+        .padding(.vertical, 12)
+        .padding(.horizontal)
+        .padding(.bottom, safeAreaInsets.bottom / 2)
         .background(backgroundView)
-        .overlay(overlayView)
-        .cornerRadius(cornerRadius)
         .onTapGesture {
             homeVM.showPlayer = true
         }
@@ -47,11 +47,6 @@ public struct MenuTrackView<T:TokenProtocol,
             artwork.background
         }
         .layoutPriority(1)
-    }
-    
-    var overlayView: some View {
-        RoundedRectangle(cornerRadius: cornerRadius)
-            .stroke(Color.white.opacity(0.3), lineWidth: 1)
     }
     
     // MARK: No track view
@@ -117,7 +112,6 @@ public struct MenuTrackView<T:TokenProtocol,
     
     func dislikeButton(track: Track) -> some View {
         DislikeButton<N,B>(track: track, size: 20)
-            .padding(.horizontal)
     }
 }
 

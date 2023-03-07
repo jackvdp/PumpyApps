@@ -45,7 +45,7 @@ public struct MenuView<H:HomeProtocol,
     @State private var showPlayer = true
     
     public var body: some View {
-        ZStack(alignment: .bottom) {
+        VStack(spacing: 0) {
             mainMenu
             nowPlayingTrack
         }
@@ -92,8 +92,6 @@ public struct MenuView<H:HomeProtocol,
     
     var nowPlayingTrack: some View {
         MenuTrackView<T,N,B,P,H>()
-            .padding()
-            .padding(.bottom)
             .environmentObject(nowPlayingManager)
             .environmentObject(playlistManager)
             .environmentObject(blockedTracksManager)
