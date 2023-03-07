@@ -63,7 +63,7 @@ class SearchResultsViewModel: ObservableObject {
     }
     
     private func runAMSearch(_ searchTerm: String, _ authManager: AuthorisationManager) {
-        SearchController().searchAppleMusic(searchTerm, authManager: authManager) { playlists, error in
+        SearchController().searchAppleMusic(searchTerm, getNext: true, authManager: authManager) { playlists, error in
             self.amSearching = false
             if let error = error {
                 self.errorMessage = error

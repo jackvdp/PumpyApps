@@ -18,7 +18,7 @@ public class SearchController {
                           completion: @escaping ([PlaylistSnapshot]?, ErrorMessage?) -> ()) {
         
         searchSpotify(term, authManager: authManager, completion: completion)
-        searchAppleMusic(term, authManager: authManager, completion: completion)
+        searchAppleMusic(term, getNext: true, authManager: authManager, completion: completion)
         searchSYB(term, completion: completion)
     
     }
@@ -33,10 +33,12 @@ public class SearchController {
     }
     
     public func searchAppleMusic(_ term: String,
+                                 getNext: Bool,
                                  authManager: AuthorisationManager,
                                  completion: @escaping ([PlaylistSnapshot]?, ErrorMessage?) -> ()) {
         
         SearchAM().run(term,
+                       getNext: getNext,
                        authManager: authManager,
                        completion: completion)
     }

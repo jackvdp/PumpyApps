@@ -23,7 +23,9 @@ class CatalogSearchViewModel: ObservableObject {
         var done = 0
         
         // MARK: - AM Playlists
-        controller.searchAppleMusic(term, authManager: authManager) { [weak self] snapshots, error in
+        controller.searchAppleMusic(term,
+                                    getNext: false,
+                                    authManager: authManager) { [weak self] snapshots, error in
             done += 1
             
             guard let self = self else { return }
@@ -101,8 +103,6 @@ class CatalogSearchViewModel: ObservableObject {
             }
             
             sybSnapshots = snapshots
-            print("*** '\(snapshots.count)")
-            print("*** '\(sybSnapshots.count)")
             
             if done == 4 {
                 self.pageState = .success(am: amSnapshots,

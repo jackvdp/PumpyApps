@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class SearchAM {
     
-    func run(_ term: String, next: String? = nil, authManager: AuthorisationManager, completion: @escaping ([PlaylistSnapshot]?, ErrorMessage?) -> ()) {
+    func run(_ term: String, getNext: Bool, next: String? = nil, authManager: AuthorisationManager, completion: @escaping ([PlaylistSnapshot]?, ErrorMessage?) -> ()) {
         AMSearchAPI().run(term, next: next, authManager: authManager) { data, error in
             if let err = error {
                 completion(nil, err)
@@ -28,8 +28,11 @@ class SearchAM {
                 return
             }
             
-            if let nextUnwrapped = jsonData["results"]["playlists"]["next"].string {
-                self.run(term, next: nextUnwrapped, authManager: authManager) { libPlaylists, error in
+            if let nextUnwrapped = jsonData["results"]["playlists"]["next"].string, getNext {
+                self.run(term,
+                         getNext: getNext,
+                         next: nextUnwrapped,
+                         authManager: authManager) { libPlaylists, error in
                     completion(libPlaylists, error)
                 }
             }
