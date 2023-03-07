@@ -20,6 +20,7 @@ public struct TrackRow<T:TokenProtocol,
     let track: Track
     let tapAction: (()->())?
     @State private var buttonTapped = false
+    @State private var trackAMID: String?
     @EnvironmentObject var tokenManager: AuthorisationManager
     @EnvironmentObject var queueManager: Q
 
@@ -53,7 +54,10 @@ public struct TrackRow<T:TokenProtocol,
             DislikeButton<N,B>(track: track, size: 20)
                 .padding(.horizontal)
         }
-        .opacity(track.amStoreID != nil ? 1 : 0.3)
+        .opacity(trackAMID != nil ? 1 : 0.3)
+        .background {
+            analyticsInfo
+        }
         .onAppear() {
             UITableViewCell.appearance().backgroundColor = .clear
             UITableView.appearance().backgroundColor = .clear
@@ -64,6 +68,9 @@ public struct TrackRow<T:TokenProtocol,
         } preview: {
             TrackPreview(track: track)
                 .environmentObject(tokenManager)
+        }
+        .onAppear() {
+            trackAMID = track.amStoreID
         }
     }
     
@@ -85,6 +92,24 @@ public struct TrackRow<T:TokenProtocol,
                 .lineLimit(1)
         }
     }
+    
+    /// Used to track new data for matching
+    @ViewBuilder
+    var analyticsInfo: some View {
+        if let analyticsTrack = track as? PumpyAnalytics.Track {
+            EmptyView()
+                .frame(width: 0, height: 0)
+                .onReceive(analyticsTrack.$appleMusicItem) { newValue in
+                    if let myID = newValue?.id {
+                        withAnimation {
+                            trackAMID = myID
+                        }
+                    }
+                }
+        }
+    }
+    
+    // MARK: - Preview Menu
     
     @ViewBuilder
     var menu: some View {
@@ -113,8 +138,12 @@ public struct TrackRow<T:TokenProtocol,
         .foregroundColor(.pumpyPink)
     }
     
-    var missingTrackMenu: some View {
-        Text("track not matched to Apple Music").opacity(0.5)
+    @ViewBuilder var missingTrackMenu: some View {
+        if (track as? PumpyAnalytics.Track)?.inProgress.gettingAM ?? false {
+            Text("Matching...").opacity(0.5)
+        } else {
+            Text("Track not matched to Apple Music").opacity(0.5)
+        }
     }
 
     // MARK: - Flash Methods
