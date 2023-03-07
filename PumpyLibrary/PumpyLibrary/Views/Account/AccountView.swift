@@ -23,6 +23,7 @@ public struct AccountView<A:AccountManagerProtocol>: View {
             accountButtons
             versionLabel
         }
+        .pumpyBackground()
         .navigationBarTitle("Account")
         .alert(isPresented: $showError) {
             standardAlertBox

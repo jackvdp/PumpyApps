@@ -19,10 +19,8 @@ public struct PumpyList<Content: View>: View {
         List() {
             content
                 .listRowBackground(Color.clear)
-            Spacer(minLength: 60)
-                .listRowBackground(Color.clear)
         }
-        .background(ArtworkView().background)
+        .background(Color.clear)
         .clearListBackgroundIOS16()
     }
 }

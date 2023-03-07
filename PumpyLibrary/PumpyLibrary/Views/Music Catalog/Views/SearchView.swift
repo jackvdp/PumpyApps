@@ -22,7 +22,7 @@ struct CatalogSearchView<H:HomeProtocol,
     @Namespace var screen
     
     var body: some View {
-        PumpyList {
+        Group {
             switch pageState {
             case .loading:
                 loadingView
@@ -36,6 +36,7 @@ struct CatalogSearchView<H:HomeProtocol,
                 failedView
             }
         }
+        .pumpyBackground()
         .onChange(of: viewModel.pageState) { newValue in
             withAnimation {
                 pageState = newValue
@@ -49,22 +50,24 @@ struct CatalogSearchView<H:HomeProtocol,
                        _ spotPlaylists: [PlaylistSnapshot],
                        _ sybPlaylists: [PlaylistSnapshot],
                        _ tracks: [Track]) -> some View {
-        Group {
+        PumpyList {
             if sybPlaylists.isNotEmpty {
-                title("Pumpy Playlists")
-                playlistGrids(sybPlaylists)
+                titleAndGrid(text: "Pumpy Playlists",
+                             playlists: sybPlaylists)
             }
             if amPlaylists.isNotEmpty {
-                title("Apple Music Playlists")
-                playlistGrids(amPlaylists)
+                titleAndGrid(text: "Apple Music Playlists",
+                             playlists: amPlaylists)
             }
             if spotPlaylists.isNotEmpty {
-                title("Spotify Playlists")
-                playlistGrids(spotPlaylists)
+                titleAndGrid(text: "Spotify Playlists",
+                             playlists: spotPlaylists)
             }
             if tracks.isNotEmpty {
-                title("Tracks")
-                tracksList(tracks)
+                VStack {
+                    title("Tracks")
+                    tracksList(tracks)
+                }
             }
             if amPlaylists.isEmpty &&
                 spotPlaylists.isEmpty &&
@@ -75,6 +78,12 @@ struct CatalogSearchView<H:HomeProtocol,
         }
     }
     
+    func titleAndGrid(text: String, playlists: [PlaylistSnapshot]) -> some View {
+        VStack {
+            title(text)
+            playlistGrids(playlists)
+        }
+    }
     
     func playlistGrids(_ playlists: [PlaylistSnapshot]) -> some View {
         let playlistRows = Array(repeating: GridItem(.fixed(200)),
@@ -106,6 +115,7 @@ struct CatalogSearchView<H:HomeProtocol,
     func title(_ title: String) -> some View {
         Text(title)
             .font(.title2.bold())
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     var emptySearch: some View {
@@ -114,7 +124,7 @@ struct CatalogSearchView<H:HomeProtocol,
             .multilineTextAlignment(.center)
             .padding(.vertical, 100)
             .opacity(0.5)
-            .background(ArtworkView().background)
+            .pumpyBackground()
             .edgesIgnoringSafeArea(.all)
     }
     
@@ -129,7 +139,7 @@ struct CatalogSearchView<H:HomeProtocol,
     }
     
     var loadingView: some View {
-        ActivityView(activityIndicatorVisible: .constant(true))
+        ActivityView(activityIndicatorVisible: .constant(true)).noBackground
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, 100)
     }

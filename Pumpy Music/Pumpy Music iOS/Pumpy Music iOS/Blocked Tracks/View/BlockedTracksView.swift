@@ -39,6 +39,7 @@ struct BlockedTracksView: View {
                 }))
             }
         }
+        .pumpyBackground()
         .navigationBarTitle("Blocked Tracks")
         .alert(isPresented: $showAlert) {
             createAlert()

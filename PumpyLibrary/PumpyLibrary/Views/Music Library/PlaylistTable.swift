@@ -38,6 +38,7 @@ public struct PlaylistTable<H:HomeProtocol,
         }
         .navigationBarTitle("Playlists")
         .accentColor(.pumpyPink)
+        .pumpyBackground()
     }
     
     var filteredPlaylists: [Playlist] {

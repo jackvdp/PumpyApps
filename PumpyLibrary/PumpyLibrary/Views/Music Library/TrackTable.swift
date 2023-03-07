@@ -34,6 +34,7 @@ struct TrackTable<H:HomeProtocol,
         .listStyle(.plain)
         .searchable(text: $searchText, prompt: "Tracks...")
         .navigationBarTitle(playlist.title ?? "Playlist")
+        .pumpyBackground()
         .toast(isPresenting: $showingPlayNextToast) {
             playNextToast
         }

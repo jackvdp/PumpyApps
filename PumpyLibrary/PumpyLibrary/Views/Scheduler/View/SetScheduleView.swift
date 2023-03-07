@@ -22,6 +22,7 @@ struct SetScheduleView: View {
             secondaryPlaylists
             externalDisplaySettings
         }
+        .pumpyBackground()
         .listStyle(InsetGroupedListStyle())
         .navigationTitle("Set Event")
         .navigationBarItems(leading: CancelButton(action: cancelPressed),

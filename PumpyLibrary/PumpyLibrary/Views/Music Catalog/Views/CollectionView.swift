@@ -82,6 +82,7 @@ struct CollectionView_Previews: PreviewProvider {
             }
             .navigationTitle("Catalog")
         }
+        .pumpyBackground()
         .listStyle(.plain)
         .previewLayout(.sizeThatFits)
         .preferredColorScheme(.dark)

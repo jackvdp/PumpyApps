@@ -37,6 +37,7 @@ public struct CatalogView<H:HomeProtocol,
                 CatalogSearchView<H,P,N,B,T,Q>(viewModel: viewModel)
             }
         }
+        .pumpyBackground()
         .navigationTitle("Catalog")
         .listStyle(.plain)
         .searchable(text: $searchText,
@@ -54,7 +55,7 @@ public struct CatalogView<H:HomeProtocol,
     // Components
     
     var loadingView: some View {
-        ActivityView(activityIndicatorVisible: .constant(true))
+        ActivityView(activityIndicatorVisible: .constant(true)).noBackground
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, 100)
             .background(ArtworkView().background)

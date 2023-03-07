@@ -68,6 +68,7 @@ public struct MenuView<H:HomeProtocol,
                 }
                 .listStyle(.insetGrouped)
                 .toolbar { logo }
+                .pumpyBackground()
             }
             .accentColor(.pumpyPink)
             .pumpyNavigation(isLandscape: isLandscape(geo: geo))

@@ -23,9 +23,6 @@ struct CapabilitiesView: View {
                 CheckRowView(text: "Store Authorised",
                              granted: capaVM.storeAccess,
                              action: {})
-                CheckRowView(text: "Notifications Authorised",
-                             granted: capaVM.notificationsAllowed,
-                             action: capaVM.getNotificationAccesss)
                 CheckRowView(text: "Logged in to Pumpy",
                              granted: (accountVM.user != nil),
                              action: {
@@ -36,6 +33,7 @@ struct CapabilitiesView: View {
                              action: {})
             }
         }
+        .pumpyBackground()
         .navigationBarTitle("Capabilities")
     }
 }

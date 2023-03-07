@@ -154,9 +154,13 @@ public struct ActivityView: View {
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                 .opacity(0.5)
                 .isHidden(!activityIndicatorVisible)
-            ActivityIndicatorView(isVisible: $activityIndicatorVisible, type: .arcs())
-                .frame(width: size, height: size)
-                .foregroundColor(Color.pumpyPink)
+            noBackground
         }
+    }
+    
+    public var noBackground: some View {
+        ActivityIndicatorView(isVisible: $activityIndicatorVisible, type: .arcs())
+            .frame(width: size, height: size)
+            .foregroundColor(Color.pumpyPink)
     }
 }

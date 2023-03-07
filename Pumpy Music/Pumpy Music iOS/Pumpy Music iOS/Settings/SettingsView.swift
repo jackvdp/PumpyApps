@@ -23,10 +23,10 @@ struct SettingsView: View {
             }
             capabilitiesRow
             if !revealAdminSettings {
-                Spacer()
                 unlockButton
             }
         }
+        .pumpyBackground()
         .toggleStyle(SwitchToggleStyle(tint: Color.pumpyPink))
         .accentColor(.pumpyPink)
         .navigationBarTitle("Settings")
@@ -45,20 +45,15 @@ struct SettingsView: View {
         Section {
             Toggle("Show Music Library", isOn: $settingsVM.onlineSettings.showMusicLibrary)
             Toggle("Show Music Store", isOn: $settingsVM.onlineSettings.showMusicStore)
-        }
-        Section {
             Toggle("Show Playlist Scheduler:", isOn: $settingsVM.onlineSettings.showScheduler)
-        }
-        Section {
             Toggle("Show External Display:", isOn: $settingsVM.onlineSettings.showExternalDisplay)
         }
     }
     
     var capabilitiesRow: some View {
-        Section {
-            NavigationLink(destination: CapabilitiesView()) {
-                MenuRow(title: "Capabilities", imageName: "bolt.fill")
-            }
+        NavigationLink(destination: CapabilitiesView()) {
+            MenuRow(title: "Capabilities", imageName: "bolt.fill")
+                .padding(.horizontal, -10)
         }
     }
     
@@ -69,7 +64,7 @@ struct SettingsView: View {
             HStack {
                 Image(systemName: "lock.fill").foregroundColor(.white)
                 Text("Access Admin Settings")
-            }.padding()
+            }
         }
     }
 }

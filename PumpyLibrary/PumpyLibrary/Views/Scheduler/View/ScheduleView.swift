@@ -27,6 +27,7 @@ public struct ScheduleView: View {
             }
             hoverButtons
         }
+        .pumpyBackground()
         .navigationTitle("Schedule" + (scheduleViewModel.alarmDays != nil ? " – \(scheduleViewModel.alarmDays!.rawValue)" : ""))
         .navigationBarItems(trailing: addAlarmButton)
         .onChange(of: scheduleViewModel.alarmDays) { _ in
