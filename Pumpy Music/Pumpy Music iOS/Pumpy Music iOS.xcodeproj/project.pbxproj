@@ -38,6 +38,7 @@
 		C050067B294A676E00A8B50E /* PumpyShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C050067A294A676E00A8B50E /* PumpyShared.framework */; };
 		C05D340626281B94009DFC2A /* CapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D340526281B94009DFC2A /* CapabilitiesView.swift */; };
 		C05D340B26281BA4009DFC2A /* CapabilitiesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D340A26281BA4009DFC2A /* CapabilitiesVM.swift */; };
+		C05FD22226E29E6A001370FF /* SpotifyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05FD22126E29E6A001370FF /* SpotifyAPI.swift */; };
 		C061CB7824AA949200E18F98 /* LockAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C061CB7724AA949200E18F98 /* LockAlertView.swift */; };
 		C068FB19252F85A5006F7349 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C068FB18252F85A5006F7349 /* NetworkExtension.framework */; };
 		C0725DDC2617757D0095EDD9 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0725DDB2617757C0095EDD9 /* AccountManager.swift */; };
@@ -55,6 +56,7 @@
 		C0D60C6223313D6B0010F653 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0D60C6123313D6B0010F653 /* Assets.xcassets */; };
 		C0D60C6523313D6B0010F653 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0D60C6323313D6B0010F653 /* LaunchScreen.storyboard */; };
 		C0E6E0012631B9B000265B9E /* Music Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E6E0002631B9B000265B9E /* Music Models.swift */; };
+		C0FCE335260B07BA00D4E608 /* AppleMusicAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FCE334260B07BA00D4E608 /* AppleMusicAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +115,7 @@
 		C050067A294A676E00A8B50E /* PumpyShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C05D340526281B94009DFC2A /* CapabilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CapabilitiesView.swift; path = "Pumpy Music iOS/Settings/Capabilitites/CapabilitiesView.swift"; sourceTree = SOURCE_ROOT; };
 		C05D340A26281BA4009DFC2A /* CapabilitiesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesVM.swift; sourceTree = "<group>"; };
+		C05FD22126E29E6A001370FF /* SpotifyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAPI.swift; sourceTree = "<group>"; };
 		C061CB7724AA949200E18F98 /* LockAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockAlertView.swift; sourceTree = "<group>"; };
 		C068FB18252F85A5006F7349 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		C0725DDB2617757C0095EDD9 /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
@@ -132,6 +135,7 @@
 		C0D60C6423313D6B0010F653 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C0D60C6623313D6B0010F653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0E6E0002631B9B000265B9E /* Music Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Music Models.swift"; sourceTree = "<group>"; };
+		C0FCE334260B07BA00D4E608 /* AppleMusicAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +172,15 @@
 				6D972DC228A307A300CFD9D7 /* HomeVM.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		6DC5EE0F289EDD5200AB5410 /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				C0FCE334260B07BA00D4E608 /* AppleMusicAPI.swift */,
+				C03B214C26E38FCF008AD541 /* SpotifyAPI */,
+			);
+			path = APIs;
 			sourceTree = "<group>";
 		};
 		C00EA26524EB1FDC00D0C107 /* Music Manager */ = {
@@ -211,6 +224,14 @@
 				C08E0AEB2931760000D83774 /* MenuContent.swift */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		C03B214C26E38FCF008AD541 /* SpotifyAPI */ = {
+			isa = PBXGroup;
+			children = (
+				C05FD22126E29E6A001370FF /* SpotifyAPI.swift */,
+			);
+			path = SpotifyAPI;
 			sourceTree = "<group>";
 		};
 		C046009D23895DC9008151A5 /* Frameworks */ = {
@@ -278,6 +299,7 @@
 				C03176922395C69900B5D766 /* Core Functions.swift */,
 				C0071F392653D4D200B16401 /* MusicContent.swift */,
 				6DC5EE0C289ED80000AB5410 /* Music Extensions.swift */,
+				6DC5EE0F289EDD5200AB5410 /* APIs */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -488,6 +510,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0FCE335260B07BA00D4E608 /* AppleMusicAPI.swift in Sources */,
 				6DC5EE09289EB20F00AB5410 /* QueueManager.swift in Sources */,
 				C05D340626281B94009DFC2A /* CapabilitiesView.swift in Sources */,
 				C0A6CAF624A8FA6F00F66187 /* PlaybackData.swift in Sources */,
@@ -511,6 +534,7 @@
 				C0130B5226CBD52B0056E5F6 /* BlockedTrackViewModel.swift in Sources */,
 				C0071F3A2653D4D200B16401 /* MusicContent.swift in Sources */,
 				C0798655262D5CC9003A426E /* MusicManager.swift in Sources */,
+				C05FD22226E29E6A001370FF /* SpotifyAPI.swift in Sources */,
 				6D45ED9228A5A0C0002EC94C /* StartView.swift in Sources */,
 				C0D60C5B23313D6A0010F653 /* AppDelegate.swift in Sources */,
 				C04A655923DF4F6300DD5FBB /* RemoteManager.swift in Sources */,
