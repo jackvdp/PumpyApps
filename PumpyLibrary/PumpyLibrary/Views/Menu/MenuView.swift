@@ -90,7 +90,9 @@ public struct MenuView<H:HomeProtocol,
         }
     }
     
+    @ViewBuilder
     var nowPlayingTrack: some View {
+        Divider()
         MenuTrackView<T,N,B,P,H>()
             .environmentObject(nowPlayingManager)
             .environmentObject(playlistManager)

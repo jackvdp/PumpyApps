@@ -25,7 +25,8 @@ struct ItemDetailView<H:HomeProtocol,
         VStack {
             switch pageState {
             case .loading:
-                EmptyView()
+                ActivityView(activityIndicatorVisible: .constant(true)).noBackground
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .transition(.opacity)
                     .id(screen)
             case .success(let playlist):

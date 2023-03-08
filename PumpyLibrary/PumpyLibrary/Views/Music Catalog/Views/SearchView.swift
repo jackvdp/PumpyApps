@@ -141,7 +141,6 @@ struct CatalogSearchView<H:HomeProtocol,
     var loadingView: some View {
         ActivityView(activityIndicatorVisible: .constant(true)).noBackground
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.vertical, 100)
     }
     
     // Methods
