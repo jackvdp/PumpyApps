@@ -78,6 +78,42 @@ public struct MockData {
                                     popularity: 99)
     )
     
+    public static var trackWithLongDetails: Track {
+        var trk = Track(title: "Really really really really really long name",
+                        artist: "Really really really really really long name",
+                        album: "Dark Side of the Moon",
+                        isrc: "SJHFJTUBEGKYL846",
+                        artworkURL: "",
+                           previewUrl: "",
+                           isExplicit: true,
+                        sourceID: "",
+                        authManager: AuthorisationManager(),
+                        appleMusicItem: AppleMusicItem(
+                           isrc: "SJHFJTUBEGKYL846",
+                           id: "",
+                           name: "Numb",
+                           artistName: "Pink Floyd",
+                           artworkURL: "", genres: ["Pop", "Rock", "Really really long genre name", "Loads of genres", "Jazzy Blues"],
+                           type: .track),
+                        spotifyItem: SpotifyItem(
+                           isrc: "SJHFJTUBEGKYL846",
+                           id: "",
+                           year: 2002,
+                           popularity: 75))
+        trk.audioFeatures = AudioFeatures(danceability: 0.95,
+                                            energy: 0.8,
+                                            key: 1,
+                                            loudness: 100,
+                                            tempo: 130,
+                                            valence: 0.9,
+                                            liveliness: 0.9,
+                                            instrumentalness: 0.9,
+                                            speechiness: 0.9,
+                                            acousticness: 0.9,
+                                            id: track.sourceID)
+        return trk
+    }
+    
     public static var trackWithFeatures: Track {
         track.audioFeatures = AudioFeatures(danceability: 0.95,
                                             energy: 0.8,

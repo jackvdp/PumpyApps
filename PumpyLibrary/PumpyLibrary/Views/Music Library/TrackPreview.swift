@@ -14,9 +14,10 @@ struct TrackPreview: View {
     @State var analysedTrack: PumpyAnalytics.Track?
     private let controller = AnalyseController()
     @EnvironmentObject var authManager: AuthorisationManager
+    private let contentWidth: CGFloat = 200
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(spacing: 10) {
             trackDetails
             if let spotItem = analysedTrack?.spotifyItem,
                let amItem = analysedTrack?.appleMusicItem {
@@ -24,18 +25,78 @@ struct TrackPreview: View {
                 trackFeatures(amItem, spotItem: spotItem)
                     .animation(.easeIn, value: analysedTrack)
             }
-            
             if let analysis = analysedTrack?.audioFeatures {
                 Divider()
                 trackAnalysis(analysis)
                     .animation(.easeIn, value: analysedTrack)
             }
         }
+        .frame(width: contentWidth)
         .padding()
-        .onAppear() {
+        .task {
             analyseTrack()
         }
     }
+    
+    // MARK: - Components
+    
+    private var trackDetails: some View {
+        VStack(alignment: .leading) {
+            ArtworkView(artworkURL: track.artworkURL, size: contentWidth)
+            Text(track.name)
+                .frame(width: contentWidth, alignment: .leading)
+                .lineLimit(2)
+            Text(track.artistName)
+                .frame(width: contentWidth, alignment: .leading)
+                .lineLimit(2)
+                .opacity(0.5)
+        }
+    }
+    
+    private func trackFeatures(_ amItem: AppleMusicItem, spotItem: SpotifyItem) -> some View {
+        var genres: String {
+            var g = amItem.genres
+            g.removeAll(where: { $0 == "Music"})
+            switch g.count {
+            case let i where i > 1:
+                return "\(g[0]), \(g[1])"
+            default:
+                return g.first ?? "–"
+            }
+        }
+        
+        return VStack(alignment: .leading, spacing: 5) {
+            analysisRow(label: "Popularity", value: spotItem.popularityString ?? "–")
+            analysisRow(label: "Year", value: spotItem.year?.description ?? "–")
+            analysisRow(label: "Genre", value: genres, labelWidth: 55)
+        }
+    }
+    
+    private func trackAnalysis(_ features: PumpyAnalytics.AudioFeatures) -> some View {
+        VStack(alignment: .leading, spacing: 5) {
+            analysisRow(label: "Peak", value: features.pumpyScoreString)
+            analysisRow(label: "Dance", value: features.danceabilityString)
+            analysisRow(label: "Energy", value: features.energyString)
+            analysisRow(label: "Happiness", value: features.valenceString)
+            analysisRow(label: "Loud", value: features.loudnessString)
+            analysisRow(label: "Instrumental", value: features.instrumentalnessString)
+            analysisRow(label: "Acoustic", value: features.acousticnessString)
+            analysisRow(label: "Live", value: features.livelinessString)
+        }
+    }
+    
+    private func analysisRow(label: String, value: String, labelWidth: CGFloat = 100) -> some View {
+        HStack(alignment: .top, spacing: 0) {
+            Text(label + ":")
+                .opacity(0.5)
+                .frame(width: labelWidth, alignment: .leading)
+            Text(value)
+                .frame(width: contentWidth - labelWidth, alignment: .trailing)
+                .lineLimit(2)
+        }
+    }
+    
+    // MARK: - Methods
     
     private func analyseTrack() {
         if let anlysdTrack = track as? PumpyAnalytics.Track {
@@ -54,68 +115,19 @@ struct TrackPreview: View {
         }
     }
     
-    private var trackDetails: some View {
-        VStack(alignment: .leading) {
-            ArtworkView(artworkURL: track.artworkURL, size: 200)
-            Text(track.name)
-            Text(track.artistName)
-                .opacity(0.5)
-        }
-    }
-    
-    func trackAnalysis(_ features: PumpyAnalytics.AudioFeatures) -> some View {
-        VStack(alignment: .leading, spacing: 5) {
-            analysisRow(label: "Peak", value: features.pumpyScoreString)
-            analysisRow(label: "Dance", value: features.danceabilityString)
-            analysisRow(label: "Energy", value: features.energyString)
-            analysisRow(label: "Happiness", value: features.valenceString)
-            analysisRow(label: "Loud", value: features.loudnessString)
-            analysisRow(label: "Instrumental", value: features.instrumentalnessString)
-            analysisRow(label: "Acoustic", value: features.acousticnessString)
-            analysisRow(label: "Live", value: features.livelinessString)
-        }
-    }
-    
-    func trackFeatures(_ amItem: AppleMusicItem, spotItem: SpotifyItem) -> some View {
-        var genres: String {
-            var g = amItem.genres
-            g.removeAll(where: { $0 == "Music"})
-            return g.joined(separator: ", ")
-        }
-        
-        return VStack(alignment: .leading, spacing: 5) {
-            analysisRow(label: "Popularity", value: spotItem.popularityString ?? "–")
-            analysisRow(label: "Year", value: spotItem.year?.description ?? "–")
-            analysisRow(label: "Genre", value: genres)
-        }
-    }
-    
-    func analysisRow(label: String, value: String) -> some View {
-        HStack(alignment: .top, spacing: 0) {
-            Text(label + ":")
-                .opacity(0.5)
-                .frame(width: 100, alignment: .leading)
-            Spacer()
-            Text(value)
-                .frame(width: 100, alignment: .trailing)
-        }
-    }
-    
 }
 
+// MARK: - Previews
+
 struct TrackPreview_Previews: PreviewProvider {
-    static let analysedTrack = PumpyAnalytics.MockData.trackWithFeatures
+    static let analysedTrack = PumpyAnalytics.MockData.trackWithLongDetails
     
     static var previews: some View {
         Group {
-            TrackPreview(track: MockData.track, analysedTrack: analysedTrack)
+            TrackPreview(track: analysedTrack, analysedTrack: analysedTrack)
+                .border(.black)
                 .preferredColorScheme(.dark)
-                .padding(100)
-                .background(Color.indigo)
-                .environmentObject(AuthorisationManager())
-            TrackPreview(track: MockData.track).trackAnalysis(analysedTrack.audioFeatures!)
-                .preferredColorScheme(.dark)
-                .padding(100)
+                .padding()
                 .background(Color.indigo)
                 .environmentObject(AuthorisationManager())
         }
