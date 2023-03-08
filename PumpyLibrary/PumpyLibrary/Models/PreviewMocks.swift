@@ -14,7 +14,16 @@ public struct MockData {
     public static let playlist = PreviewPlaylist(title: "Test",
                                                  songs: [],
                                                  cloudGlobalID: "",
-                                                 representativeItem: nil)
+                                                 representativeItem: nil,
+                                                 shortDescription: """
+                                                 <i>Lorem</i> <b>ipsum</b> orem ipsum orem ipsumorem ipsum orem ipsum orem ipsumorem ipsum orem ipsum orem ipsum orem ipsum
+                                                 
+                                                 <i>Lorem</i> <b>ipsum</b> orem ipsum orem ipsumorem ipsum orem ipsum orem ipsumorem ipsum orem ipsum orem ipsum orem ipsum
+                                                                                                  
+                                                 <i>Lorem</i> <b>ipsum</b> orem ipsum orem ipsumorem ipsum orem ipsum orem ipsumorem ipsum orem ipsum orem ipsum orem ipsum
+                                                                                                  
+                                                 <i>Lorem</i> <b>ipsum</b> orem ipsum orem ipsumorem ipsum orem ipsum orem ipsumorem ipsum orem ipsum orem ipsum orem ipsum
+                                                 """)
     public static let tracks = Array(repeating: MockData.track, count: 20)
     public static let track = ConstructedTrack(title: "Test",
                                                artist: "Test",
@@ -30,6 +39,7 @@ public struct PreviewPlaylist: Playlist {
     public var cloudGlobalID: String?
     public var representativeItem: MPMediaItem?
     public var artworkURL: String?
+    public var shortDescription: String?
 }
 
 public struct PreviewTrack: Track {

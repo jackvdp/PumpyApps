@@ -40,12 +40,16 @@ struct CapsuleButton: View {
     var body: some View {
         Button(action: action) {
             HStack {
-                Image(systemName: iconName).foregroundColor(.white)
-                Text(title).foregroundColor(.white)
+                Image(systemName: iconName)
+                    .foregroundColor(.white)
+                Text(title)
+                    .foregroundColor(.white)
             }
-            .padding()
+            .font(.subheadline)
+            .padding(.horizontal)
+            .padding(.vertical, 10)
             .background(Color.pumpyPink)
-            .clipShape(Capsule())
+            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
             .shadow(color: .black, radius:10)
         }
         .buttonStyle(.plain)

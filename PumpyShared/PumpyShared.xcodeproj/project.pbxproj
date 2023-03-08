@@ -11,6 +11,7 @@
 		C044A52529112AC700E17A09 /* PumpyShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C044A51A29112AC600E17A09 /* PumpyShared.framework */; };
 		C044A52A29112AC700E17A09 /* PumpySharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C044A52929112AC700E17A09 /* PumpySharedTests.swift */; };
 		C044A52B29112AC700E17A09 /* PumpyShared.h in Headers */ = {isa = PBXBuildFile; fileRef = C044A51D29112AC600E17A09 /* PumpyShared.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C07C625029B8E11F0088E604 /* HTMLText.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C624F29B8E11F0088E604 /* HTMLText.swift */; };
 		C08CD138291152F40052FE26 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08CD137291152F40052FE26 /* Debouncer.swift */; };
 		C08E0AF729321A4200D83774 /* PumpyNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08E0AF629321A4200D83774 /* PumpyNavigation.swift */; };
 /* End PBXBuildFile section */
@@ -31,6 +32,7 @@
 		C044A51E29112AC600E17A09 /* PumpyShared.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = PumpyShared.docc; sourceTree = "<group>"; };
 		C044A52429112AC700E17A09 /* PumpySharedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PumpySharedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C044A52929112AC700E17A09 /* PumpySharedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpySharedTests.swift; sourceTree = "<group>"; };
+		C07C624F29B8E11F0088E604 /* HTMLText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLText.swift; sourceTree = "<group>"; };
 		C08CD137291152F40052FE26 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		C08E0AF629321A4200D83774 /* PumpyNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpyNavigation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,6 +81,7 @@
 				C044A51E29112AC600E17A09 /* PumpyShared.docc */,
 				C08CD137291152F40052FE26 /* Debouncer.swift */,
 				C08E0AF629321A4200D83774 /* PumpyNavigation.swift */,
+				C07C624F29B8E11F0088E604 /* HTMLText.swift */,
 			);
 			path = PumpyShared;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				C08E0AF729321A4200D83774 /* PumpyNavigation.swift in Sources */,
 				C044A51F29112AC600E17A09 /* PumpyShared.docc in Sources */,
 				C08CD138291152F40052FE26 /* Debouncer.swift in Sources */,
+				C07C625029B8E11F0088E604 /* HTMLText.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

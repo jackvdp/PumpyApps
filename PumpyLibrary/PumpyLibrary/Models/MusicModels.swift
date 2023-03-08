@@ -17,6 +17,7 @@ public protocol Playlist {
     var artworkURL: String? { get }
     var songs: [Track] { get }
     var cloudGlobalID: String? { get }
+    var shortDescription: String? { get }
 }
 
 public protocol Track {
@@ -34,6 +35,7 @@ public struct ConstructedPlaylist: Playlist {
     public var songs: [Track]
     public var cloudGlobalID: String?
     public var artworkURL: String? = nil
+    public var shortDescription: String?
 }
 
 public struct ConstructedTrack: Track, Equatable {

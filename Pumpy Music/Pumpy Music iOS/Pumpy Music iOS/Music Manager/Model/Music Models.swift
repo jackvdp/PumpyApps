@@ -42,6 +42,10 @@ extension MPMediaItem: Track {
 }
 
 extension MPMediaPlaylist: Playlist, ScheduledPlaylist {
+    public var shortDescription: String? {
+        self.descriptionText
+    }
+    
     public var title: String? {
         self.name
     }
