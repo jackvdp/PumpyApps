@@ -50,6 +50,11 @@ struct MenuContent: View {
                     MenuRow(title: "Music Catalog", imageName: "music.mic")
                 }
             }
+            if settings.onlineSettings.showMusicLab {
+                NavigationLink(destination: MusicLabView()) {
+                    MenuRow(title: "Music Lab", imageName: "testtube.2")
+                }
+            }
         }
     }
 
