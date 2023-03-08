@@ -105,6 +105,7 @@
 		C0A861C029212F2200D75A8D /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A861BF29212F2200D75A8D /* List.swift */; };
 		C0BBEFA8291806ED008200DB /* ContextiOS16.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BBEFA7291806ED008200DB /* ContextiOS16.swift */; };
 		C0CBA99729151BCB001A90AE /* PumpyAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */; };
+		C0F54F2029B93ECC00B886C0 /* SettingsModelDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F1F29B93ECC00B886C0 /* SettingsModelDecoding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +212,7 @@
 		C0A861BF29212F2200D75A8D /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		C0BBEFA7291806ED008200DB /* ContextiOS16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextiOS16.swift; sourceTree = "<group>"; };
 		C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyAnalytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0F54F1F29B93ECC00B886C0 /* SettingsModelDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModelDecoding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -533,6 +535,7 @@
 			isa = PBXGroup;
 			children = (
 				C003521E290D7FD40006ACDE /* AlarmTests.swift */,
+				C0F54F1F29B93ECC00B886C0 /* SettingsModelDecoding.swift */,
 			);
 			path = PumpyLibraryTests;
 			sourceTree = "<group>";
@@ -766,6 +769,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C003521F290D7FD40006ACDE /* AlarmTests.swift in Sources */,
+				C0F54F2029B93ECC00B886C0 /* SettingsModelDecoding.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

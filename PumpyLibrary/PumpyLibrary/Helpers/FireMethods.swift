@@ -66,7 +66,7 @@ public class FireMethods {
         }
     }
     
-    public static func save<T>(object: T, name: String, documentName: String, dataFieldName: String) where T: Codable {
+    public static func save<T>(object: T, name: String, documentName: String, dataFieldName: String) where T: Encodable {
         let firebaseRemoteItem = try! FirebaseEncoder().encode(object)
 
         db.collection(name).document(documentName).setData([

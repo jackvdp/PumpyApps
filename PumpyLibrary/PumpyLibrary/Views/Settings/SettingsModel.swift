@@ -9,9 +9,10 @@
 import Foundation
 import SwiftUI
 
-public struct SettingsModel: Codable {
+public struct SettingsModel: Encodable {
     public var showMusicLibrary: Bool = true
     public var showMusicStore: Bool = true
+    public var showMusicLab: Bool = true
     public var showScheduler: Bool = true
     public var showDownloader: Bool = true
     public var showRepeater: Bool = true
@@ -20,4 +21,32 @@ public struct SettingsModel: Codable {
     public var showExternalDisplay: Bool = true
     public var banExplicit: Bool = false
     public var overrideSchedule: Bool = false
+}
+
+public struct SettingsDTOModel: Codable {
+    public var showMusicLibrary: Bool?
+    public var showMusicStore: Bool?
+    public var showMusicLab: Bool?
+    public var showScheduler: Bool?
+    public var showDownloader: Bool?
+    public var showRepeater: Bool?
+    public var showBlocked: Bool?
+    public var crossfadeOn: Bool?
+    public var showExternalDisplay: Bool?
+    public var banExplicit: Bool?
+    public var overrideSchedule: Bool?
+    
+    func toDomain() -> SettingsModel {
+        SettingsModel(showMusicLibrary: self.showMusicLibrary ?? true,
+                      showMusicStore: self.showMusicStore ?? true,
+                      showMusicLab: self.showMusicLab ?? true,
+                      showScheduler: self.showScheduler ?? true,
+                      showDownloader: self.showDownloader ?? true,
+                      showRepeater: self.showRepeater ?? true,
+                      showBlocked: self.showBlocked ?? true,
+                      crossfadeOn: self.crossfadeOn ?? true,
+                      showExternalDisplay: self.showExternalDisplay ?? true,
+                      banExplicit: self.banExplicit ?? false,
+                      overrideSchedule: self.overrideSchedule ?? false)
+    }
 }

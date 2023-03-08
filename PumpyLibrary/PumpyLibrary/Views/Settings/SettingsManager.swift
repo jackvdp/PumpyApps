@@ -39,8 +39,8 @@ public class SettingsManager: ObservableObject {
             settingsListener = FireMethods.listen(name: username,
                                                   documentName: K.FStore.settings,
                                                   dataFieldName: K.FStore.settings,
-                                                  decodeObject: SettingsModel.self) { [weak self] settings in
-                self?.onlineSettings = settings
+                                                  decodeObject: SettingsDTOModel.self) { [weak self] settings in
+                self?.onlineSettings = settings.toDomain()
             }
         }
     }
