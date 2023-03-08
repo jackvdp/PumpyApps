@@ -36,6 +36,7 @@ struct ItemDetailView<H:HomeProtocol,
             }
             
         }
+        .pumpyBackground()
         .onAppear() {
             viewModel.getItem(snapshot: snapshot,
                               authManager: authManager)
