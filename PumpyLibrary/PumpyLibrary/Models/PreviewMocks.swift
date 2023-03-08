@@ -16,6 +16,9 @@ public struct MockData {
                                                  cloudGlobalID: "",
                                                  representativeItem: nil,
                                                  shortDescription: """
+                                                 <i>Lorem</i> <b>ipsum</b> edjkednj
+                                                 """,
+                                                 longDescription: """
                                                  <i>Lorem</i> <b>ipsum</b> orem ipsum orem ipsumorem ipsum orem ipsum orem ipsumorem ipsum orem ipsum orem ipsum orem ipsum
                                                  
                                                  <i>Lorem</i> <b>ipsum</b> orem ipsum orem ipsumorem ipsum orem ipsum orem ipsumorem ipsum orem ipsum orem ipsum orem ipsum
@@ -40,6 +43,7 @@ public struct PreviewPlaylist: Playlist {
     public var representativeItem: MPMediaItem?
     public var artworkURL: String?
     public var shortDescription: String?
+    public var longDescription: String?
 }
 
 public struct PreviewTrack: Track {

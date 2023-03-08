@@ -18,6 +18,7 @@ public protocol Playlist {
     var songs: [Track] { get }
     var cloudGlobalID: String? { get }
     var shortDescription: String? { get }
+    var longDescription: String? { get }
 }
 
 public protocol Track {
@@ -36,6 +37,7 @@ public struct ConstructedPlaylist: Playlist {
     public var cloudGlobalID: String?
     public var artworkURL: String? = nil
     public var shortDescription: String?
+    public var longDescription: String?
 }
 
 public struct ConstructedTrack: Track, Equatable {
@@ -97,6 +99,10 @@ public enum PlayButton: String {
 // MARK: - Extend Anlaytics Models
 
 extension AMPlaylist: PumpyLibrary.Playlist {
+    public var longDescription: String? {
+        self.description
+    }
+    
     public var title: String? {
         self.name
     }
@@ -111,6 +117,9 @@ extension AMPlaylist: PumpyLibrary.Playlist {
 }
 
 extension SpotifyPlaylist: PumpyLibrary.Playlist {
+    public var longDescription: String? {
+        self.description
+    }
     public var title: String? {
         self.name
     }
@@ -125,6 +134,9 @@ extension SpotifyPlaylist: PumpyLibrary.Playlist {
 }
 
 extension SYBPlaylist: PumpyLibrary.Playlist {
+    public var longDescription: String? {
+        self.description
+    }
     public var title: String? {
         self.name
     }

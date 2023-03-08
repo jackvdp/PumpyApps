@@ -63,7 +63,7 @@ struct TrackTable<H:HomeProtocol,
     @State private var showPlaylistDescriptionSheet = false
     var playlistDescription: some View {
         let songCount = playlist.songs.count == 1 ? "1 song" : "\(playlist.songs.count) songs"
-        let description = playlist.shortDescription
+        let description = showPlaylistDescriptionSheet ? playlist.longDescription : playlist.shortDescription
         let combinedText = description != nil ? songCount + " • " + description! : songCount
         return HTMLText(combinedText)
             .font(.footnote)

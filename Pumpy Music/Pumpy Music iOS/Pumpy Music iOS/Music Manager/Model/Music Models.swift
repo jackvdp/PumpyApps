@@ -46,6 +46,10 @@ extension MPMediaPlaylist: Playlist, ScheduledPlaylist {
         self.descriptionText
     }
     
+    public var longDescription: String? {
+        self.descriptionText
+    }
+    
     public var title: String? {
         self.name
     }
