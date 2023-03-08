@@ -11,20 +11,17 @@ import StoreKit
 
 public class AuthorisationManager: ObservableObject {
     
-    private let clientID = K.Spotify.clientID
-    private let clientSecret = K.Spotify.clientSecret
-    private var renewTokenTimer: Timer?
-    private let storeController = SKCloudServiceController()
     @Published public var spotifyToken: String?
     @Published public var appleMusicToken: String?
     @Published public var storefront: String?
-    
+
     public init() {}
     
     deinit {
         print("deiniting AM")
     }
     
+    /// Call to get tokens. Should be called on start.
     public func fetchTokens() {
         getSpotifyToken()
         checkIfAuthorised()
@@ -33,16 +30,18 @@ public class AuthorisationManager: ObservableObject {
     
     // MARK: - Spotify
     
-    let spotifyAPI = SpotifyTokenAPI()
+    private let spotifyAPI = SpotifyTokenAPI()
+    private var renewTokenTimer: Timer?
     
     public func getSpotifyToken() {
-        spotifyAPI.getSpotifyToken(clientID: clientID, clientSecret: clientSecret) { [weak self] token, renewTime in
+        spotifyAPI.getSpotifyToken(clientID: K.Spotify.clientID,
+                                   clientSecret: K.Spotify.clientSecret) { [weak self] token, renewTime in
             guard let self else { return }
             print("Spotify Token: " + (token ?? "N/A"))
             DispatchQueue.main.async {
                 self.spotifyToken = token
+                self.renewToken(time: renewTime)
             }
-            self.renewToken(time: renewTime)
         }
     }
     
@@ -52,8 +51,15 @@ public class AuthorisationManager: ObservableObject {
         }
     }
     
+    public func removeTimer() {
+        renewTokenTimer?.invalidate()
+        renewTokenTimer = nil
+    }
+    
     // MARK: - AM
 
+    private let storeController = SKCloudServiceController()
+    
     public func checkIfAuthorised() {
         SKCloudServiceController.requestAuthorization { [weak self] status in
             self?.getAppleMusicToken()
@@ -87,9 +93,5 @@ public class AuthorisationManager: ObservableObject {
             }
         }
     }
-    
-    public func removeTimer() {
-        renewTokenTimer?.invalidate()
-        renewTokenTimer = nil
-    }
+
 }
