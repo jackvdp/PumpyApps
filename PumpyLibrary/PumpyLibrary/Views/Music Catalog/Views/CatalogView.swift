@@ -77,7 +77,7 @@ public struct CatalogView<H:HomeProtocol,
     }
     
     var failedView: some View {
-        Text("Error fetching catalog results. \nPull down to try again.")
+        Text("Error fetching catalog results.\nPull down to try again.")
             .opacity(0.5)
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
