@@ -51,7 +51,13 @@ struct MenuContent: View {
                 }
             }
             if settings.onlineSettings.showMusicLab {
-                NavigationLink(destination: MusicLabView()) {
+                NavigationLink(destination: MusicLabView<
+                               NowPlayingManager,
+                               BlockedTracksManager,
+                               AuthorisationManager,
+                               QueueManager,
+                               PlaylistManager
+                               >()) {
                     MenuRow(title: "Music Lab", imageName: "testtube.2")
                 }
             }

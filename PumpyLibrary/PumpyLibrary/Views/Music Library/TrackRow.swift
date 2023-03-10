@@ -21,7 +21,7 @@ public struct TrackRow<T:TokenProtocol,
     let tapAction: (()->())?
     @State private var buttonTapped = false
     @State private var trackAMID: String?
-    @EnvironmentObject var tokenManager: AuthorisationManager
+    @EnvironmentObject var tokenManager: T
     @EnvironmentObject var queueManager: Q
 
     public init(track: Track, tapAction: (()->())? = nil) {
