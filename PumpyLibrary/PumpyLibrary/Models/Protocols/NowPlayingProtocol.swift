@@ -9,10 +9,10 @@ import Foundation
 
 public protocol NowPlayingProtocol: ObservableObject {
     var playButtonState: PlayButton { get set }
-    var currentTrack: ConstructedTrack? { get }
+    var currentTrack: QueueTrack? { get }
 }
 
 class MockNowPlayingManager: NowPlayingProtocol {
     var playButtonState: PlayButton = .notPlaying
-    @Published var currentTrack: ConstructedTrack? = nil
+    @Published var currentTrack: QueueTrack? = nil
 }

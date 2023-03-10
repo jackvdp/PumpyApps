@@ -29,9 +29,10 @@ public protocol Track {
     var isExplicitItem: Bool { get }
 }
 
-// MARK: - Constructed
+// MARK: - Queue
 
-public struct ConstructedPlaylist: Playlist {
+/// Used to put a custom array (normally a subset of a playlist) of tracks into the queue
+public struct QueuePlaylist: Playlist {
     public var title: String?
     public var songs: [Track]
     public var cloudGlobalID: String?
@@ -40,7 +41,8 @@ public struct ConstructedPlaylist: Playlist {
     public var longDescription: String?
 }
 
-public struct ConstructedTrack: Track, Equatable {
+/// Used as an interface for dealing with queue tracks i.e. by NowPlayingManager/QueueManager/UpNextList
+public struct QueueTrack: Track, Equatable {
     
     public init(title: String = "",
                 artist: String = "",

@@ -14,7 +14,7 @@ import PumpyAnalytics
 import PumpyShared
 
 class NowPlayingManager: NowPlayingProtocol {
-    @Published var currentTrack: ConstructedTrack?
+    @Published var currentTrack: QueueTrack?
     @Published var playButtonState: PlayButton = .notPlaying
     private let respondDebouncer = Debouncer()
     private let itemDebouncer = Debouncer()
@@ -32,7 +32,7 @@ class NowPlayingManager: NowPlayingProtocol {
     
     func updateTrackData() {
         if let nowPlayingItem = musicPlayerController.nowPlayingItem {
-            currentTrack = ConstructedTrack(title: nowPlayingItem.name,
+            currentTrack = QueueTrack(title: nowPlayingItem.name,
                                             artist: nowPlayingItem.artistName,
                                             artworkURL: nowPlayingItem.artworkURL,
                                             playbackStoreID: nowPlayingItem.playbackStoreID,

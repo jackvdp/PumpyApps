@@ -20,7 +20,7 @@ class QueueManager: QueueProtocol {
     let recieveDebouncer = Debouncer()
     let respondDebouncer = Debouncer()
     weak var authManager: AuthorisationManager?
-    @Published var queueTracks = [ConstructedTrack]()
+    @Published var queueTracks = [QueueTrack]()
     @Published var queueIndex = 0
     @Published var analysingEnergy = false
     
@@ -55,7 +55,7 @@ class QueueManager: QueueProtocol {
         } completion: { [weak self] queue, error in
             guard error == nil else { return }
             self?.queueTracks = queue.items.map {
-                ConstructedTrack(title: $0.name,
+                QueueTrack(title: $0.name,
                                  artist: $0.artistName,
                                  artworkURL: $0.artworkURL,
                                  playbackStoreID: $0.playbackStoreID,
@@ -73,7 +73,7 @@ class QueueManager: QueueProtocol {
             }
         } completion: { [weak self] queue, _ in
             self?.queueTracks = queue.items.map {
-                ConstructedTrack(title: $0.name,
+                QueueTrack(title: $0.name,
                                  artist: $0.artistName,
                                  artworkURL: $0.artworkURL,
                                  playbackStoreID: $0.playbackStoreID,

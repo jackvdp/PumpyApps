@@ -19,7 +19,7 @@ class CatalogSearchViewModel: ObservableObject {
         var amSnapshots = [PlaylistSnapshot]()
         var spotifySnapshots = [PlaylistSnapshot]()
         var sybSnapshots = [PlaylistSnapshot]()
-        var searchedTracks = [ConstructedTrack]()
+        var searchedTracks = [PumpyAnalytics.Track]()
         var done = 0
         
         // MARK: - AM Playlists
@@ -54,13 +54,7 @@ class CatalogSearchViewModel: ObservableObject {
                 self.pageState = .failed
                 return
             }
-            searchedTracks = tracks.compactMap { track in
-                ConstructedTrack(title: track.title,
-                                 artist: track.artist,
-                                 artworkURL: track.artworkURL,
-                                 playbackStoreID: track.sourceID,
-                                 isExplicitItem: track.isExplicit)
-            }
+            searchedTracks = tracks
             
             if done == 4 {
                 self.pageState = .success(am: amSnapshots,

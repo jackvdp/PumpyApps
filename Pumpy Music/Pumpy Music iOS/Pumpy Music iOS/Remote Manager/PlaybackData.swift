@@ -55,7 +55,7 @@ class PlaybackData {
                          dataFieldName: K.FStore.upNext)
     }
     
-    static func updatePlaybackInfoOnline(for username: String, item: ConstructedTrack?, index: Int, playbackState: Int, playlistLabel: String) {
+    static func updatePlaybackInfoOnline(for username: String, item: QueueTrack?, index: Int, playbackState: Int, playlistLabel: String) {
         var currentTrack = "Not Playing"
         var currentArtist = "– – – –"
         var id = String()

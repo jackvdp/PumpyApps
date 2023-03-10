@@ -65,16 +65,6 @@ class ItemDetailViewModel: ObservableObject {
         
     }
     
-    func convertTracksToConstructedTracks(_ tracks: [PumpyAnalytics.Track]) -> [ConstructedTrack] {
-        return tracks.compactMap { trk in
-            ConstructedTrack(title: trk.title,
-                             artist: trk.artist,
-                             artworkURL: trk.artworkURL,
-                             playbackStoreID: trk.sourceID,
-                             isExplicitItem: trk.isExplicit)
-        }
-    }
-    
     enum PageState: Equatable {
         case loading, success(PumpyAnalytics.Playlist), failed
         

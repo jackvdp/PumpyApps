@@ -146,7 +146,7 @@ struct CatalogSearchView<H:HomeProtocol,
     // Methods
     
     func playFromPosition(tracks: [Track], index: Int) {
-        let playlist = ConstructedPlaylist(title: viewModel.lastSearchTerm,
+        let playlist = QueuePlaylist(title: viewModel.lastSearchTerm,
                                            songs: tracks,
                                            cloudGlobalID: nil,
                                            artworkURL: nil)

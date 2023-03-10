@@ -28,7 +28,7 @@ public struct MockData {
                                                  <i>Lorem</i> <b>ipsum</b> orem ipsum orem ipsumorem ipsum orem ipsum orem ipsumorem ipsum orem ipsum orem ipsum orem ipsum
                                                  """)
     public static let tracks = Array(repeating: MockData.track, count: 20)
-    public static let track = ConstructedTrack(title: "Test",
+    public static let track = QueueTrack(title: "Test",
                                                artist: "Test",
                                                artworkURL: "https://is3-ssl.mzstatic.com/image/thumb/Music118/v4/37/0a/9e/370a9e4b-9f5e-5a22-21c9-205e8f07d271/00602547472533.rgb.jpg/200x200bb.jpg",
                                                playbackStoreID: "",

@@ -9,7 +9,7 @@ import Foundation
 
 public protocol QueueProtocol: ObservableObject {
     var queueIndex: Int { get set }
-    var queueTracks: [ConstructedTrack] { get set }
+    var queueTracks: [QueueTrack] { get set }
     var analysingEnergy: Bool { get set }
     func removeFromQueue(id: String)
     func increaseEnergy()
@@ -20,7 +20,7 @@ public protocol QueueProtocol: ObservableObject {
 
 public class MockQueueManager: QueueProtocol {
     public var queueIndex = 0
-    public var queueTracks = [ConstructedTrack]()
+    public var queueTracks = [QueueTrack]()
     public var analysingEnergy: Bool = false
     public func removeFromQueue(id: String) {}
     public func increaseEnergy() {}
