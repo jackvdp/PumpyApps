@@ -11,7 +11,7 @@ import PumpyAnalytics
 struct TrackPreview: View {
     
     let track: Track
-    @State var analysedTrack: PumpyAnalytics.Track?
+    @Binding var analysedTrack: PumpyAnalytics.Track?
     private let controller = AnalyseController()
     @EnvironmentObject var authManager: AuthorisationManager
     private let contentWidth: CGFloat = 200
@@ -99,9 +99,10 @@ struct TrackPreview: View {
     // MARK: - Methods
     
     private func analyseTrack() {
-        if let anlysdTrack = track as? PumpyAnalytics.Track {
+        guard analysedTrack == nil else { return }
+        if let analyticsTrack = track as? PumpyAnalytics.Track {
             withAnimation {
-                analysedTrack = anlysdTrack
+                analysedTrack = analyticsTrack
             }
         } else {
             guard let id = track.amStoreID else { return }
@@ -124,12 +125,13 @@ struct TrackPreview_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            TrackPreview(track: analysedTrack, analysedTrack: analysedTrack)
+            TrackPreview(track: analysedTrack, analysedTrack: .constant(analysedTrack))
                 .border(.black)
                 .preferredColorScheme(.dark)
                 .padding()
                 .background(Color.indigo)
                 .environmentObject(AuthorisationManager())
+                .environmentObject(MusicLabManager())
         }
     }
 }

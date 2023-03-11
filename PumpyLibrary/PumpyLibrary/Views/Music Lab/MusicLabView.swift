@@ -19,22 +19,40 @@ public struct MusicLabView<N:NowPlayingProtocol,
     public init() {}
     
     public var body: some View {
-        PumpyList {
-            tracks
-            slider
-            slider
-            slider
-            slider
-        }
-        .mask {
-            mask
-        }
-        .listStyle(.plain)
-        .overlay(alignment: .bottom) {
-            button
+        Group {
+            if labManager.seedTracks.isEmpty {
+                emptyView
+            } else {
+                notEmptyView
+            }
         }
         .navigationTitle("Music Lab")
         .pumpyBackground()
+    }
+    
+    var emptyView: some View {
+        VStack(spacing: 50) {
+            Text("Select tracks and make some music!")
+                .font(.title).bold()
+                .multilineTextAlignment(.center)
+                .opacity(0.5)
+            Text("Go to Library or Catalog, long press a track and add to the Music Lab.\n\nMusic Lab allows users to create playlists based on up to 5 chosen tracks and tuned using tunable attributes.")
+                .opacity(0.5)
+        }.padding().frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    var notEmptyView: some View {
+        PumpyList {
+            tracks
+            sliders
+        }
+        .listStyle(.plain)
+        .mask {
+            mask
+        }
+        .overlay(alignment: .bottom) {
+            button
+        }
     }
     
     var tracks: some View {
@@ -44,43 +62,46 @@ public struct MusicLabView<N:NowPlayingProtocol,
         .onDelete(perform: labManager.removeTrack)
     }
     
-    @State private var celsius: Double = 0
-    var slider: some View {
-        VStack {
-            HStack(spacing: -4) {
-                Slider(value: $celsius, in: -100...100)
-                    .accentColor(.pumpyPink)
-                    .padding(.trailing)
-                    .rotationEffect(.degrees(180))
-                    .offset(y: 1)
-                Slider(value: $celsius, in: -100...100)
-                    .accentColor(.pumpyPink)
-                    .padding(.trailing)
-            }
-            Text("\(celsius, specifier: "%.1f") Celsius")
+    @ViewBuilder var sliders: some View {
+        Text("Tunable attributes:").opacity(0.5).padding(.top).font(.subheadline)
+        ForEach(labManager.properties.indices, id: \.self) { index in
+            let property = $labManager.properties[index]
+            FeatureSlider(prop: property).padding(.top)
         }
+        emptySpace
+    }
+    
+    var emptySpace: some View {
+        Rectangle()
+            .foregroundColor(.clear)
+            .frame(height: 100)
     }
     
     var button: some View {
         Button(action: {
-            //
+            labManager.createMix()
         }, label: {
             Text("Create")
+                .bold()
                 .padding(4)
                 .frame(maxWidth: .infinity)
         })
         .accentColor(.pumpyPink)
         .buttonStyle(.borderedProminent)
         .padding(.horizontal)
+        .padding(.bottom, 8)
     }
 
     var mask: some View {
-        LinearGradient(
-            gradient:
-                Gradient(colors:
-                            Array<Color>(repeating: .white, count: 6) + Array<Color>(repeating: .white.opacity(0), count: 1)),
-            startPoint: .top,
-            endPoint: .bottom)
+        VStack(spacing: 0) {
+            Color.white
+            LinearGradient(
+                gradient:
+                    Gradient(colors: [.white] + Array<Color>(repeating: .clear, count: 3)),
+                startPoint: .top,
+                endPoint: .bottom)
+            .frame(height: 100)
+        }
     }
 }
 
@@ -90,28 +111,41 @@ struct MusicLabView_Previews: PreviewProvider {
     
     static var labManager: MusicLabManager = {
         let lm = MusicLabManager()
-        lm.addTrack(MockData.track)
-        lm.addTrack(MockData.track)
-        lm.addTrack(MockData.track)
-        lm.addTrack(MockData.track)
-        lm.addTrack(MockData.track)
-        lm.addTrack(MockData.track)
+        lm.addTrack(PumpyAnalytics.MockData.track)
+        lm.addTrack(PumpyAnalytics.MockData.track)
+        lm.addTrack(PumpyAnalytics.MockData.track)
+        lm.addTrack(PumpyAnalytics.MockData.track)
+        lm.addTrack(PumpyAnalytics.MockData.track)
+        lm.addTrack(PumpyAnalytics.MockData.track)
         return lm
     }()
     
     static var previews: some View {
-        NavigationView {
-            MusicLabView<MockNowPlayingManager,
-            MockBlockedTracks,
-            MockTokenManager,
-            MockQueueManager,MockPlaylistManager>()
+        Group {
+            NavigationView {
+                VStack {
+                    MusicLabView<MockNowPlayingManager,
+                    MockBlockedTracks,
+                    MockTokenManager,
+                    MockQueueManager,MockPlaylistManager>()
+                    MenuTrackView<MockTokenManager,MockNowPlayingManager, MockBlockedTracks,MockPlaylistManager, MockHomeVM>()
+                        .border(.red)
+                }
+            }.environmentObject(labManager)
+            NavigationView {
+                MusicLabView<MockNowPlayingManager,
+                MockBlockedTracks,
+                MockTokenManager,
+                MockQueueManager,MockPlaylistManager>()
+            }.environmentObject(MusicLabManager())
         }
             .preferredColorScheme(.dark)
-            .environmentObject(labManager)
             .environmentObject(MockNowPlayingManager())
             .environmentObject(MockBlockedTracks())
             .environmentObject(MockTokenManager())
             .environmentObject(MockQueueManager())
             .environmentObject(MockPlaylistManager())
+            .environmentObject(AlarmManager())
+            .environmentObject(MockHomeVM())
     }
 }

@@ -21,6 +21,9 @@ struct TrackTable<H:HomeProtocol,
     @EnvironmentObject var homeVM: H
     let playlist: PumpyLibrary.Playlist
     @State private var showingPlayNextToast = false
+    @State private var showLabAddToast = false
+    @State private var showLabRemoveToast = false
+    @State private var showLabNotAnalysedToast = false
     @State private var searchText = ""
     
     var body: some View {
@@ -40,6 +43,15 @@ struct TrackTable<H:HomeProtocol,
         .pumpyBackground()
         .toast(isPresenting: $showingPlayNextToast) {
             playNextToast
+        }
+        .toast(isPresenting: $showLabAddToast) {
+            labAddToast
+        }
+        .toast(isPresenting: $showLabRemoveToast) {
+            labRemoveToast
+        }
+        .toast(isPresenting: $showLabNotAnalysedToast) {
+            labNotAnalsyedToast
         }
     }
     
@@ -78,7 +90,11 @@ struct TrackTable<H:HomeProtocol,
     var tracksList: some View {
         ForEach(filteredTracks.indices, id: \.self) { i in
             TrackRow<T,N,B,P,Q>(track: filteredTracks[i],
-                                tapAction: { playFromPosition(track: filteredTracks[i]) })
+                                tapAction: { playFromPosition(track: filteredTracks[i]) },
+                                addToLabResponse: { showLabAddToast = true },
+                                removeFromLabResponse: { showLabRemoveToast = true },
+                                notAnalysedLabResponse: { showLabNotAnalysedToast = true }
+            )
         }
     }
     
@@ -86,6 +102,25 @@ struct TrackTable<H:HomeProtocol,
         AlertToast(displayMode: .alert,
                    type: .systemImage("plus", .pumpyPink),
                    title: "Playing Next")
+    }
+    
+    var labAddToast: AlertToast {
+        AlertToast(displayMode: .alert,
+                   type: .systemImage("plus", .pumpyPink),
+                   title: "Added to Music Lab")
+    }
+    
+    var labRemoveToast: AlertToast {
+        AlertToast(displayMode: .alert,
+                   type: .systemImage("minus", .pumpyPink),
+                   title: "Removed from Music Lab")
+    }
+    
+    var labNotAnalsyedToast: AlertToast {
+        AlertToast(displayMode: .alert,
+                   type: .systemImage("exclamationmark.triangle", .pumpyPink),
+                   title: "Not analysed",
+                   subTitle: "Try again.")
     }
     
     // MARK: - Methods

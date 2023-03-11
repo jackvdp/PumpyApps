@@ -19,28 +19,42 @@ public struct TrackRow<T:TokenProtocol,
     
     let track: Track
     let tapAction: (()->())?
+    let addToLabResponse: (()->())?
+    let removeFromLabResponse: (()->())?
+    let notAnalysedLabResponse: (()->())?
     @State private var buttonTapped = false
     @State private var trackAMID: String?
+    @State private var analysedTrack: PumpyAnalytics.Track?
     @EnvironmentObject var tokenManager: T
     @EnvironmentObject var queueManager: Q
+    @EnvironmentObject var labManager: MusicLabManager
 
-    public init(track: Track, tapAction: (()->())? = nil) {
+    public init(track: Track,
+                tapAction: (()->())? = nil,
+                addToLabResponse: (()->())? = nil,
+                removeFromLabResponse: (()->())? = nil,
+                notAnalysedLabResponse: (()->())? = nil) {
         self.track = track
         self.tapAction = tapAction
+        self.addToLabResponse = addToLabResponse
+        self.removeFromLabResponse = removeFromLabResponse
+        self.notAnalysedLabResponse = notAnalysedLabResponse
     }
     
     public var body: some View {
-        if let action = tapAction {
-            Button {
-                flashRow()
-                action()
-            } label: {
+        Group {
+            if let action = tapAction {
+                Button {
+                    flashRow()
+                    action()
+                } label: {
+                    label
+                }
+                .buttonStyle(.plain)
+                .foregroundColor(buttonTapped ? Color.pumpyPink : Color.primary)
+            } else {
                 label
             }
-            .buttonStyle(.plain)
-            .foregroundColor(buttonTapped ? Color.pumpyPink : Color.primary)
-        } else {
-            label
         }
     }
     
@@ -58,19 +72,18 @@ public struct TrackRow<T:TokenProtocol,
         .background {
             analyticsInfo
         }
-        .onAppear() {
-            UITableViewCell.appearance().backgroundColor = .clear
-            UITableView.appearance().backgroundColor = .clear
-        }
         .contentShape(Rectangle())
         .contextWithPreview {
             menu
         } preview: {
-            TrackPreview(track: track)
+            TrackPreview(track: track, analysedTrack: $analysedTrack)
                 .environmentObject(tokenManager)
         }
         .onAppear() {
             trackAMID = track.amStoreID
+            if let analyticsTrack = track as? PumpyAnalytics.Track {
+                analysedTrack = analyticsTrack
+            }
         }
     }
     
@@ -114,23 +127,42 @@ public struct TrackRow<T:TokenProtocol,
     @ViewBuilder
     var menu: some View {
         if let id = track.amStoreID {
-            trackMenu(appleId: id)
+            matchedTrackMenu(amId: id)
         } else {
             missingTrackMenu
+        }
+        if let analysedTrack, labManager.includes(track: analysedTrack) {
+            Button {
+                labManager.removeTrack(analysedTrack)
+                removeFromLabResponse?()
+            } label: {
+                Label("Remove from Lab", systemImage: "minue")
+            }.padding()
+        } else {
+            Button {
+                if let analysedTrack {
+                    labManager.addTrack(analysedTrack)
+                    addToLabResponse?()
+                } else {
+                    notAnalysedLabResponse?()
+                }
+            } label: {
+                Label("Add to Music Lab", systemImage: "plus")
+            }.padding()
         }
     }
     
     @ViewBuilder
-    func trackMenu(appleId: String) -> some View {
+    func matchedTrackMenu(amId: String) -> some View {
         Button {
-            queueManager.playTrackNow(id: appleId)
+            queueManager.playTrackNow(id: amId)
         } label: {
             Label("Play Now", systemImage: "play.fill")
         }
         .padding()
         .foregroundColor(.pumpyPink)
         Button {
-            queueManager.addTrackToQueue(ids: [appleId])
+            queueManager.addTrackToQueue(ids: [amId])
         } label: {
             Label("Play Next", systemImage: "text.insert")
         }
@@ -140,7 +172,7 @@ public struct TrackRow<T:TokenProtocol,
     
     @ViewBuilder var missingTrackMenu: some View {
         if (track as? PumpyAnalytics.Track)?.inProgress.gettingAM ?? false {
-            Text("Matching...").opacity(0.5)
+            Text("Track not matched... yet.").opacity(0.5)
         } else {
             Text("Track not matched to Apple Music").opacity(0.5)
         }

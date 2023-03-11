@@ -30,7 +30,7 @@ class AnalyseMediaPlayerTracks {
                              artist: song.artistName,
                              album: song.albumTitle ?? "",
                              isrc: isrc,
-                             artworkURL: nil,
+                             artworkURL: song.artwork?.url(width: 400, height: 400)?.absoluteString,
                              previewUrl: nil,
                              isExplicit: false,
                              sourceID: song.id.rawValue,

@@ -15,8 +15,8 @@ public struct AudioFeatures {
     public var tempo: Float // BPM
     public var valence: Float? // Happiness
     public var liveliness: Float? // Audience/live music
-    public var instrumentalness: Float?
-    public var speechiness: Float?
+    public var instrumentalness: Float? // Vocals in a song
+    public var speechiness: Float? // Talking e.g. podcast
     public var acousticness: Float?
     public var id: String?
     

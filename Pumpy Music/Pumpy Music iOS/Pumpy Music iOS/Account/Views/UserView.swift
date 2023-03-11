@@ -23,6 +23,7 @@ struct UserView: View {
     @StateObject private var blockedTracksManager = BlockedTracksManager()
     @StateObject private var alarmManager = AlarmManager()
     @StateObject private var remoteManager = RemoteManager()
+    @StateObject private var labManager = MusicLabManager()
 
     var body: some View {
         viewAndDependencies
@@ -51,7 +52,9 @@ struct UserView: View {
           alarmManager: alarmManager,
           authManager: authManager,
           queueManager: queueManager,
+          labManager: labManager,
           content: {MenuContent()})
+        .environmentObject(labManager)
     }
     
     func setUp() {

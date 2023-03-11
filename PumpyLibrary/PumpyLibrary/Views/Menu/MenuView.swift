@@ -19,7 +19,7 @@ public struct MenuView<H:HomeProtocol,
                        U:UserProtocol,
                        Content:View>: View {
     
-    public init(settings: SettingsManager, blockedTracksManager: B, nowPlayingManager: N, playlistManager: P, homeVM: H, user: U, alarmManager: AlarmManager, authManager: AuthorisationManager, queueManager: Q, content: @escaping () -> Content) {
+    public init(settings: SettingsManager, blockedTracksManager: B, nowPlayingManager: N, playlistManager: P, homeVM: H, user: U, alarmManager: AlarmManager, authManager: AuthorisationManager, queueManager: Q, labManager: MusicLabManager, content: @escaping () -> Content) {
         self.settings = settings
         self.blockedTracksManager = blockedTracksManager
         self.nowPlayingManager = nowPlayingManager
@@ -29,6 +29,7 @@ public struct MenuView<H:HomeProtocol,
         self.alarmManager = alarmManager
         self.authManager = authManager
         self.queueManager = queueManager
+        self.labManager = labManager
         self.content = content
     }
     
@@ -41,6 +42,7 @@ public struct MenuView<H:HomeProtocol,
     @ObservedObject var alarmManager: AlarmManager
     @ObservedObject var authManager: AuthorisationManager
     @ObservedObject var queueManager: Q
+    @ObservedObject var labManager: MusicLabManager
     let content: () -> Content
     @State private var showPlayer = true
     
@@ -87,6 +89,7 @@ public struct MenuView<H:HomeProtocol,
             .environmentObject(queueManager)
             .environmentObject(homeVM)
             .environmentObject(user)
+            .environmentObject(labManager)
         }
     }
     
@@ -102,6 +105,7 @@ public struct MenuView<H:HomeProtocol,
             .environmentObject(authManager)
             .environmentObject(queueManager)
             .environmentObject(homeVM)
+            .environmentObject(labManager)
     }
     
     var playerView: some View {
@@ -114,6 +118,7 @@ public struct MenuView<H:HomeProtocol,
                  .environmentObject(authManager)
                  .environmentObject(queueManager)
                  .environmentObject(homeVM)
+                 .environmentObject(labManager)
     }
 
     var logo: ToolbarItem<(), some View> {
@@ -179,6 +184,7 @@ struct MenuView_Previews: PreviewProvider {
                                 alarmManager: AlarmManager(),
                                 authManager: AuthorisationManager(),
                                 queueManager: MockQueueManager(),
+                                labManager: MusicLabManager(),
                                 content: {EmptyView()})
 
 }
