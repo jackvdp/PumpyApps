@@ -46,6 +46,8 @@ public class PlaylistController {
                                 authManager: authManager)
     }
     
+    // MARK: - Convert playlists to platform
+    
     public func convertToAppleMusic(playlistName: String,
                                     tracks: [Track],
                                     authManager: AuthorisationManager,
@@ -71,13 +73,22 @@ public class PlaylistController {
         return GetIDFromURL().execute(playlistURL)
     }
     
+    // MARK: - Recommended Playlist
+    
+    private let createFromSeedingUseCase = CreatePlaylistFromSeeding()
+    
+    /// Make playlist from seeding using Spotify's `/getRecommendations` endpoint
+    /// - Parameters:
+    ///   - seeding: Tunable attributes for the returnign playlist
+    ///   - authManager: Authrosation manager
+    ///   - completion: Returns either a playlist or an error
     public func createFromSuggestions(seeding: PlaylistSeeding,
                                       authManager: AuthorisationManager,
-                                      completion: @escaping (Playlist?, ErrorMessage?) -> ()) {
+                                      completion: @escaping (RecommendedPlaylist?, ErrorMessage?) -> ()) {
         
-        CreatePlaylistFromSeeding().execute(seeding: seeding,
-                                            authManager: authManager,
-                                            completion: completion)
+        createFromSeedingUseCase.execute(seeding: seeding,
+                                         authManager: authManager,
+                                         completion: completion)
     }
     
 }

@@ -10,26 +10,48 @@ import PumpyAnalytics
 
 struct StatsForFeature: View {
     @EnvironmentObject var labManager: MusicLabManager
-    var keyPath: KeyPath<PumpyAnalytics.AudioFeatures, String>
+    @ObservedObject var prop: SeedAttributes
     
     var body: some View {
         VStack(spacing: 8) {
-            ForEach(labManager.seedTracks.indices, id: \.self) { i in
-                let track = labManager.seedTracks[i]
-                HStack {
-                    VStack {
-                        Text(track.name)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Text(track.artistName)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .opacity(0.5)
-                    }.lineLimit(1)
-                    Spacer()
-                    Text(track.audioFeatures?[keyPath: keyPath] ?? "–")
-                }
+            lowrAndUpperValues
+            Divider()
+            individualStats
+        }
+        .font(.subheadline)
+    }
+    
+    var lowrAndUpperValues: some View {
+        HStack {
+            Text(prop.transformToSeeding(forMax: false)?.description ?? "–")
+            Spacer()
+            Text(prop.transformToSeeding(forMax: true)?.description ?? "–")
+        }
+    }
+    
+    var individualStats: some View {
+        ForEach(labManager.seedTracks.indices, id: \.self) { i in
+            let track = labManager.seedTracks[i]
+            HStack {
+                VStack {
+                    Text(track.name)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(track.artistName)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .opacity(0.5)
+                }.lineLimit(1)
+                Spacer()
+                Text(propertyName(track))
             }
         }
-        .frame(maxWidth: 250)
+    }
+    
+    func propertyName(_ track: PumpyAnalytics.Track) -> String {
+        if let keyPath = prop.descriptionKeyPath {
+            return track.audioFeatures?[keyPath: keyPath] ?? "–"
+        } else {
+            return track.spotifyItem?.popularityString ?? "–"
+        }
     }
 }
 
@@ -42,11 +64,15 @@ struct StatsForFeature_Previews: PreviewProvider {
         lm.addTrack(PumpyAnalytics.MockData.track)
         lm.addTrack(PumpyAnalytics.MockData.track)
         lm.addTrack(PumpyAnalytics.MockData.track)
+        lm.setAverages()
         return lm
     }()
     
     static var previews: some View {
-        StatsForFeature(keyPath: \.energyString)
+        StatsForFeature(prop: SeedAttributes(name: "Popularity",
+                                             lowerLabel: "Playing at bars",
+                                             higherLabel: "World Tour",
+                                             keyPath: \.energy, descriptionKeyPath: \.energyString))
             .preferredColorScheme(.dark)
             .environmentObject(labManager)
     }

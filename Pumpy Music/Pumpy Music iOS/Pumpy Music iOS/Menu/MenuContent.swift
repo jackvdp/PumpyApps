@@ -56,9 +56,10 @@ struct MenuContent: View {
                                BlockedTracksManager,
                                AuthorisationManager,
                                QueueManager,
-                               PlaylistManager
+                               PlaylistManager,HomeVM
                                >()) {
                     MenuRow(title: "Music Lab", imageName: "testtube.2")
+                        .environmentObject(tokenManager)
                 }
             }
         }

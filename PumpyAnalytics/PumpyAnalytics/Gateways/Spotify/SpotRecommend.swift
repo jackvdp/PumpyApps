@@ -53,7 +53,7 @@ class SpotifyRecommendPlaylistGateway {
             let jsonData = JSON(data)
             
             let tracks = SpotifyTracksParser().parseForTracks(tracks: jsonData,
-                                                                       authManager: authManager)
+                                                              authManager: authManager)
             
             completion(tracks, nil)
             

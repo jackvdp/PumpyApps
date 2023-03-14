@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RecommendedPlaylist: Playlist {
+public class RecommendedPlaylist: Playlist {
     
     init(name: String? = nil, tracks: [Track], artworkURL: String? = nil, description: String? = nil, shortDescription: String? = nil, authManager: AuthorisationManager, sourceID: String) {
         self.name = name

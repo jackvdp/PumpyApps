@@ -152,6 +152,23 @@ extension SYBPlaylist: PumpyLibrary.Playlist {
     }
 }
 
+extension RecommendedPlaylist: PumpyLibrary.Playlist {
+    public var longDescription: String? {
+        self.description
+    }
+    public var title: String? {
+        self.name
+    }
+    
+    public var songs: [Track] {
+        self.tracks
+    }
+
+    public var cloudGlobalID: String? {
+        nil
+    }
+}
+
 extension PumpyAnalytics.Track: Track {
     public var name: String {
         self.title

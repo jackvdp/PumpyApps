@@ -9,7 +9,7 @@ import SwiftUI
 import PumpyAnalytics
 
 struct FeatureSlider: View {
-    @Binding var prop: SeedAttributes
+    @ObservedObject var prop: SeedAttributes
     @State private var showDetails = false
     @EnvironmentObject var labManager: MusicLabManager
     
@@ -19,8 +19,8 @@ struct FeatureSlider: View {
             sliders
             boundaryLabel
             if showDetails && labManager.anyTracksHaveFeatures {
-                Divider().padding()
-                StatsForFeature(keyPath: prop.keyPath)
+                Divider()
+                StatsForFeature(prop: prop)
             }
         }
         .font(.callout)
@@ -80,24 +80,26 @@ struct DualSlider_Previews: PreviewProvider {
     }
     
     struct MockSliders: View {
-        @State var prop = SeedAttributes(name: "Popularity",
-                                         lowerLabel: "Playing at bars",
-                                         higherLabel: "World Tour",
-                                         keyPath: \.energyString)
+        var labManager: MusicLabManager = {
+            let lm = MusicLabManager()
+            lm.addTrack(PumpyAnalytics.MockData.trackWithFeatures)
+            lm.addTrack(PumpyAnalytics.MockData.trackWithFeatures)
+            lm.addTrack(PumpyAnalytics.MockData.trackWithFeatures)
+            lm.addTrack(PumpyAnalytics.MockData.trackWithFeatures)
+            lm.addTrack(PumpyAnalytics.MockData.trackWithFeatures)
+            lm.setAverages()
+            return lm
+        }()
         
         var body: some View {
             VStack {
                 Spacer()
-                FeatureSlider(prop: $prop)
+                FeatureSlider(prop: labManager.properties[0])
                     .padding()
                     .border(.gray)
                 Spacer()
-                Divider()
-                Text("Lower: \(prop.lowerValue.description)")
-                Text("Upper: \(prop.higherValue.description)")
-                Spacer()
             }
-            .environmentObject(MusicLabManager())
+            .environmentObject(labManager)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .pumpyBackground()
             .preferredColorScheme(.dark)

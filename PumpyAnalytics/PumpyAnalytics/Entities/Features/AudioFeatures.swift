@@ -8,11 +8,11 @@
 import Foundation
 
 public struct AudioFeatures {
-    public var danceability: Float //  how dancey a track is based on elements including tempo, rhythm stability, beat strength, and overall regularity
-    public var energy: Float // energetic tracks feel fast, loud, and noisy. For example, death metal has high energy
+    public var danceability: Float? //  how dancey a track is based on elements including tempo, rhythm stability, beat strength, and overall regularity
+    public var energy: Float? // energetic tracks feel fast, loud, and noisy. For example, death metal has high energy
     public var key: Int?
     public var loudness: Float?
-    public var tempo: Float // BPM
+    public var tempo: Float? // BPM
     public var valence: Float? // Happiness
     public var liveliness: Float? // Audience/live music
     public var instrumentalness: Float? // Vocals in a song
@@ -46,22 +46,34 @@ public struct AudioFeatures {
         
     }
     
-    public var pumpyScore: Float {
-        let bpmScore = (tempo - 50) / 170
-        let score = (bpmScore + (energy * 3) + (danceability * 2)) / 6
-        return score
+    public var pumpyScore: Float? {
+        if let tempo, let danceability, let energy {
+            let bpmScore = (tempo - 50) / 170
+            let score = (bpmScore + (energy * 3) + (danceability * 2)) / 6
+            return score
+        } else {
+            return nil
+        }
     }
     
     public var danceabilityString: String {
-        let percentage = danceability * 100
-        let int = Int(percentage)
-        return "\(int)%"
+        if let danceability {
+            let percentage = danceability * 100
+            let int = Int(percentage)
+            return "\(int)%"
+        } else {
+            return "N/A"
+        }
     }
     
     public var energyString: String {
-        let percentage = energy * 100
-        let int = Int(percentage)
-        return "\(int)%"
+        if let energy {
+            let percentage = energy * 100
+            let int = Int(percentage)
+            return "\(int)%"
+        } else {
+            return "N/A"
+        }
     }
     
     public var loudnessString: String {
@@ -73,8 +85,12 @@ public struct AudioFeatures {
     }
     
     public var tempoString: String {
-        let int = Int(tempo)
-        return "\(int)"
+        if let tempo {
+            let int = Int(tempo)
+            return "\(int)"
+        } else {
+            return "N/A"
+        }
     }
     
     public var valenceString: String {
@@ -128,8 +144,13 @@ public struct AudioFeatures {
     }
     
     public var pumpyScoreString: String {
-        let percentage = pumpyScore * 100
-        let int = Int(percentage)
-        return "\(int)%"
+        
+        if let pumpyScore {
+            let percentage = pumpyScore * 100
+            let int = Int(percentage)
+            return "\(int)%"
+        } else {
+            return "N/A"
+        }
     }
 }
