@@ -109,6 +109,7 @@
 		C0CBA99729151BCB001A90AE /* PumpyAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */; };
 		C0CC4D3D29BA9078002A0204 /* FeatureSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CC4D3C29BA9078002A0204 /* FeatureSlider.swift */; };
 		C0CC4D3F29BB3839002A0204 /* CheckboxStyleToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CC4D3E29BB3839002A0204 /* CheckboxStyleToggle.swift */; };
+		C0DDB4B329C08224007364E3 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DDB4B229C08224007364E3 /* RangeSlider.swift */; };
 		C0F54F2029B93ECC00B886C0 /* SettingsModelDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F1F29B93ECC00B886C0 /* SettingsModelDecoding.swift */; };
 		C0F54F2329B94C2800B886C0 /* MusicLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F2229B94C2800B886C0 /* MusicLabView.swift */; };
 		C0F54F2529B9D0BE00B886C0 /* MusicLabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F2429B9D0BE00B886C0 /* MusicLabManager.swift */; };
@@ -222,6 +223,7 @@
 		C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyAnalytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0CC4D3C29BA9078002A0204 /* FeatureSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureSlider.swift; sourceTree = "<group>"; };
 		C0CC4D3E29BB3839002A0204 /* CheckboxStyleToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxStyleToggle.swift; sourceTree = "<group>"; };
+		C0DDB4B229C08224007364E3 /* RangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
 		C0F54F1F29B93ECC00B886C0 /* SettingsModelDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModelDecoding.swift; sourceTree = "<group>"; };
 		C0F54F2229B94C2800B886C0 /* MusicLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLabView.swift; sourceTree = "<group>"; };
 		C0F54F2429B9D0BE00B886C0 /* MusicLabManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLabManager.swift; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 				C0F54F2229B94C2800B886C0 /* MusicLabView.swift */,
 				C0F54F2429B9D0BE00B886C0 /* MusicLabManager.swift */,
 				C0CC4D3C29BA9078002A0204 /* FeatureSlider.swift */,
+				C0DDB4B229C08224007364E3 /* RangeSlider.swift */,
 				C08BBAEE29BBA4C50028D96D /* StatsForFeature.swift */,
 				C08BBAF029BCFED00028D96D /* MusicLabModel.swift */,
 			);
@@ -710,6 +713,7 @@
 				C0CC4D3D29BA9078002A0204 /* FeatureSlider.swift in Sources */,
 				6D851527288D3A72006397CC /* Constants.swift in Sources */,
 				6DEE0CDE288DA1BC006A0CC4 /* ExtDisplaySettingsRows.swift in Sources */,
+				C0DDB4B329C08224007364E3 /* RangeSlider.swift in Sources */,
 				6D972DBB28A301F200CFD9D7 /* HomeProtocol.swift in Sources */,
 				6D1577C228BF56F2004BAB47 /* Account+Change.swift in Sources */,
 				6DB8C01728A3B120006C1B85 /* ScheduleRow.swift in Sources */,
