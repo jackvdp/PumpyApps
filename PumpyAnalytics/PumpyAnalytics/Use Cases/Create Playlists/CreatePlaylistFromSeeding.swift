@@ -24,7 +24,7 @@ class CreatePlaylistFromSeeding {
                 return
             }
             
-            let playlist = RecommendedPlaylist(name: "Recommended Playlist",
+            let playlist = RecommendedPlaylist(name: "Music Lab Playlist",
                                                tracks: tracks,
                                                authManager: authManager,
                                                sourceID: UUID().uuidString)
@@ -96,7 +96,7 @@ class CreatePlaylistFromSeeding {
         let tempoSeedMin: String? = seeding.minBPM == nil ? nil : "min_tempo=" + seeding.minBPM!.description
         let happinessSeedMin: String? = seeding.minHappiness == nil ? nil : "min_valence=" + seeding.minHappiness!.description
         let loudnessSeedMin: String? = seeding.minLoudness == nil ? nil : "min_loudness=" + seeding.minLoudness!.description
-        let speechinessSeedMin: String? = seeding.minSpeechiness == nil ? nil : "min_speechiness=" + seeding.minSpeechiness!.description
+        let instrumentalSeedMin: String? = seeding.minInstrumentalness == nil ? nil : "min_instrumentalness" + seeding.minInstrumentalness!.description
         let acousticSeedMin: String? = seeding.minAcoustic == nil ? nil : "min_acousticness=" + seeding.minAcoustic!.description
 
         let danceSeedMax: String? = seeding.maxDanceability == nil ? nil : "max_danceability=" + seeding.maxDanceability!.description
@@ -105,10 +105,10 @@ class CreatePlaylistFromSeeding {
         let tempoSeedMax: String? = seeding.maxBPM == nil ? nil : "max_tempo=" + seeding.maxBPM!.description
         let happinessSeedMax: String? = seeding.maxDanceability == nil ? nil : "max_valence=" + seeding.maxHappiness!.description
         let loudnessSeedMax: String? = seeding.maxLoudness == nil ? nil : "max_loudness=" + seeding.maxLoudness!.description
-        let speechinessSeedMax: String? = seeding.maxSpeechiness == nil ? nil : "max_speechiness=" + seeding.maxSpeechiness!.description
+        let instrumentalSeedMax: String? = seeding.maxInstrumentalness == nil ? nil : "max_instrumentalness=" + seeding.maxInstrumentalness!.description
         let acousticSeedMax: String? = seeding.maxAcoustic == nil ? nil : "max_acousticness=" + seeding.maxAcoustic!.description
 
-        let array = [danceSeedMax,energySeedMax,popularitySeedMax,tempoSeedMax,happinessSeedMax,loudnessSeedMax,speechinessSeedMax,acousticSeedMax,danceSeedMin,energySeedMin,popularitySeedMin,tempoSeedMin,happinessSeedMin,loudnessSeedMin,speechinessSeedMin,acousticSeedMin]
+        let array = [danceSeedMax,energySeedMax,popularitySeedMax,tempoSeedMax,happinessSeedMax,loudnessSeedMax,instrumentalSeedMax,acousticSeedMax,danceSeedMin,energySeedMin,popularitySeedMin,tempoSeedMin,happinessSeedMin,loudnessSeedMin,instrumentalSeedMin,acousticSeedMin]
 
         let compactArray = array.compactMap { $0 }
         

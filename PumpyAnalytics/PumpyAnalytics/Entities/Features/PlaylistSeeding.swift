@@ -37,8 +37,8 @@ public struct AttributeSeeding {
                 minHappiness: Double?,
                 maxLoudness: Int?,
                 minLoudness: Int?,
-                maxSpeechiness: Double?,
-                minSpeechiness: Double?,
+                maxInstrumnetalness: Double?,
+                minInstrumnetalness: Double?,
                 maxAcoustic: Double?,
                 minAcoustic: Double?) {
         self.maxDanceability = maxDanceability
@@ -53,8 +53,8 @@ public struct AttributeSeeding {
         self.minHappiness = minHappiness
         self.maxLoudness = maxLoudness
         self.minLoudness = minLoudness
-        self.maxSpeechiness = maxSpeechiness
-        self.minSpeechiness = minSpeechiness
+        self.maxInstrumentalness = maxInstrumnetalness
+        self.minInstrumentalness = minInstrumnetalness
         self.maxAcoustic = maxAcoustic
         self.minAcoustic = minAcoustic
     }
@@ -77,8 +77,8 @@ public struct AttributeSeeding {
     public var maxLoudness: Int?
     public var minLoudness: Int?
     
-    public var maxSpeechiness: Double?
-    public var minSpeechiness: Double?
+    public var maxInstrumentalness: Double?
+    public var minInstrumentalness: Double?
     
     public var maxAcoustic: Double?
     public var minAcoustic: Double?

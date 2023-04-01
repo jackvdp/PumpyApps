@@ -145,6 +145,15 @@
       }
     },
     {
+      "identity" : "range-slider",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jackvdp/Range-Slider",
+      "state" : {
+        "branch" : "main",
+        "revision" : "c1264f46ef316ec57331ec1b9d1d3d0af096bd8a"
+      }
+    },
+    {
       "identity" : "sdwebimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage.git",

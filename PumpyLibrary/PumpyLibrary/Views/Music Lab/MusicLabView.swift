@@ -75,18 +75,28 @@ public struct MusicLabView<N:NowPlayingProtocol,
     }
     
     @ViewBuilder var sliders: some View {
-        Text("Tunable attributes:").opacity(0.5).padding(.top).font(.subheadline)
-        ForEach(labManager.properties.indices, id: \.self) { index in
-            let property = labManager.properties[index]
-            FeatureSlider(prop: property).padding(.top)
+        VStack(alignment: .leading) {
+            Text("Tunable attributes:")
+                .opacity(0.5)
+                .padding(.top)
+                .font(.subheadline)
+            ForEach(labManager.properties.indices, id: \.self) { index in
+                let property = labManager.properties[index]
+                PropertySelector(prop: property)
+                    .padding()
+                    .background(.ultraThinMaterial.opacity(0.5))
+                    .cornerRadius(8)
+                    .padding(.horizontal, -8)
+            }
+            emptySpace
         }
-        emptySpace
+        
     }
     
     var emptySpace: some View {
         Rectangle()
             .foregroundColor(.clear)
-            .frame(height: 100)
+            .frame(height: 80)
     }
     
     var button: some View {
@@ -127,12 +137,12 @@ struct MusicLabView_Previews: PreviewProvider {
     
     static var labManager: MusicLabManager = {
         let lm = MusicLabManager()
-        lm.addTrack(PumpyAnalytics.MockData.track)
-        lm.addTrack(PumpyAnalytics.MockData.track)
-        lm.addTrack(PumpyAnalytics.MockData.track)
-        lm.addTrack(PumpyAnalytics.MockData.track)
-        lm.addTrack(PumpyAnalytics.MockData.track)
-        lm.addTrack(PumpyAnalytics.MockData.track)
+        lm.addTrack(PumpyAnalytics.MockData.trackWithFeatures)
+        lm.addTrack(PumpyAnalytics.MockData.trackWithFeatures)
+        lm.addTrack(PumpyAnalytics.MockData.trackWithFeatures)
+        lm.addTrack(PumpyAnalytics.MockData.trackWithFeatures)
+        lm.addTrack(PumpyAnalytics.MockData.trackWithFeatures)
+        lm.addTrack(PumpyAnalytics.MockData.trackWithFeatures)
         return lm
     }()
     
