@@ -15,6 +15,7 @@ public struct MockData {
                                                  songs: [],
                                                  cloudGlobalID: "",
                                                  representativeItem: nil,
+                                                 artworkURL: "https://is3-ssl.mzstatic.com/image/thumb/Music118/v4/37/0a/9e/370a9e4b-9f5e-5a22-21c9-205e8f07d271/00602547472533.rgb.jpg/200x200bb.jpg",
                                                  shortDescription: """
                                                  <i>Lorem</i> <b>ipsum</b> edjkednj
                                                  """,

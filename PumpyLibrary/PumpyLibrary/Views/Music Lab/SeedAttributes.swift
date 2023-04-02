@@ -207,7 +207,7 @@ extension SeedAttributes {
                   keyPath: nil, descriptionKeyPath: nil),
             .init(name: "Energy", lowerLabel: "Chill", higherLabel: "Buzzing",
                   keyPath: \.energy, descriptionKeyPath: \.energyString),
-            .init(name: "Instrumental", lowerLabel: "No words", higherLabel: "Sing-song",
+            .init(name: "Instrumental", lowerLabel: "Anthem", higherLabel: "No Words",
                   keyPath: \.instrumentalness, descriptionKeyPath: \.instrumentalnessString),
             .init(name: "BPM", lowerLabel: "Slow", higherLabel: "Fast",
                   keyPath: \.tempo, descriptionKeyPath: \.tempoString),
