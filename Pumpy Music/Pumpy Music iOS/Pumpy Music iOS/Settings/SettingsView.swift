@@ -34,7 +34,6 @@ struct SettingsView: View {
     
     var generalSettings: some View {
         Section {
-            Toggle("Use Crossfade", isOn: $settingsVM.onlineSettings.crossfadeOn)
             Toggle("Ban Explicit Content:", isOn: $settingsVM.onlineSettings.banExplicit)
             Toggle("Suspend Playlist Schedule \n(until 6am tomorrow):", isOn: $settingsVM.onlineSettings.overrideSchedule)
         }
