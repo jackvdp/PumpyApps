@@ -18,6 +18,7 @@ struct TrackTable<H:HomeProtocol,
                   Q:QueueProtocol>: View {
     
     @EnvironmentObject var playlistManager: P
+    @EnvironmentObject var labManager: MusicLabManager
     @EnvironmentObject var homeVM: H
     let playlist: PumpyLibrary.Playlist
     @State private var showingPlayNextToast = false
@@ -40,6 +41,16 @@ struct TrackTable<H:HomeProtocol,
         .searchable(text: $searchText, prompt: "Tracks...")
         .navigationBarTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if labManager.seedTracks.isNotEmpty {
+                    NavigationLink(destination: MusicLabView<N,B,T,Q,P,H>()) {
+                        Image(systemName: "testtube.2").resizable()
+                    }.buttonStyle(.plain)
+
+                }
+            }
+        }
         .pumpyBackground()
         .toast(isPresenting: $showingPlayNextToast) {
             playNextToast
@@ -57,10 +68,12 @@ struct TrackTable<H:HomeProtocol,
     
     // MARK: - Components
     
-    var artwork: some View {
-        let size: CGFloat = 200
-        return ArtworkView(artworkURL: playlist.artworkURL, size: size)
-            .frame(width: size, height: size)
+    @ViewBuilder var artwork: some View {
+        if let url = playlist.artworkURL {
+            let size: CGFloat = 200
+            ArtworkView(artworkURL: url, size: size)
+                .frame(width: size, height: size)
+        } else { EmptyView() }
     }
     
     var playlistName: some View {
@@ -163,14 +176,12 @@ struct TrackTable_Previews: PreviewProvider {
 
     static var previews: some View {
         NavigationView {
-            VStack {
                 TrackTable<MockHomeVM,
                            MockPlaylistManager,
                            MockNowPlayingManager,
                            MockBlockedTracks,
                            MockTokenManager,
                            MockQueueManager>(playlist: playlist)
-            }
         }
         .preferredColorScheme(.dark)
         .environmentObject(MockPlaylistManager())
@@ -179,6 +190,7 @@ struct TrackTable_Previews: PreviewProvider {
         .environmentObject(MockBlockedTracks())
         .environmentObject(MockTokenManager())
         .environmentObject(MockQueueManager())
+        .environmentObject(MusicLabManager())
         .environmentObject(AlarmManager())
     }
 }

@@ -96,6 +96,7 @@
 		C0035220290D7FD40006ACDE /* PumpyLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D851514288D3A3F006397CC /* PumpyLibrary.framework */; platformFilter = ios; };
 		C01720BF28F17B9B003BA158 /* TrackPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01720BE28F17B9B003BA158 /* TrackPreview.swift */; };
 		C01720C328F17EE7003BA158 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01720C228F17EE7003BA158 /* ArtworkView.swift */; };
+		C0278AFB29D9908D00FAB3DE /* LabResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0278AFA29D9908D00FAB3DE /* LabResultsView.swift */; };
 		C06668C028D0DEF800B4E679 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06668BF28D0DEF800B4E679 /* ItemDetailView.swift */; };
 		C077977928D355AA00EC9D5F /* ItemGridComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C077977828D355AA00EC9D5F /* ItemGridComponent.swift */; };
 		C08BBAF129BCFED00028D96D /* SeedAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08BBAF029BCFED00028D96D /* SeedAttributes.swift */; };
@@ -108,7 +109,7 @@
 		C0C0177629CF34990030E7A9 /* RangeSlider in Frameworks */ = {isa = PBXBuildFile; productRef = C0C0177529CF34990030E7A9 /* RangeSlider */; };
 		C0C0177829CF68EA0030E7A9 /* SeedAttributesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C0177729CF68EA0030E7A9 /* SeedAttributesTests.swift */; };
 		C0CBA99729151BCB001A90AE /* PumpyAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */; };
-		C0CC4D3D29BA9078002A0204 /* PropertySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CC4D3C29BA9078002A0204 /* PropertySelector.swift */; };
+		C0CC4D3D29BA9078002A0204 /* PropertySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CC4D3C29BA9078002A0204 /* PropertySelectorView.swift */; };
 		C0CC4D3F29BB3839002A0204 /* CheckboxStyleToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CC4D3E29BB3839002A0204 /* CheckboxStyleToggle.swift */; };
 		C0F54F2029B93ECC00B886C0 /* SettingsModelDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F1F29B93ECC00B886C0 /* SettingsModelDecoding.swift */; };
 		C0F54F2329B94C2800B886C0 /* MusicLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F2229B94C2800B886C0 /* MusicLabView.swift */; };
@@ -210,6 +211,7 @@
 		C003521E290D7FD40006ACDE /* AlarmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTests.swift; sourceTree = "<group>"; };
 		C01720BE28F17B9B003BA158 /* TrackPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPreview.swift; sourceTree = "<group>"; };
 		C01720C228F17EE7003BA158 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
+		C0278AFA29D9908D00FAB3DE /* LabResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabResultsView.swift; sourceTree = "<group>"; };
 		C06668BF28D0DEF800B4E679 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		C077977828D355AA00EC9D5F /* ItemGridComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGridComponent.swift; sourceTree = "<group>"; };
 		C08BBAF029BCFED00028D96D /* SeedAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedAttributes.swift; sourceTree = "<group>"; };
@@ -221,7 +223,7 @@
 		C0BBEFA7291806ED008200DB /* ContextiOS16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextiOS16.swift; sourceTree = "<group>"; };
 		C0C0177729CF68EA0030E7A9 /* SeedAttributesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedAttributesTests.swift; sourceTree = "<group>"; };
 		C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyAnalytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C0CC4D3C29BA9078002A0204 /* PropertySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertySelector.swift; sourceTree = "<group>"; };
+		C0CC4D3C29BA9078002A0204 /* PropertySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertySelectorView.swift; sourceTree = "<group>"; };
 		C0CC4D3E29BB3839002A0204 /* CheckboxStyleToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxStyleToggle.swift; sourceTree = "<group>"; };
 		C0F54F1F29B93ECC00B886C0 /* SettingsModelDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModelDecoding.swift; sourceTree = "<group>"; };
 		C0F54F2229B94C2800B886C0 /* MusicLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLabView.swift; sourceTree = "<group>"; };
@@ -557,6 +559,16 @@
 			path = PumpyLibraryTests;
 			sourceTree = "<group>";
 		};
+		C0278AFC29D9958F00FAB3DE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C0F54F2229B94C2800B886C0 /* MusicLabView.swift */,
+				C0278AFA29D9908D00FAB3DE /* LabResultsView.swift */,
+				C0CC4D3C29BA9078002A0204 /* PropertySelectorView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		C08E0AFB29321E3D00D83774 /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -571,9 +583,8 @@
 			isa = PBXGroup;
 			children = (
 				C0F54F2429B9D0BE00B886C0 /* MusicLabManager.swift */,
-				C0F54F2229B94C2800B886C0 /* MusicLabView.swift */,
-				C0CC4D3C29BA9078002A0204 /* PropertySelector.swift */,
 				C08BBAF029BCFED00028D96D /* SeedAttributes.swift */,
+				C0278AFC29D9958F00FAB3DE /* Views */,
 			);
 			path = "Music Lab";
 			sourceTree = "<group>";
@@ -710,7 +721,7 @@
 				6D851533288D3AE8006397CC /* ExternalDisplayModels.swift in Sources */,
 				6DB8C03028A3D319006C1B85 /* TrackRow.swift in Sources */,
 				6DAC17C628A50BAE009D46BC /* UserProtocol.swift in Sources */,
-				C0CC4D3D29BA9078002A0204 /* PropertySelector.swift in Sources */,
+				C0CC4D3D29BA9078002A0204 /* PropertySelectorView.swift in Sources */,
 				6D851527288D3A72006397CC /* Constants.swift in Sources */,
 				6DEE0CDE288DA1BC006A0CC4 /* ExtDisplaySettingsRows.swift in Sources */,
 				6D972DBB28A301F200CFD9D7 /* HomeProtocol.swift in Sources */,
@@ -758,6 +769,7 @@
 				6D267C5F28A2581F0094AAF1 /* GetArtwork.swift in Sources */,
 				6DD8490928A449BD00794FDB /* UpNextArtworkView.swift in Sources */,
 				6DAC17C128A5090B009D46BC /* SettingsModel.swift in Sources */,
+				C0278AFB29D9908D00FAB3DE /* LabResultsView.swift in Sources */,
 				6DB8C02128A3B135006C1B85 /* AlarmManager.swift in Sources */,
 				C08E0AF5293209F100D83774 /* MenuView.swift in Sources */,
 				6D267C6328A2588B0094AAF1 /* AMArtworkGateway.swift in Sources */,

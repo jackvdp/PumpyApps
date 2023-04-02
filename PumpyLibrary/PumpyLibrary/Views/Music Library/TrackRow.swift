@@ -136,11 +136,11 @@ public struct TrackRow<T:TokenProtocol,
                 labManager.removeTrack(analysedTrack)
                 removeFromLabResponse?()
             } label: {
-                Label("Remove from Lab", systemImage: "minue")
+                Label("Remove from Lab", systemImage: "minus")
             }.padding()
         } else {
             Button {
-                if let analysedTrack {
+                if let analysedTrack, analysedTrack.audioFeatures != nil {
                     labManager.addTrack(analysedTrack)
                     addToLabResponse?()
                 } else {

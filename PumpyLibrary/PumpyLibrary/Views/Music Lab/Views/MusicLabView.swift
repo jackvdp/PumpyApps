@@ -16,21 +16,10 @@ public struct MusicLabView<N:NowPlayingProtocol,
                            H:HomeProtocol>: View {
     
     @EnvironmentObject var labManager: MusicLabManager
-    @EnvironmentObject var authManager: AuthorisationManager
-    @State private var pageStae: LabPageState = .lab
     
     public init() {}
     
     public var body: some View {
-        switch pageStae {
-        case .lab:
-            labView
-        case .result(let playlist):
-            TrackTable<H,P,N,B,T,Q>(playlist: playlist)
-        }
-    }
-    
-    var labView: some View {
         Group {
             if labManager.seedTracks.isEmpty {
                 emptyView
@@ -100,18 +89,12 @@ public struct MusicLabView<N:NowPlayingProtocol,
     }
     
     var button: some View {
-        Button(action: {
-            labManager.createMix(authManager: authManager) { playlist in
-                if let playlist {
-                    pageStae = .result(playlist)
-                }
-            }
-        }, label: {
+        NavigationLink(destination: LabResultView<H,P,N,B,T,Q>()) {
             Text("Create")
                 .bold()
                 .padding(4)
                 .frame(maxWidth: .infinity)
-        })
+        }
         .accentColor(.pumpyPink)
         .buttonStyle(.borderedProminent)
         .padding(.horizontal)
@@ -173,8 +156,4 @@ struct MusicLabView_Previews: PreviewProvider {
             .environmentObject(AlarmManager())
             .environmentObject(MockHomeVM())
     }
-}
-
-private enum LabPageState {
-    case lab, result(PumpyAnalytics.RecommendedPlaylist)
 }
