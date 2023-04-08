@@ -147,7 +147,7 @@ struct UpNextView_Previews: PreviewProvider {
             MockNowPlayingManager,
             MockBlockedTracks,
             MockTokenManager,
-        MockPlaylistManager
+            MockPlaylistManager
         >()
             .environmentObject(queueManager)
             .environmentObject(MockBlockedTracks())
