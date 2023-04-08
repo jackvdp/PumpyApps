@@ -63,12 +63,9 @@ public struct MusicLabView<N:NowPlayingProtocol,
         .onDelete(perform: labManager.removeTrack)
     }
     
-    @ViewBuilder var sliders: some View {
+    var sliders: some View {
         VStack(alignment: .leading) {
-            Text("Tunable attributes:")
-                .opacity(0.5)
-                .padding(.top)
-                .font(.subheadline)
+            tunableAttributesHeader
             ForEach(labManager.properties.indices, id: \.self) { index in
                 let property = labManager.properties[index]
                 PropertySelector(prop: property)
@@ -79,7 +76,26 @@ public struct MusicLabView<N:NowPlayingProtocol,
             }
             emptySpace
         }
-        
+    }
+    
+    var tunableAttributesHeader: some View {
+        HStack(spacing: 20) {
+            Text("Tunable attributes:").bold()
+            Spacer()
+            Button("Enable All") {
+                labManager.enableAllAttributes()
+            }
+            .buttonStyle(.plain)
+            .disabled(labManager.allTracksEnabled)
+            Button("Disable All") {
+                labManager.disableAllAttributes()
+            }
+            .buttonStyle(.plain)
+            .disabled(labManager.allTracksDisabled)
+        }
+        .opacity(0.5)
+        .padding(.top)
+        .font(.subheadline)
     }
     
     var emptySpace: some View {

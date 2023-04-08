@@ -33,6 +33,10 @@ struct PropertySelector: View {
     var titleAndActivation: some View {
         HStack {
             Toggle("", isOn: $prop.active)
+                .onChange(of: prop.active) { _ in
+                    // Refreshes enable/disable all buttons
+                    labManager.objectWillChange.send()
+                }
             Text(prop.name)
                 .bold()
                 .opacity(prop.active ? 1 : 0.5)

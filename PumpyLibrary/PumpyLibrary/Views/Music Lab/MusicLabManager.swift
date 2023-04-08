@@ -18,8 +18,8 @@ public class MusicLabManager: ObservableObject {
             setAverages()
         }
     }
-    let controller = PlaylistController()
     var properties = SeedAttributes.defaultAttributes()
+    private let controller = PlaylistController()
     
     /// Add new track to seed items. If seed tracks is already at capacity (count of 5), the first item will be removed
     func addTrack(_ track: PumpyAnalytics.Track) {
@@ -68,6 +68,29 @@ public class MusicLabManager: ObservableObject {
         }
     }
     
+    // MARK: Enable/Disable Attributes
+    
+    func enableAllAttributes() {
+        properties.forEach { attribute in
+            attribute.active = true
+        }
+        objectWillChange.send()
+    }
+    
+    func disableAllAttributes() {
+        properties.forEach { attribute in
+            attribute.active = false
+        }
+        objectWillChange.send()
+    }
+    
+    var allTracksEnabled: Bool {
+        properties.filter { $0.active == false }.count == 0
+    }
+    
+    var allTracksDisabled: Bool {
+        properties.filter { $0.active }.count == 0
+    }
 }
 
 

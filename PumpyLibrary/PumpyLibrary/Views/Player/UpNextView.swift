@@ -166,11 +166,17 @@ public struct UpNextMask: View {
     
     public var body: some View {
         LinearGradient(
-            gradient:
-                Gradient(colors:
-                            Array<Color>(repeating: .white, count: 12) + Array<Color>(repeating: .white.opacity(0), count: 1)),
+            gradient: gradient,
             startPoint: .top,
-            endPoint: .bottom)
+            endPoint: .bottom
+        )
+    }
+    
+    var gradient: Gradient {
+        Gradient(colors:
+                    Array<Color>(repeating: .white, count: 12) +
+                 [.white.opacity(0)]
+        )
     }
 }
 
