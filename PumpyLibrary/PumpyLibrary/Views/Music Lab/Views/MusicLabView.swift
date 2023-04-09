@@ -39,7 +39,9 @@ public struct MusicLabView<N:NowPlayingProtocol,
                 .opacity(0.5)
             Text("Go to Library or Catalog, long press a track and add to the Music Lab.\n\nMusic Lab allows users to create playlists based on up to 5 chosen tracks and tuned using tunable attributes.")
                 .opacity(0.5)
-        }.padding().frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     var notEmptyView: some View {

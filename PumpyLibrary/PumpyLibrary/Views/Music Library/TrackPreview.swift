@@ -99,10 +99,25 @@ struct TrackPreview: View {
     // MARK: - Methods
     
     private func analyseTrack() {
-        guard analysedTrack == nil else { return }
+        guard analysedTrack?.audioFeatures == nil else {
+            // For tracks that have already been analysed through this process
+            return
+        }
         if let analyticsTrack = track as? PumpyAnalytics.Track {
-            withAnimation {
-                analysedTrack = analyticsTrack
+            if analyticsTrack.audioFeatures != nil {
+                withAnimation {
+                    // For tracks that have already been analysed
+                    analysedTrack = analyticsTrack
+                }
+            } else {
+                controller.analyseTracks(tracks: [analyticsTrack],
+                                         authManager: authManager) { tracks in
+                    guard let track = tracks.first else { return }
+                    withAnimation {
+                        // For analytics tracks that haven't been analysed
+                        analysedTrack = track
+                    }
+                }
             }
         } else {
             guard let id = track.amStoreID else { return }
@@ -110,6 +125,7 @@ struct TrackPreview: View {
                                                 authManager: authManager) { tracks in
                 guard let track = tracks.first else { return }
                 withAnimation {
+                    // For MPMediaItems
                     analysedTrack = track
                 }
             }

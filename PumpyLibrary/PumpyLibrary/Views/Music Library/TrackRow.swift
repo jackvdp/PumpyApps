@@ -80,10 +80,8 @@ public struct TrackRow<T:TokenProtocol,
                 .environmentObject(tokenManager)
         }
         .onAppear() {
+            // Check if track is already matched
             trackAMID = track.amStoreID
-            if let analyticsTrack = track as? PumpyAnalytics.Track {
-                analysedTrack = analyticsTrack
-            }
         }
     }
     

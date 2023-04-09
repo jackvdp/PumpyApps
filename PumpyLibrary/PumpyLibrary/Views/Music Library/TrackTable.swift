@@ -47,7 +47,6 @@ struct TrackTable<H:HomeProtocol,
                     NavigationLink(destination: MusicLabView<N,B,T,Q,P,H>()) {
                         Image(systemName: "testtube.2").resizable()
                     }.buttonStyle(.plain)
-
                 }
             }
         }
@@ -86,6 +85,7 @@ struct TrackTable<H:HomeProtocol,
     }
     
     @State private var showPlaylistDescriptionSheet = false
+    
     var playlistDescription: some View {
         let songCount = playlist.songs.count == 1 ? "1 song" : "\(playlist.songs.count) songs"
         let description = showPlaylistDescriptionSheet ? playlist.longDescription : playlist.shortDescription
@@ -150,7 +150,8 @@ struct TrackTable<H:HomeProtocol,
     }
     
     func playFromPosition(track: Track) {
-        if let playlistIndex = playlist.songs.firstIndex(where: { $0.amStoreID == track.amStoreID }) {
+        if let playlistIndex = playlist
+            .songs.firstIndex(where: { $0.amStoreID == track.amStoreID }) {
             playlistManager.playPlaylist(playlist: playlist, from: playlistIndex)
         }
     }

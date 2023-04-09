@@ -50,7 +50,7 @@ struct CatalogSearchView<H:HomeProtocol,
                        _ spotPlaylists: [PlaylistSnapshot],
                        _ sybPlaylists: [PlaylistSnapshot],
                        _ tracks: [Track]) -> some View {
-        PumpyList {
+        ScrollView {
             if sybPlaylists.isNotEmpty {
                 titleAndGrid(text: "Pumpy Playlists",
                              playlists: sybPlaylists)
@@ -64,10 +64,8 @@ struct CatalogSearchView<H:HomeProtocol,
                              playlists: spotPlaylists)
             }
             if tracks.isNotEmpty {
-                VStack {
-                    title("Tracks")
-                    tracksList(tracks)
-                }
+                title("Tracks")
+                tracksList(tracks)  
             }
             if amPlaylists.isEmpty &&
                 spotPlaylists.isEmpty &&
@@ -103,12 +101,14 @@ struct CatalogSearchView<H:HomeProtocol,
             }
             .padding(.horizontal)
         }
-        .padding(.horizontal, -20)
     }
     
     func tracksList(_ tracks: [Track]) -> some View {
         ForEach(tracks.indices, id: \.self) { i in
-            TrackRow<T,N,B,P,Q>(track: tracks[i], tapAction: {playFromPosition(tracks: tracks, index: i)})
+            TrackRow<T,N,B,P,Q>(track: tracks[i],
+                                tapAction: { playFromPosition(tracks: tracks, index: i) })
+            .padding(.leading)
+            Divider()
         }
     }
     
@@ -116,6 +116,7 @@ struct CatalogSearchView<H:HomeProtocol,
         Text(title)
             .font(.title2.bold())
             .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading)
     }
     
     var emptySearch: some View {
@@ -147,9 +148,9 @@ struct CatalogSearchView<H:HomeProtocol,
     
     func playFromPosition(tracks: [Track], index: Int) {
         let playlist = QueuePlaylist(title: viewModel.lastSearchTerm,
-                                           songs: tracks,
-                                           cloudGlobalID: nil,
-                                           artworkURL: nil)
+                                     songs: tracks,
+                                     cloudGlobalID: nil,
+                                     artworkURL: nil)
         playlistManager.playPlaylist(playlist: playlist, from: index)
     }
     
@@ -166,9 +167,7 @@ struct CatalogSearchView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            PumpyList {
-                searchView.searchResults(snapshots, snapshots, snapshots, tracks)
-            }
+            searchView.searchResults(snapshots, snapshots, snapshots, tracks)
             PumpyList {
                 searchView.searchResults([], [], [], [])
             }
