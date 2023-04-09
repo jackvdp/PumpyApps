@@ -19,26 +19,18 @@ public struct TrackRow<T:TokenProtocol,
     
     let track: Track
     let tapAction: (()->())?
-    let addToLabResponse: (()->())?
-    let removeFromLabResponse: (()->())?
-    let notAnalysedLabResponse: (()->())?
     @State private var buttonTapped = false
     @State private var trackAMID: String?
     @State private var analysedTrack: PumpyAnalytics.Track?
     @EnvironmentObject var tokenManager: T
     @EnvironmentObject var queueManager: Q
     @EnvironmentObject var labManager: MusicLabManager
+    @EnvironmentObject var toastManager: ToastManager
 
     public init(track: Track,
-                tapAction: (()->())? = nil,
-                addToLabResponse: (()->())? = nil,
-                removeFromLabResponse: (()->())? = nil,
-                notAnalysedLabResponse: (()->())? = nil) {
+                tapAction: (()->())? = nil) {
         self.track = track
         self.tapAction = tapAction
-        self.addToLabResponse = addToLabResponse
-        self.removeFromLabResponse = removeFromLabResponse
-        self.notAnalysedLabResponse = notAnalysedLabResponse
     }
     
     public var body: some View {
@@ -132,7 +124,7 @@ public struct TrackRow<T:TokenProtocol,
         if let analysedTrack, labManager.includes(track: analysedTrack) {
             Button {
                 labManager.removeTrack(analysedTrack)
-                removeFromLabResponse?()
+                toastManager.showLabRemoveToast = true
             } label: {
                 Label("Remove from Lab", systemImage: "minus")
             }.padding()
@@ -140,9 +132,9 @@ public struct TrackRow<T:TokenProtocol,
             Button {
                 if let analysedTrack, analysedTrack.audioFeatures != nil {
                     labManager.addTrack(analysedTrack)
-                    addToLabResponse?()
+                    toastManager.showLabAddToast = true
                 } else {
-                    notAnalysedLabResponse?()
+                    toastManager.showLabNotAnalysedToast = true
                 }
             } label: {
                 Label("Add to Music Lab", systemImage: "plus")
@@ -161,6 +153,7 @@ public struct TrackRow<T:TokenProtocol,
         .foregroundColor(.pumpyPink)
         Button {
             queueManager.addTrackToQueue(ids: [amId])
+            toastManager.showingPlayNextToast = true
         } label: {
             Label("Play Next", systemImage: "text.insert")
         }

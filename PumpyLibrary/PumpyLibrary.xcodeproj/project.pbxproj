@@ -114,6 +114,7 @@
 		C0F54F2029B93ECC00B886C0 /* SettingsModelDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F1F29B93ECC00B886C0 /* SettingsModelDecoding.swift */; };
 		C0F54F2329B94C2800B886C0 /* MusicLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F2229B94C2800B886C0 /* MusicLabView.swift */; };
 		C0F54F2529B9D0BE00B886C0 /* MusicLabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F2429B9D0BE00B886C0 /* MusicLabManager.swift */; };
+		C0F669D629E2FE7500BDD7B9 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F669D529E2FE7500BDD7B9 /* ToastManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -228,6 +229,7 @@
 		C0F54F1F29B93ECC00B886C0 /* SettingsModelDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModelDecoding.swift; sourceTree = "<group>"; };
 		C0F54F2229B94C2800B886C0 /* MusicLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLabView.swift; sourceTree = "<group>"; };
 		C0F54F2429B9D0BE00B886C0 /* MusicLabManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLabManager.swift; sourceTree = "<group>"; };
+		C0F669D529E2FE7500BDD7B9 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -358,6 +360,7 @@
 				C0A24B4529B7D9440044BEA0 /* Background.swift */,
 				C0A24B4729B7F3AB0044BEA0 /* SafeAreaInsets.swift */,
 				C0CC4D3E29BB3839002A0204 /* CheckboxStyleToggle.swift */,
+				C0F669D529E2FE7500BDD7B9 /* ToastManager.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -760,6 +763,7 @@
 				6DB8C03428A3D91F006C1B85 /* AudioFeaturesModel.swift in Sources */,
 				6D1577C828BF7650004BAB47 /* DuplicateAlarmsView.swift in Sources */,
 				6D85152D288D3AA4006397CC /* FileDownloader.swift in Sources */,
+				C0F669D629E2FE7500BDD7B9 /* ToastManager.swift in Sources */,
 				6D851535288D3C2A006397CC /* FireMethods.swift in Sources */,
 				6D267C5B28A250600094AAF1 /* PlaybackModels.swift in Sources */,
 				6DE6C05728C0AF660045587C /* PlaylistTable.swift in Sources */,

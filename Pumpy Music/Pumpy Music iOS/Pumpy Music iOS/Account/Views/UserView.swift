@@ -31,6 +31,7 @@ struct UserView: View {
                 setUp()
                 authManager.fetchTokens()
             }
+            .musicToasts()
     }
   
     var viewAndDependencies: some View {
