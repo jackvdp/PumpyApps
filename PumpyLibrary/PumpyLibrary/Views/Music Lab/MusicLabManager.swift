@@ -13,18 +13,8 @@ public class MusicLabManager: ObservableObject {
 
     public init() {}
     
-    @Published private(set) var seedTracks = [PumpyAnalytics.Track]() {
-        didSet {
-            setAverages()
-        }
-    }
     var properties = SeedAttributes.defaultAttributes()
     private let playlistController = PlaylistController()
-    
-    /// API only allows for a maximum of 5 seed items (tracks, artists, genres)
-    var seedItemsTotal: Int {
-        seedTracks.count + selectedGenres.count
-    }
     
     // MARK: - Create
     
@@ -37,7 +27,20 @@ public class MusicLabManager: ObservableObject {
         }
     }
     
+    // MARK: - Seed Items
+    
+    /// API only allows for a maximum of 5 seed items (tracks, artists, genres)
+    var seedItemsTotal: Int {
+        seedTracks.count + selectedGenres.count
+    }
+    
     // MARK: - Seed Tracks
+    
+    @Published private(set) var seedTracks = [PumpyAnalytics.Track]() {
+        didSet {
+            setAverages()
+        }
+    }
     
     /// Add new track to seed items. If seed tracks is already at capacity (count of 5), the first item will be removed
     func addTrack(_ track: PumpyAnalytics.Track) {
@@ -68,7 +71,7 @@ public class MusicLabManager: ObservableObject {
         }
     }
     
-    // MARK: - Genres
+    // MARK: -  Seed Genres
     
     private let genreController = GenreController()
     /// List of all genres available

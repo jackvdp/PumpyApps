@@ -50,14 +50,14 @@ class CreatePlaylistFromSeeding {
     }
     
     private func trackArtistGenreSeeding(tracks: [String],
-                                      artists: [String],
-                                      genres: [String]) -> String {
+                                         artists: [String],
+                                         genres: [String]) -> String {
         
         var queryString = String()
         
         var tracksToEdit = tracks
         var artistsToEdit = artists
-        var genresToEdit = genres
+        var genresToEdit = genres.map { $0.lowercased() }
         
         while tracksToEdit.count > 5 {
             tracksToEdit.removeLast()
