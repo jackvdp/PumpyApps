@@ -115,6 +115,7 @@
 		C0F54F2329B94C2800B886C0 /* MusicLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F2229B94C2800B886C0 /* MusicLabView.swift */; };
 		C0F54F2529B9D0BE00B886C0 /* MusicLabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F2429B9D0BE00B886C0 /* MusicLabManager.swift */; };
 		C0F669D629E2FE7500BDD7B9 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F669D529E2FE7500BDD7B9 /* ToastManager.swift */; };
+		C0F669D829E405E600BDD7B9 /* LabaManagerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F669D729E405E600BDD7B9 /* LabaManagerToolbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -230,6 +231,7 @@
 		C0F54F2229B94C2800B886C0 /* MusicLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLabView.swift; sourceTree = "<group>"; };
 		C0F54F2429B9D0BE00B886C0 /* MusicLabManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLabManager.swift; sourceTree = "<group>"; };
 		C0F669D529E2FE7500BDD7B9 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
+		C0F669D729E405E600BDD7B9 /* LabaManagerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabaManagerToolbar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,6 +363,7 @@
 				C0A24B4729B7F3AB0044BEA0 /* SafeAreaInsets.swift */,
 				C0CC4D3E29BB3839002A0204 /* CheckboxStyleToggle.swift */,
 				C0F669D529E2FE7500BDD7B9 /* ToastManager.swift */,
+				C0F669D729E405E600BDD7B9 /* LabaManagerToolbar.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -735,6 +738,7 @@
 				C0000EA828D124C700F909FD /* ItemDetailViewModel.swift in Sources */,
 				6DD8490F28A44F8200794FDB /* ExtDisplaySettingsView.swift in Sources */,
 				6DB8C01428A3B120006C1B85 /* SetScheduleView.swift in Sources */,
+				C0F669D829E405E600BDD7B9 /* LabaManagerToolbar.swift in Sources */,
 				C0CC4D3F29BB3839002A0204 /* CheckboxStyleToggle.swift in Sources */,
 				6D972DBA28A301F200CFD9D7 /* PlayerView.swift in Sources */,
 				C0000EB328D2677300F909FD /* CatalogSearchViewModel.swift in Sources */,

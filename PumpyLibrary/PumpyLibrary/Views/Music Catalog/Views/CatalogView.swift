@@ -38,6 +38,7 @@ public struct CatalogView<H:HomeProtocol,
             }
         }
         .pumpyBackground()
+        .labManagerToolbar(destination: MusicLabView<N,B,T,Q,P,H>())
         .navigationTitle("Catalog")
         .listStyle(.plain)
         .searchable(text: $searchText,

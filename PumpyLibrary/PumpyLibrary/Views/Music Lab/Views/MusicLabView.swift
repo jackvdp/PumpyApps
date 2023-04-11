@@ -16,6 +16,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
                            H:HomeProtocol>: View {
     
     @EnvironmentObject var labManager: MusicLabManager
+    @EnvironmentObject var playlistManager: P
     
     public init() {}
     
@@ -60,9 +61,18 @@ public struct MusicLabView<N:NowPlayingProtocol,
     
     var tracks: some View {
         ForEach(labManager.seedTracks.indices, id: \.self) { i in
-            TrackRow<T,N,B,P,Q>(track: labManager.seedTracks[i])
+            TrackRow<T,N,B,P,Q>(track: labManager.seedTracks[i],
+                                tapAction: { playFromPosition(tracks: labManager.seedTracks, index: i) })
         }
         .onDelete(perform: labManager.removeTrack)
+    }
+    
+    func playFromPosition(tracks: [Track], index: Int) {
+        let playlist = QueuePlaylist(title: "Music Lab Items",
+                                     songs: tracks,
+                                     cloudGlobalID: nil,
+                                     artworkURL: nil)
+        playlistManager.playPlaylist(playlist: playlist, from: index)
     }
     
     var sliders: some View {

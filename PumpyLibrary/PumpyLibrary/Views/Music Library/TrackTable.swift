@@ -38,15 +38,7 @@ struct TrackTable<H:HomeProtocol,
         .searchable(text: $searchText, prompt: "Tracks...")
         .navigationBarTitle("")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                if labManager.seedTracks.isNotEmpty {
-                    NavigationLink(destination: MusicLabView<N,B,T,Q,P,H>()) {
-                        Image(systemName: "testtube.2").resizable()
-                    }.buttonStyle(.plain)
-                }
-            }
-        }
+        .labManagerToolbar(destination: MusicLabView<N,B,T,Q,P,H>())
         .pumpyBackground()
     }
     

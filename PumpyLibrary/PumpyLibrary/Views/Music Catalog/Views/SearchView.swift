@@ -37,6 +37,7 @@ struct CatalogSearchView<H:HomeProtocol,
             }
         }
         .pumpyBackground()
+        .labManagerToolbar(destination: MusicLabView<N,B,T,Q,P,H>())
         .onChange(of: viewModel.pageState) { newValue in
             withAnimation {
                 pageState = newValue
