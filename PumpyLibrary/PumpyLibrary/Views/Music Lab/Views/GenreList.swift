@@ -26,6 +26,8 @@ struct GenreList: View {
                         genreRow(filteredgenres[i])
                     }
                 }
+                .searchable(text: $searchText,
+                            prompt: "Genres")
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -38,8 +40,6 @@ struct GenreList: View {
             .padding()
             .pumpyBackground()
             .navigationTitle("Genres")
-            .searchable(text: $searchText,
-                        prompt: "Genres")
         }
         .accentColor(.pumpyPink)
     }

@@ -20,7 +20,7 @@ struct PropertySelector: View {
             titleAndActivation
             sliders
             boundaryLabel
-            if showDetails && labManager.anyTracksHaveFeatures && prop.active {
+            if showDetails && prop.active {
                 stats
             }
         }
@@ -50,7 +50,7 @@ struct PropertySelector: View {
                     .disableAnimation()
             }
             .buttonStyle(.plain)
-            .disabled(!labManager.anyTracksHaveFeatures || !prop.active)
+            .disabled(!prop.active)
         }
     }
 
@@ -119,8 +119,10 @@ extension PropertySelector {
     fileprivate var stats: some View {
         VStack(spacing: 8) {
             lowerAndUpperValues
-            Divider()
-            individualStats
+            if labManager.anyTracksHaveFeatures {
+                Divider()
+                individualStats
+            }
         }
         .font(.subheadline)
         .padding()

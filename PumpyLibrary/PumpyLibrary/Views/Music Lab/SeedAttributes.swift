@@ -22,8 +22,8 @@ class SeedAttributes: ObservableObject {
     var name: String
     var lowerLabel: String
     var higherLabel: String
-    @Published var lowerValue: Double = 0.25
-    @Published var higherValue: Double = 0.75
+    @Published var lowerValue: Double = 0.0
+    @Published var higherValue: Double = 1.0
     @Published var active: Bool = true
     var keyPath: KeyPath<PumpyAnalytics.AudioFeatures, Float?>?
     var descriptionKeyPath: KeyPath<PumpyAnalytics.AudioFeatures, String>?
