@@ -19,14 +19,36 @@ public class MusicLabManager: ObservableObject {
         }
     }
     var properties = SeedAttributes.defaultAttributes()
-    private let controller = PlaylistController()
+    private let playlistController = PlaylistController()
+    
+    /// API only allows for a maximum of 5 seed items (tracks, artists, genres)
+    var seedItemsTotal: Int {
+        seedTracks.count + selectedGenres.count
+    }
+    
+    // MARK: - Create
+    
+    func createMix(authManager: AuthorisationManager, completion: @escaping (RecommendedPlaylist?) -> ()) {
+        let seeding = properties.transformToAnalyticsSeeding(tracks: seedTracks, genres: selectedGenres)
+        playlistController.createFromSuggestions(seeding: seeding,
+                                                 authManager: authManager) { playlist, error in
+            completion(playlist)
+            playlist?.getTracksData()
+        }
+    }
+    
+    // MARK: - Seed Tracks
     
     /// Add new track to seed items. If seed tracks is already at capacity (count of 5), the first item will be removed
     func addTrack(_ track: PumpyAnalytics.Track) {
         seedTracks.append(track)
         
-        if seedTracks.count > 5 {
-            seedTracks.removeFirst()
+        if seedItemsTotal > 5 {
+            if seedTracks.isNotEmpty {
+                seedTracks.removeFirst()
+            } else if selectedGenres.isNotEmpty {
+                selectedGenres.removeFirst()
+            }
         }
     }
     
@@ -46,14 +68,43 @@ public class MusicLabManager: ObservableObject {
         }
     }
     
-    func createMix(authManager: AuthorisationManager, completion: @escaping (RecommendedPlaylist?) -> ()) {
-        let seeding = properties.transformToAnalyticsSeeding(tracks: seedTracks)
-        controller.createFromSuggestions(seeding: seeding,
-                                         authManager: authManager) { playlist, error in
-            completion(playlist)
-            playlist?.getTracksData()
+    // MARK: - Genres
+    
+    private let genreController = GenreController()
+    /// List of all genres available
+    @Published var genres = [String]()
+    /// Array of genres selected by user for lab
+    @Published var selectedGenres = [String]()
+    
+    func getGenres(authManager: AuthorisationManager) {
+        guard genres.isEmpty else { return }
+        genres = GenreController.defaultGenres
+        genreController.getGenres(authManager: authManager) { [weak self] newGenres in
+            if newGenres.isNotEmpty {
+                self?.genres = newGenres
+            }
         }
     }
+    
+    /// Add new genre to selected genres. If selected genres is already at capacity (count of 5), the first item will be removed.
+    /// If genre is already sleected then it's removed
+    func addRemoveGenre(_ genre: String) {
+        if selectedGenres.contains(genre) {
+            selectedGenres.removeAll(where: { $0 == genre })
+        } else {
+            selectedGenres.append(genre)
+            
+            if seedItemsTotal > 5 {
+                if selectedGenres.isNotEmpty {
+                    selectedGenres.removeFirst()
+                } else if seedTracks.isNotEmpty {
+                    seedTracks.removeFirst()
+                }
+            }
+        }
+    }
+    
+    // MARK: - Set Attribute Sliders
     
     var anyTracksHaveFeatures: Bool {
         seedTracks.filter { $0.audioFeatures != nil }.isNotEmpty
@@ -68,7 +119,7 @@ public class MusicLabManager: ObservableObject {
         }
     }
     
-    // MARK: Enable/Disable Attributes
+    // MARK: - Enable/Disable Attributes
     
     func enableAllAttributes() {
         properties.forEach { attribute in

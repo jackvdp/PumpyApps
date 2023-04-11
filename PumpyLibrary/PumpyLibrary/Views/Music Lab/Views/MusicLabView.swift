@@ -17,6 +17,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
     
     @EnvironmentObject var labManager: MusicLabManager
     @EnvironmentObject var playlistManager: P
+    @EnvironmentObject var authManager: AuthorisationManager
     
     public init() {}
     
@@ -30,6 +31,9 @@ public struct MusicLabView<N:NowPlayingProtocol,
         }
         .navigationTitle("Music Lab")
         .pumpyBackground()
+        .onAppear() {
+            labManager.getGenres(authManager: authManager)
+        }
     }
     
     var emptyView: some View {
@@ -48,6 +52,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
     var notEmptyView: some View {
         PumpyList {
             tracks
+            genres
             sliders
         }
         .listStyle(.plain)
@@ -58,6 +63,31 @@ public struct MusicLabView<N:NowPlayingProtocol,
             button
         }
     }
+    
+    // MARK: - Genres
+    
+    @State private var showGenreSheet = false
+    
+    var genres: some View {
+        HStack {
+            Text("Genres:")
+            Spacer()
+            Text(
+                labManager.selectedGenres.isEmpty ?
+                "-- Select --" : labManager.selectedGenres.joined(separator: ", ")
+            )
+            .foregroundColor(.pumpyPink)
+            .onTapGesture {
+                showGenreSheet = true
+            }
+        }
+        .font(.subheadline)
+        .sheet(isPresented: $showGenreSheet) {
+            GenreList()
+        }
+    }
+    
+    // MARK: - Tracks
     
     var tracks: some View {
         ForEach(labManager.seedTracks.indices, id: \.self) { i in
@@ -74,6 +104,8 @@ public struct MusicLabView<N:NowPlayingProtocol,
                                      artworkURL: nil)
         playlistManager.playPlaylist(playlist: playlist, from: index)
     }
+    
+    // MARK: - Attribute Sliders
     
     var sliders: some View {
         VStack(alignment: .leading) {
@@ -109,6 +141,8 @@ public struct MusicLabView<N:NowPlayingProtocol,
         .padding(.top)
         .font(.subheadline)
     }
+    
+    // MARK: - Bottom & Button
     
     var emptySpace: some View {
         Rectangle()
@@ -183,5 +217,6 @@ struct MusicLabView_Previews: PreviewProvider {
             .environmentObject(MockPlaylistManager())
             .environmentObject(AlarmManager())
             .environmentObject(MockHomeVM())
+            .environmentObject(AuthorisationManager())
     }
 }
