@@ -68,4 +68,16 @@ public class SearchController {
                                       completion: completion)
     }
     
+    // MARK: Search Suggestions
+    
+    private let suggestionsUseCase = GetSearchSuggestions()
+    
+    public func searchSuggestions(term: String,
+                                  authManager: AuthorisationManager,
+                                  completion: @escaping ([String], ErrorMessage?) -> ()) {
+        suggestionsUseCase.execute(term: term,
+                                   authManager: authManager,
+                                   completion: completion)
+    }
+    
 }

@@ -19,46 +19,47 @@ struct CreateSlidersView: View {
         
     var body: some View {
         LazyVGrid(columns: columns, spacing: 20) {
-            SliderView(title: "BPM",
-                       lowerLabel: "Slow",
-                       upperLabel: "Fast",
-                       lower: $seeding.seeding.minHappiness,
-                       upper: $seeding.seeding.maxHappiness)
-            SliderView(title: "BPM",
-                       lowerLabel: "Slow",
-                       upperLabel: "Fast",
-                       lower: $seeding.seeding.minHappiness,
-                       upper: $seeding.seeding.maxHappiness)
-            SliderView(title: "BPM",
-                       lowerLabel: "Slow",
-                       upperLabel: "Fast",
-                       lower: $seeding.seeding.minHappiness,
-                       upper: $seeding.seeding.maxHappiness)
-            SliderView(title: "BPM",
-                       lowerLabel: "Slow",
-                       upperLabel: "Fast",
-                       lower: $seeding.seeding.minHappiness,
-                       upper: $seeding.seeding.maxHappiness)
-            SliderView(title: "BPM",
-                       lowerLabel: "Slow",
-                       upperLabel: "Fast",
-                       lower: $seeding.seeding.minHappiness,
-                       upper: $seeding.seeding.maxHappiness)
-            SliderView(title: "BPM",
-                       lowerLabel: "Slow",
-                       upperLabel: "Fast",
-                       lower: $seeding.seeding.minHappiness,
-                       upper: $seeding.seeding.maxHappiness)
-            SliderView(title: "BPM",
-                       lowerLabel: "Slow",
-                       upperLabel: "Fast",
-                       lower: $seeding.seeding.minHappiness,
-                       upper: $seeding.seeding.maxHappiness)
-            SliderView(title: "BPM",
-                       lowerLabel: "Slow",
-                       upperLabel: "Fast",
-                       lower: $seeding.seeding.minHappiness,
-                       upper: $seeding.seeding.maxHappiness)
+            Text("h")
+//            SliderView(title: "BPM",
+//                       lowerLabel: "Slow",
+//                       upperLabel: "Fast",
+//                       lower: $seeding.seeding.minHappiness,
+//                       upper: $seeding.seeding.maxHappiness)
+//            SliderView(title: "BPM",
+//                       lowerLabel: "Slow",
+//                       upperLabel: "Fast",
+//                       lower: $seeding.seeding.minHappiness,
+//                       upper: $seeding.seeding.maxHappiness)
+//            SliderView(title: "BPM",
+//                       lowerLabel: "Slow",
+//                       upperLabel: "Fast",
+//                       lower: $seeding.seeding.minHappiness,
+//                       upper: $seeding.seeding.maxHappiness)
+//            SliderView(title: "BPM",
+//                       lowerLabel: "Slow",
+//                       upperLabel: "Fast",
+//                       lower: $seeding.seeding.minHappiness,
+//                       upper: $seeding.seeding.maxHappiness)
+//            SliderView(title: "BPM",
+//                       lowerLabel: "Slow",
+//                       upperLabel: "Fast",
+//                       lower: $seeding.seeding.minHappiness,
+//                       upper: $seeding.seeding.maxHappiness)
+//            SliderView(title: "BPM",
+//                       lowerLabel: "Slow",
+//                       upperLabel: "Fast",
+//                       lower: $seeding.seeding.minHappiness,
+//                       upper: $seeding.seeding.maxHappiness)
+//            SliderView(title: "BPM",
+//                       lowerLabel: "Slow",
+//                       upperLabel: "Fast",
+//                       lower: $seeding.seeding.minHappiness,
+//                       upper: $seeding.seeding.maxHappiness)
+//            SliderView(title: "BPM",
+//                       lowerLabel: "Slow",
+//                       upperLabel: "Fast",
+//                       lower: $seeding.seeding.minHappiness,
+//                       upper: $seeding.seeding.maxHappiness)
         }
         .padding()
     }

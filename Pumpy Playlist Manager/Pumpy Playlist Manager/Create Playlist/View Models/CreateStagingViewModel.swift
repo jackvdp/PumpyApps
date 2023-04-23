@@ -15,25 +15,7 @@ class CreateStagingViewModel: ObservableObject {
                                              artistIDs: [],
                                              genres: [],
                                              playlistSize: 100,
-                                             seeding: CustomSeeding(
-                                                maxDanceability: 0.5,
-                                                minDanceability: 0.2,
-                                                maxEnergy: 0.5,
-                                                minEnergy: 0.2,
-                                                maxPopularity: 20,
-                                                minPopularity: 100,
-                                                maxBPM: 250,
-                                                minBPM: 0,
-                                                maxHappiness: 0.5,
-                                                minHappiness: 0.2,
-                                                maxLoudness: 0,
-                                                minLoudness: -20,
-                                                maxSpeechiness: 0.5,
-                                                minSpeechiness: 0.2,
-                                                maxAcoustic: 0.5,
-                                                minAcoustic: 0.2
-                                            )
-    )
+                                             seeding: AttributeSeeding(maxDanceability: nil, minDanceability: nil, maxEnergy: nil, minEnergy: nil, maxPopularity: nil, minPopularity: nil, maxBPM: nil, minBPM: nil, maxHappiness: nil, minHappiness: nil, maxLoudness: nil, minLoudness: nil, maxInstrumnetalness: nil, minInstrumnetalness: nil, maxAcoustic: nil, minAcoustic: nil))
     
     init(nav: CreateNavigationManager) {
         self.nav = nav

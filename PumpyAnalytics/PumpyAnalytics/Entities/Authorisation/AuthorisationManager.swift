@@ -14,6 +14,9 @@ public class AuthorisationManager: ObservableObject {
     @Published public var spotifyToken: String?
     @Published public var appleMusicToken: String?
     @Published public var storefront: String?
+    
+    public var appleTokenCompletion: ((String) -> ())?
+    public var spotifyTokenCompletion: ((String) -> ())?
 
     public init() {}
     
@@ -41,6 +44,7 @@ public class AuthorisationManager: ObservableObject {
             DispatchQueue.main.async {
                 self.spotifyToken = token
                 self.renewToken(time: renewTime)
+                self.spotifyTokenCompletion?(token ?? "")
             }
         }
     }
@@ -76,6 +80,7 @@ public class AuthorisationManager: ObservableObject {
             if let token = receivedToken {
                 print("Am Token: " + token)
                 self.appleMusicToken = token
+                self.appleTokenCompletion?(token)
             }
         }
     }

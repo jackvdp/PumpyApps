@@ -9,7 +9,7 @@ import Foundation
 @testable import PumpyAnalytics
 
 class MockSearchTracksGateway: SearchTracksGatewayProtocol {
-    func run(_ term: String, authManager: AuthorisationManager, completion: @escaping (SongSearchResults?, Int) -> ()) {
+    func run(_ term: String, limit: Int, authManager: PumpyAnalytics.AuthorisationManager, completion: @escaping (PumpyAnalytics.SongSearchResults?, Int) -> ()) {
         let model = searchJSON.convertJSONStringToModel(to: SongSearchResults.self)
         completion(model, 200)
     }

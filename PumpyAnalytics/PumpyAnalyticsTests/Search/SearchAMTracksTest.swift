@@ -17,7 +17,7 @@ final class SearchAMTracksTest: XCTestCase {
         let promise = expectation(description: "Don't get error after call")
         var expectedResult: SongSearchResults?
         
-        gateway.run(term, authManager: AuthorisationManager()) { result, code in
+        gateway.run(term, limit: 10, authManager: AuthorisationManager()) { result, code in
             expectedResult = result
             promise.fulfill()
         }
@@ -31,7 +31,7 @@ final class SearchAMTracksTest: XCTestCase {
         let promise = expectation(description: "Don't get error after call")
         var expectedResult: SongSearchResults?
         
-        gateway.run(term, authManager: AuthorisationManager()) { result, code in
+        gateway.run(term, limit: 10, authManager: AuthorisationManager()) { result, code in
             expectedResult = result
             promise.fulfill()
         }
@@ -45,7 +45,7 @@ final class SearchAMTracksTest: XCTestCase {
         let promise = expectation(description: "Don't get error after call")
         var expectedResult: [Track]?
         
-        useCase.execute(term: term, authManager: AuthorisationManager()) { songs, error in
+        useCase.execute(term: term, limit: 10, authManager: AuthorisationManager()) { songs, error in
             expectedResult = songs
             promise.fulfill()
         }

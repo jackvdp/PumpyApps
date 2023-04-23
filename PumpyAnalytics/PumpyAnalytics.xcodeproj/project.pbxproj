@@ -97,10 +97,14 @@
 		6DECEF7A2860EED60020B2D2 /* GetRecommendedPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DECEF792860EED60020B2D2 /* GetRecommendedPlaylist.swift */; };
 		6DECEF7C2860F0840020B2D2 /* SpotifyTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DECEF7B2860F0840020B2D2 /* SpotifyTracks.swift */; };
 		C044A50F2910757D00E17A09 /* TextPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C044A50E2910757D00E17A09 /* TextPlaylist.swift */; };
+		C06067F829F3D5B70042BEEF /* TestSearchSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06067F729F3D5B70042BEEF /* TestSearchSuggestions.swift */; };
+		C06067FA29F3D79F0042BEEF /* SearchSuggestionsGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06067F929F3D79F0042BEEF /* SearchSuggestionsGateway.swift */; };
+		C06067FC29F3D87E0042BEEF /* SearchSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06067FB29F3D87E0042BEEF /* SearchSuggestions.swift */; };
 		C07B55CB2916F333006B3536 /* AnalyseMediaPlayerTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07B55CA2916F333006B3536 /* AnalyseMediaPlayerTracks.swift */; };
 		C08CD13229114D4C0052FE26 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = C08CD13129114D4C0052FE26 /* Apollo */; };
 		C08CD13429114D4C0052FE26 /* ApolloCodegenLib in Frameworks */ = {isa = PBXBuildFile; productRef = C08CD13329114D4C0052FE26 /* ApolloCodegenLib */; };
 		C08CD13629114D4C0052FE26 /* ApolloWebSocket in Frameworks */ = {isa = PBXBuildFile; productRef = C08CD13529114D4C0052FE26 /* ApolloWebSocket */; };
+		C0AE03C729F126FF00547147 /* GetSearchSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AE03C629F126FF00547147 /* GetSearchSuggestions.swift */; };
 		C0BBDAF828D3CE7600BB7AF1 /* SearchTracksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BBDAF728D3CE7600BB7AF1 /* SearchTracksAPI.swift */; };
 		C0BBDAFA28D3D60F00BB7AF1 /* SongSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BBDAF928D3D60F00BB7AF1 /* SongSearch.swift */; };
 		C0BBDAFD28D3DB5C00BB7AF1 /* SearchAMTracksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BBDAFC28D3DB5C00BB7AF1 /* SearchAMTracksTest.swift */; };
@@ -218,7 +222,11 @@
 		6DECEF792860EED60020B2D2 /* GetRecommendedPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecommendedPlaylist.swift; sourceTree = "<group>"; };
 		6DECEF7B2860F0840020B2D2 /* SpotifyTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyTracks.swift; sourceTree = "<group>"; };
 		C044A50E2910757D00E17A09 /* TextPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPlaylist.swift; sourceTree = "<group>"; };
+		C06067F729F3D5B70042BEEF /* TestSearchSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSearchSuggestions.swift; sourceTree = "<group>"; };
+		C06067F929F3D79F0042BEEF /* SearchSuggestionsGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionsGateway.swift; sourceTree = "<group>"; };
+		C06067FB29F3D87E0042BEEF /* SearchSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestions.swift; sourceTree = "<group>"; };
 		C07B55CA2916F333006B3536 /* AnalyseMediaPlayerTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyseMediaPlayerTracks.swift; sourceTree = "<group>"; };
+		C0AE03C629F126FF00547147 /* GetSearchSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchSuggestions.swift; sourceTree = "<group>"; };
 		C0BBDAF728D3CE7600BB7AF1 /* SearchTracksAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTracksAPI.swift; sourceTree = "<group>"; };
 		C0BBDAF928D3D60F00BB7AF1 /* SongSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSearch.swift; sourceTree = "<group>"; };
 		C0BBDAFC28D3DB5C00BB7AF1 /* SearchAMTracksTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchAMTracksTest.swift; path = PumpyAnalyticsTests/Search/SearchAMTracksTest.swift; sourceTree = SOURCE_ROOT; };
@@ -301,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				6D467F8228C32F7B0042C2C8 /* Suggestions.swift */,
+				C06067FB29F3D87E0042BEEF /* SearchSuggestions.swift */,
 			);
 			path = Suggestions;
 			sourceTree = "<group>";
@@ -408,6 +417,7 @@
 				6D549806283C1D8B00F3DF59 /* PlaylistRequestModel.swift */,
 				6D467F7C28C277E00042C2C8 /* SuggestionsAPI.swift */,
 				C0CBCCF128D8E26E00161660 /* AlbumAPI.swift */,
+				C06067F929F3D79F0042BEEF /* SearchSuggestionsGateway.swift */,
 			);
 			path = "Apple Music";
 			sourceTree = "<group>";
@@ -559,6 +569,7 @@
 				6D549852283CDD7100F3DF59 /* SearchSpotify.swift */,
 				6D5498C62842343800F3DF59 /* SearchAMTracks.swift */,
 				6DCB0880289986EB0059EEBB /* SearchArtistStation.swift */,
+				C0AE03C629F126FF00547147 /* GetSearchSuggestions.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -645,6 +656,7 @@
 			children = (
 				C0BBDAFC28D3DB5C00BB7AF1 /* SearchAMTracksTest.swift */,
 				C0BBDAFE28D46DC300BB7AF1 /* MockSearchGateway.swift */,
+				C06067F729F3D5B70042BEEF /* TestSearchSuggestions.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -836,6 +848,7 @@
 				6DD9DA6A2860F9F60038F12E /* GetRecommendedPlaylistTest.swift in Sources */,
 				C0CBCCFB28D8F6AC00161660 /* MockAlbumGateway.swift in Sources */,
 				6D341EE9286077E9003EE110 /* RecommendationsHelpers.swift in Sources */,
+				C06067F829F3D5B70042BEEF /* TestSearchSuggestions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -860,6 +873,7 @@
 				6D6C35A22851E83700FE2196 /* GetIDFromURL.swift in Sources */,
 				6D6C359B285141C800FE2196 /* GetAMLibPlaylists.swift in Sources */,
 				C0CBCD0028D90C5500161660 /* AlbumController.swift in Sources */,
+				C0AE03C729F126FF00547147 /* GetSearchSuggestions.swift in Sources */,
 				6D549824283CDB6F00F3DF59 /* Notifcations.swift in Sources */,
 				6D6C359D2851437F00FE2196 /* LibraryController.swift in Sources */,
 				C0F869A229E5633B00DD2BA0 /* GetGenres.swift in Sources */,
@@ -882,6 +896,7 @@
 				6D54983C283CDBA300F3DF59 /* GetMusicItem.swift in Sources */,
 				C0CBCCF228D8E26E00161660 /* AlbumAPI.swift in Sources */,
 				6D549835283CDB8D00F3DF59 /* SpotPlaylist.swift in Sources */,
+				C06067FA29F3D79F0042BEEF /* SearchSuggestionsGateway.swift in Sources */,
 				C07B55CB2916F333006B3536 /* AnalyseMediaPlayerTracks.swift in Sources */,
 				6D549810283C1D8B00F3DF59 /* SearchAPI.swift in Sources */,
 				6D549827283CDB6F00F3DF59 /* AppleMusicItem.swift in Sources */,
@@ -907,6 +922,7 @@
 				6D71E599289462F8002E5FF4 /* MergePlaylists.swift in Sources */,
 				6D4F5C3928AFE70A00FA1982 /* AnalyseController.swift in Sources */,
 				6DECEF782860E6750020B2D2 /* RecommendedPlaylist.swift in Sources */,
+				C06067FC29F3D87E0042BEEF /* SearchSuggestions.swift in Sources */,
 				6D54986B283CE0F400F3DF59 /* ConvertToAM.swift in Sources */,
 				C0F869A529E564C800DD2BA0 /* SpotGenres.swift in Sources */,
 				6D54984C283CDD0500F3DF59 /* GetSYBPlaylist.swift in Sources */,
