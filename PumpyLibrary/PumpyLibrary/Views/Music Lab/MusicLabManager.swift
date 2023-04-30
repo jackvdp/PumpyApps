@@ -15,6 +15,8 @@ public class MusicLabManager: ObservableObject {
     
     var properties = SeedAttributes.defaultAttributes()
     private let playlistController = PlaylistController()
+    /// Is search view triggered by LabView. If so search should be dimssied rather than navigation to
+    var searchViewTriggeredFromLab = false
     
     // MARK: - Create
     

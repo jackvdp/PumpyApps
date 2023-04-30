@@ -8,22 +8,25 @@
 import SwiftUI
 import PumpyAnalytics
 
-struct CatalogSearchView<H:HomeProtocol,
-                         P:PlaylistProtocol,
-                         N:NowPlayingProtocol,
-                         B:BlockedTracksProtocol,
-                         T:TokenProtocol,
-                         Q:QueueProtocol>: View {
+struct SearchView<H:HomeProtocol,
+                  P:PlaylistProtocol,
+                  N:NowPlayingProtocol,
+                  B:BlockedTracksProtocol,
+                  T:TokenProtocol,
+                  Q:QueueProtocol>: View {
     
-    @ObservedObject var viewModel: CatalogSearchViewModel
+    @StateObject private var viewModel = SearchViewModel()
     @EnvironmentObject var authManager: AuthorisationManager
     @EnvironmentObject var playlistManager: P
-    @State private var pageState: CatalogSearchViewModel.PageState = .loading
     @Namespace var screen
     
     var body: some View {
         Group {
-            switch pageState {
+            switch viewModel.pageState {
+            case .searchStage:
+                searchStageView
+                    .transition(.opacity)
+                    .id(screen)
             case .loading:
                 loadingView
                     .transition(.opacity)
@@ -36,13 +39,14 @@ struct CatalogSearchView<H:HomeProtocol,
                 failedView
             }
         }
+        .searchable(text: $viewModel.searchText,
+                    placement: .navigationBarDrawer(displayMode: .always),
+                    prompt: "Playlists, Artists, Songs")
         .pumpyBackground()
         .labManagerToolbar(destination: MusicLabView<N,B,T,Q,P,H>())
-        .onChange(of: viewModel.pageState) { newValue in
-            withAnimation {
-                pageState = newValue
-            }
-        }
+        .onSubmit(of: .search, runSearch)
+        .onChange(of: viewModel.searchText, perform: handleSearchTextChanged)
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     // MARK: - Components
@@ -132,7 +136,7 @@ struct CatalogSearchView<H:HomeProtocol,
     
     var failedView: some View {
         Button("Search Error.\n Please try again.") {
-            viewModel.searchAgain(authManager: authManager)
+            viewModel.runSearch(authManager: authManager)
         }
         .buttonStyle(.bordered)
         .foregroundColor(.gray)
@@ -145,26 +149,78 @@ struct CatalogSearchView<H:HomeProtocol,
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    // Methods
+    // MARK: Search Suggestions
+    
+    @ViewBuilder
+    var searchStageView: some View {
+        if viewModel.searchSuggestions.isNotEmpty {
+            List {
+                ForEach(viewModel.searchSuggestions, id: \.self) { suggestion in
+                    searchRow(suggestion)
+                }
+                .listRowBackground(Color.primary.opacity(0.1))
+            }
+        } else {
+            List {
+                if viewModel.recentSearches.isNotEmpty {
+                    Text("RECENT SEARCHES").font(.callout).bold()
+                        .listRowBackground(Color.clear)
+                    ForEach(viewModel.recentSearches, id: \.self) { search in
+                        searchRow(search)
+                    }
+                    .listRowBackground(Color.clear)
+                }
+            }
+            .listStyle(.plain)
+        }
+    }
+    
+    func searchRow(_ item: String) -> some View {
+        Button {
+            viewModel.searchWithSuggestion(item, authManager: authManager)
+        } label: {
+            Label(item, systemImage: "magnifyingglass")
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .buttonStyle(.plain)
+    }
+    
+    // MARK: Methods
     
     func playFromPosition(tracks: [Track], index: Int) {
-        let playlist = QueuePlaylist(title: viewModel.lastSearchTerm,
+        let playlist = QueuePlaylist(title: viewModel.searchText,
                                      songs: tracks,
                                      cloudGlobalID: nil,
                                      artworkURL: nil)
         playlistManager.playPlaylist(playlist: playlist, from: index)
     }
     
+    func runSearch() {
+        viewModel.runSearch(authManager: authManager)
+    }
+    
+    func handleSearchTextChanged(_ text: String) {
+        viewModel.getSuggestions(authManager: authManager)
+        if !viewModel.searchTextChangedByCompletion {
+            withAnimation {
+                viewModel.pageState = .searchStage
+            }
+        } else {
+            viewModel.searchTextChangedByCompletion = false
+        }
+    }
 }
+
+// MARK: - Previews
 
 struct CatalogSearchView_Previews: PreviewProvider {
     
-    static var searchView = CatalogSearchView<MockHomeVM,
+    static var searchView = SearchView<MockHomeVM,
                                    MockPlaylistManager,
                                    MockNowPlayingManager,
                                    MockBlockedTracks,
                                    MockTokenManager,
-                                   MockQueueManager>(viewModel: CatalogSearchViewModel())
+                                   MockQueueManager>()
     
     static var previews: some View {
         Group {

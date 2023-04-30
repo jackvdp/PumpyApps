@@ -12,15 +12,25 @@ struct LabManagerToolbar<OtherContent: View>: ViewModifier {
     
     @EnvironmentObject var labManager: MusicLabManager
     var destination: OtherContent
+    @Environment(\.dismiss) var dismiss
     
     func body(content: Content) -> some View {
         content
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if labManager.seedTracks.isNotEmpty {
-                        NavigationLink(destination: destination) {
-                            Image(systemName: "testtube.2").resizable()
-                        }.buttonStyle(.plain)
+                        if labManager.searchViewTriggeredFromLab {
+                            Button {
+                                dismiss()
+                            } label: {
+                                Image(systemName: "testtube.2").resizable()
+                            }
+                            .buttonStyle(.plain)
+                        } else {
+                            NavigationLink(destination: destination) {
+                                Image(systemName: "testtube.2").resizable()
+                            }.buttonStyle(.plain)
+                        }
                     }
                 }
             }

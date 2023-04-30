@@ -39,6 +39,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
         .onAppear() {
             labManager.getGenres(authManager: authManager)
         }
+        .searchToolbar(destination: SearchView<H,P,N,B,T,Q>(), modal: true)
     }
 
     // MARK: - Genres

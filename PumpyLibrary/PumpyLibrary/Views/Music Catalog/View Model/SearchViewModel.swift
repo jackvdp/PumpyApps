@@ -7,15 +7,49 @@
 
 import Foundation
 import PumpyAnalytics
+import PumpyShared
+import UIKit
 
-class CatalogSearchViewModel: ObservableObject {
+class SearchViewModel: ObservableObject {
     
-    @Published var pageState = PageState.loading
+    @Published var pageState = PageState.searchStage
+    @Published var searchText = String()
+    @Published var searchSuggestions = [String]()
+    @Published var recentSearches = [String]()
+    @Published var searchTextChangedByCompletion = false
+    private let recentSearchesKey = "recentSearches"
     private let controller = SearchController()
-    var lastSearchTerm = String()
+    private let debouncer = Debouncer()
     
-    func runSearch(term: String, authManager: AuthorisationManager) {
-        lastSearchTerm = term
+    init() {
+        getRecentSearches()
+    }
+    
+    func getSuggestions(authManager: AuthorisationManager) {
+        if searchText.count > 2 {
+            debouncer.handle { [weak self] in
+                guard let self, self.pageState == .searchStage else { return }
+                self.controller.searchSuggestions(term: self.searchText,
+                                             authManager: authManager) { [weak self] suggestions, error in
+                    guard self?.pageState == .searchStage else { return }
+                    self?.searchSuggestions = suggestions
+                }
+            }
+        } else {
+            searchSuggestions = []
+        }
+    }
+    
+    func searchWithSuggestion(_ completionTerm: String, authManager: AuthorisationManager) {
+        searchTextChangedByCompletion = true
+        searchText = completionTerm
+        runSearch(authManager: authManager)
+    }
+    
+    func runSearch(authManager: AuthorisationManager) {
+        UIApplication.shared.endEditing()
+        pageState = .loading
+        setRecentSearches()
         var amSnapshots = [PlaylistSnapshot]()
         var spotifySnapshots = [PlaylistSnapshot]()
         var sybSnapshots = [PlaylistSnapshot]()
@@ -23,7 +57,7 @@ class CatalogSearchViewModel: ObservableObject {
         var done = 0
         
         // MARK: - AM Playlists
-        controller.searchAppleMusic(term,
+        controller.searchAppleMusic(searchText,
                                     getNext: false,
                                     authManager: authManager) { [weak self] snapshots, error in
             done += 1
@@ -45,7 +79,7 @@ class CatalogSearchViewModel: ObservableObject {
         }
         
         // MARK: - AM Tracks
-        controller.searchAMTracks(term, authManager: authManager) { [weak self] tracks, error in
+        controller.searchAMTracks(searchText, authManager: authManager) { [weak self] tracks, error in
             done += 1
             
             guard let self = self else { return }
@@ -65,7 +99,7 @@ class CatalogSearchViewModel: ObservableObject {
         }
         
         // MARK: - Spotfy Playlists
-        controller.searchSpotify(term, authManager: authManager) { [weak self] snapshots, error in
+        controller.searchSpotify(searchText, authManager: authManager) { [weak self] snapshots, error in
             done += 1
             
             guard let self = self else { return }
@@ -86,7 +120,7 @@ class CatalogSearchViewModel: ObservableObject {
         }
         
         // MARK: - SYB Playlists
-        controller.searchSYB(term) { [weak self] snapshots, error in
+        controller.searchSYB(searchText) { [weak self] snapshots, error in
             done += 1
             
             guard let self = self else { return }
@@ -108,18 +142,38 @@ class CatalogSearchViewModel: ObservableObject {
         
     }
     
-    func searchAgain(authManager: AuthorisationManager) {
-        runSearch(term: lastSearchTerm, authManager: authManager)
+    // MARK: - Recent Searches
+    
+    private func getRecentSearches() {
+        if let searches = UserDefaults.standard.array(forKey: recentSearchesKey) as? [String] {
+            recentSearches = searches
+        }
     }
     
+    private func setRecentSearches() {
+        recentSearches.insert(searchText, at: 0)
+        recentSearches.removeDuplicates()
+        if recentSearches.count > 5 {
+            recentSearches.removeLast()
+        }
+        UserDefaults.standard.set(recentSearches, forKey: recentSearchesKey)
+    }
+    
+    // MARK: - Page State
+    
     enum PageState: Equatable {
-        case loading, success(am: [PlaylistSnapshot],
-                              spotify: [PlaylistSnapshot],
-                              syb: [PlaylistSnapshot],
-                              tracks: [Track]), failed
+        case searchStage
+        case loading
+        case success(am: [PlaylistSnapshot],
+                     spotify: [PlaylistSnapshot],
+                     syb: [PlaylistSnapshot],
+                     tracks: [Track])
+        case failed
         
-        static func == (lhs: CatalogSearchViewModel.PageState, rhs: CatalogSearchViewModel.PageState) -> Bool {
+        static func == (lhs: SearchViewModel.PageState, rhs: SearchViewModel.PageState) -> Bool {
             switch (lhs, rhs) {
+            case (.searchStage, .searchStage):
+                return true
             case (.loading, .loading):
                 return true
             case (.success(let a, _, _, _), .success(let b, _, _, _)):
@@ -130,5 +184,11 @@ class CatalogSearchViewModel: ObservableObject {
                 return false
             }
         }
+    }
+}
+
+private extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

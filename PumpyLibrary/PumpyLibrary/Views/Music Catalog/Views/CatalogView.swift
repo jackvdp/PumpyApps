@@ -16,10 +16,8 @@ public struct CatalogView<H:HomeProtocol,
                           Q:QueueProtocol>: View {
     
     @EnvironmentObject var authManager: AuthorisationManager
-    @StateObject private var viewModel = CatalogSearchViewModel()
     @State var collections = [SuggestedCollection]()
     @State var pageState: PageState = .loading
-    @State private var searchText = ""
     
     public init() {}
     
@@ -28,28 +26,17 @@ public struct CatalogView<H:HomeProtocol,
             switch pageState {
             case .loading:
                 loadingView
-                    .onAppear() {
-                        getCollections()
-                    }
-            case .complete:
+            case .catalog:
                 completeView
-            case .search:
-                CatalogSearchView<H,P,N,B,T,Q>(viewModel: viewModel)
             }
         }
         .pumpyBackground()
+        .searchToolbar(destination: SearchView<H,P,N,B,T,Q>())
         .labManagerToolbar(destination: MusicLabView<N,B,T,Q,P,H>())
         .navigationTitle("Catalog")
         .listStyle(.plain)
-        .searchable(text: $searchText,
-                    prompt: "Playlists, Artists, Songs")
-        .onSubmit(of: .search, runSearch)
-        .onChange(of: searchText) { newValue in
-            if newValue == "" {
-                withAnimation {
-                    pageState = .complete
-                }
-            }
+        .onAppear() {
+            getCollections()
         }
     }
     
@@ -99,20 +86,12 @@ public struct CatalogView<H:HomeProtocol,
             }
             
             self.collections = collection
-            withAnimation { pageState = .complete }
+            withAnimation { pageState = .catalog }
         }
     }
-    
-    func runSearch() {
-        viewModel.pageState = .loading
-        viewModel.runSearch(term: searchText, authManager: authManager)
-        withAnimation {
-            pageState = .search
-        }
-    }
-    
+        
     enum PageState {
-        case loading, complete, search
+        case loading, catalog
     }
 }
 
