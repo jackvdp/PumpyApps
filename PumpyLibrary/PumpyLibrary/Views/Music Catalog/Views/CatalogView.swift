@@ -72,7 +72,7 @@ public struct CatalogView<H:HomeProtocol,
             .refreshable {
                 getCollections()
             }
-            .background(ArtworkView().background)
+            .pumpyBackground()
             .edgesIgnoringSafeArea(.all)
     }
     

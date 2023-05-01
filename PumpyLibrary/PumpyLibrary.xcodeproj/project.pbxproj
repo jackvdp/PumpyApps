@@ -98,6 +98,7 @@
 		C01720C328F17EE7003BA158 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01720C228F17EE7003BA158 /* ArtworkView.swift */; };
 		C0278AFB29D9908D00FAB3DE /* LabResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0278AFA29D9908D00FAB3DE /* LabResultsView.swift */; };
 		C0606E6A29FD2B0B00157AE1 /* SearchToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0606E6929FD2B0B00157AE1 /* SearchToolbar.swift */; };
+		C0606E6D29FEB27100157AE1 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C0606E6C29FEB27100157AE1 /* Kingfisher */; };
 		C06668C028D0DEF800B4E679 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06668BF28D0DEF800B4E679 /* ItemDetailView.swift */; };
 		C077977928D355AA00EC9D5F /* ItemGridComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C077977828D355AA00EC9D5F /* ItemGridComponent.swift */; };
 		C08BBAF129BCFED00028D96D /* SeedAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08BBAF029BCFED00028D96D /* SeedAttributes.swift */; };
@@ -247,6 +248,7 @@
 				6DEAAC7428C8B6030033ED19 /* AlertToast in Frameworks */,
 				C0CBA99729151BCB001A90AE /* PumpyAnalytics.framework in Frameworks */,
 				C0C0177629CF34990030E7A9 /* RangeSlider in Frameworks */,
+				C0606E6D29FEB27100157AE1 /* Kingfisher in Frameworks */,
 				C08E0AF929321E1E00D83774 /* PumpyShared.framework in Frameworks */,
 				6DEAAC7128C8B5E20033ED19 /* Introspect in Frameworks */,
 				6DEAAC6628C8B5730033ED19 /* ActivityIndicatorView in Frameworks */,
@@ -637,6 +639,7 @@
 				6DEAAC7028C8B5E20033ED19 /* Introspect */,
 				6DEAAC7328C8B6030033ED19 /* AlertToast */,
 				C0C0177529CF34990030E7A9 /* RangeSlider */,
+				C0606E6C29FEB27100157AE1 /* Kingfisher */,
 			);
 			productName = PumpyLibrary;
 			productReference = 6D851514288D3A3F006397CC /* PumpyLibrary.framework */;
@@ -694,6 +697,7 @@
 				6DEAAC6F28C8B5E20033ED19 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				6DEAAC7228C8B6030033ED19 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				C0C0177429CF34990030E7A9 /* XCRemoteSwiftPackageReference "Range-Slider" */,
+				C0606E6B29FEB27100157AE1 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 6D851515288D3A3F006397CC /* Products */;
 			projectDirPath = "";
@@ -1152,6 +1156,14 @@
 				kind = branch;
 			};
 		};
+		C0606E6B29FEB27100157AE1 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		C0C0177429CF34990030E7A9 /* XCRemoteSwiftPackageReference "Range-Slider" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jackvdp/Range-Slider";
@@ -1192,6 +1204,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6DEAAC7228C8B6030033ED19 /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
+		};
+		C0606E6C29FEB27100157AE1 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C0606E6B29FEB27100157AE1 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		C0C0177529CF34990030E7A9 /* RangeSlider */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -35,18 +35,10 @@ public struct MenuTrackView<T:TokenProtocol,
         .padding(.vertical, 12)
         .padding(.horizontal)
         .padding(.bottom, safeAreaInsets.bottom / 2)
-        .background(backgroundView)
+        .background(BackgroundView.solid(backgroundColour: backgroundColour))
         .onTapGesture {
             homeVM.showPlayer = true
         }
-    }
-    
-    var backgroundView: some View {
-        ZStack {
-            LinearGradient(colors: [Color.pumpyPurple, Color.pumpyBlue], startPoint: .top, endPoint: .bottom)
-            artwork.background
-        }
-        .layoutPriority(1)
     }
     
     // MARK: No track view
@@ -80,10 +72,12 @@ public struct MenuTrackView<T:TokenProtocol,
         Spacer()
         dislikeButton(track: track)
     }
+    
+    @State private var backgroundColour: UIColor?
 
     var artwork: ArtworkView {
         let url = nowPlayingManager.currentTrack?.artworkURL
-        return ArtworkView(artworkURL: url, size: size)
+        return ArtworkView(artworkURL: url, size: size, backgroundColour: $backgroundColour)
     }
         
     func songDetails(_ track: QueueTrack) -> some View {

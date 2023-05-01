@@ -40,7 +40,7 @@ public struct PlayerView<P: PlaylistProtocol,
         .padding(.horizontal)
         .padding(.vertical, 10)
         .accentColor(.pumpyPink)
-        .background(artwork(size: measureRect.width).background)
+        .background(BackgroundView.solid(backgroundColour: backgroundColour))
         .environmentObject(homeVM)
         .onReceive(nowPlayingManager.currentTrack.publisher) { _ in
             withAnimation {
@@ -80,9 +80,12 @@ public struct PlayerView<P: PlaylistProtocol,
         }
     }
     
+    @State private var backgroundColour: UIColor?
+    
     func artwork(size: CGFloat) -> ArtworkView {
         ArtworkView(artworkURL: nowPlayingManager.currentTrack?.artworkURL,
-                    size: size)
+                    size: size,
+                    backgroundColour: $backgroundColour)
     }
     
     @ViewBuilder
