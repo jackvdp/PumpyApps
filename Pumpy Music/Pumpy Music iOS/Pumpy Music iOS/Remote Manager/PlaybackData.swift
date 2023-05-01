@@ -9,18 +9,26 @@
 import Foundation
 import MediaPlayer
 import PumpyLibrary
+import PumpyShared
 
 class PlaybackData {
     
-    static func saveCurrentPlaybackInfo(_ playbackItem: PlaybackItem, for username: String) {
-        FireMethods.save(object: playbackItem,
-                         name: username,
-                         documentName: K.FStore.currentPlayback,
-                         dataFieldName: K.FStore.currentPlayback)
+    static let shared = PlaybackData()
+    private init() {}
+    
+    private let debouncer = Debouncer()
+    
+    private func saveCurrentPlaybackInfo(_ playbackItem: PlaybackItem, for username: String) {
+        debouncer.handle {
+            FireMethods.save(object: playbackItem,
+                             name: username,
+                             documentName: K.FStore.currentPlayback,
+                             dataFieldName: K.FStore.currentPlayback)
+        }
     }
     
     
-    static func savePlaylistsOnline(for username: String) {
+    func savePlaylistsOnline(for username: String) {
         let playlists = MusicContent.getPlaylists().map {
             PlaylistOnline(name: $0.name ?? "",
                            id: $0.cloudGlobalID ?? "")
@@ -32,7 +40,7 @@ class PlaybackData {
     }
 
     
-    static func saveTracksOnline(playlist: String, for username: String) {
+    func saveTracksOnline(playlist: String, for username: String) {
         let firebaseTracks = MusicContent.getOnlineTracks(chosenPlaylist: playlist)
 
         FireMethods.save(dict: [
@@ -43,7 +51,7 @@ class PlaybackData {
         documentName: K.FStore.trackCollection)
     }
     
-    static func saveCurrentQueueOnline(items: [Track], for username: String) {
+    func saveCurrentQueueOnline(items: [Track], for username: String) {
         let tracks: [TrackOnline] = items.compactMap {
             TrackOnline(name: $0.name,
                         artist: $0.artistName,
@@ -55,7 +63,7 @@ class PlaybackData {
                          dataFieldName: K.FStore.upNext)
     }
     
-    static func updatePlaybackInfoOnline(for username: String, item: QueueTrack?, index: Int, playbackState: Int, playlistLabel: String) {
+    func updatePlaybackInfoOnline(for username: String, item: QueueTrack?, index: Int, playbackState: Int, playlistLabel: String) {
         var currentTrack = "Not Playing"
         var currentArtist = "– – – –"
         var id = String()

@@ -46,11 +46,13 @@ class NowPlayingManager: NowPlayingProtocol {
     func updateTrackOnline(for username: String, playlist: String) {
         respondDebouncer.handle() { [weak self] in
             guard let self else { return }
-            PlaybackData.updatePlaybackInfoOnline(for: username,
-                                                  item: self.currentTrack,
-                                                  index: self.musicPlayerController.indexOfNowPlayingItem,
-                                                  playbackState: self.musicPlayerController.playbackState.rawValue,
-                                                  playlistLabel: playlist)
+            PlaybackData
+                .shared
+                .updatePlaybackInfoOnline(for: username,
+                                          item: self.currentTrack,
+                                          index: self.musicPlayerController.indexOfNowPlayingItem,
+                                          playbackState: self.musicPlayerController.playbackState.rawValue,
+                                          playlistLabel: playlist)
         }
     }
     

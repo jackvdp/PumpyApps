@@ -28,7 +28,7 @@ class User: ObservableObject, UserProtocol {
     
     init(username: String) {
         self.username = username
-        PlaybackData.savePlaylistsOnline(for: username)
+        PlaybackData.shared.savePlaylistsOnline(for: username)
         ActiveInfo.save(.loggedIn, for: username)
     }
     

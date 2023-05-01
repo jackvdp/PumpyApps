@@ -122,7 +122,7 @@ class QueueManager: QueueProtocol {
     func saveNewQueue(_ items: [MPMediaItem]) {
         if let username {
             respondDebouncer.handle() {
-                PlaybackData.saveCurrentQueueOnline(items: items, for: username)
+                PlaybackData.shared.saveCurrentQueueOnline(items: items, for: username)
             }
         }
     }

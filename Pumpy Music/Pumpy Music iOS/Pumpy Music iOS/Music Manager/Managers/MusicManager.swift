@@ -89,7 +89,7 @@ class MusicManager: ObservableObject, MusicProtocol {
     
     @objc func handleLibraryDidChangeState(_ notification: Notification) {
         if let username {
-            PlaybackData.savePlaylistsOnline(for: username)
+            PlaybackData.shared.savePlaylistsOnline(for: username)
         }
     }
     
