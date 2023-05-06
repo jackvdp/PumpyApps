@@ -84,8 +84,9 @@ public struct PlayerView<P: PlaylistProtocol,
     
     func artwork(size: CGFloat) -> ArtworkView {
         ArtworkView(artworkURL: nowPlayingManager.currentTrack?.artworkURL,
-                    size: size,
-                    backgroundColour: $backgroundColour)
+                    size: size) { colour in
+            backgroundColour = colour
+        }
     }
     
     @ViewBuilder

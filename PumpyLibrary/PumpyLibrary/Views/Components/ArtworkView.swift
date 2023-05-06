@@ -7,18 +7,24 @@
 
 import SwiftUI
 import Kingfisher
+import MediaPlayer
 
 public struct ArtworkView: View {
     
-    public init(artworkURL: String? = nil, size: CGFloat? = nil, backgroundColour: Binding<UIColor?> = .constant(nil)) {
+    public init(artworkURL: String? = nil,
+                size: CGFloat? = nil,
+                backgroundColour: Binding<UIColor?> = .constant(nil),
+                colourCallback: ((UIColor?) -> ())? = nil) {
         self.artworkURL = artworkURL
         self.size = max(1, size ?? 1)
         self._backgroundColour = backgroundColour
+        self.colourCallback = colourCallback
     }
     
     let artworkURL: String?
     let size: CGFloat
     @Binding var backgroundColour: UIColor?
+    var colourCallback: ((UIColor?) -> ())?
     
     public var body: some View {
         artwork
@@ -40,6 +46,7 @@ public struct ArtworkView: View {
                 }
                 .onSuccess({ result in
                     backgroundColour = result.image.averageColor
+                    colourCallback?(result.image.averageColor)
                 })
                 .onFailure({ error in
                     backgroundColour = nil
