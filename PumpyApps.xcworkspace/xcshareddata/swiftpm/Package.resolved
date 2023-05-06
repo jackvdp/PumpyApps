@@ -15,7 +15,7 @@
       "location" : "https://github.com/exyte/ActivityIndicatorView.git",
       "state" : {
         "branch" : "master",
-        "revision" : "9970fd0bb7a05dad0b6566ae1f56937716686b24"
+        "revision" : "a581d245cd0b8a9d4e99aef1aaae9d41426e4f2c"
       }
     },
     {
@@ -136,6 +136,15 @@
       }
     },
     {
+      "identity" : "musadorakit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rryam/MusadoraKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "836024860fd23d0cb1b6fa02a8f4d3a923f47d2a"
+      }
+    },
+    {
       "identity" : "nanopb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/nanopb.git",
@@ -217,6 +226,15 @@
       }
     },
     {
+      "identity" : "swiftlintplugin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lukepistrol/SwiftLintPlugin",
+      "state" : {
+        "revision" : "f3586ed424d7bf5d94628332fbd0edebf1f5147f",
+        "version" : "0.2.3"
+      }
+    },
+    {
       "identity" : "swiftui-cachedasyncimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lorenzofiamingo/SwiftUI-CachedAsyncImage",
@@ -240,7 +258,7 @@
       "location" : "https://github.com/siteline/SwiftUI-Introspect.git",
       "state" : {
         "branch" : "master",
-        "revision" : "c18951c747ab62af7c15e17a81bd37d4fd5a9979"
+        "revision" : "a2b9069cb3738261a2f024a16d1de809b0eb0b01"
       }
     },
     {

@@ -18,7 +18,6 @@
 		6DBA8A9328BBB528000A25FD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA8A9228BBB528000A25FD /* AuthManager.swift */; };
 		6DC5EE07289E866100AB5410 /* PlaylistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC5EE06289E866100AB5410 /* PlaylistManager.swift */; };
 		6DC5EE09289EB20F00AB5410 /* QueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC5EE08289EB20F00AB5410 /* QueueManager.swift */; };
-		6DC5EE0D289ED80000AB5410 /* Music Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC5EE0C289ED80000AB5410 /* Music Extensions.swift */; };
 		6DEAAC5828C8B4950033ED19 /* Siren in Frameworks */ = {isa = PBXBuildFile; productRef = 6DEAAC5728C8B4950033ED19 /* Siren */; };
 		6DEAAC5B28C8B4A30033ED19 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 6DEAAC5A28C8B4A30033ED19 /* Charts */; };
 		C0035217290D72A30006ACDE /* ScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0035216290D72A30006ACDE /* ScheduleManager.swift */; };
@@ -30,7 +29,8 @@
 		C020E4F9291518B100811488 /* PumpyShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020E4F8291518B100811488 /* PumpyShared.framework */; };
 		C020E4FA291518B100811488 /* PumpyShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C020E4F8291518B100811488 /* PumpyShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C031993523BFD105007B1A4D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C031993423BFD105007B1A4D /* GoogleService-Info.plist */; };
-		C031EAC826C6F97400D3A18A /* NowPlayingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C031EAC726C6F97400D3A18A /* NowPlayingManager.swift */; };
+		C03CCEEA2A06637B000EA0DB /* MusadoraKit in Frameworks */ = {isa = PBXBuildFile; productRef = C03CCEE92A06637B000EA0DB /* MusadoraKit */; };
+		C03CCEEC2A06637B000EA0DB /* MusadoraLabsKit in Frameworks */ = {isa = PBXBuildFile; productRef = C03CCEEB2A06637B000EA0DB /* MusadoraLabsKit */; };
 		C04600A023895E0B008151A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C046009E23895DC9008151A5 /* QuartzCore.framework */; };
 		C04A655923DF4F6300DD5FBB /* RemoteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04A655823DF4F6300DD5FBB /* RemoteManager.swift */; };
 		C0500677294A676E00A8B50E /* PumpyAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0500676294A676E00A8B50E /* PumpyAnalytics.framework */; };
@@ -43,7 +43,6 @@
 		C0725DDC2617757D0095EDD9 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0725DDB2617757C0095EDD9 /* AccountManager.swift */; };
 		C075CC6D2947602B002A8F30 /* MusicManagerLeakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C075CC6C2947602B002A8F30 /* MusicManagerLeakTests.swift */; };
 		C07865132619D5CB001FB32B /* ActiveInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07865122619D5CB001FB32B /* ActiveInfo.swift */; };
-		C0798655262D5CC9003A426E /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0798654262D5CC9003A426E /* MusicManager.swift */; };
 		C08E0AEC2931760000D83774 /* MenuContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08E0AEB2931760000D83774 /* MenuContent.swift */; };
 		C0A6CAF624A8FA6F00F66187 /* PlaybackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A6CAF524A8FA6F00F66187 /* PlaybackData.swift */; };
 		C0AE9CBB291D260F00142243 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AE9CBA291D260F00142243 /* UserView.swift */; };
@@ -95,7 +94,6 @@
 		6DBA8A9228BBB528000A25FD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		6DC5EE06289E866100AB5410 /* PlaylistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistManager.swift; sourceTree = "<group>"; };
 		6DC5EE08289EB20F00AB5410 /* QueueManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueManager.swift; sourceTree = "<group>"; };
-		6DC5EE0C289ED80000AB5410 /* Music Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Music Extensions.swift"; sourceTree = "<group>"; };
 		C0035216290D72A30006ACDE /* ScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleManager.swift; sourceTree = "<group>"; };
 		C0071F392653D4D200B16401 /* MusicContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicContent.swift; sourceTree = "<group>"; };
 		C00CA9D42689BF53000BF2DC /* BlockedTracksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedTracksManager.swift; sourceTree = "<group>"; };
@@ -106,7 +104,6 @@
 		C03176922395C69900B5D766 /* Core Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core Functions.swift"; sourceTree = "<group>"; };
 		C03176932395C69900B5D766 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C031993423BFD105007B1A4D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C031EAC726C6F97400D3A18A /* NowPlayingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingManager.swift; sourceTree = "<group>"; };
 		C046009E23895DC9008151A5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C04A655823DF4F6300DD5FBB /* RemoteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteManager.swift; sourceTree = "<group>"; };
 		C0500676294A676E00A8B50E /* PumpyAnalytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyAnalytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,7 +118,6 @@
 		C075CC6C2947602B002A8F30 /* MusicManagerLeakTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManagerLeakTests.swift; sourceTree = "<group>"; };
 		C07865122619D5CB001FB32B /* ActiveInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveInfo.swift; sourceTree = "<group>"; };
 		C078F06423C4D17700190352 /* Pumpy Music.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pumpy Music.entitlements"; sourceTree = "<group>"; };
-		C0798654262D5CC9003A426E /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
 		C08E0AEB2931760000D83774 /* MenuContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContent.swift; sourceTree = "<group>"; };
 		C0A6CAF524A8FA6F00F66187 /* PlaybackData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackData.swift; sourceTree = "<group>"; };
 		C0AE9CBA291D260F00142243 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
@@ -156,8 +152,10 @@
 				C020E4F9291518B100811488 /* PumpyShared.framework in Frameworks */,
 				C04600A023895E0B008151A5 /* QuartzCore.framework in Frameworks */,
 				6DEAAC5B28C8B4A30033ED19 /* Charts in Frameworks */,
+				C03CCEEC2A06637B000EA0DB /* MusadoraLabsKit in Frameworks */,
 				6DEAAC5828C8B4950033ED19 /* Siren in Frameworks */,
 				C068FB19252F85A5006F7349 /* NetworkExtension.framework in Frameworks */,
+				C03CCEEA2A06637B000EA0DB /* MusadoraKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,8 +250,6 @@
 		C0510802262E09790008B73D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				C0798654262D5CC9003A426E /* MusicManager.swift */,
-				C031EAC726C6F97400D3A18A /* NowPlayingManager.swift */,
 				6DC5EE06289E866100AB5410 /* PlaylistManager.swift */,
 				6DC5EE08289EB20F00AB5410 /* QueueManager.swift */,
 				6D4F5C3D28B0FDAB00FA1982 /* Queue + Energy.swift */,
@@ -279,7 +275,6 @@
 				C0E6E0002631B9B000265B9E /* Music Models.swift */,
 				C03176922395C69900B5D766 /* Core Functions.swift */,
 				C0071F392653D4D200B16401 /* MusicContent.swift */,
-				6DC5EE0C289ED80000AB5410 /* Music Extensions.swift */,
 				C0FCE334260B07BA00D4E608 /* AppleMusicAPI.swift */,
 			);
 			path = Model;
@@ -409,6 +404,8 @@
 			packageProductDependencies = (
 				6DEAAC5728C8B4950033ED19 /* Siren */,
 				6DEAAC5A28C8B4A30033ED19 /* Charts */,
+				C03CCEE92A06637B000EA0DB /* MusadoraKit */,
+				C03CCEEB2A06637B000EA0DB /* MusadoraLabsKit */,
 			);
 			productName = "Pumpy Music iOS";
 			productReference = C0D60C5723313D6A0010F653 /* Pumpy Music.app */;
@@ -447,6 +444,7 @@
 				6DEAAC5628C8B4950033ED19 /* XCRemoteSwiftPackageReference "Siren" */,
 				6DEAAC5928C8B4A30033ED19 /* XCRemoteSwiftPackageReference "swiftui-charts" */,
 				6DEAAC8B28C900760033ED19 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C03CCEE82A06637A000EA0DB /* XCRemoteSwiftPackageReference "MusadoraKit" */,
 			);
 			productRefGroup = C0D60C5823313D6A0010F653 /* Products */;
 			projectDirPath = "";
@@ -501,7 +499,6 @@
 				C05D340B26281BA4009DFC2A /* CapabilitiesVM.swift in Sources */,
 				6D4F5C3E28B0FDAB00FA1982 /* Queue + Energy.swift in Sources */,
 				C00CA9D52689BF53000BF2DC /* BlockedTracksManager.swift in Sources */,
-				C031EAC826C6F97400D3A18A /* NowPlayingManager.swift in Sources */,
 				6DBA8A9328BBB528000A25FD /* AuthManager.swift in Sources */,
 				C0AE9CBB291D260F00142243 /* UserView.swift in Sources */,
 				C0725DDC2617757D0095EDD9 /* AccountManager.swift in Sources */,
@@ -511,10 +508,8 @@
 				C07865132619D5CB001FB32B /* ActiveInfo.swift in Sources */,
 				C0BE156F25FE28620066B274 /* SettingsView.swift in Sources */,
 				C0B5BCB82396A59600102F50 /* SceneDelegate.swift in Sources */,
-				6DC5EE0D289ED80000AB5410 /* Music Extensions.swift in Sources */,
 				C0130B5226CBD52B0056E5F6 /* BlockedTrackViewModel.swift in Sources */,
 				C0071F3A2653D4D200B16401 /* MusicContent.swift in Sources */,
-				C0798655262D5CC9003A426E /* MusicManager.swift in Sources */,
 				6D45ED9228A5A0C0002EC94C /* StartView.swift in Sources */,
 				C0D60C5B23313D6A0010F653 /* AppDelegate.swift in Sources */,
 				C04A655923DF4F6300DD5FBB /* RemoteManager.swift in Sources */,
@@ -732,7 +727,7 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Pumpy Music iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
 				MARKETING_VERSION = 3.0;
@@ -764,7 +759,7 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Pumpy Music iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MACH_O_TYPE = mh_execute;
 				MARKETING_VERSION = 3.0;
@@ -845,6 +840,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		C03CCEE82A06637A000EA0DB /* XCRemoteSwiftPackageReference "MusadoraKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rryam/MusadoraKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -857,6 +860,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6DEAAC5928C8B4A30033ED19 /* XCRemoteSwiftPackageReference "swiftui-charts" */;
 			productName = Charts;
+		};
+		C03CCEE92A06637B000EA0DB /* MusadoraKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C03CCEE82A06637A000EA0DB /* XCRemoteSwiftPackageReference "MusadoraKit" */;
+			productName = MusadoraKit;
+		};
+		C03CCEEB2A06637B000EA0DB /* MusadoraLabsKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C03CCEE82A06637A000EA0DB /* XCRemoteSwiftPackageReference "MusadoraKit" */;
+			productName = MusadoraLabsKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

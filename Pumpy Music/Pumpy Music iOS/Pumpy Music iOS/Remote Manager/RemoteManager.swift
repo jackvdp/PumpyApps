@@ -84,9 +84,9 @@ class RemoteManager: ObservableObject {
         case .previousTrack:
             MusicCoreFunctions.skipBackToBeginningOrPreviousItem()
         case .playPlaylistNow(let playlist):
-            playlistManager.playNow(playlistName: playlist)
+            playlistManager.playLibraryPlayist(playlist, secondaryPlaylists: [], when: .now)
         case .playPlaylistNext(let playlist):
-            playlistManager.playNext(playlistName: playlist)
+            playlistManager.playLibraryPlayist(playlist, secondaryPlaylists: [], when: .next)
         case .getLibraryPlaylists:
             PlaybackData.shared.savePlaylistsOnline(for: username)
         case .getTracksFromPlaylist(let playlist):
@@ -94,7 +94,7 @@ class RemoteManager: ObservableObject {
         case .removeTrackFromQueue(let id):
             queueManager.removeFromQueue(id: id)
         case .addToQueue(let queueIDs):
-            queueManager.addTrackToQueue(ids: queueIDs)
+            queueManager.addTrackToQueue(ids: queueIDs, playWhen: .next)
         case .activeInfo:
             ActiveInfo.save(.loggedIn, for: username)
         case .increaseEnergy:
@@ -102,9 +102,9 @@ class RemoteManager: ObservableObject {
         case .decreaseEnergy:
             queueManager.decreaseEnergy()
         case .playCatalogPlaylistNow(id: let id):
-            playlistManager.playNow(playlistID: id)
+            playlistManager.playCatalogPlaylist(id: id, when: .now)
         case .playCatalogPlaylistNext(id: let id):
-            playlistManager.playNext(playlistID: id)
+            playlistManager.playCatalogPlaylist(id: id, when: .next)
         }
     }
     

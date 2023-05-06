@@ -8,14 +8,14 @@
 
 import Foundation
 import PumpyLibrary
-import MediaPlayer
 import PumpyAnalytics
+import MusicKit
+import MusadoraKit
 
 class PlaylistManager: PlaylistProtocol {
     
-    private let musicPlayerController = MPMusicPlayerApplicationController.applicationQueuePlayer
+    private let musicPlayerController = ApplicationMusicPlayer.shared
     @Published var playlistLabel = String()
-    @Published var playlistURL = String()
     weak var blockedTracksManager: BlockedTracksManager?
     weak var settingsManager: SettingsManager?
     weak var tokenManager: AuthorisationManager?
@@ -43,159 +43,121 @@ class PlaylistManager: PlaylistProtocol {
     
     // MARK: - Public Functions
     
-    func playNow(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist] = []) {
-        if let mpPlaylist = playlist as? MPMediaPlaylist, let name = mpPlaylist.name {
-            playNow(playlistName: name, secondaryPlaylists: secondaryPlaylists)
-        } else {
-            playNow(catalogPlaylist: playlist)
+    // MARK: Play Library Playlist
+    
+    
+    
+    /// Play playlist in AM library
+    func playLibraryPlayist(_ playlist: MusicKit.Playlist, when position: Position) {
+        Task {
+            do {
+                var request = MusicLibraryRequest<MusicKit.Playlist>()
+                request.filter(matching: \.id, equalTo: playlist.id)
+                let response = try await request.response()
+                guard let playlist = response.items.first else { return }
+                let p = try await playlist.with(.tracks)
+                
+                playRequestedPlaylistWithTracks(p, when: position)
+            } catch {
+                print(error)
+            }
         }
     }
     
-    func playPlaylist(playlist: PumpyLibrary.Playlist, from index: Int) {
-        let tracks = playlist.songs[index...playlist.songs.count - 1]
-        let storeIDs = tracks.compactMap { $0.amStoreID }
-        let queue = MPMusicPlayerStoreQueueDescriptor(storeIDs: storeIDs)
-        playQueueNow(name: playlist.title ?? "", queue: queue)
-    }
-    
-    func playNext(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist] = []) {
-        if let mpPlaylist = playlist as? MPMediaPlaylist, let name = mpPlaylist.name {
-            playNext(playlistName: name, secondaryPlaylists: secondaryPlaylists)
-        } else {
-            playNext(catalogPlaylist: playlist)
+    /// Play playlist in AM library by name
+    func playLibraryPlayist(_ name: String,
+                            secondaryPlaylists: [SecondaryPlaylist],
+                            when position: Position) {
+        Task {
+            do {
+                guard let playlistWithTracks = try await getLibraryPlaylistWithTracksFromName(name) else { return }
+                
+                let secondaries: [(playlist: MusicKit.Playlist, ratio: Int)?] = try await secondaryPlaylists.asyncMap { playlist in
+                    if let playlistWithTracks = try await getLibraryPlaylistWithTracksFromName(playlist.name) {
+                        return (playlist: playlistWithTracks, ratio: playlist.ratio)
+                    }
+                    return nil
+                }
+                let secondariesWithoutNils = secondaries.compactMap { $0 }
+                
+                playRequestedPlaylistWithTracks(playlistWithTracks,
+                                                secondaryPlaylists: secondariesWithoutNils,
+                                                when: position)
+                
+            } catch {
+                print(error)
+            }
         }
     }
     
-    // MARK: - Play From Name
+    // MARK: Play Catalog Playlist
     
-    func playNow(playlistName: String, secondaryPlaylists: [SecondaryPlaylist] = []) {
-        let queue = getQueueFromPlaylists(playlist: playlistName,
-                                          secondaryPlaylists: secondaryPlaylists)
-        playQueueNow(name: playlistName, queue: queue)
-    }
-    
-    func playNext(playlistName: String, secondaryPlaylists: [SecondaryPlaylist] = []) {
-        guard musicPlayerController.playbackState == .playing else {
-            playNow(playlistName: playlistName, secondaryPlaylists: secondaryPlaylists)
-            return
-        }
-        
-        let queueDescriptor = getQueueFromPlaylists(playlist: playlistName,
-                                                    secondaryPlaylists: secondaryPlaylists)
-        playQueueNext(name: playlistName, queue: queueDescriptor)
-    }
-    
-    // MARK: - Play From Catalog ID
-    
-    func playNow(playlistID: String) {
-        getQueueFromPlaylist(id: playlistID) { [weak self] name, queue in
-            self?.playQueueNow(name: name, queue: queue)
+    /// Play catalog playlist of AM ID
+    func playCatalogPlaylist(id: String, when position: Position) {
+        Task {
+            do {
+                let musicItemID = MusicItemID(id)
+                let playlist = try await MCatalog.playlist(id: musicItemID, fetch: .tracks)
+                playRequestedPlaylistWithTracks(playlist, when: position)
+            } catch {
+                print(error)
+            }
         }
     }
     
-    func playNext(playlistID: String) {
-        guard musicPlayerController.playbackState == .playing else {
-            playNow(playlistID: playlistID)
-            return
-        }
-        
-        getQueueFromPlaylist(id: playlistID) { [weak self] name, queue in
-            self?.playQueueNext(name: name, queue: queue)
-        }
-    }
+    // MARK: Private Functions
     
-    // MARK: - Play From Items
-    
-    private func playNow(catalogPlaylist: PumpyLibrary.Playlist) {
-        let queue = getQueueFromCatalogPlaylist(catalogPlaylist: catalogPlaylist)
-        playQueueNow(name: catalogPlaylist.title ?? "", queue: queue)
-    }
-    
-    private func playNext(catalogPlaylist: PumpyLibrary.Playlist) {
-        guard musicPlayerController.playbackState == .playing else {
-            playNow(catalogPlaylist: catalogPlaylist)
-            return
-        }
-        
-        let queue = getQueueFromCatalogPlaylist(catalogPlaylist: catalogPlaylist)
-        playQueueNext(name: catalogPlaylist.title ?? "", queue: queue)
-    }
-    
-    // MARK: - Play Queue
-    
-    private func playQueueNow(name: String, queue: MPMusicPlayerQueueDescriptor) {
-        musicPlayerController.setQueue(with: queue)
-        musicPlayerController.shuffleMode = .off
-        musicPlayerController.repeatMode = .all
-        MusicCoreFunctions.prepareToPlayAndPlay()
-        displayPlaylistInfo(playlist: name)
-    }
-    
-    private func playQueueNext(name: String, queue: MPMusicPlayerQueueDescriptor) {
-        queueManager?.addPlaylistToQueue(queueDescriptor: queue)
-        displayPlaylistInfo(playlist: name)
-    }
-    
-    // MARK: - Get items from playlist Name
-    
-    private func getQueueFromPlaylists(playlist: String,
-                                       secondaryPlaylists: [SecondaryPlaylist]) -> MPMusicPlayerMediaItemQueueDescriptor  {
-        let totalNumberOfTracks = 150
-        let secondaryItems: [MPMediaItem] = secondaryPlaylists.flatMap {
-            getItemsFromPlaylist(playlist: $0.name, number: totalNumberOfTracks / $0.ratio)
-        }
-        let primaryItems = getItemsFromPlaylist(playlist: playlist, number: totalNumberOfTracks - secondaryItems.count)
-        let itemsToAdd = (primaryItems + secondaryItems).shuffled()
-        
-        let collection = MPMediaItemCollection(items: itemsToAdd)
-        return MPMusicPlayerMediaItemQueueDescriptor(itemCollection: collection)
-    }
-    
-    private func getItemsFromPlaylist(playlist: String, number: Int) -> [MPMediaItem] {
-        let query = MPMediaQuery.playlists()
-        let filter = MPMediaPropertyPredicate(value: playlist,
-                                              forProperty: MPMediaPlaylistPropertyName,
-                                              comparisonType: .equalTo)
-        query.addFilterPredicate(filter)
-        guard let items = query.items else {
-            return []
-        }
-        
-        return Array(removeUnwantedMPMediaItems(items: items).shuffled().prefix(number))
-    }
-    
-    // MARK: - Get items from playlist ID
-    
-    private func getQueueFromPlaylist(id: String, completion: @escaping (String, MPMusicPlayerStoreQueueDescriptor)->())  {
-        guard let tokenManager else { return }
-        
-        let snapshot = PlaylistSnapshot(sourceID: id, type: .am(id: id))
-        playlistController.get(libraryPlaylist: snapshot,
-                               authManager: tokenManager) { playlist, error in
+    /// Use this method to play a playlist after fetching tracks
+    private func playRequestedPlaylistWithTracks(_ playlist: MusicKit.Playlist,
+                                                 secondaryPlaylists: [(playlist: MusicKit.Playlist, ratio: Int)] = [],
+                                                 when position: Position) {
+        Task {
+            let overallNumberOfTracks = 150
+            let numberOfTracks = overallNumberOfTracks - secondaryPlaylists.reduce(0, { $0 + overallNumberOfTracks/$1.ratio })
+            guard var shuffledTracks = playlist.tracks?.shuffled().prefix(numberOfTracks) else { return }
             
-            guard let playlist, !playlist.tracks.isEmpty else { return }
-            let trackIDs = playlist.tracks.compactMap(\.appleMusicItem?.id)
-            let shuffledAndCutIDs = Array(trackIDs.shuffled().prefix(150))
-            completion(playlist.name ?? "", MPMusicPlayerStoreQueueDescriptor(storeIDs: shuffledAndCutIDs))
+            // Add secondary playlists
+            if !secondaryPlaylists.isEmpty {
+                secondaryPlaylists.forEach { playlist, ratio in
+                    if let tracks = playlist.tracks?.shuffled().prefix(overallNumberOfTracks / ratio) {
+                        shuffledTracks.append(contentsOf: tracks)
+                    }
+                }
+            }
+            
+            let shuffledTracksArray = shuffledTracks.shuffled()
+            
+            // Remove banned and explicit
+            let tracksWithoutUnwanted = removeUnwantedTracks(items: shuffledTracksArray)
+            
+            // Add to queue
+            switch position {
+            case .now:
+                musicPlayerController.queue = ApplicationMusicPlayer.Queue(for: tracksWithoutUnwanted)
+            case .next:
+                try await musicPlayerController.queue.insert(shuffledTracks, position: .afterCurrentEntry)
+            }
+            
+            // Player settings
+            musicPlayerController.state.shuffleMode = .off
+            musicPlayerController.state.repeatMode = .all
+            try await musicPlayerController.play()
+            
+            displayPlaylistInfo(playlist: playlist.name)
         }
     }
     
-    // MARK: - Get items from catalog playlist
-    
-    private func getQueueFromCatalogPlaylist(catalogPlaylist: PumpyLibrary.Playlist) -> MPMusicPlayerStoreQueueDescriptor {
-        let wantedTracks = removeUnwantedTracks(items: catalogPlaylist.songs)
-        let storeIDs = wantedTracks.compactMap { $0.amStoreID }
-        let shuffledAndCutIDs = Array(storeIDs.shuffled().prefix(150))
-        return MPMusicPlayerStoreQueueDescriptor(storeIDs: shuffledAndCutIDs)
+    /// Get a library playlist with tracks from a name
+    private func getLibraryPlaylistWithTracksFromName(_ name: String) async throws -> MusicKit.Playlist?  {
+        var request = MusicLibraryRequest<MusicKit.Playlist>()
+        request.filter(matching: \.name, equalTo: name)
+        let response = try await request.response()
+        
+        guard let playlist = response.items.first else { return nil }
+        return try await playlist.with(.tracks)
     }
     
-    // MARK: - Remove items
-    
-    private func removeUnwantedMPMediaItems(items: [MPMediaItem]) -> [MPMediaItem] {
-         return removeUnwantedTracks(items: items) as! [MPMediaItem]
-    }
-    
-    private func removeUnwantedTracks(items: [PumpyLibrary.Track]) -> [PumpyLibrary.Track] {
+    private func removeUnwantedTracks(items: [MusicKit.Track]) -> [MusicKit.Track] {
         var itemsToKeep = items
         // Blocked Tracks
         if let blockedTracksManager {
@@ -212,31 +174,35 @@ class PlaylistManager: PlaylistProtocol {
         return itemsToKeep
     }
     
-    // MARK: - Set UI elements
-    
     private func displayPlaylistInfo(playlist: String) {
         playlistLabel = "Playlist: \(playlist)"
-        getPlaylistURL(playlist)
-    }
-    
-    private func getPlaylistURL(_ playlist: String) {
-        if let token = tokenManager?.appleMusicToken, let store = tokenManager?.appleMusicStoreFront {
-            let amAPI = AppleMusicAPI(token: token, storeFront: store)
-            amAPI.getPlaylistURL(playlist: playlist) { urlString in
-                DispatchQueue.main.async { [weak self] in
-                    self?.playlistURL = urlString
-                }
-            }
-        }
     }
 
     // MARK: - Timer Change Playlist
     
     func changePlaylistForSchedule(alarm: Alarm) {
         if (settingsManager?.onlineSettings.overrideSchedule ?? false) == false {
-            playNext(playlistName: alarm.playlistLabel,
-                     secondaryPlaylists: alarm.secondaryPlaylists ?? [])
+            
+            playLibraryPlayist(alarm.playlistLabel,
+                               secondaryPlaylists: alarm.secondaryPlaylists ?? [],
+                               when: .next)
+            
         }
     }
     
+}
+
+
+extension Sequence {
+    func asyncMap<T>(
+        _ transform: (Element) async throws -> T
+    ) async rethrows -> [T] {
+        var values = [T]()
+
+        for element in self {
+            try await values.append(transform(element))
+        }
+
+        return values
+    }
 }

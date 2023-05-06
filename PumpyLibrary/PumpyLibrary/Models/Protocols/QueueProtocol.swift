@@ -6,25 +6,27 @@
 //
 
 import Foundation
+import MusicKit
 
 public protocol QueueProtocol: ObservableObject {
     var queueIndex: Int { get set }
-    var queueTracks: [QueueTrack] { get set }
+    var queueTracks: ApplicationMusicPlayer.Queue.Entries { get set }
     var analysingEnergy: Bool { get set }
+    func getQueue()
     func removeFromQueue(id: String)
+    func addTrackToQueue(ids: [String], playWhen position: Position)
     func increaseEnergy()
     func decreaseEnergy()
-    func addTrackToQueue(ids: [String])
-    func playTrackNow(id: String)
 }
 
 public class MockQueueManager: QueueProtocol {
     public var queueIndex = 0
-    public var queueTracks = [QueueTrack]()
+    public var queueTracks = ApplicationMusicPlayer.Queue.Entries()
     public var analysingEnergy: Bool = false
     public func removeFromQueue(id: String) {}
     public func increaseEnergy() {}
     public func decreaseEnergy() {}
-    public func addTrackToQueue(ids: [String]) {}
-    public func playTrackNow(id: String) {}
+    public func getQueue() {}
+    public func addTrackToQueue(ids: [String], playWhen position: Position) {}
+    
 }
