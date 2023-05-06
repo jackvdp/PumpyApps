@@ -12,8 +12,6 @@ import PumpyLibrary
 import PumpyAnalytics
 
 class User: ObservableObject, UserProtocol {
-    
-    typealias M = MusicManager
     typealias P = PlaylistManager
     
     let username: String
@@ -21,7 +19,6 @@ class User: ObservableObject, UserProtocol {
     weak var alarmManager: AlarmManager?
     weak var settingsManager: SettingsManager?
     weak var externalDisplayManager: ExternalDisplayManager<PlaylistManager>?
-    weak var musicManager: MusicManager?
     weak var authManager: AuthorisationManager?
     weak var blockedTracksManager: BlockedTracksManager?
     weak var playlistManager: PlaylistManager?
@@ -39,14 +36,12 @@ class User: ObservableObject, UserProtocol {
     func setUp(alarmManager: AlarmManager,
                remoteManager: RemoteManager,
                externalDisplayManager: ExternalDisplayManager<PlaylistManager>,
-               musicManager: MusicManager,
                authManager: AuthorisationManager,
                blockedTracksMamager: BlockedTracksManager,
                playlistManager: PlaylistManager) {
         self.alarmManager = alarmManager
         self.remoteManager = remoteManager
         self.externalDisplayManager = externalDisplayManager
-        self.musicManager = musicManager
         self.authManager = authManager
         self.blockedTracksManager = blockedTracksMamager
         self.playlistManager = playlistManager
@@ -60,7 +55,6 @@ class User: ObservableObject, UserProtocol {
         blockedTracksManager?.removeListener()
         playlistManager?.scheduleManager.removeObservers()
         authManager?.removeTimer()
-        musicManager?.endNotifications()
         settingsManager?.removeSettingsListener()
         externalDisplayManager?.removeSettingsListener()
         playlistManager?.scheduleManager.removeObservers()

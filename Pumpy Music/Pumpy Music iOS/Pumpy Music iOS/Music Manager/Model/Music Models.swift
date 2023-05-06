@@ -7,55 +7,51 @@
 //
 
 import Foundation
-import MediaPlayer
-import SwiftUI
 import PumpyLibrary
+import MusicKit
+import PumpyAnalytics
 
-extension MPMediaItem: Track {
+extension MusicKit.Playlist: PumpyLibrary.Playlist {
     
-    public var name: String {
-        self.title ?? ""
-    }
-    
-    public var artistName: String {
-        self.artist ?? ""
-    }
-    
-    public var amStoreID: String? {
-        self.playbackStoreID
+    public var title: String? {
+        return name
     }
     
     public var artworkURL: String? {
-        if let catalog = value(forKey: "artworkCatalog") as? NSObject,
-           let token = catalog.value(forKey: "token") as? NSObject,
-           let url = token.value(forKey: "availableArtworkToken") as? String ??
-                     token.value(forKey: "fetchableArtworkToken") as? String {
-            if url.contains("https:") {
-                return url.replacingOccurrences(of: "600x600", with: "{w}x{w}")
-            } else {
-                return "https://is3-ssl.mzstatic.com/image/thumb/\(url)/{w}x{w}.jpg"
-            }
-        }
-        return nil
+        let key = PumpyAnalytics.K.MusicStore.artworkKey
+        return self.artwork?.url(width: key, height: key)?.absoluteString
     }
-
-}
-
-extension MPMediaPlaylist: Playlist, ScheduledPlaylist {
-    public var shortDescription: String? {
-        self.descriptionText
+    
+    public var songs: [PumpyLibrary.Track] {
+        let tracks: [MusicKit.Track] = tracks!.map { $0 }
+        return tracks
+    }
+    
+    public var cloudGlobalID: String? {
+        return id.rawValue
     }
     
     public var longDescription: String? {
-        self.descriptionText
+        return self.standardDescription
     }
     
-    public var title: String? {
-        self.name
-    }
-    
-    public var songs: [Track] {
-        return items
-    }
 }
 
+extension MusicKit.Track: PumpyLibrary.Track {
+    public var name: String {
+        self.title
+    }
+    
+    public var artworkURL: String? {
+        self.artwork?.url(width: K.MusicStore.artworkKey, height: K.MusicStore.artworkKey)?.absoluteString
+    }
+    
+    public var amStoreID: String? {
+        self.id.rawValue
+    }
+    
+    public var isExplicitItem: Bool {
+        self.contentRating == .explicit
+    }
+    
+}

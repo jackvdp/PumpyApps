@@ -6,25 +6,26 @@
 //
 
 import Foundation
+import MusicKit
 
 public protocol PlaylistProtocol: ObservableObject {
     var playlistLabel: String { get set }
-    var playlistURL: String { get set }
-    func playNext(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist])
-    func playNow(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist])
-    func playPlaylist(playlist: PumpyLibrary.Playlist, from: Int)
-    func playNow(playlistID: String)
-    func playNext(playlistID: String)
+    func playLibraryPlayist(_ playlist: MusicKit.Playlist, when position: Position)
+    func playLibraryPlayist(_ name: String,
+                            secondaryPlaylists: [SecondaryPlaylist],
+                            when position: Position)
+    func playCatalogPlaylist(id: String, when position: Position)
 }
 
 public class MockPlaylistManager: PlaylistProtocol {
     public init() {}
     public var playlistLabel: String = String()
-    public var playlistURL: String = String()
-    public func playNext(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist] = []) {}
-    public func playNow(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist] = []) {}
-    public func playPlaylist(playlist: PumpyLibrary.Playlist, from: Int) {}
-    public func playNow(playlistID: String) {}
-    public func playNext(playlistID: String) {}
+    public func playLibraryPlayist(_ playlist: MusicKit.Playlist, when position: Position) {}
+    public func playLibraryPlayist(_ name: String,
+                            secondaryPlaylists: [SecondaryPlaylist],
+                                   when position: Position) {}
+    public func playCatalogPlaylist(id: String, when position: Position) {}
     
 }
+
+public enum Position { case now, next }

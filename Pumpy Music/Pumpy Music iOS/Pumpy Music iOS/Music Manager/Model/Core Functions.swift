@@ -8,7 +8,6 @@
 
 import Foundation
 import MediaPlayer
-import AVFoundation
 import PumpyLibrary
 
 class MusicCoreFunctions {
@@ -39,7 +38,9 @@ class MusicCoreFunctions {
     
     static func coldStart(alarms: [Alarm], playlistManager: PlaylistManager) {
         if let playlist = alarms.getMostRecentAlarm() {
-            playlistManager.playNow(playlistName: playlist.playlistLabel, secondaryPlaylists: playlist.secondaryPlaylists ?? [])
+            playlistManager.playLibraryPlayist(playlist.playlistLabel,
+                                               secondaryPlaylists: playlist.secondaryPlaylists ?? [],
+                                               when: .now)
         } else {
             musicPlayerController.play()
         }
