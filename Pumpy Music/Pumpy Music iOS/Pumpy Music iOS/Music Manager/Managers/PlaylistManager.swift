@@ -174,7 +174,6 @@ class PlaylistManager: PlaylistProtocol {
                                authManager: tokenManager) { playlist, error in
             
             guard let playlist, !playlist.tracks.isEmpty else { return }
-            let totalNumberOfTracks = 150
             let trackIDs = playlist.tracks.compactMap(\.appleMusicItem?.id)
             let shuffledAndCutIDs = Array(trackIDs.shuffled().prefix(150))
             completion(playlist.name ?? "", MPMusicPlayerStoreQueueDescriptor(storeIDs: shuffledAndCutIDs))
