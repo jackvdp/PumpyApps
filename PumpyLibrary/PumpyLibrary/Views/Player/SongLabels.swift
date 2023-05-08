@@ -70,7 +70,7 @@ struct SongLabels_Previews: PreviewProvider {
     static let playlistManager = MockPlaylistManager()
     
     static var previews: some View {
-        nowPlayingManager.currentTrack = MockData.track
+        nowPlayingManager.currentEntry = MockData.track
         playlistManager.playlistLabel = "Test Playlist"
         return SongLabels<MockNowPlayingManager, MockPlaylistManager>()
             .environmentObject(playlistManager)

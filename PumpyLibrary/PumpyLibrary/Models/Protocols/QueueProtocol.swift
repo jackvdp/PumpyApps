@@ -10,7 +10,7 @@ import MusicKit
 
 public protocol QueueProtocol: ObservableObject {
     var queueIndex: Int { get set }
-    var queueTracks: ApplicationMusicPlayer.Queue.Entries { get set }
+    var queueTracks: [PumpyLibrary.Track] { get set }
     var analysingEnergy: Bool { get set }
     func getQueue()
     func removeFromQueue(id: String)
@@ -21,7 +21,7 @@ public protocol QueueProtocol: ObservableObject {
 
 public class MockQueueManager: QueueProtocol {
     public var queueIndex = 0
-    public var queueTracks = ApplicationMusicPlayer.Queue.Entries()
+    public var queueTracks = [PumpyLibrary.Track]()
     public var analysingEnergy: Bool = false
     public func removeFromQueue(id: String) {}
     public func increaseEnergy() {}

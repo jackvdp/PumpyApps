@@ -9,14 +9,13 @@
 import SwiftUI
 import PumpyLibrary
 import PumpyAnalytics
+import MusicKit
 
 struct UserView: View {
     
     @ObservedObject var user: User
     @StateObject private var homeVM = HomeVM()
-    @StateObject private var musicManager = MusicManager()
     @StateObject private var authManager = AuthorisationManager()
-    @StateObject private var nowPlayingManager = NowPlayingManager()
     @StateObject private var playlistManager = PlaylistManager()
     @StateObject private var queueManager = QueueManager()
     @StateObject private var settingsManager = SettingsManager()
@@ -38,7 +37,7 @@ struct UserView: View {
         MenuView<
             HomeVM,
             PlaylistManager,
-            NowPlayingManager,
+            ApplicationMusicPlayer.Queue,
             BlockedTracksManager,
             AuthorisationManager,
             QueueManager,
@@ -46,7 +45,7 @@ struct UserView: View {
             MenuContent
         >(settings: settingsManager,
           blockedTracksManager: blockedTracksManager,
-          nowPlayingManager: nowPlayingManager,
+          nowPlayingManager: ApplicationMusicPlayer.shared.queue,
           playlistManager: playlistManager,
           homeVM: homeVM,
           user: user,
@@ -59,15 +58,6 @@ struct UserView: View {
     }
     
     func setUp() {
-        musicManager.setUp(nowPlayingManager: nowPlayingManager,
-                           playlistManager: playlistManager,
-                           queueManager: queueManager,
-                           blockedTracksManager: blockedTracksManager,
-                           settingsManager: settingsManager,
-                           authManager: authManager,
-                           username: user.username,
-                           remoteManager: remoteManager)
-        nowPlayingManager.setUp(authManager: authManager)
         playlistManager.setUp(blockedTracksManager: blockedTracksManager,
                               settingsManager: settingsManager,
                               tokenManager: authManager,

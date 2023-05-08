@@ -36,7 +36,7 @@ extension QueueManager {
         analysingEnergy = true
         guard queueIndex + 1 < queueTracks.count && queueIndex >= 0 else { return }
         guard let authManager = authManager else { return }
-        let ids = queueTracks[queueIndex+1..<queueTracks.count].compactMap { $0.id }
+        let ids = queueTracks[queueIndex+1..<queueTracks.count].compactMap { $0.amStoreID }
         AnalyseController().analyseMediaPlayerTracks(amIDs: ids,
                                                      authManager: authManager) { [weak self] analysedTracks in
             DispatchQueue.main.async {
@@ -48,16 +48,16 @@ extension QueueManager {
     
     // MARK: - Set queue with new items
     
-    private func matchTracksToQueueItems(tracks: [PumpyAnalytics.Track]) -> [ApplicationMusicPlayer.Queue.Entry] {
+    private func matchTracksToQueueItems(tracks: [PumpyAnalytics.Track]) -> [PumpyLibrary.Track] {
         return queueTracks.filter { item in
             tracks.contains(where: { track in
-                track.sourceID == item.id
+                track.sourceID == item.amStoreID
             })
         }
     }
     
-    private func removeUnwantedAnalysedTracks(_ tracks: [ApplicationMusicPlayer.Queue.Entry]) {
-        let tracksToKeepIds = tracks.map { $0.id }
+    private func removeUnwantedAnalysedTracks(_ tracks: [PumpyLibrary.Track]) {
+        let tracksToKeepIds = tracks.map { $0.amStoreID }
         for item in controller.queue.entries {
             if tracksToKeepIds.contains(item.id) {
                 controller.queue.entries.removeAll(where: { $0.id == item.id })

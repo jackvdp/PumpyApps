@@ -17,6 +17,7 @@ class PlaybackData {
     private init() {}
     
     private let debouncer = Debouncer()
+    private let musicContent = MusicContent()
     
     private func saveCurrentPlaybackInfo(_ playbackItem: PlaybackItem, for username: String) {
         debouncer.handle {
@@ -29,26 +30,16 @@ class PlaybackData {
     
     
     func savePlaylistsOnline(for username: String) {
-        let playlists = MusicContent.getPlaylists().map {
-            PlaylistOnline(name: $0.name ?? "",
-                           id: $0.cloudGlobalID ?? "")
+        musicContent.getPlaylists { playlists in
+            let onlinePlaylists = playlists.map {
+                PlaylistOnline(name: $0.title ?? "",
+                               id: $0.cloudGlobalID ?? "")
+            }
+            FireMethods.save(object: onlinePlaylists,
+                             name: username,
+                             documentName: K.FStore.playlistCollection,
+                             dataFieldName: K.FStore.playlistCollection)
         }
-        FireMethods.save(object: playlists,
-                         name: username,
-                         documentName: K.FStore.playlistCollection,
-                         dataFieldName: K.FStore.playlistCollection)
-    }
-
-    
-    func saveTracksOnline(playlist: String, for username: String) {
-        let firebaseTracks = MusicContent.getOnlineTracks(chosenPlaylist: playlist)
-
-        FireMethods.save(dict: [
-            K.FStore.trackCollection : firebaseTracks,
-            K.FStore.playlistName : playlist
-        ],
-        name: username,
-        documentName: K.FStore.trackCollection)
     }
     
     func saveCurrentQueueOnline(items: [Track], for username: String) {

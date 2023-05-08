@@ -70,7 +70,7 @@ public class ExternalDisplayManager<P:PlaylistProtocol>: ObservableObject {
     func getCorrectURL() -> String {
         switch liveSettings.qrType  {
         case .playlist:
-            return playlistManager?.playlistURL ?? ""
+            return ""
         case .custom:
             return liveSettings.qrURL
         }

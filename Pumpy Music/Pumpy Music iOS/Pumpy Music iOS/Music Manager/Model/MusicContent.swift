@@ -7,24 +7,38 @@
 //
 
 import Foundation
-import MediaPlayer
+import MusicKit
 import PumpyLibrary
+import MediaPlayer
 
 class MusicContent {
     
-    static func getPlaylists() -> [MPMediaPlaylist] {
-        if let playlistsAndFolders = MPMediaQuery.playlists().collections {
-            let playlists = playlistsAndFolders.filter { !($0.value(forProperty: "isFolder") as? Bool ?? false) }
-            if let plists = playlists as? [MPMediaPlaylist] {
-                return plists.sorted { $0.name ?? "" < $1.name ?? "" }
+    func getPlaylists(completion: @escaping ([PumpyLibrary.Playlist]) -> ()) {
+        Task {
+            do {
+                let request = MusicLibraryRequest<MusicKit.Playlist>()
+                let response = try await request.response()
+                let playlists = response.items.map { $0 as MusicKit.Playlist }
+                let sorted = playlists.sorted { $0.name < $1.name }
+                completion(sorted)
+            } catch {
+                print(error)
             }
         }
-        return []
     }
     
-    static func getTracks(for playlist: MPMediaPlaylist) -> [Track] {
-        let songs = playlist.items
-        return songs.sorted { $0.artist ?? "" < $1.artist ?? "" }
+    static func getTracks(for playlist: PumpyLibrary.Playlist,
+                          completion: @escaping ([PumpyLibrary.Track]) -> ()) {
+        Task {
+            do {
+                let mkPlaylist = playlist as! MusicKit.Playlist
+                let playlistWithTracks = try await mkPlaylist.with(.tracks)
+                let tracks = playlistWithTracks.tracks?.map { $0 as MusicKit.Track }
+                completion(tracks ?? [])
+            } catch {
+                print(error)
+            }
+        }
     }
     
     static func getListOfPlaylistNames() -> [String] {
@@ -34,24 +48,5 @@ class MusicContent {
         }
         return []
     }
-    
-    static func getOnlineTracks(chosenPlaylist: String) -> [TrackOnline] {
-        let playlists = MPMediaQuery.playlists().collections
-        var trackArray: [TrackOnline] = []
-        for playlist in playlists! {
-            if (playlist.value(forProperty: MPMediaPlaylistPropertyName)as! String) == chosenPlaylist {
-                let songs = playlist.items
-                for song in songs {
-                    if song.artwork != nil {
-                        trackArray.append(TrackOnline(name: song.title ?? "",
-                                                      artist:song.artist ?? "",
-                                                      id: song.playbackStoreID
-                        ))
-                    }
-                }
-            }
-        }
-        let sortedTracks = trackArray.sorted(by: { $0.artist < $1.artist})
-        return sortedTracks
-    }
+
 }

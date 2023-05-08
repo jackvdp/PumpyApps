@@ -9,6 +9,7 @@
 import SwiftUI
 import AVKit
 import MediaPlayer
+import MusicKit
 
 struct PlayerControls<P:PlaylistProtocol,
                       N:NowPlayingProtocol,
@@ -21,6 +22,7 @@ struct PlayerControls<P:PlaylistProtocol,
     @EnvironmentObject var queueManager: Q
     @EnvironmentObject var alarmData: AlarmManager
     @State private var showingOptions: Bool = false
+    @ObservedObject private var stateManager = ApplicationMusicPlayer.shared.state
     
     var isPortrait: Bool
     var notPlaying: Bool
@@ -40,7 +42,7 @@ struct PlayerControls<P:PlaylistProtocol,
     }
     
     var playButton: some View {
-        Image(systemName: nowPlayingManager.playButtonState == .playing ? "pause.fill" : "play.fill")
+        Image(systemName: stateManager.playbackStatus == .playing ? "pause.fill" : "play.fill")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 40, height: 40, alignment: .center)

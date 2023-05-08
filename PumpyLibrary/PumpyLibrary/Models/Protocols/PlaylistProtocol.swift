@@ -15,6 +15,9 @@ public protocol PlaylistProtocol: ObservableObject {
                             secondaryPlaylists: [SecondaryPlaylist],
                             when position: Position)
     func playCatalogPlaylist(id: String, when position: Position)
+    func playPlaylist(_ playlist: PumpyLibrary.Playlist, when position: Position)
+    func getLibraryPlaylists() async -> [PumpyLibrary.Playlist]
+    func getLibraryPlaylistTracks(playlist: PumpyLibrary.Playlist) async -> [PumpyLibrary.Track]
 }
 
 public class MockPlaylistManager: PlaylistProtocol {
@@ -25,7 +28,11 @@ public class MockPlaylistManager: PlaylistProtocol {
                             secondaryPlaylists: [SecondaryPlaylist],
                                    when position: Position) {}
     public func playCatalogPlaylist(id: String, when position: Position) {}
-    
+    public func playPlaylist(_ playlist: PumpyLibrary.Playlist, when position: Position) {}
+    public func getLibraryPlaylists() async -> [PumpyLibrary.Playlist] { return [] }
+    public func getLibraryPlaylistTracks(playlist: PumpyLibrary.Playlist) async -> [PumpyLibrary.Track] { return [] }
 }
 
-public enum Position { case now, next }
+public enum Position: Equatable {
+    case now, next, at(Int)
+}

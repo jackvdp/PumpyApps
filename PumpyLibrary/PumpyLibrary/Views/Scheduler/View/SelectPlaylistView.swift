@@ -76,9 +76,9 @@ extension SetScheduleView {
 struct SelectPlaylistView_Previews: PreviewProvider {
     
     static var previews: some View {
-        SetScheduleView.SelectPlaylistView(schVM: SetScheduleViewModel(alarm: nil,
-                                                                       alarmManager: AlarmManager(),
-                                                                       getPlists: {return[]}))
+        SetScheduleView<MockPlaylistManager>
+            .SelectPlaylistView(schVM: SetScheduleViewModel(alarm: nil,
+                                                            alarmManager: AlarmManager()))
     }
 }
 #endif

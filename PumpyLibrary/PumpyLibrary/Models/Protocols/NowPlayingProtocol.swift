@@ -8,11 +8,18 @@
 import Foundation
 
 public protocol NowPlayingProtocol: ObservableObject {
-    var playButtonState: PlayButton { get set }
-    var currentTrack: QueueTrack? { get }
+    var currentTrack: Track? { get }
 }
 
-class MockNowPlayingManager: NowPlayingProtocol {
+public protocol PlayerStateProtocol: ObservableObject {
+    var playButtonState: PlayButton { get set }
+}
+
+public class MockNowPlayingManager: NowPlayingProtocol {
+    public var currentTrack: Track? {
+        self.currentEntry
+    }
+    
     var playButtonState: PlayButton = .notPlaying
-    @Published var currentTrack: QueueTrack? = nil
+    var currentEntry: QueueTrack? = nil
 }

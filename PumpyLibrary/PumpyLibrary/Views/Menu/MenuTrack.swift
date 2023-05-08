@@ -66,7 +66,7 @@ public struct MenuTrackView<T:TokenProtocol,
     // MARK: Track view
     
     @ViewBuilder
-    func trackDetails(_ track: QueueTrack) -> some View {
+    func trackDetails(_ track: Track) -> some View {
         artwork
         songDetails(track)
         Spacer()
@@ -80,7 +80,7 @@ public struct MenuTrackView<T:TokenProtocol,
         return ArtworkView(artworkURL: url, size: size, backgroundColour: $backgroundColour)
     }
         
-    func songDetails(_ track: QueueTrack) -> some View {
+    func songDetails(_ track: Track) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center, spacing: 10.0) {
                 Text(track.name)
@@ -139,7 +139,7 @@ struct MenuTrack_Previews: PreviewProvider {
     
     static var np: MockNowPlayingManager {
         let now = MockNowPlayingManager()
-        now.currentTrack = MockData.track
+        now.currentEntry = MockData.track
         return now
     }
     

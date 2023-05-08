@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MediaPlayer
 import PumpyLibrary
 import PumpyAnalytics
 import MusicKit
@@ -19,7 +18,7 @@ class QueueManager: QueueProtocol {
     var username: String?
     let controller = ApplicationMusicPlayer.shared
     weak var authManager: AuthorisationManager?
-    @Published var queueTracks = MusicKit.ApplicationMusicPlayer.Queue.Entries()
+    @Published var queueTracks = [PumpyLibrary.Track]()
     @Published var queueIndex = 0
     @Published var analysingEnergy = false
     
@@ -36,7 +35,7 @@ class QueueManager: QueueProtocol {
     // MARK: - Core Queue Methods
     
     func getQueue() {
-        queueTracks = controller.queue.entries
+        queueTracks = controller.queue.entries.map { $0 }
         if let currentEntry = controller.queue.currentEntry,
            let index = controller.queue.entries.firstIndex(of: currentEntry) {
             queueIndex = index
@@ -69,7 +68,7 @@ class QueueManager: QueueProtocol {
     
     // MARK: - Queue Behaviour Methods
 
-    func saveNewQueue(_ items: [MPMediaItem]) {
+    func saveNewQueue(_ items: [PumpyLibrary.Track]) {
         if let username {
             PlaybackData.shared.saveCurrentQueueOnline(items: items, for: username)
         }

@@ -13,7 +13,7 @@ import MusicKit
 struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
     
     let track: Track
-    var nowPlayingManager: N?
+    @EnvironmentObject var nowPlayingManager: N
     @EnvironmentObject var blockedTracksManager: B
     
     @State private var rotation: Double = 0
@@ -40,7 +40,7 @@ struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
         .onChange(of: blockedTracksManager.blockedTracks.publisher) { _ in
             setButton()
         }
-        .onChange(of: nowPlayingManager?.currentTrack) { _ in
+        .onReceive(nowPlayingManager.currentTrack.publisher) { _ in
             setButton()
         }
     }
@@ -82,4 +82,3 @@ struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
 //    }
 //}
 #endif
-

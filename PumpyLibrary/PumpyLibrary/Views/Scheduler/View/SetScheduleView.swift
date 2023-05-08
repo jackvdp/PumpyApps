@@ -8,13 +8,14 @@
 
 import SwiftUI
 
-struct SetScheduleView: View {
+struct SetScheduleView<P: PlaylistProtocol>: View {
     
     @ObservedObject var schVM: SetScheduleViewModel
     @EnvironmentObject var alarmManager: AlarmManager
     @Environment(\.presentationMode) var presentationMode
     @State private var showingAlert: Bool = false
     @State private var showingSecondaryPlaylists = true
+    @EnvironmentObject var playlistManager: P
     
     var body: some View {
         PumpyList {
@@ -30,6 +31,9 @@ struct SetScheduleView: View {
         .accentColor(.pumpyPink)
         .alert(isPresented: $showingAlert) {
             playlistAlert
+        }
+        .task {
+            await schVM.loadPlaylists(playlistManager: playlistManager)
         }
     }
     
@@ -117,10 +121,9 @@ struct SetScheduleView: View {
 #if DEBUG
 struct SetScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        return SetScheduleView(schVM:
+        return SetScheduleView<MockPlaylistManager>(schVM:
                                 SetScheduleViewModel(alarm: nil,
-                                                     alarmManager: AlarmManager(),
-                                                     getPlists: {return []})
+                                                     alarmManager: AlarmManager())
         )
     }
 }

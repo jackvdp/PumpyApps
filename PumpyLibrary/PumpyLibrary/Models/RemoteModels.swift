@@ -28,7 +28,6 @@ public enum RemoteEnum {
     case playCatalogPlaylistNow(id: String)
     case playCatalogPlaylistNext(id: String)
     case getLibraryPlaylists
-    case getTracksFromPlaylist(playlist: String)
     case removeTrackFromQueue(id: String)
     case addToQueue(queueIDs: [String])
     case activeInfo
@@ -70,11 +69,7 @@ extension RemoteEnum: Codable {
             
         case .getLibraryPlaylists:
             try container.encode("getLibraryPlaylists", forKey: .rawValue)
-            
-        case .getTracksFromPlaylist(let playlist):
-            try container.encode("getTracksFromPlaylist", forKey: .rawValue)
-            try container.encode(playlist, forKey: .associatedValue)
-            
+ 
         case .removeTrackFromQueue(let id):
             try container.encode("removeTrackFromQueue", forKey: .rawValue)
             try container.encode(id, forKey: .associatedValue)
@@ -122,9 +117,6 @@ extension RemoteEnum: Codable {
             self = .playPlaylistNext(playlist: playlist)
         case "getLibraryPlaylists":
             self = .getLibraryPlaylists
-        case "getTracksFromPlaylist":
-            let playlist = try container.decode(String.self, forKey: .associatedValue)
-            self = .getTracksFromPlaylist(playlist: playlist)
         case "removeTrackFromQueue":
             let id = try container.decode(String.self, forKey: .associatedValue)
             self = .removeTrackFromQueue(id: id)

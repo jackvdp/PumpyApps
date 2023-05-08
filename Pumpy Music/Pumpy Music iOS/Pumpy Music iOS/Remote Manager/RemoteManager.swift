@@ -89,8 +89,6 @@ class RemoteManager: ObservableObject {
             playlistManager.playLibraryPlayist(playlist, secondaryPlaylists: [], when: .next)
         case .getLibraryPlaylists:
             PlaybackData.shared.savePlaylistsOnline(for: username)
-        case .getTracksFromPlaylist(let playlist):
-            PlaybackData.shared.saveTracksOnline(playlist: playlist, for: username)
         case .removeTrackFromQueue(let id):
             queueManager.removeFromQueue(id: id)
         case .addToQueue(let queueIDs):

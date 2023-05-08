@@ -10,7 +10,6 @@ import Foundation
 class SetScheduleViewModel: ObservableObject {
     
     weak var alarmData: AlarmManager?
-    var getPlaylists: () -> [ScheduledPlaylist]
     let alarm: Alarm?
     
     @Published var playlists = [String]()
@@ -28,28 +27,25 @@ class SetScheduleViewModel: ObservableObject {
     @Published var messageSpeed: Double = 8.0
     @Published var qrType: QRType = .playlist
     
-    init(alarm: Alarm?, alarmManager: AlarmManager, getPlists: @escaping () -> [ScheduledPlaylist]) {
+    init(alarm: Alarm?, alarmManager: AlarmManager) {
         self.alarmData = alarmManager
-        self.getPlaylists = getPlists
         self.alarm = alarm
-        loadPlaylists()
         setAlarm()
     }
     
-    func loadPlaylists() {
-        let playlistsMM = getPlaylists()
+    func loadPlaylists(playlistManager: any PlaylistProtocol) async {
+        let playlistsMM = await playlistManager.getLibraryPlaylists()
         if !playlistsMM.isEmpty {
             for playlist in playlistsMM {
-                playlists.append(playlist.name ?? "")
+                playlists.append(playlist.title ?? "")
             }
             playlists.append(K.stopMusic)
         }
     }
     
     func createNewSecondaryPlaylist() {
-        let playlistsMM = getPlaylists()
-        if let playlist = playlistsMM.first {
-            secondaryPlaylists.append(SecondaryPlaylist(name: playlist.name ?? "", ratio: 2))
+        if let playlist = playlists.first {
+            secondaryPlaylists.append(SecondaryPlaylist(name: playlist, ratio: 2))
         }
     }
     

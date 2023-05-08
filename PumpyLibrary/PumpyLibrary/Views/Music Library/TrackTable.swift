@@ -23,6 +23,8 @@ struct TrackTable<H:HomeProtocol,
     @EnvironmentObject var homeVM: H
     let playlist: PumpyLibrary.Playlist
     @State private var searchText = ""
+    var libraryPlaylist = false
+    @State private var libraryTracks = [PumpyLibrary.Track]()
     
     var body: some View {
         PumpyList {
@@ -40,6 +42,15 @@ struct TrackTable<H:HomeProtocol,
         .navigationBarTitleDisplayMode(.inline)
         .labManagerToolbar(destination: MusicLabView<N,B,T,Q,P,H>())
         .pumpyBackground()
+        .task {
+            if libraryPlaylist {
+                libraryTracks = await playlistManager.getLibraryPlaylistTracks(playlist: playlist)
+            }
+        }
+    }
+    
+    var playlistTracks: [PumpyLibrary.Track] {
+        libraryTracks.isEmpty ? playlist.songs : libraryTracks
     }
     
     // MARK: - Components
@@ -64,7 +75,7 @@ struct TrackTable<H:HomeProtocol,
     @State private var showPlaylistDescriptionSheet = false
     
     var playlistDescription: some View {
-        let songCount = playlist.songs.count == 1 ? "1 song" : "\(playlist.songs.count) songs"
+        let songCount = playlistTracks.count == 1 ? "1 song" : "\(playlistTracks.count) songs"
         let description = showPlaylistDescriptionSheet ? playlist.longDescription : playlist.shortDescription
         let combinedText = description != nil ? songCount + " • " + description! : songCount
         return HTMLText(combinedText)
@@ -88,27 +99,25 @@ struct TrackTable<H:HomeProtocol,
     
     func playNext() {
         toastManager.showingPlayNextToast = true
-        playlistManager.playNext(playlist: playlist,
-                                 secondaryPlaylists: [])
+        playlistManager.playPlaylist(playlist, when: .next)
     }
     
     func playNow() {
-        playlistManager.playNow(playlist: playlist,
-                                secondaryPlaylists: [])
+        playlistManager.playPlaylist(playlist, when: .now)
     }
     
     func playFromPosition(track: Track) {
         if let playlistIndex = playlist
             .songs.firstIndex(where: { $0.amStoreID == track.amStoreID }) {
-            playlistManager.playPlaylist(playlist: playlist, from: playlistIndex)
+            playlistManager.playPlaylist(playlist, when: .at(playlistIndex))
         }
     }
     
     var filteredTracks: [Track] {
         if searchText.isEmpty {
-            return playlist.songs
+            return playlistTracks
         } else {
-            return playlist.songs.filter {
+            return playlistTracks.filter {
                 ($0.name).localizedCaseInsensitiveContains(searchText) ||
                 ($0.artistName).localizedCaseInsensitiveContains(searchText)
             }

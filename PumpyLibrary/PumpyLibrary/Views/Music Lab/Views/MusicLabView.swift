@@ -17,6 +17,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
     
     @EnvironmentObject var labManager: MusicLabManager
     @EnvironmentObject var playlistManager: P
+    @EnvironmentObject var queueManager: Q
     @EnvironmentObject var authManager: AuthorisationManager
     
     public init() {}
@@ -76,11 +77,10 @@ public struct MusicLabView<N:NowPlayingProtocol,
     }
     
     func playFromPosition(tracks: [Track], index: Int) {
-        let playlist = QueuePlaylist(title: "Music Lab Items",
-                                     songs: tracks,
-                                     cloudGlobalID: nil,
-                                     artworkURL: nil)
-        playlistManager.playPlaylist(playlist: playlist, from: index)
+        let selectedTracks = tracks[index..<tracks.count]
+        let amIDs = selectedTracks.compactMap { $0.amStoreID }
+        queueManager.addTrackToQueue(ids: amIDs, playWhen: .now)
+        playlistManager.playlistLabel = "Music Lab"
     }
     
     // MARK: - Attribute Sliders

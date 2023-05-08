@@ -14,27 +14,25 @@ public struct PlaylistTable<H:HomeProtocol,
                             T:TokenProtocol,
                             Q:QueueProtocol>: View {
     
-    public init(getPlaylists: @escaping () -> [Playlist]) {
-        self.getPlaylists = getPlaylists
-    }
+    public init() {}
     
     @State private var playlists = [Playlist]()
     @State private var searchText = ""
     @State private var tableView: UITableView?
-    var getPlaylists: ()->[Playlist]
+    @EnvironmentObject var playlistManager: P
 
     public var body: some View {
         PumpyList {
             ForEach(filteredPlaylists.indices, id: \.self) { i in
-                NavigationLink(destination: TrackTable<H,P,N,B,T,Q>(playlist: filteredPlaylists[i])) {
+                NavigationLink(destination: TrackTable<H,P,N,B,T,Q>(playlist: filteredPlaylists[i], libraryPlaylist: true)) {
                     PlaylistRow(playlist: filteredPlaylists[i])
                 }
             }
         }
         .listStyle(.plain)
         .searchable(text: $searchText, prompt: "Playlists...")
-        .onAppear() {
-            playlists = getPlaylists()
+        .task {
+            playlists = await playlistManager.getLibraryPlaylists()
         }
         .navigationBarTitle("Playlists")
         .accentColor(.pumpyPink)
@@ -53,6 +51,6 @@ public struct PlaylistTable<H:HomeProtocol,
 
 struct PlaylistTable_Previews: PreviewProvider {
     static var previews: some View {
-        PlaylistTable<MockHomeVM,MockPlaylistManager,MockNowPlayingManager,MockBlockedTracks,MockTokenManager,MockQueueManager>(getPlaylists: {return []})
+        PlaylistTable<MockHomeVM,MockPlaylistManager,MockNowPlayingManager,MockBlockedTracks,MockTokenManager,MockQueueManager>()
     }
 }

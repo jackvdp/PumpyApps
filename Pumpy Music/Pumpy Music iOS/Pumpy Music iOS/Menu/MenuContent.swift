@@ -9,6 +9,7 @@
 import SwiftUI
 import PumpyLibrary
 import PumpyAnalytics
+import MusicKit
 
 struct MenuContent: View {
     @EnvironmentObject var settings: SettingsManager
@@ -29,34 +30,33 @@ struct MenuContent: View {
                 NavigationLink(destination: PlaylistTable<
                                HomeVM,
                                PlaylistManager,
-                               NowPlayingManager,
+                               ApplicationMusicPlayer.Queue,
                                BlockedTracksManager,
                                AuthorisationManager,
                                QueueManager
-                               >(getPlaylists: MusicContent.getPlaylists), isActive: $homeVM.triggerNavigation) {
+                               >(), isActive: $homeVM.triggerNavigation) {
                     MenuRow(title: "Music Library", imageName: "music.note.list")
                 }.tag(1)
             }
             if settings.onlineSettings.showMusicStore {
-                NavigationLink(destination:
-                                CatalogView<
-                                   HomeVM,
-                                   PlaylistManager,
-                                   NowPlayingManager,
-                                   BlockedTracksManager,
-                                   AuthorisationManager,
-                                   QueueManager
-                               >()) {
+                NavigationLink(destination: CatalogView<
+                               HomeVM,
+                               PlaylistManager,
+                               ApplicationMusicPlayer.Queue,
+                               BlockedTracksManager,
+                               AuthorisationManager,
+                               QueueManager>()) {
                     MenuRow(title: "Music Catalog", imageName: "music.mic")
                 }
             }
             if settings.onlineSettings.showMusicLab {
                 NavigationLink(destination: MusicLabView<
-                               NowPlayingManager,
+                               ApplicationMusicPlayer.Queue,
                                BlockedTracksManager,
                                AuthorisationManager,
                                QueueManager,
-                               PlaylistManager,HomeVM
+                               PlaylistManager,
+                               HomeVM
                                >()) {
                     MenuRow(title: "Music Lab", imageName: "testtube.2")
                         .environmentObject(tokenManager)
@@ -68,7 +68,7 @@ struct MenuContent: View {
     var scheduleAndBlocked: some View {
         Section {
             if settings.onlineSettings.showScheduler {
-                NavigationLink(destination: ScheduleView(getPlists: MusicContent.getPlaylists)) {
+                NavigationLink(destination: ScheduleView<PlaylistManager>()) {
                     MenuRow(title: "Playlist Schedule", imageName: "clock")
                 }
             }

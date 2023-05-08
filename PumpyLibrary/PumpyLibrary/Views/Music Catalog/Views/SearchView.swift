@@ -18,6 +18,7 @@ struct SearchView<H:HomeProtocol,
     @StateObject private var viewModel = SearchViewModel()
     @EnvironmentObject var authManager: AuthorisationManager
     @EnvironmentObject var playlistManager: P
+    @EnvironmentObject var queueManager: Q
     @Namespace var screen
     
     var body: some View {
@@ -192,7 +193,9 @@ struct SearchView<H:HomeProtocol,
                                      songs: tracks,
                                      cloudGlobalID: nil,
                                      artworkURL: nil)
-        playlistManager.playPlaylist(playlist: playlist, from: index)
+        let selectedTracks = [tracks[index]]
+        let amIDs = selectedTracks.compactMap { $0.amStoreID }
+        queueManager.addTrackToQueue(ids: amIDs, playWhen: .now)
     }
     
     func runSearch() {

@@ -43,9 +43,20 @@ class PlaylistManager: PlaylistProtocol {
     
     // MARK: - Public Functions
     
+    // MARK: Play Any Playlist
+    
+    func playPlaylist(_ playlist: PumpyLibrary.Playlist, when position: Position) {
+        if let analyticsPlaylist = playlist as? PumpyAnalytics.Playlist {
+            let amIDS = analyticsPlaylist.tracks.compactMap { $0.amStoreID }
+            let shuffledIDs = amIDS.shuffled()
+            queueManager?.addTrackToQueue(ids: shuffledIDs, playWhen: position)
+            playlistLabel = playlist.title ?? "Playlist"
+        } else {
+            // Check if playlist is library or not
+        }
+    }
+    
     // MARK: Play Library Playlist
-    
-    
     
     /// Play playlist in AM library
     func playLibraryPlayist(_ playlist: MusicKit.Playlist, when position: Position) {
@@ -105,7 +116,34 @@ class PlaylistManager: PlaylistProtocol {
         }
     }
     
-    // MARK: Private Functions
+    // MARK: Get Library Playlists
+    
+    func getLibraryPlaylists() async -> [PumpyLibrary.Playlist] {
+        do {
+            let request = MusicLibraryRequest<MusicKit.Playlist>()
+            let response = try await request.response()
+            let playlists = response.items.map { $0 as MusicKit.Playlist }
+            let sorted = playlists.sorted { $0.name < $1.name }
+            return sorted
+        } catch {
+            print(error)
+            return []
+        }
+    }
+    
+    func getLibraryPlaylistTracks(playlist: PumpyLibrary.Playlist) async -> [PumpyLibrary.Track] {
+        guard let mkPlaylist = playlist as? MusicKit.Playlist else { return [] }
+        do {
+            let playlistWithTracks = try await mkPlaylist.with(.tracks)
+            guard let tracks = playlistWithTracks.tracks else { return [] }
+            return tracks.map { $0 as MusicKit.Track }.sorted { $0.artistName < $1.artistName }
+        } catch {
+            print(error)
+            return []
+        }
+    }
+    
+    // MARK: - Private Functions
     
     /// Use this method to play a playlist after fetching tracks
     private func playRequestedPlaylistWithTracks(_ playlist: MusicKit.Playlist,
@@ -136,6 +174,8 @@ class PlaylistManager: PlaylistProtocol {
                 musicPlayerController.queue = ApplicationMusicPlayer.Queue(for: tracksWithoutUnwanted)
             case .next:
                 try await musicPlayerController.queue.insert(shuffledTracks, position: .afterCurrentEntry)
+            case .at:
+                break
             }
             
             // Player settings
