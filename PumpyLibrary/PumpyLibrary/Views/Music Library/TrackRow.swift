@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import MediaPlayer
 import PumpyShared
 import PumpyAnalytics
 

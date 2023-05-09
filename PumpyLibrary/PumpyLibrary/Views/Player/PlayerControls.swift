@@ -8,7 +8,6 @@
 
 import SwiftUI
 import AVKit
-import MediaPlayer
 import MusicKit
 
 struct PlayerControls<P:PlaylistProtocol,

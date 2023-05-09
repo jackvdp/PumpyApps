@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MediaPlayer
 import PumpyAnalytics
 
 public class ArtworkHandler {

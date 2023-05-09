@@ -9,7 +9,6 @@
 import Foundation
 import PumpyAnalytics
 import MusicKit
-import MediaPlayer
 import PumpyLibrary
 
 extension QueueManager {

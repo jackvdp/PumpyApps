@@ -7,17 +7,17 @@
 //
 
 import Foundation
-import MediaPlayer
+import MusicKit
 import PumpyLibrary
 
 class MusicCoreFunctions {
     
-    static let musicPlayerController = MPMusicPlayerController.applicationQueuePlayer
+    static let musicPlayerController = ApplicationMusicPlayer.shared
     
     static func togglePlayPause(alarms: [Alarm], playlistManager: PlaylistManager) {
-        if musicPlayerController.playbackState == .playing {
+        if musicPlayerController.state.playbackStatus == .playing {
             musicPlayerController.pause()
-        } else if musicPlayerController.playbackState == .paused {
+        } else if musicPlayerController.state.playbackStatus == .paused {
             prepareToPlayAndPlay()
         } else {
             coldStart(alarms: alarms, playlistManager: playlistManager)
@@ -25,14 +25,26 @@ class MusicCoreFunctions {
     }
     
     static func skipToNextItem() {
-        musicPlayerController.skipToNextItem()
+        Task {
+            do {
+                try await musicPlayerController.skipToNextEntry()
+            } catch {
+                print(error)
+            }
+        }
     }
     
     static func skipBackToBeginningOrPreviousItem() {
-        if musicPlayerController.currentPlaybackTime < 5 {
-            musicPlayerController.skipToPreviousItem()
-        } else {
-            musicPlayerController.skipToBeginning()
+        Task {
+            do {
+                if musicPlayerController.playbackTime < 5 {
+                    try await musicPlayerController.skipToPreviousEntry()
+                } else {
+                    musicPlayerController.restartCurrentEntry()
+                }
+            } catch {
+                print(error)
+            }
         }
     }
     
@@ -42,16 +54,20 @@ class MusicCoreFunctions {
                                                secondaryPlaylists: playlist.secondaryPlaylists ?? [],
                                                when: .now)
         } else {
-            musicPlayerController.play()
+            Task {
+                try await musicPlayerController.play()
+            }
         }
     }
     
     static func prepareToPlayAndPlay() {
-        musicPlayerController.prepareToPlay { (error) in
-            if let e = error {
-                print(e)
+        Task {
+            do {
+                try await musicPlayerController.prepareToPlay()
+                try await musicPlayerController.play()
+            } catch {
+                print(error)
             }
-            self.musicPlayerController.play()
         }
     }
     

@@ -45,14 +45,20 @@ class PlaylistManager: PlaylistProtocol {
     
     // MARK: Play Any Playlist
     
-    func playPlaylist(_ playlist: PumpyLibrary.Playlist, when position: Position) {
+    func playPlaylist(_ playlist: PumpyLibrary.Playlist, fromLibrary: Bool, when position: Position) {
         if let analyticsPlaylist = playlist as? PumpyAnalytics.Playlist {
             let amIDS = analyticsPlaylist.tracks.compactMap { $0.amStoreID }
             let shuffledIDs = amIDS.shuffled()
             queueManager?.addTrackToQueue(ids: shuffledIDs, playWhen: position)
             playlistLabel = playlist.title ?? "Playlist"
+        } else if let mkPlaylist = playlist as? MusicKit.Playlist {
+            if fromLibrary {
+                playLibraryPlayist(mkPlaylist, when: position)
+            } else {
+                playCatalogPlaylist(id: mkPlaylist.id.rawValue, when: position)
+            }
         } else {
-            // Check if playlist is library or not
+            fatalError("What playlist is this")
         }
     }
     
@@ -166,24 +172,27 @@ class PlaylistManager: PlaylistProtocol {
             let shuffledTracksArray = shuffledTracks.shuffled()
             
             // Remove banned and explicit
-            let tracksWithoutUnwanted = removeUnwantedTracks(items: shuffledTracksArray)
+            var tracksWithoutUnwanted = removeUnwantedTracks(items: shuffledTracksArray)
+            
+            guard tracksWithoutUnwanted.isNotEmpty else { return }
             
             // Add to queue
             switch position {
             case .now:
-                musicPlayerController.queue = ApplicationMusicPlayer.Queue(for: tracksWithoutUnwanted)
-            case .next:
-                try await musicPlayerController.queue.insert(shuffledTracks, position: .afterCurrentEntry)
-            case .at:
+                let firstTrack = tracksWithoutUnwanted.removeFirst()
+                musicPlayerController.queue = [firstTrack]
+                // Player settings
+                musicPlayerController.state.shuffleMode = .off
+                musicPlayerController.state.repeatMode = .all
+                try await musicPlayerController.prepareToPlay()
+                try await musicPlayerController.play()
+            default:
                 break
             }
             
-            // Player settings
-            musicPlayerController.state.shuffleMode = .off
-            musicPlayerController.state.repeatMode = .all
-            try await musicPlayerController.play()
+            await displayPlaylistInfo(playlist: playlist.name)
             
-            displayPlaylistInfo(playlist: playlist.name)
+            try await musicPlayerController.queue.insert(tracksWithoutUnwanted, position: .afterCurrentEntry)
         }
     }
     
@@ -214,6 +223,7 @@ class PlaylistManager: PlaylistProtocol {
         return itemsToKeep
     }
     
+    @MainActor
     private func displayPlaylistInfo(playlist: String) {
         playlistLabel = "Playlist: \(playlist)"
     }

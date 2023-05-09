@@ -8,25 +8,21 @@
 
 import SwiftUI
 
-public struct PlayCapsules: View {
-    public init(playNext: @escaping () -> Void, playNow: @escaping () -> Void) {
-        playNextAction = playNext
-        playNowAction = playNow
-    }
-    
-    var playNextAction: () -> Void
-    var playNowAction: () -> Void
+public struct PlayCapsules<P:PlaylistProtocol>: View {
+    @EnvironmentObject var playlistManager: P
+    var fromLibrary: Bool
+    var playlist: Playlist
     
     public var body: some View {
         HStack {
             CapsuleButton(title: "Play Next",
-                          iconName: "arrow.turn.down.right",
-                          action: playNextAction)
-                .frame(maxWidth: .infinity)
+                          iconName: "arrow.turn.down.right") {
+                playlistManager.playPlaylist(playlist, fromLibrary: fromLibrary, when: .next)
+            }.frame(maxWidth: .infinity)
             CapsuleButton(title: "Play Now",
-                          iconName: "play.fill",
-                          action: playNowAction)
-                .frame(maxWidth: .infinity)
+                          iconName: "play.fill") {
+                playlistManager.playPlaylist(playlist, fromLibrary: fromLibrary, when: .now)
+            }.frame(maxWidth: .infinity)
         }
     }
 }

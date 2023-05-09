@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1340"
+   LastUpgradeVersion = "1420"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C0D60C5623313D6A0010F653"
-               BuildableName = "Pumpy Music.app"
-               BlueprintName = "Pumpy Music iOS"
-               ReferencedContainer = "container:Pumpy Music iOS.xcodeproj">
+               BlueprintIdentifier = "6D851513288D3A3F006397CC"
+               BuildableName = "PumpyLibrary.framework"
+               BlueprintName = "PumpyLibrary"
+               ReferencedContainer = "container:PumpyLibrary.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,23 +29,14 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C0D60C7523313D6C0010F653"
-               BuildableName = "Pumpy Music iOSUITests.xctest"
-               BlueprintName = "Pumpy Music iOSUITests"
-               ReferencedContainer = "container:Pumpy Music iOS.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C075CC692947602B002A8F30"
-               BuildableName = "Pumpy MusicTests.xctest"
-               BlueprintName = "Pumpy MusicTests"
-               ReferencedContainer = "container:Pumpy Music iOS.xcodeproj">
+               BlueprintIdentifier = "C003521B290D7FD40006ACDE"
+               BuildableName = "PumpyLibraryTests.xctest"
+               BlueprintName = "PumpyLibraryTests"
+               ReferencedContainer = "container:PumpyLibrary.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -60,16 +51,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C0D60C5623313D6A0010F653"
-            BuildableName = "Pumpy Music.app"
-            BlueprintName = "Pumpy Music iOS"
-            ReferencedContainer = "container:Pumpy Music iOS.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -77,16 +58,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C0D60C5623313D6A0010F653"
-            BuildableName = "Pumpy Music.app"
-            BlueprintName = "Pumpy Music iOS"
-            ReferencedContainer = "container:Pumpy Music iOS.xcodeproj">
+            BlueprintIdentifier = "6D851513288D3A3F006397CC"
+            BuildableName = "PumpyLibrary.framework"
+            BlueprintName = "PumpyLibrary"
+            ReferencedContainer = "container:PumpyLibrary.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

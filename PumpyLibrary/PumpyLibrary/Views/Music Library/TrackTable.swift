@@ -69,7 +69,7 @@ struct TrackTable<H:HomeProtocol,
     }
     
     var playButtons: some View {
-        PlayCapsules(playNext: playNext, playNow: playNow)
+        PlayCapsules<P>(fromLibrary: libraryPlaylist, playlist: playlist)
     }
     
     @State private var showPlaylistDescriptionSheet = false
@@ -99,17 +99,23 @@ struct TrackTable<H:HomeProtocol,
     
     func playNext() {
         toastManager.showingPlayNextToast = true
-        playlistManager.playPlaylist(playlist, when: .next)
+        playlistManager.playPlaylist(playlist,
+                                     fromLibrary: libraryPlaylist,
+                                     when: .next)
     }
     
     func playNow() {
-        playlistManager.playPlaylist(playlist, when: .now)
+        playlistManager.playPlaylist(playlist,
+                                     fromLibrary: libraryPlaylist,
+                                     when: .now)
     }
     
     func playFromPosition(track: Track) {
         if let playlistIndex = playlist
             .songs.firstIndex(where: { $0.amStoreID == track.amStoreID }) {
-            playlistManager.playPlaylist(playlist, when: .at(playlistIndex))
+            playlistManager.playPlaylist(playlist,
+                                         fromLibrary: libraryPlaylist,
+                                         when: .at(playlistIndex))
         }
     }
     

@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import MediaPlayer
 
 public struct UpNextView<Q: QueueProtocol,
                          N:NowPlayingProtocol,

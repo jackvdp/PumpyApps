@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import MediaPlayer
 import MusicKit
 
 struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
