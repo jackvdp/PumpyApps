@@ -11,10 +11,6 @@ public class BrowseController {
     
     public init() {}
     
-    deinit {
-        print("Bye bye 3")
-    }
-    
     public func getAppleMusicSuggestions(authManager: AuthorisationManager,
                                          completion: @escaping ([SuggestedCollection], ErrorMessage?)->()) {
         GetSuggestions().execute(authManager: authManager, completion: completion)

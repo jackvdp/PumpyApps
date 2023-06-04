@@ -14,7 +14,7 @@ import MusadoraKit
 
 class PlaylistManager: PlaylistProtocol {
     
-    private let musicPlayerController = ApplicationMusicPlayer.shared
+    private let musicPlayer = ApplicationMusicPlayer.shared
     @Published var playlistLabel = String()
     weak var blockedTracksManager: BlockedTracksManager?
     weak var settingsManager: SettingsManager?
@@ -49,7 +49,7 @@ class PlaylistManager: PlaylistProtocol {
         if let analyticsPlaylist = playlist as? PumpyAnalytics.Playlist {
             let amIDS = analyticsPlaylist.tracks.compactMap { $0.amStoreID }
             let shuffledIDs = amIDS.shuffled()
-            queueManager?.addTrackToQueue(ids: shuffledIDs, playWhen: position)
+            queueManager?.addTracksToQueue(ids: shuffledIDs, playWhen: position)
             playlistLabel = playlist.title ?? "Playlist"
         } else if let mkPlaylist = playlist as? MusicKit.Playlist {
             if fromLibrary {
@@ -58,7 +58,7 @@ class PlaylistManager: PlaylistProtocol {
                 playCatalogPlaylist(id: mkPlaylist.id.rawValue, when: position)
             }
         } else {
-            fatalError("What playlist is this")
+            fatalError()
         }
     }
     
@@ -66,15 +66,11 @@ class PlaylistManager: PlaylistProtocol {
     
     /// Play playlist in AM library
     func playLibraryPlayist(_ playlist: MusicKit.Playlist, when position: Position) {
-        Task {
+        Task(priority: .high) {
             do {
-                var request = MusicLibraryRequest<MusicKit.Playlist>()
-                request.filter(matching: \.id, equalTo: playlist.id)
-                let response = try await request.response()
-                guard let playlist = response.items.first else { return }
+                let playlist = try await MLibrary.playlist(id: playlist.id)
                 let p = try await playlist.with(.tracks)
-                
-                playRequestedPlaylistWithTracks(p, when: position)
+                await playRequestedPlaylistWithTracks(p, when: position)
             } catch {
                 print(error)
             }
@@ -85,7 +81,7 @@ class PlaylistManager: PlaylistProtocol {
     func playLibraryPlayist(_ name: String,
                             secondaryPlaylists: [SecondaryPlaylist],
                             when position: Position) {
-        Task {
+        Task(priority: .high) {
             do {
                 guard let playlistWithTracks = try await getLibraryPlaylistWithTracksFromName(name) else { return }
                 
@@ -97,7 +93,7 @@ class PlaylistManager: PlaylistProtocol {
                 }
                 let secondariesWithoutNils = secondaries.compactMap { $0 }
                 
-                playRequestedPlaylistWithTracks(playlistWithTracks,
+                await playRequestedPlaylistWithTracks(playlistWithTracks,
                                                 secondaryPlaylists: secondariesWithoutNils,
                                                 when: position)
                 
@@ -111,26 +107,24 @@ class PlaylistManager: PlaylistProtocol {
     
     /// Play catalog playlist of AM ID
     func playCatalogPlaylist(id: String, when position: Position) {
-        Task {
+        Task(priority: .high) {
             do {
                 let musicItemID = MusicItemID(id)
                 let playlist = try await MCatalog.playlist(id: musicItemID, fetch: .tracks)
-                playRequestedPlaylistWithTracks(playlist, when: position)
+                await playRequestedPlaylistWithTracks(playlist, when: position)
             } catch {
                 print(error)
             }
         }
     }
     
-    // MARK: Get Library Playlists
+    // MARK: Get Library Playlists & Tracks
     
     func getLibraryPlaylists() async -> [PumpyLibrary.Playlist] {
         do {
-            let request = MusicLibraryRequest<MusicKit.Playlist>()
-            let response = try await request.response()
-            let playlists = response.items.map { $0 as MusicKit.Playlist }
-            let sorted = playlists.sorted { $0.name < $1.name }
-            return sorted
+            let playlists = try await MLibrary.playlists()
+            let playlistArray = playlists.map { $0 }
+            return playlistArray
         } catch {
             print(error)
             return []
@@ -154,45 +148,32 @@ class PlaylistManager: PlaylistProtocol {
     /// Use this method to play a playlist after fetching tracks
     private func playRequestedPlaylistWithTracks(_ playlist: MusicKit.Playlist,
                                                  secondaryPlaylists: [(playlist: MusicKit.Playlist, ratio: Int)] = [],
-                                                 when position: Position) {
-        Task {
-            let overallNumberOfTracks = 150
-            let numberOfTracks = overallNumberOfTracks - secondaryPlaylists.reduce(0, { $0 + overallNumberOfTracks/$1.ratio })
-            guard var shuffledTracks = playlist.tracks?.shuffled().prefix(numberOfTracks) else { return }
-            
-            // Add secondary playlists
-            if !secondaryPlaylists.isEmpty {
-                secondaryPlaylists.forEach { playlist, ratio in
-                    if let tracks = playlist.tracks?.shuffled().prefix(overallNumberOfTracks / ratio) {
-                        shuffledTracks.append(contentsOf: tracks)
-                    }
-                }
-            }
-            
-            let shuffledTracksArray = shuffledTracks.shuffled()
+                                                 when position: Position) async {
+        do {
+            // Pull tracks from playlists either in order from index or randomly selected
+            let requestedTracks = pullTracksFromPlaylist(playlist: playlist,
+                                                         secondaryPlaylists: secondaryPlaylists,
+                                                         position: position)
             
             // Remove banned and explicit
-            var tracksWithoutUnwanted = removeUnwantedTracks(items: shuffledTracksArray)
-            
+            var tracksWithoutUnwanted = removeUnwantedTracks(items: requestedTracks)
             guard tracksWithoutUnwanted.isNotEmpty else { return }
             
             // Add to queue
             switch position {
-            case .now:
-                let firstTrack = tracksWithoutUnwanted.removeFirst()
-                musicPlayerController.queue = [firstTrack]
-                // Player settings
-                musicPlayerController.state.shuffleMode = .off
-                musicPlayerController.state.repeatMode = .all
-                try await musicPlayerController.prepareToPlay()
-                try await musicPlayerController.play()
-            default:
-                break
+            case .now, .at:
+                musicPlayer.queue = ApplicationMusicPlayer.Queue(for: tracksWithoutUnwanted)
+                musicPlayer.state.shuffleMode = .off
+                musicPlayer.state.repeatMode = .all
+                try await musicPlayer.prepareToPlay()
+                try await musicPlayer.play()
+            case .next:
+                try await musicPlayer.queue.insert(tracksWithoutUnwanted, position: .tail)
             }
-            
+
             await displayPlaylistInfo(playlist: playlist.name)
-            
-            try await musicPlayerController.queue.insert(tracksWithoutUnwanted, position: .afterCurrentEntry)
+        } catch {
+            print(error)
         }
     }
     
@@ -226,6 +207,35 @@ class PlaylistManager: PlaylistProtocol {
     @MainActor
     private func displayPlaylistInfo(playlist: String) {
         playlistLabel = "Playlist: \(playlist)"
+    }
+    
+    private func pullTracksFromPlaylist(playlist: MusicKit.Playlist,
+                                        secondaryPlaylists: [(playlist: MusicKit.Playlist, ratio: Int)],
+                                        position: Position,
+                                        overallNumberOfTracks: Int = 99) -> [MusicKit.Track] {
+        switch position {
+            
+        case .at(let index):
+            
+            guard let tracks = playlist.tracks, index < tracks.count else { return [] }
+            let finalIndex = index + 98 < tracks.count ? index + 98 : tracks.count - 1
+
+            return Array(tracks[index...finalIndex])
+            
+        default:
+            
+            let numberOfTracks = overallNumberOfTracks - secondaryPlaylists.reduce(0, { $0 + overallNumberOfTracks/$1.ratio })
+            guard var shuffledTracks = playlist.tracks?.shuffled().prefix(numberOfTracks) else { return [] }
+
+            // Add secondary playlists
+            secondaryPlaylists.forEach { playlist, ratio in
+                if let tracks = playlist.tracks?.shuffled().prefix(overallNumberOfTracks / ratio) {
+                    shuffledTracks.append(contentsOf: tracks)
+                }
+            }
+            return shuffledTracks.shuffled()
+            
+        }
     }
 
     // MARK: - Timer Change Playlist

@@ -52,13 +52,17 @@ class QueueManager: QueueProtocol {
     
     // MARK: - Track
     
-    func addTrackToQueue(ids: [String], playWhen position: Position) {
+    func addTracksToQueue(ids: [String], playWhen position: Position) {
         Task {
             do {
-                let songs = try await MCatalog.songs(ids: ids.map { MusicItemID($0) })
-                try await controller.queue.insert(songs, position: .afterCurrentEntry)
-                if position == .now {
-                    try await controller.skipToNextEntry()
+                let cappedIds = ids.count > 99 ? Array(ids[0..<99]) : ids
+                let songs = try await MCatalog.songs(ids: cappedIds.map { MusicItemID($0) })
+                
+                if position == .now || controller.state.playbackStatus != .playing {
+                    controller.queue = .init(for: songs)
+                    try await controller.play()
+                } else {
+                    try await controller.queue.insert(songs, position: .afterCurrentEntry)
                 }
             } catch {
                 print(error)

@@ -40,7 +40,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
         .onAppear() {
             labManager.getGenres(authManager: authManager)
         }
-        .searchToolbar(destination: SearchView<H,P,N,B,T,Q>(), modal: true)
+        .searchToolbar(modal: true) { SearchView<H,P,N,B,T,Q>() } 
     }
 
     // MARK: - Genres
@@ -79,7 +79,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
     func playFromPosition(tracks: [Track], index: Int) {
         let selectedTracks = tracks[index..<tracks.count]
         let amIDs = selectedTracks.compactMap { $0.amStoreID }
-        queueManager.addTrackToQueue(ids: amIDs, playWhen: .now)
+        queueManager.addTracksToQueue(ids: amIDs, playWhen: .now)
         playlistManager.playlistLabel = "Music Lab"
     }
     

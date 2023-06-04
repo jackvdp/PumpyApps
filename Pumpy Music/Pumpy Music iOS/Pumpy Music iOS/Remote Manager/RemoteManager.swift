@@ -92,7 +92,7 @@ class RemoteManager: ObservableObject {
         case .removeTrackFromQueue(let id):
             queueManager.removeFromQueue(id: id)
         case .addToQueue(let queueIDs):
-            queueManager.addTrackToQueue(ids: queueIDs, playWhen: .next)
+            queueManager.addTracksToQueue(ids: queueIDs, playWhen: .next)
         case .activeInfo:
             ActiveInfo.save(.loggedIn, for: username)
         case .increaseEnergy:

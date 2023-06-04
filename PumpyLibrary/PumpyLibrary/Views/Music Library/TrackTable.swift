@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import AlertToast
 import PumpyShared
 
 struct TrackTable<H:HomeProtocol,
@@ -40,7 +39,7 @@ struct TrackTable<H:HomeProtocol,
         .searchable(text: $searchText, prompt: "Tracks...")
         .navigationBarTitle("")
         .navigationBarTitleDisplayMode(.inline)
-        .labManagerToolbar(destination: MusicLabView<N,B,T,Q,P,H>())
+        .labManagerToolbar { MusicLabView<N,B,T,Q,P,H>() }
         .pumpyBackground()
         .task {
             if libraryPlaylist {
@@ -111,8 +110,9 @@ struct TrackTable<H:HomeProtocol,
     }
     
     func playFromPosition(track: Track) {
-        if let playlistIndex = playlist
-            .songs.firstIndex(where: { $0.amStoreID == track.amStoreID }) {
+        print("PM before")
+        if let playlistIndex = playlistTracks.firstIndex(where: { $0.amStoreID == track.amStoreID }) {
+            print("PM before")
             playlistManager.playPlaylist(playlist,
                                          fromLibrary: libraryPlaylist,
                                          when: .at(playlistIndex))

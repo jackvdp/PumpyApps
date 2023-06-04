@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchToolbar<OtherContent: View>: ViewModifier {
     
-    var destination: OtherContent
+    var destination: () -> OtherContent
     var modal: Bool
     @State private var showSheet: Bool = false
     @EnvironmentObject var labManager: MusicLabManager
@@ -38,7 +38,7 @@ struct SearchToolbar<OtherContent: View>: ViewModifier {
             .sheet(isPresented: $showSheet,
                    onDismiss: { labManager.searchViewTriggeredFromLab = false }) {
                 NavigationView {
-                    destination
+                    destination()
                 }
                 .tint(.pumpyPink)
                 .pumpyBackground()
@@ -50,7 +50,7 @@ struct SearchToolbar<OtherContent: View>: ViewModifier {
 }
 
 extension View {
-    func searchToolbar<Content: View>(destination: Content, modal: Bool = false) -> some View {
+    func searchToolbar<Content: View>(modal: Bool = false, destination: @escaping () -> Content) -> some View {
         self.modifier(SearchToolbar(destination: destination, modal: modal))
     }
 }

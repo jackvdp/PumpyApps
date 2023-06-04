@@ -144,14 +144,14 @@ public struct TrackRow<T:TokenProtocol,
     @ViewBuilder
     func matchedTrackMenu(amId: String) -> some View {
         Button {
-            queueManager.addTrackToQueue(ids: [amId], playWhen: .now)
+            queueManager.addTracksToQueue(ids: [amId], playWhen: .now)
         } label: {
             Label("Play Now", systemImage: "play.fill")
         }
         .padding()
         .foregroundColor(.pumpyPink)
         Button {
-            queueManager.addTrackToQueue(ids: [amId], playWhen: .next)
+            queueManager.addTracksToQueue(ids: [amId], playWhen: .next)
             toastManager.showingPlayNextToast = true
         } label: {
             Label("Play Next", systemImage: "text.insert")

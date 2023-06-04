@@ -14,7 +14,7 @@ public protocol QueueProtocol: ObservableObject {
     var analysingEnergy: Bool { get set }
     func getQueue()
     func removeFromQueue(id: String)
-    func addTrackToQueue(ids: [String], playWhen position: Position)
+    func addTracksToQueue(ids: [String], playWhen position: Position)
     func increaseEnergy()
     func decreaseEnergy()
 }
@@ -27,6 +27,6 @@ public class MockQueueManager: QueueProtocol {
     public func increaseEnergy() {}
     public func decreaseEnergy() {}
     public func getQueue() {}
-    public func addTrackToQueue(ids: [String], playWhen position: Position) {}
+    public func addTracksToQueue(ids: [String], playWhen position: Position) {}
     
 }

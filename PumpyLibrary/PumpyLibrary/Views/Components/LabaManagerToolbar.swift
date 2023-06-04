@@ -11,7 +11,7 @@ import SwiftUI
 struct LabManagerToolbar<OtherContent: View>: ViewModifier {
     
     @EnvironmentObject var labManager: MusicLabManager
-    var destination: OtherContent
+    var destination: () -> OtherContent
     @Environment(\.dismiss) var dismiss
     
     func body(content: Content) -> some View {
@@ -38,7 +38,7 @@ struct LabManagerToolbar<OtherContent: View>: ViewModifier {
 }
 
 extension View {
-    func labManagerToolbar<Content: View>(destination: Content) -> some View {
+    func labManagerToolbar<Content: View>(destination: @escaping () -> Content) -> some View {
         self.modifier(LabManagerToolbar(destination: destination))
     }
 }

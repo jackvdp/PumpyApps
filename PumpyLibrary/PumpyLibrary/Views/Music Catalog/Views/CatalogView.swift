@@ -31,8 +31,8 @@ public struct CatalogView<H:HomeProtocol,
             }
         }
         .pumpyBackground()
-        .searchToolbar(destination: SearchView<H,P,N,B,T,Q>())
-        .labManagerToolbar(destination: MusicLabView<N,B,T,Q,P,H>())
+        .searchToolbar { SearchView<H,P,N,B,T,Q>() }
+        .labManagerToolbar { MusicLabView<N,B,T,Q,P,H>() }
         .navigationTitle("Catalog")
         .listStyle(.plain)
         .onAppear() {

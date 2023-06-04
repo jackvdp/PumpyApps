@@ -44,7 +44,7 @@ struct SearchView<H:HomeProtocol,
                     placement: .navigationBarDrawer(displayMode: .always),
                     prompt: "Playlists, Artists, Songs")
         .pumpyBackground()
-        .labManagerToolbar(destination: MusicLabView<N,B,T,Q,P,H>())
+        .labManagerToolbar { MusicLabView<N,B,T,Q,P,H>() }
         .onSubmit(of: .search, runSearch)
         .onChange(of: viewModel.searchText, perform: handleSearchTextChanged)
         .navigationBarTitleDisplayMode(.inline)
@@ -195,7 +195,7 @@ struct SearchView<H:HomeProtocol,
                                      artworkURL: nil)
         let selectedTracks = [tracks[index]]
         let amIDs = selectedTracks.compactMap { $0.amStoreID }
-        queueManager.addTrackToQueue(ids: amIDs, playWhen: .now)
+        queueManager.addTracksToQueue(ids: amIDs, playWhen: .now)
     }
     
     func runSearch() {
