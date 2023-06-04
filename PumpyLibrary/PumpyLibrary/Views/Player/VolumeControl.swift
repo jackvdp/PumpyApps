@@ -37,23 +37,22 @@ struct VolumeControl: View {
         func updateUIView(_ view: MPVolumeView, context: Context) {
             view.tintColor = .white
             view.setVolumeThumbImage(UIImage(systemName: "circlebadge.fill"), for: .normal)
-            view.showsRouteButton = false
-        }
-        
-    }
-
-    struct AirPlayView: UIViewRepresentable {
-        
-        func makeUIView(context: Context) -> AVRoutePickerView {
-            AVRoutePickerView(frame: .zero)
-        }
-        
-        func updateUIView(_ view: AVRoutePickerView, context: Context) {
-            view.tintColor = .white
-            view.activeTintColor = UIColor(Color.pumpyPink)
+//            view.showsRouteButton = false
         }
         
     }
 }
 
 
+struct AirPlayView: UIViewRepresentable {
+    
+    func makeUIView(context: Context) -> AVRoutePickerView {
+        AVRoutePickerView(frame: .zero)
+    }
+    
+    func updateUIView(_ view: AVRoutePickerView, context: Context) {
+        view.tintColor = .white
+        view.activeTintColor = UIColor(Color.pumpyPink)
+    }
+    
+}

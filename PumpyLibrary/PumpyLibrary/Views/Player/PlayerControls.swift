@@ -26,16 +26,24 @@ struct PlayerControls<P:PlaylistProtocol,
     var notPlaying: Bool
     
     var body: some View {
-        HStack(alignment: .center, spacing: 40.0) {
-            changeEnergyButton
-                .disabled(notPlaying)
-            if isPortrait {
-                upNextButton
+        VStack(spacing: 32) {
+            HStack(alignment: .center, spacing: 60.0) {
+                backButton
+                    .disabled(notPlaying)
+                playButton
+                fastForwardButton
                     .disabled(notPlaying)
             }
-            playButton
-            fastForwardButton
-                .disabled(notPlaying)
+            HStack(alignment: .center, spacing: 75.0) {
+                changeEnergyButton
+                    .disabled(notPlaying)
+                if isPortrait {
+                    upNextButton
+                        .disabled(notPlaying)
+                }
+                AirPlayView()
+                    .frame(width: 15, height: 15)
+            }.padding(.horizontal)
         }
     }
     
@@ -67,6 +75,18 @@ struct PlayerControls<P:PlaylistProtocol,
                 .accentColor(.white)
         }
     }
+    
+    var backButton: some View {
+        Button(action: {
+            homeVM.skipBack()
+        }) {
+            Image(systemName: "backward.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 40, height: 40, alignment: .center)
+                .accentColor(.white)
+        }
+    }
 
     var upNextButton: some View {
         Button(action: {
@@ -82,7 +102,7 @@ struct PlayerControls<P:PlaylistProtocol,
             Image(systemName: "list.bullet")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 30, height: 30, alignment: .center)
+                .frame(width: 25, height: 25, alignment: .center)
                 .accentColor(homeVM.pageType == .upNext ? .pumpyPink : .white)
                 .font(.title.weight(.light))
         }
@@ -96,7 +116,7 @@ struct PlayerControls<P:PlaylistProtocol,
             Image(systemName: "bolt")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 30, height: 30, alignment: .center)
+                .frame(width: 25, height: 25, alignment: .center)
                 .foregroundColor(queueManager.analysingEnergy ? .pumpyPink : .white)
                 .font(.title.weight(.light))
         }

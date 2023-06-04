@@ -30,4 +30,7 @@ class HomeVM: HomeProtocol {
         MusicCoreFunctions.skipToNextItem()
     }
     
+    func skipBack() {
+        MusicCoreFunctions.skipBackToBeginningOrPreviousItem()
+    }
 }

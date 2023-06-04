@@ -18,6 +18,7 @@ public protocol HomeProtocol: ObservableObject {
     func playPause(alarmData: AlarmManager, playlistManager: any PlaylistProtocol)
     func coldStart(alarmData: AlarmManager, playlistManager: any PlaylistProtocol)
     func skipToNextItem()
+    func skipBack()
 }
 
 public enum PageType {
@@ -34,4 +35,5 @@ class MockHomeVM: HomeProtocol {
     func playPause(alarmData: AlarmManager, playlistManager: any PlaylistProtocol) { }
     func coldStart(alarmData: AlarmManager, playlistManager: any PlaylistProtocol) { }
     func skipToNextItem() {}
+    func skipBack() {}
 }

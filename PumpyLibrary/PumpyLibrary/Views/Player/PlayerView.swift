@@ -60,6 +60,10 @@ public struct PlayerView<P: PlaylistProtocol,
         switch homeVM.pageType {
         case .artwork:
             artwork(size: measureRect.width)
+            Spacer(minLength: 20)
+            if nowPlayingManager.currentTrack != nil {
+                TimeScrubber()
+            }
         case .upNext:
             UpNextView<Q,N,B,T,P>()
                 .padding(.horizontal, -20)
@@ -72,6 +76,10 @@ public struct PlayerView<P: PlaylistProtocol,
             VStack {
                 Spacer()
                 artwork(size: (measureRect.width / 2) - 5)
+                Spacer(minLength: 20)
+                if nowPlayingManager.currentTrack != nil {
+                    TimeScrubber()
+                }
                 songDetailsAndControls
             }
             VStack {
@@ -99,8 +107,6 @@ public struct PlayerView<P: PlaylistProtocol,
         PlayerControls<P,N,H,Q>(isPortrait: isPortrait(),
                                 notPlaying: notPlaying)
             .id(controls)
-        Spacer(minLength: 20)
-        VolumeControl()
     }
     
     // MARK: - Methods
