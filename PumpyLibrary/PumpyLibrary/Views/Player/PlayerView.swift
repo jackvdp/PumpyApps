@@ -26,10 +26,11 @@ public struct PlayerView<P: PlaylistProtocol,
     @Namespace var background
     @State private var measureRect = CGRect()
     @State private var notPlaying = true
+    private let labelOpacity: CGFloat = 0.6
     
     public var body: some View {
         VStack {
-            NavigationBar<B, N, H>()
+            NavigationBar<B, N, H>().opacity(labelOpacity)
                 .background(GeometryGetter(rect: $measureRect))
             if isPortrait() {
                 portraitView
@@ -61,14 +62,12 @@ public struct PlayerView<P: PlaylistProtocol,
         case .artwork:
             artwork(size: measureRect.width)
             Spacer(minLength: 20)
-            if nowPlayingManager.currentTrack != nil {
-                TimeScrubber()
-            }
+            TimeScrubber().opacity(labelOpacity)
         case .upNext:
             UpNextView<Q,N,B,T,P>()
                 .padding(.horizontal, -20)
         }
-        songDetailsAndControls
+        songDetailsAndControls.opacity(labelOpacity)
     }
     
     var landscapeView: some View {
@@ -77,10 +76,8 @@ public struct PlayerView<P: PlaylistProtocol,
                 Spacer()
                 artwork(size: (measureRect.width / 2) - 5)
                 Spacer(minLength: 20)
-                if nowPlayingManager.currentTrack != nil {
-                    TimeScrubber()
-                }
-                songDetailsAndControls
+                TimeScrubber().opacity(labelOpacity)
+                songDetailsAndControls.opacity(labelOpacity)
             }
             VStack {
                 UpNextView<Q,N,B,T,P>()
@@ -90,7 +87,7 @@ public struct PlayerView<P: PlaylistProtocol,
     
     @State private var backgroundColour: UIColor?
     
-    func artwork(size: CGFloat) -> ArtworkView {
+    func artwork(size: CGFloat) -> some View {
         ArtworkView(artworkURL: nowPlayingManager.currentTrack?.artworkURL,
                     size: size) { colour in
             backgroundColour = colour

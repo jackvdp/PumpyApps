@@ -36,7 +36,6 @@ struct NavigationBar<B: BlockedTracksProtocol, N:NowPlayingProtocol, H:HomeProto
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(Color.white)
                 .frame(width: 20, alignment: .center)
-                
         }
     }
     

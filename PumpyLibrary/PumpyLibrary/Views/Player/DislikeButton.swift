@@ -32,7 +32,6 @@ struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: size, height: size, alignment: .center)
                 .foregroundColor(colour)
-                .font(Font.title.weight(.thin))
                 .rotationEffect(.degrees(rotation))
         }
         .buttonStyle(.plain)

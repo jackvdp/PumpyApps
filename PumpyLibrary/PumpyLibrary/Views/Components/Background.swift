@@ -34,7 +34,7 @@ struct BackgroundView: ViewModifier {
                 Color.pumpyBlue
             }
         }.overlay {
-            Color.black.opacity(0.6)
+            Color.black.opacity(0.5)
         }
         .edgesIgnoringSafeArea(.all)
     }

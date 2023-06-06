@@ -121,25 +121,7 @@ public struct TrackRow<T:TokenProtocol,
         } else {
             missingTrackMenu
         }
-        if let analysedTrack, labManager.includes(track: analysedTrack) {
-            Button {
-                labManager.removeTrack(analysedTrack)
-                toastManager.showLabRemoveToast = true
-            } label: {
-                Label("Remove from Lab", systemImage: "minus")
-            }.padding()
-        } else {
-            Button {
-                if let analysedTrack, analysedTrack.audioFeatures != nil {
-                    labManager.addTrack(analysedTrack)
-                    toastManager.showLabAddToast = true
-                } else {
-                    toastManager.showLabNotAnalysedToast = true
-                }
-            } label: {
-                Label("Add to Music Lab", systemImage: "plus")
-            }.padding()
-        }
+        LabButtons(analysedTrack: $analysedTrack)
     }
     
     @ViewBuilder

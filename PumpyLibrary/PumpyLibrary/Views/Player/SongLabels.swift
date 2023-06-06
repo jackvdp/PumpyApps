@@ -13,8 +13,6 @@ public struct SongLabels<N: NowPlayingProtocol, P: PlaylistProtocol>: View {
     @EnvironmentObject var playlistManager: P
     
     var size: CGFloat = 17
-    var mainFont = K.Font.helvetica
-    var subFont = K.Font.helveticaLight
     var mainFontOpacity = 1.0
     var subFontOpacity = 1.0
     var padding: CGFloat = 0
@@ -22,27 +20,28 @@ public struct SongLabels<N: NowPlayingProtocol, P: PlaylistProtocol>: View {
     var showNowPlaying = false
     var showPlaylistLabel = true
     
-    @State private var title = String()
+    @State private var title = "Not playing..."
     @State private var artist = String()
     @State private var playlist = String()
     
     public var body: some View {
         VStack(spacing: 5.0) {
             if showNowPlaying {
-                label("Now playing", font: subFont, size: size * 0.75)
+                label("Now playing", size: size * 0.75)
                     .opacity(subFontOpacity)
             }
-            label(title, font: mainFont, size: size)
-            label(artist, font: subFont, size: size)
+            label(title, size: size, bold: true)
+                .opacity(nowPlayingManager.currentTrack != nil ? 1 : 0.5)
+            label(artist, size: size)
                 .opacity(subFontOpacity)
             if showPlaylistLabel {
-                label(playlist, font: subFont, size: size)
+                label(playlist, size: size)
                     .opacity(subFontOpacity)
             }
         }
         .onReceive(nowPlayingManager.currentTrack.publisher) { _ in
             withAnimation {
-                title = nowPlayingManager.currentTrack?.name ?? ""
+                title = nowPlayingManager.currentTrack?.name ?? "Not playing..."
                 artist = nowPlayingManager.currentTrack?.artistName ?? ""
             }
         }
@@ -53,11 +52,11 @@ public struct SongLabels<N: NowPlayingProtocol, P: PlaylistProtocol>: View {
         }
     }
     
-    func label(_ text: String, font: String, size: CGFloat) -> some View {
-        return Text(text)
+    func label(_ text: String, size: CGFloat, bold: Bool = false) -> some View {
+        let text = bold ? Text(text).bold() : Text(text)
+        return text
             .foregroundColor(Color.white)
             .fontWeight(fontWeight)
-            .font(.custom(font, size: size))
             .lineLimit(1)
             .padding(padding)
     }
@@ -78,17 +77,3 @@ struct SongLabels_Previews: PreviewProvider {
     }
 }
 #endif
-
-extension SongLabels {
-    public init(size: CGFloat = 17, mainFont: String = K.Font.helvetica, subFont: String = K.Font.helveticaLight, mainFontOpacity: Double = 1.0, subFontOpacity: Double = 1.0, padding: CGFloat = 0, fontWeight: Font.Weight? = nil, showNowPlaying: Bool = false, showPlaylistLabel: Bool = true) {
-        self.size = size
-        self.mainFont = mainFont
-        self.subFont = subFont
-        self.mainFontOpacity = mainFontOpacity
-        self.subFontOpacity = subFontOpacity
-        self.padding = padding
-        self.fontWeight = fontWeight
-        self.showNowPlaying = showNowPlaying
-        self.showPlaylistLabel = showPlaylistLabel
-    }
-}

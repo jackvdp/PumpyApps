@@ -102,6 +102,8 @@
 		C06668C028D0DEF800B4E679 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06668BF28D0DEF800B4E679 /* ItemDetailView.swift */; };
 		C077977928D355AA00EC9D5F /* ItemGridComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C077977828D355AA00EC9D5F /* ItemGridComponent.swift */; };
 		C07DC8942A2CB608005A142F /* TimeScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07DC8932A2CB608005A142F /* TimeScrubber.swift */; };
+		C07DC8972A2DF29F005A142F /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = C07DC8962A2DF29F005A142F /* PopupView */; };
+		C0803A882A2FE3DF009EC18D /* AddToLabButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0803A872A2FE3DF009EC18D /* AddToLabButtons.swift */; };
 		C08BBAF129BCFED00028D96D /* SeedAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08BBAF029BCFED00028D96D /* SeedAttributes.swift */; };
 		C08E0AF5293209F100D83774 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08E0AF4293209F100D83774 /* MenuView.swift */; };
 		C08E0AF929321E1E00D83774 /* PumpyShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08E0AF829321E1E00D83774 /* PumpyShared.framework */; };
@@ -222,6 +224,7 @@
 		C06668BF28D0DEF800B4E679 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		C077977828D355AA00EC9D5F /* ItemGridComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGridComponent.swift; sourceTree = "<group>"; };
 		C07DC8932A2CB608005A142F /* TimeScrubber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeScrubber.swift; sourceTree = "<group>"; };
+		C0803A872A2FE3DF009EC18D /* AddToLabButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToLabButtons.swift; sourceTree = "<group>"; };
 		C08BBAF029BCFED00028D96D /* SeedAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedAttributes.swift; sourceTree = "<group>"; };
 		C08E0AF4293209F100D83774 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		C08E0AF829321E1E00D83774 /* PumpyShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -249,6 +252,7 @@
 				6DEAAC6928C8B5980033ED19 /* CodableFirebase in Frameworks */,
 				6DEAAC7428C8B6030033ED19 /* AlertToast in Frameworks */,
 				C0CBA99729151BCB001A90AE /* PumpyAnalytics.framework in Frameworks */,
+				C07DC8972A2DF29F005A142F /* PopupView in Frameworks */,
 				C0C0177629CF34990030E7A9 /* RangeSlider in Frameworks */,
 				C0606E6D29FEB27100157AE1 /* Kingfisher in Frameworks */,
 				C08E0AF929321E1E00D83774 /* PumpyShared.framework in Frameworks */,
@@ -373,6 +377,7 @@
 				C0F669D529E2FE7500BDD7B9 /* ToastManager.swift */,
 				C0F669D729E405E600BDD7B9 /* LabaManagerToolbar.swift */,
 				C0606E6929FD2B0B00157AE1 /* SearchToolbar.swift */,
+				C0803A872A2FE3DF009EC18D /* AddToLabButtons.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -643,6 +648,7 @@
 				6DEAAC7328C8B6030033ED19 /* AlertToast */,
 				C0C0177529CF34990030E7A9 /* RangeSlider */,
 				C0606E6C29FEB27100157AE1 /* Kingfisher */,
+				C07DC8962A2DF29F005A142F /* PopupView */,
 			);
 			productName = PumpyLibrary;
 			productReference = 6D851514288D3A3F006397CC /* PumpyLibrary.framework */;
@@ -701,6 +707,7 @@
 				6DEAAC7228C8B6030033ED19 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				C0C0177429CF34990030E7A9 /* XCRemoteSwiftPackageReference "Range-Slider" */,
 				C0606E6B29FEB27100157AE1 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				C07DC8952A2DF29E005A142F /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			productRefGroup = 6D851515288D3A3F006397CC /* Products */;
 			projectDirPath = "";
@@ -777,6 +784,7 @@
 				C0BBEFA8291806ED008200DB /* ContextiOS16.swift in Sources */,
 				C01720C328F17EE7003BA158 /* ArtworkView.swift in Sources */,
 				6DB8C01A28A3B120006C1B85 /* ButtonsView.swift in Sources */,
+				C0803A882A2FE3DF009EC18D /* AddToLabButtons.swift in Sources */,
 				6DBA8A8A28BB64B1000A25FD /* MenuRow.swift in Sources */,
 				6DB8C03428A3D91F006C1B85 /* AudioFeaturesModel.swift in Sources */,
 				6D1577C828BF7650004BAB47 /* DuplicateAlarmsView.swift in Sources */,
@@ -1168,6 +1176,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		C07DC8952A2DF29E005A142F /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		C0C0177429CF34990030E7A9 /* XCRemoteSwiftPackageReference "Range-Slider" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jackvdp/Range-Slider";
@@ -1213,6 +1229,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C0606E6B29FEB27100157AE1 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		C07DC8962A2DF29F005A142F /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C07DC8952A2DF29E005A142F /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
 		};
 		C0C0177529CF34990030E7A9 /* RangeSlider */ = {
 			isa = XCSwiftPackageProductDependency;

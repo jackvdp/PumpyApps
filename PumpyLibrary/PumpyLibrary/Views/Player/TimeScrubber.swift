@@ -10,9 +10,6 @@ import MusicKit
 
 struct TimeScrubber: View {
     
-    var size: CGFloat = 15
-    let font: String = K.Font.helveticaLight
-    
     var player = ApplicationMusicPlayer.shared
     @ObservedObject var queue = ApplicationMusicPlayer.shared.queue
     @ObservedObject var state = ApplicationMusicPlayer.shared.state
@@ -41,13 +38,15 @@ struct TimeScrubber: View {
                 Text(endTime)
             }
             .foregroundColor(Color.white)
-            .font(.custom(font, size: size))
+            .font(.footnote)
         }
         .onReceive(timer) { _ in
             setTimeLabels()
             setPercentageDone()
         }
-        .opacity(0.6)
+        .onAppear() {
+            setTimeLabels()
+        }
         .padding(.horizontal)
     }
     
@@ -58,7 +57,7 @@ struct TimeScrubber: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(.white)
-                .frame(width: size, height: size)
+                .frame(width: 15, height: 15)
             if let name {
                 Text(name)
             }
@@ -75,9 +74,9 @@ struct TimeScrubber: View {
         case .dolbyAudio:
             return ("dolby", nil)
         case .lossless:
-            return ("lossless", nil)
+            return ("lossless", "Lossless")
         case .highResolutionLossless:
-            return ("", "Hi-Res")
+            return ("lossless", "Hi-Res")
         default:
             return ("", nil)
         }
@@ -103,7 +102,7 @@ struct TimeScrubber: View {
     }
     
     func setTimeLabels() {
-        startTime = formattedTime(player.playbackTime)
+        startTime = queue.currentEntry != nil ? formattedTime(player.playbackTime) : "--:--"
         endTime = formattedTime(getEndTime())
     }
 
@@ -119,7 +118,7 @@ struct TimeScrubber: View {
 
 struct TimeScrubber_Previews: PreviewProvider {
     static var previews: some View {
-        TimeScrubber(size: 15)
+        TimeScrubber()
             .padding()
             .background(.blue)
     }
