@@ -24,7 +24,6 @@ public struct TrackRow<T:TokenProtocol,
     @State private var analysedTrack: PumpyAnalytics.Track?
     @EnvironmentObject var tokenManager: T
     @EnvironmentObject var queueManager: Q
-    @EnvironmentObject var labManager: MusicLabManager
     @EnvironmentObject var toastManager: ToastManager
 
     public init(track: Track,

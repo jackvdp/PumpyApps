@@ -46,6 +46,7 @@ struct TimeScrubber: View {
         }
         .onAppear() {
             setTimeLabels()
+            setPercentageDone(animated: false)
         }
         .padding(.horizontal)
     }
@@ -82,13 +83,17 @@ struct TimeScrubber: View {
         }
     }
     
-    func setPercentageDone() {
+    func setPercentageDone(animated: Bool = true) {
         guard let endTime = getEndTime() else {
             timePercentage =  0
             return
         }
         let currentTime = player.playbackTime
-        withAnimation {
+        if animated {
+            withAnimation {
+                timePercentage = currentTime / endTime
+            }
+        } else {
             timePercentage = currentTime / endTime
         }
     }

@@ -22,7 +22,6 @@ struct PlayerControls<P:PlaylistProtocol,
     @EnvironmentObject var nowPlayingManager: N
     @EnvironmentObject var queueManager: Q
     @EnvironmentObject var alarmData: AlarmManager
-    @EnvironmentObject var musicLabManager: MusicLabManager
     @State private var showingOptions: Bool = false
     
     var isPortrait: Bool
