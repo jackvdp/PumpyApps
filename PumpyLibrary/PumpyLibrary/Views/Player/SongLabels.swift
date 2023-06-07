@@ -23,6 +23,7 @@ public struct SongLabels<N: NowPlayingProtocol, P: PlaylistProtocol>: View {
     @State private var title = "Not playing..."
     @State private var artist = String()
     @State private var playlist = String()
+    @State private var isExplicit = false
     
     public var body: some View {
         VStack(spacing: 5.0) {
@@ -30,7 +31,7 @@ public struct SongLabels<N: NowPlayingProtocol, P: PlaylistProtocol>: View {
                 label("Now playing", size: size * 0.75)
                     .opacity(subFontOpacity)
             }
-            label(title, size: size, bold: true)
+            label(title, explicitLabel: isExplicit, size: size, bold: true)
                 .opacity(nowPlayingManager.currentTrack != nil ? 1 : 0.5)
             label(artist, size: size)
                 .opacity(subFontOpacity)
@@ -43,6 +44,7 @@ public struct SongLabels<N: NowPlayingProtocol, P: PlaylistProtocol>: View {
             withAnimation {
                 title = nowPlayingManager.currentTrack?.name ?? "Not playing..."
                 artist = nowPlayingManager.currentTrack?.artistName ?? ""
+                isExplicit = nowPlayingManager.currentTrack?.isExplicitItem ?? false
             }
         }
         .onReceive(playlistManager.playlistLabel.publisher) { _ in
@@ -52,13 +54,33 @@ public struct SongLabels<N: NowPlayingProtocol, P: PlaylistProtocol>: View {
         }
     }
     
-    func label(_ text: String, size: CGFloat, bold: Bool = false) -> some View {
+    @ViewBuilder
+    func label(_ text: String,
+               explicitLabel: Bool = false,
+               size: CGFloat,
+               bold: Bool = false) -> some View {
+        
         let text = bold ? Text(text).bold() : Text(text)
-        return text
-            .foregroundColor(Color.white)
-            .fontWeight(fontWeight)
-            .lineLimit(1)
-            .padding(padding)
+        if explicitLabel {
+            HStack(spacing: 10.0) {
+                text
+                    .foregroundColor(Color.white)
+                    .fontWeight(fontWeight)
+                    .lineLimit(1)
+                    .padding(padding)
+                Image(systemName: "e.square")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 12, height: 12, alignment: .center)
+                    .foregroundColor(Color.white)
+            }
+        } else {
+            text
+                .foregroundColor(Color.white)
+                .fontWeight(fontWeight)
+                .lineLimit(1)
+                .padding(padding)
+        }
     }
 }
 
