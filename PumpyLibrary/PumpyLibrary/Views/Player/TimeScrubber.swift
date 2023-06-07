@@ -16,10 +16,11 @@ struct TimeScrubber: View {
     @ObservedObject var queue = ApplicationMusicPlayer.shared.queue
     @ObservedObject var state = ApplicationMusicPlayer.shared.state
     private let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
-    @State private var startTime = "--:--"
-    @State private var endTime = "--:--"
+    @State private var startTime = Self.noTimeLabel
+    @State private var endTime = Self.noTimeLabel
     @State private var timePercentage: Double = 0
     let opacity: CGFloat
+    static let noTimeLabel = "--:--"
     
     var body: some View {
         VStack(spacing: 4) {
@@ -136,12 +137,12 @@ struct TimeScrubber: View {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.minute, .second]
         formatter.zeroFormattingBehavior = .pad
-        guard let interval else { return "--:--" }
-        return formatter.string(from: interval) ?? "--:--"
+        guard let interval else { return Self.noTimeLabel }
+        return formatter.string(from: interval) ?? Self.noTimeLabel
     }
     
     func setTimeLabels() {
-        startTime = queue.currentEntry != nil ? formattedTime(player.playbackTime) : "--:--"
+        startTime = queue.currentEntry != nil ? formattedTime(player.playbackTime) : Self.noTimeLabel
         endTime = formattedTime(getEndTime())
     }
 
