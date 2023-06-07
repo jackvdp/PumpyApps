@@ -62,7 +62,7 @@ public struct PlayerView<P: PlaylistProtocol,
         case .artwork:
             artwork(size: measureRect.width)
             Spacer(minLength: 20)
-            TimeScrubber().opacity(labelOpacity)
+            TimeScrubber(opacity: labelOpacity)
         case .upNext:
             UpNextView<Q,N,B,T,P>()
                 .padding(.horizontal, -20)
@@ -76,7 +76,7 @@ public struct PlayerView<P: PlaylistProtocol,
                 Spacer()
                 artwork(size: (measureRect.width / 2) - 5)
                 Spacer(minLength: 20)
-                TimeScrubber().opacity(labelOpacity)
+                TimeScrubber(opacity: labelOpacity)
                 songDetailsAndControls.opacity(labelOpacity)
             }
             VStack {

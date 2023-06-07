@@ -104,6 +104,7 @@
 		C07DC8942A2CB608005A142F /* TimeScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07DC8932A2CB608005A142F /* TimeScrubber.swift */; };
 		C07DC8972A2DF29F005A142F /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = C07DC8962A2DF29F005A142F /* PopupView */; };
 		C0803A882A2FE3DF009EC18D /* AddToLabButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0803A872A2FE3DF009EC18D /* AddToLabButtons.swift */; };
+		C0803A8B2A2FF177009EC18D /* Sliders in Frameworks */ = {isa = PBXBuildFile; productRef = C0803A8A2A2FF177009EC18D /* Sliders */; };
 		C08BBAF129BCFED00028D96D /* SeedAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08BBAF029BCFED00028D96D /* SeedAttributes.swift */; };
 		C08E0AF5293209F100D83774 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08E0AF4293209F100D83774 /* MenuView.swift */; };
 		C08E0AF929321E1E00D83774 /* PumpyShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08E0AF829321E1E00D83774 /* PumpyShared.framework */; };
@@ -258,6 +259,7 @@
 				C08E0AF929321E1E00D83774 /* PumpyShared.framework in Frameworks */,
 				6DEAAC7128C8B5E20033ED19 /* Introspect in Frameworks */,
 				6DEAAC6628C8B5730033ED19 /* ActivityIndicatorView in Frameworks */,
+				C0803A8B2A2FF177009EC18D /* Sliders in Frameworks */,
 				6DEAAC6E28C8B5B50033ED19 /* FirebaseFirestore in Frameworks */,
 				6DEAAC6C28C8B5B50033ED19 /* FirebaseAuth in Frameworks */,
 			);
@@ -649,6 +651,7 @@
 				C0C0177529CF34990030E7A9 /* RangeSlider */,
 				C0606E6C29FEB27100157AE1 /* Kingfisher */,
 				C07DC8962A2DF29F005A142F /* PopupView */,
+				C0803A8A2A2FF177009EC18D /* Sliders */,
 			);
 			productName = PumpyLibrary;
 			productReference = 6D851514288D3A3F006397CC /* PumpyLibrary.framework */;
@@ -708,6 +711,7 @@
 				C0C0177429CF34990030E7A9 /* XCRemoteSwiftPackageReference "Range-Slider" */,
 				C0606E6B29FEB27100157AE1 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				C07DC8952A2DF29E005A142F /* XCRemoteSwiftPackageReference "PopupView" */,
+				C0803A892A2FF177009EC18D /* XCRemoteSwiftPackageReference "swiftui-sliders" */,
 			);
 			productRefGroup = 6D851515288D3A3F006397CC /* Products */;
 			projectDirPath = "";
@@ -1184,6 +1188,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		C0803A892A2FF177009EC18D /* XCRemoteSwiftPackageReference "swiftui-sliders" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/spacenation/swiftui-sliders.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		C0C0177429CF34990030E7A9 /* XCRemoteSwiftPackageReference "Range-Slider" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jackvdp/Range-Slider";
@@ -1234,6 +1246,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C07DC8952A2DF29E005A142F /* XCRemoteSwiftPackageReference "PopupView" */;
 			productName = PopupView;
+		};
+		C0803A8A2A2FF177009EC18D /* Sliders */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C0803A892A2FF177009EC18D /* XCRemoteSwiftPackageReference "swiftui-sliders" */;
+			productName = Sliders;
 		};
 		C0C0177529CF34990030E7A9 /* RangeSlider */ = {
 			isa = XCSwiftPackageProductDependency;
