@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     weak var remoteDataManager: RemoteManager?
+    weak var scheduleManager: ScheduleManager?
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -31,6 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        // Reset alarm timer after app comes out of suspended state
+        scheduleManager?.setUpPlaylistChangeTimer()
+    }
+    
     func firebaseSetup() {
         FirebaseStore.shared.configure()
     }
@@ -44,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setupSiren() {
         let siren = Siren.shared
         siren.presentationManager = PresentationManager(alertTintColor: UIColor(named: K.pumpyPink)!)
-        siren.rulesManager = RulesManager(globalRules: .critical)
+        siren.rulesManager = RulesManager(globalRules: .default)
         siren.wail()
     }
 

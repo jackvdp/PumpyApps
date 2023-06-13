@@ -18,6 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var additionalWindows = [UIWindow]()
     weak var user: User?
     
+    // MARK: - Initial view set up
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor(.pumpyPink)
     
@@ -41,6 +43,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
+    // MARK: Scene Delegate Methods
+    
     func sceneWillEnterForeground(_ scene: UIScene) {
         if let username = user?.username {
             ActiveInfo.save(.loggedIn, for: username)
@@ -49,6 +53,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneDidEnterBackground(_ scene: UIScene) {
     }
+    
+    // MARK: - External Display
     
     private var screenDidConnectPublisher: AnyPublisher<UIScreen, Never> {
         NotificationCenter.default

@@ -61,25 +61,20 @@ public struct SongLabels<N: NowPlayingProtocol, P: PlaylistProtocol>: View {
                bold: Bool = false) -> some View {
         
         let text = bold ? Text(text).bold() : Text(text)
-        if explicitLabel {
-            HStack(spacing: 10.0) {
-                text
-                    .foregroundColor(Color.white)
-                    .fontWeight(fontWeight)
-                    .lineLimit(1)
-                    .padding(padding)
+        
+        HStack(spacing: 10.0) {
+            text
+                .foregroundColor(Color.white)
+                .fontWeight(fontWeight)
+                .lineLimit(1)
+                .padding(padding)
+            if explicitLabel {
                 Image(systemName: "e.square")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 12, height: 12, alignment: .center)
                     .foregroundColor(Color.white)
             }
-        } else {
-            text
-                .foregroundColor(Color.white)
-                .fontWeight(fontWeight)
-                .lineLimit(1)
-                .padding(padding)
         }
     }
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import PumpyLibrary
+import UIKit
 
 class ScheduleManager: NSObject {
     
@@ -17,11 +18,13 @@ class ScheduleManager: NSObject {
     
     override init() {
         super.init()
+        (UIApplication.shared.delegate as! AppDelegate).scheduleManager = self
         setUpPlaylistChangeTimer()
         addDefaultsObservers()
     }
     
     deinit {
+        (UIApplication.shared.delegate as! AppDelegate).scheduleManager = nil
         print("deiniting SM")
         timer?.invalidate()
         removeObservers()
@@ -29,7 +32,7 @@ class ScheduleManager: NSObject {
     
     // MARK: - Playlist Monitor Timer
     
-    private func setUpPlaylistChangeTimer() {
+    func setUpPlaylistChangeTimer() {
         timer?.invalidate()
         let nextAlarm = AlarmManager.loadAlarms().getNextAlarm()
         let dateToFireTimer = nextAlarm.date()
