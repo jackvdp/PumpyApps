@@ -63,11 +63,12 @@ public struct UpNextView<Q: QueueProtocol,
         }
     }
     
-    func removeRowsFromUpNext(at offsets: IndexSet) {
+    func removeRowsFromUpNext(at offsets: IndexSet, indexOffset: Int) {
         for i in offsets {
-            if queueManager.queueTracks.indices.contains(i) {
-                if let id = queueManager.queueTracks[i].amStoreID {
-                    queueManager.queueTracks.remove(at: i)
+            let queueIndex = i + indexOffset
+            if queueManager.queueTracks.indices.contains(queueIndex) {
+                if let id = queueManager.queueTracks[queueIndex].amStoreID {
+                    queueManager.queueTracks.remove(at: queueIndex)
                     queueManager.removeFromQueue(id: id)
                 }
             }
@@ -124,7 +125,7 @@ public struct UpNextView<Q: QueueProtocol,
                    .id(queueManager.queueTracks[i].amStoreID)
            }
            .onDelete { indexSet in
-               removeRowsFromUpNext(at: indexSet)
+               removeRowsFromUpNext(at: indexSet, indexOffset: queueManager.queueIndex + 1)
            }
            .listSectionSeparator(Visibility.visible)
            .listRowBackground(Color.clear)

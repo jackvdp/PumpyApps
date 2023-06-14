@@ -48,9 +48,6 @@ public struct PlayerView<P: PlaylistProtocol,
                  notPlaying = (nowPlayingManager.currentTrack == nil)
             }
         }
-        .gesture(
-            dragGesture
-        )
     }
     
     // MARK: - Components
@@ -88,7 +85,6 @@ public struct PlayerView<P: PlaylistProtocol,
     @State private var backgroundColour: UIColor?
     
     func artwork(size: CGFloat) -> some View {
-        ArtworkView(artworkURL: nowPlayingManager.currentTrack?.artworkURL,
                     size: size) { colour in
             backgroundColour = colour
         }
@@ -110,14 +106,6 @@ public struct PlayerView<P: PlaylistProtocol,
     
     private func isPortrait() -> Bool {
         horizontalSizeClass == .compact && verticalSizeClass == .regular
-    }
-
-    private var dragGesture: _EndedGesture<DragGesture> {
-        DragGesture().onEnded { value in
-            if value.location.y - value.startLocation.y > 150 {
-                homeVM.showPlayer = false
-            }
-        }
     }
 }
 
