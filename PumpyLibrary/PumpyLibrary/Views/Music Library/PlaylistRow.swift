@@ -14,7 +14,7 @@ struct PlaylistRow : View {
     
     var body: some View {
         HStack(alignment: .center, spacing: 20.0) {
-            ArtworkView(artworkURL: playlist.artworkURL, size: 75)
+            ArtworkView(collection: playlist, size: 75)
             Text(playlist.title ?? "")
                 .font(.headline)
         }

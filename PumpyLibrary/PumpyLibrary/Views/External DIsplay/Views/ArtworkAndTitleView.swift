@@ -22,7 +22,7 @@ public struct ExtArtworkAndTitleView<P:PlaylistProtocol,N:NowPlayingProtocol>: V
     public var body: some View {
         if geo.size.height >= geo.size.width {
             VStack {
-                ArtworkView(artworkURL: nowPlaying.currentTrack?.artworkURL, size: nil)
+                ArtworkView(collection: nowPlaying.currentTrack, size: nil)
                     .padding(geo.size.height * 0.05)
                     .frame(height: extDisMgr.frameHeight(geo.size.height * 0.5))
                 SongLabels<N,P>(size: geo.size.width * 0.03,
@@ -35,7 +35,7 @@ public struct ExtArtworkAndTitleView<P:PlaylistProtocol,N:NowPlayingProtocol>: V
             }
         } else {
             HStack {
-                ArtworkView(artworkURL: nowPlaying.currentTrack?.artworkURL, size: nil)
+                ArtworkView(collection: nowPlaying.currentTrack, size: nil)
                     .padding(geo.size.height * 0.05)
                     .frame(width: geo.size.width * 0.5)
                 SongLabels<N,P>(size: geo.size.width * 0.03,

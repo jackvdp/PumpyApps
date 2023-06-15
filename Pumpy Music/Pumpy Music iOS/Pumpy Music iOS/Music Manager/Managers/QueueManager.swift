@@ -20,7 +20,7 @@ class QueueManager: QueueProtocol {
     let recieveDebouncer = Debouncer()
     let respondDebouncer = Debouncer()
     weak var authManager: AuthorisationManager?
-    @Published var queueTracks = [QueueTrack]()
+    @Published var queueTracks = [PumpyLibrary.Track]()
     @Published var queueIndex = 0
     @Published var analysingEnergy = false
     
@@ -54,13 +54,7 @@ class QueueManager: QueueProtocol {
             return
         } completion: { [weak self] queue, error in
             guard error == nil else { return }
-            self?.queueTracks = queue.items.map {
-                QueueTrack(title: $0.name,
-                                 artist: $0.artistName,
-                                 artworkURL: $0.artworkURL,
-                                 playbackStoreID: $0.playbackStoreID,
-                                 isExplicitItem: $0.isExplicitItem)
-            }
+            self?.queueTracks = queue.items
             self?.getIndex()
         }
     }
@@ -72,13 +66,7 @@ class QueueManager: QueueProtocol {
                 queue.remove(item)
             }
         } completion: { [weak self] queue, _ in
-            self?.queueTracks = queue.items.map {
-                QueueTrack(title: $0.name,
-                                 artist: $0.artistName,
-                                 artworkURL: $0.artworkURL,
-                                 playbackStoreID: $0.playbackStoreID,
-                                 isExplicitItem: $0.isExplicitItem)
-            }
+            self?.queueTracks = queue.items
             self?.getIndex()
         }
         

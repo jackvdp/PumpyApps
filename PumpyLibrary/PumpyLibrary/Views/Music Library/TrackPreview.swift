@@ -42,7 +42,7 @@ struct TrackPreview: View {
     
     private var trackDetails: some View {
         VStack(alignment: .leading) {
-            ArtworkView(artworkURL: track.artworkURL, size: contentWidth)
+            ArtworkView(collection: track, size: contentWidth)
             Text(track.name)
                 .frame(width: contentWidth, alignment: .leading)
                 .lineLimit(2)

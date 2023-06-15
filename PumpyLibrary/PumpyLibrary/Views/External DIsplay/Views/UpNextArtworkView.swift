@@ -22,7 +22,7 @@ struct UpNextArtworkView<N:NowPlayingProtocol,
     var body: some View {
         if geo.size.height >= geo.size.width {
             VStack {
-                ArtworkView(artworkURL: nowPlaying.currentTrack?.artworkURL, size: nil)
+                ArtworkView(collection: nowPlaying.currentTrack, size: nil)
                     .padding(geo.size.height * 0.05)
                     .frame(height: extDisMgr.frameHeight(geo.size.height * 0.4))
                 SongLabels<N,P>(size: geo.size.width * 0.03,
@@ -39,7 +39,7 @@ struct UpNextArtworkView<N:NowPlayingProtocol,
         } else {
             HStack {
                 VStack {
-                    ArtworkView(artworkURL: nowPlaying.currentTrack?.artworkURL, size: nil)
+                    ArtworkView(collection: nowPlaying.currentTrack, size: nil)
                         .padding(geo.size.height * 0.05)
                         .frame(width: geo.size.width * 0.5)
                     SongLabels<N,P>(size: geo.size.height * 0.03,

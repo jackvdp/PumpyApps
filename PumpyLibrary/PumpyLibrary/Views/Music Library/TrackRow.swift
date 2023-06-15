@@ -53,7 +53,7 @@ public struct TrackRow<T:TokenProtocol,
     
     var label: some View {
         HStack(alignment: .center, spacing: 20.0) {
-            ArtworkView(artworkURL: track.artworkURL, size: 60)
+            ArtworkView(collection: track, size: 60)
             trackDetails
             Spacer()
             DislikeButton<N,B>(track: track, size: 20)

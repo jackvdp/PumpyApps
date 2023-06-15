@@ -16,7 +16,7 @@ struct ExtHomeView<P:PlaylistProtocol,N:NowPlayingProtocol, Q:QueueProtocol,B:Bl
     var body: some View {
         GeometryReader { geo in
             ZStack() {
-                ArtworkView(artworkURL: nowPlaying.currentTrack?.artworkURL, size: nil)
+                ArtworkView(collection: nowPlaying.currentTrack, size: nil)
                 VStack {
                     switch extDisMgr.liveSettings.displayContent {
                     case .artworkAndTitles:

@@ -48,7 +48,7 @@ extension QueueManager {
     
     // MARK: - Set queue with new items
     
-    private func matchTracksToQueueItems(tracks: [PumpyAnalytics.Track]) -> [QueueTrack] {
+    private func matchTracksToQueueItems(tracks: [PumpyAnalytics.Track]) -> [PumpyLibrary.Track] {
         return queueTracks.filter { item in
             tracks.contains(where: { track in
                 track.sourceID == item.amStoreID
@@ -56,7 +56,7 @@ extension QueueManager {
         }
     }
     
-    private func removeUnwantedAnalysedTracks(_ tracks: [QueueTrack]) {
+    private func removeUnwantedAnalysedTracks(_ tracks: [PumpyLibrary.Track]) {
         let tracksToKeepIds = tracks.map { $0.amStoreID }
         conductQueuePerform { mutableQueue in
             for item in mutableQueue.items {

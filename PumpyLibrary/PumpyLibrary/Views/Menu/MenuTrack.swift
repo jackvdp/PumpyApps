@@ -76,8 +76,8 @@ public struct MenuTrackView<T:TokenProtocol,
     @State private var backgroundColour: UIColor?
 
     var artwork: ArtworkView {
-        let url = nowPlayingManager.currentTrack?.artworkURL
-        return ArtworkView(artworkURL: url, size: size, backgroundColour: $backgroundColour)
+        return ArtworkView(collection: nowPlayingManager.currentTrack,
+                           size: size, backgroundColour: $backgroundColour)
     }
         
     func songDetails(_ track: QueueTrack) -> some View {

@@ -12,7 +12,11 @@ import PumpyAnalytics
 
 // MARK: - Protocols
 
-public protocol Playlist {
+public protocol MusicCollection {
+    var artworkURL: String? { get }
+}
+
+public protocol Playlist: MusicCollection {
     var title: String? { get }
     var artworkURL: String? { get }
     var songs: [Track] { get }
@@ -21,7 +25,7 @@ public protocol Playlist {
     var longDescription: String? { get }
 }
 
-public protocol Track {
+public protocol Track: MusicCollection {
     var name: String { get }
     var artistName: String { get }
     var artworkURL: String? { get }

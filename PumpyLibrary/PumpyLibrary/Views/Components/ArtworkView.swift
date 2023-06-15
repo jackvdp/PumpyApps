@@ -11,17 +11,27 @@ import MediaPlayer
 
 public struct ArtworkView: View {
     
-    public init(artworkURL: String? = nil,
+    public init(collection: MusicCollection? = nil,
                 size: CGFloat? = nil,
                 backgroundColour: Binding<UIColor?> = .constant(nil),
                 colourCallback: ((UIColor?) -> ())? = nil) {
-        self.artworkURL = artworkURL
+        self.collection = collection
         self.size = max(1, size ?? 1)
         self._backgroundColour = backgroundColour
         self.colourCallback = colourCallback
     }
     
-    let artworkURL: String?
+    public init(url: String? = nil,
+                size: CGFloat? = nil,
+                backgroundColour: Binding<UIColor?> = .constant(nil),
+                colourCallback: ((UIColor?) -> ())? = nil) {
+        self.collection = ArtworkCollection(url)
+        self.size = max(1, size ?? 1)
+        self._backgroundColour = backgroundColour
+        self.colourCallback = colourCallback
+    }
+    
+    let collection: MusicCollection?
     let size: CGFloat
     @Binding var backgroundColour: UIColor?
     var colourCallback: ((UIColor?) -> ())?
@@ -37,27 +47,40 @@ public struct ArtworkView: View {
     
     @ViewBuilder
     private var artwork: some View {
-        if artworkURL != nil {
-            KFImage(formatArtwork(artworkURL, size: size))
-                .cancelOnDisappear(true)
-                .fade(duration: 0.25)
-                .placeholder { _ in
-                    defaultImage
-                }
-                .onSuccess({ result in
-                    backgroundColour = result.image.averageColor
-                    colourCallback?(result.image.averageColor)
-                })
-                .onFailure({ error in
-                    backgroundColour = nil
-                })
-                .resizable()
+        if let url = collection?.artworkURL {
+            artwork(fromURL: url)
+        } else if let mpArtworkImage = attemptFetchImageOfMPArtwork() {
+            artwork(fromMediaPlayer: mpArtworkImage)
         } else {
-            defaultImage
+            artworkDefault
         }
     }
+    
+    private func artwork(fromMediaPlayer image: UIImage) -> some View {
+        Image(uiImage: image)
+            .resizable()
+            .onAppear() {
+                setBackgroundColour(image)
+            }
+    }
+    
+    private func artwork(fromURL url: String) -> some View {
+        KFImage(formatArtwork(url, size: size))
+            .cancelOnDisappear(true)
+            .fade(duration: 0.25)
+            .placeholder { _ in
+                artworkDefault
+            }
+            .onSuccess({ result in
+                setBackgroundColour(result.image)
+            })
+            .onFailure({ error in
+                setBackgroundColour(nil)
+            })
+            .resizable()
+    }
 
-    var defaultImage: some View {
+    private var artworkDefault: some View {
         ZStack {
             LinearGradient(gradient: gradient,
                            startPoint: .top,
@@ -68,24 +91,56 @@ public struct ArtworkView: View {
                 .foregroundColor(.white.opacity(0.8))
                 .frame(width: size / 3)
         }
+        .onAppear() {
+            backgroundColour = nil
+            colourCallback?(nil)
+        }
     }
 
     private var gradient = Gradient(colors: [
         .black, .pumpyBlue, .pumpyPurple,
     ])
     
+    // MARK: - Methods
+    
     private func formatArtwork(_ artworkURL: String?, size: CGFloat) -> URL? {
         guard let artworkURL else { return nil }
         return ArtworkHandler.makeMusicStoreURL(artworkURL, size: Int(size))
     }
     
+    private func attemptFetchImageOfMPArtwork() -> UIImage? {
+        (collection as? MPMediaItem)?
+            .artwork?
+            .image(at: CGSize(width: size, height: size)) ??
+        (collection as? MPMediaPlaylist)?
+            .artwork
+    }
+    
+    private func setBackgroundColour(_ image: UIImage?) {
+        let colour = image?.averageColor
+        backgroundColour = colour
+        colourCallback?(colour)
+    }
 }
+
+// MARK: Extensions
+
+/// A simple struct to allow ArtworkView to accept only a url
+private struct ArtworkCollection: MusicCollection {
+    init(_ url: String?) {
+        artworkURL = url
+    }
+    var artworkURL: String?
+}
+
+// MARK: - Preview
+
 struct TrackArtworkView_Previews: PreviewProvider {
     
     static var previews: some View {
         HStack {
-            ArtworkView(artworkURL: MockData.track.artworkURL ?? "",
-                             size: 100)
+            ArtworkView(collection: MockData.track,
+                        size: 100)
                 .preferredColorScheme(.dark)
             Text("Hey")
                 .layoutPriority(1)
@@ -93,21 +148,5 @@ struct TrackArtworkView_Previews: PreviewProvider {
         }
         .frame(width: 300, height: 100)
         .border(Color.blue)
-    }
-}
-
-extension UIImage {
-    var averageColor: UIColor? {
-        guard let inputImage = CIImage(image: self) else { return nil }
-        let extentVector = CIVector(x: inputImage.extent.origin.x, y: inputImage.extent.origin.y, z: inputImage.extent.size.width, w: inputImage.extent.size.height)
-
-        guard let filter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: inputImage, kCIInputExtentKey: extentVector]) else { return nil }
-        guard let outputImage = filter.outputImage else { return nil }
-
-        var bitmap = [UInt8](repeating: 0, count: 4)
-        let context = CIContext(options: [.workingColorSpace: kCFNull])
-        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
-
-        return UIColor(red: CGFloat(bitmap[0]) / 255, green: CGFloat(bitmap[1]) / 255, blue: CGFloat(bitmap[2]) / 255, alpha: CGFloat(bitmap[3]) / 255)
     }
 }

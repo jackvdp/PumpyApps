@@ -85,6 +85,7 @@ public struct PlayerView<P: PlaylistProtocol,
     @State private var backgroundColour: UIColor?
     
     func artwork(size: CGFloat) -> some View {
+        ArtworkView(collection: nowPlayingManager.currentTrack,
                     size: size) { colour in
             backgroundColour = colour
         }

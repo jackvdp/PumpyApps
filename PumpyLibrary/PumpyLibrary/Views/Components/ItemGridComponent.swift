@@ -23,7 +23,7 @@ struct ItemGridComponent: View {
     }
     
     var artwork: some View {
-        ArtworkView(artworkURL: itemArtworkURL,
+        ArtworkView(url: itemArtworkURL,
                     size: CGFloat(size - 50))
     }
     
