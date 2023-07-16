@@ -20,17 +20,17 @@ struct TimeScrubber: View {
     @State private var endTime = Self.noTimeLabel
     @State private var timePercentage: Double = 0
     let opacity: CGFloat
-    static let noTimeLabel = "--:--"
+    private static let noTimeLabel = "--:--"
     
     var body: some View {
         VStack(spacing: 4) {
             slider
             HStack {
-                Text(startTime)
+                Text(startTime).monospacedDigit()
                 Spacer()
                 audioVariant
                 Spacer()
-                Text(endTime)
+                Text(endTime).monospacedDigit()
             }.opacity(opacity)
             .foregroundColor(Color.white)
             .font(.footnote)
