@@ -35,7 +35,7 @@ public struct MenuTrackView<T:TokenProtocol,
         .padding(.vertical, 12)
         .padding(.horizontal)
         .padding(.bottom, safeAreaInsets.bottom / 2)
-        .background(BackgroundView.solid(backgroundColour: backgroundColour))
+        .playerBackground()
         .onTapGesture {
             homeVM.showPlayer = true
         }
@@ -66,21 +66,20 @@ public struct MenuTrackView<T:TokenProtocol,
     // MARK: Track view
     
     @ViewBuilder
-    func trackDetails(_ track: QueueTrack) -> some View {
+    func trackDetails(_ track: Track) -> some View {
         artwork
         songDetails(track)
         Spacer()
         dislikeButton(track: track)
     }
     
-    @State private var backgroundColour: UIColor?
-
     var artwork: ArtworkView {
         return ArtworkView(collection: nowPlayingManager.currentTrack,
-                           size: size, backgroundColour: $backgroundColour)
+                           setBackground: true,
+                           size: size)
     }
         
-    func songDetails(_ track: QueueTrack) -> some View {
+    func songDetails(_ track: Track) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center, spacing: 10.0) {
                 Text(track.name)

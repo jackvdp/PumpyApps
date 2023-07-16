@@ -14,12 +14,11 @@ import PumpyAnalytics
 import PumpyShared
 
 class NowPlayingManager: NowPlayingProtocol {
-    @Published var currentTrack: QueueTrack?
+    @Published var currentTrack: PumpyLibrary.Track?
     @Published var playButtonState: PlayButton = .notPlaying
     private let respondDebouncer = Debouncer()
     private let itemDebouncer = Debouncer()
     private let musicPlayerController = MPMusicPlayerController.applicationQueuePlayer
-    private let artworkHandler = ArtworkHandler()
     weak var authManager: AuthorisationManager?
     
     func setUp(authManager: AuthorisationManager) {
@@ -31,25 +30,25 @@ class NowPlayingManager: NowPlayingProtocol {
     }
     
     func updateTrackData() {
-        if let nowPlayingItem = musicPlayerController.nowPlayingItem {
-            currentTrack = QueueTrack(title: nowPlayingItem.name,
-                                            artist: nowPlayingItem.artistName,
-                                            artworkURL: nowPlayingItem.artworkURL,
-                                            playbackStoreID: nowPlayingItem.playbackStoreID,
-                                            isExplicitItem: nowPlayingItem.isExplicitItem)
-        } else {
-            currentTrack = nil
-        }
+        currentTrack = musicPlayerController.nowPlayingItem
         playButtonState = musicPlayerController.playbackState == .playing ? .playing : .notPlaying
     }
     
     func updateTrackOnline(for username: String, playlist: String) {
         respondDebouncer.handle() { [weak self] in
-            guard let self else { return }
+            
+            guard let self,
+                  let currentTrack = self.currentTrack else { return }
+            
+            let queueTrack = QueueTrack(title: currentTrack.name,
+                                        artist: currentTrack.artistName,
+                                        artworkURL: currentTrack.artworkURL,
+                                        playbackStoreID: currentTrack.amStoreID ?? "",
+                                        isExplicitItem: currentTrack.isExplicitItem)
             PlaybackData
                 .shared
                 .updatePlaybackInfoOnline(for: username,
-                                          item: self.currentTrack,
+                                          item: queueTrack,
                                           index: self.musicPlayerController.indexOfNowPlayingItem,
                                           playbackState: self.musicPlayerController.playbackState.rawValue,
                                           playlistLabel: playlist)

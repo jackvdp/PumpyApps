@@ -36,10 +36,10 @@ struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
         }
         .buttonStyle(.plain)
         .alert(isPresented: $showAlert, content: createAlert)
-        .onChange(of: blockedTracksManager.blockedTracks.publisher) { _ in
+        .onReceive(blockedTracksManager.blockedTracks.publisher) { _ in
             setButton()
         }
-        .onChange(of: nowPlayingManager?.currentTrack) { _ in
+        .onChange(of: nowPlayingManager?.currentTrack?.amStoreID) { _ in
             setButton()
         }
     }

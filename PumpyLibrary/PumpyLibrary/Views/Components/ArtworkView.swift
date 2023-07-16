@@ -12,29 +12,24 @@ import MediaPlayer
 public struct ArtworkView: View {
     
     public init(collection: MusicCollection? = nil,
-                size: CGFloat? = nil,
-                backgroundColour: Binding<UIColor?> = .constant(nil),
-                colourCallback: ((UIColor?) -> ())? = nil) {
+                setBackground: Bool = false,
+                size: CGFloat? = nil) {
         self.collection = collection
         self.size = max(1, size ?? 1)
-        self._backgroundColour = backgroundColour
-        self.colourCallback = colourCallback
+        self.setBackground = setBackground
     }
     
     public init(url: String? = nil,
-                size: CGFloat? = nil,
-                backgroundColour: Binding<UIColor?> = .constant(nil),
-                colourCallback: ((UIColor?) -> ())? = nil) {
+                size: CGFloat? = nil) {
         self.collection = ArtworkCollection(url)
         self.size = max(1, size ?? 1)
-        self._backgroundColour = backgroundColour
-        self.colourCallback = colourCallback
+        setBackground = false
     }
     
     let collection: MusicCollection?
     let size: CGFloat
-    @Binding var backgroundColour: UIColor?
-    var colourCallback: ((UIColor?) -> ())?
+    var setBackground: Bool
+    let backgroundHandler = BackgroundColourHandler.shared
     
     public var body: some View {
         artwork
@@ -47,10 +42,10 @@ public struct ArtworkView: View {
     
     @ViewBuilder
     private var artwork: some View {
-        if let url = collection?.artworkURL {
-            artwork(fromURL: url)
-        } else if let mpArtworkImage = attemptFetchImageOfMPArtwork() {
+        if let mpArtworkImage = attemptFetchImageOfMPArtwork() {
             artwork(fromMediaPlayer: mpArtworkImage)
+        } else if let url = collection?.artworkURL  {
+            artwork(fromURL: url)
         } else {
             artworkDefault
         }
@@ -92,8 +87,7 @@ public struct ArtworkView: View {
                 .frame(width: size / 3)
         }
         .onAppear() {
-            backgroundColour = nil
-            colourCallback?(nil)
+            setBackgroundColour(nil)
         }
     }
 
@@ -117,9 +111,9 @@ public struct ArtworkView: View {
     }
     
     private func setBackgroundColour(_ image: UIImage?) {
-        let colour = image?.averageColor
-        backgroundColour = colour
-        colourCallback?(colour)
+        if setBackground {
+            backgroundHandler.setColour(fromImage: image)
+        }
     }
 }
 
@@ -150,3 +144,5 @@ struct TrackArtworkView_Previews: PreviewProvider {
         .border(Color.blue)
     }
 }
+
+

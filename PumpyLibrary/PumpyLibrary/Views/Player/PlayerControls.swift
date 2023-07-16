@@ -178,7 +178,7 @@ struct PlayerControls<P:PlaylistProtocol,
                     Rectangle().foregroundStyle(Material.regular)
                 }
         }
-        .onChange(of: nowPlayingManager.currentTrack) { newValue in
+        .onReceive(nowPlayingManager.currentTrack.publisher) { newValue in
             analysedTrack = nil
         }
     }

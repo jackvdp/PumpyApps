@@ -42,7 +42,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6D63C271288983DA00CCD566"
+               BlueprintIdentifier = "C075CC692947602B002A8F30"
                BuildableName = "Pumpy MusicTests.xctest"
                BlueprintName = "Pumpy MusicTests"
                ReferencedContainer = "container:Pumpy Music iOS.xcodeproj">

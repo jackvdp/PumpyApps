@@ -7,13 +7,34 @@
 
 import SwiftUI
 
-struct BackgroundView: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .background(gradient)
+extension View {
+    public func pumpyBackground() -> some View {
+        self.background(BackgroundView.gradient)
     }
     
-    var gradient: some View {
+    public func playerBackground() -> some View {
+        self.background(BackgroundView())
+    }
+}
+
+private struct BackgroundView: View {
+    
+    @ObservedObject var handler = BackgroundColourHandler.shared
+    
+    var body: some View {
+        Group {
+            if let colour = handler.colour {
+                Color(uiColor: colour)
+            } else {
+                Color.pumpyBlue
+            }
+        }.overlay {
+            Color.black.opacity(0.5)
+        }
+        .edgesIgnoringSafeArea(.all)
+    }
+    
+    static var gradient: some View {
         let gradient = Gradient(colors: [
             .black, .pumpyBlue, .pumpyBlue, .pumpyPurple, .pumpyPurple
         ])
@@ -25,23 +46,15 @@ struct BackgroundView: ViewModifier {
         }
         .blur(radius: 20)
     }
-    
-    static func solid(backgroundColour: UIColor?) -> some View {
-        Group {
-            if let bgC = backgroundColour {
-                Color(uiColor: bgC)
-            } else {
-                Color.pumpyBlue
-            }
-        }.overlay {
-            Color.black.opacity(0.5)
-        }
-        .edgesIgnoringSafeArea(.all)
-    }
 }
 
-extension View {
-    public func pumpyBackground() -> some View {
-        self.modifier(BackgroundView())
+class BackgroundColourHandler: ObservableObject {
+    static let shared = BackgroundColourHandler()
+    private init() {}
+    
+    @Published private(set) var colour: UIColor?
+    
+    func setColour(fromImage image: UIImage?) {
+        colour = image?.averageColor
     }
 }
