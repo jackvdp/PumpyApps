@@ -12,13 +12,13 @@ import UserNotifications
 
 public class AlarmManager: ObservableObject {
     
-    var username: String?
+    var username: Username?
     var alarmListener: ListenerRegistration?
     @Published public var alarms = [Alarm]()
     
     public init() {}
     
-    public func setUp(username: String) {
+    public func setUp(username: Username) {
         self.username = username
         loadOnlineData()
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
@@ -78,7 +78,7 @@ public class AlarmManager: ObservableObject {
     }
     
     func loadOtherUsersData(from otherUser: String) {
-        FireMethods.get(name: otherUser,
+        FireMethods.get(name: Username.account(otherUser),
                         documentName: K.FStore.alarmCollection,
                         dataFieldName: K.FStore.alarmCollection,
                         decodeObject: [Alarm].self) { [weak self] alarms in

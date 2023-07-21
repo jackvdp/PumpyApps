@@ -13,7 +13,7 @@ import PumpyAnalytics
 
 class MusicManager: ObservableObject, MusicProtocol {
     let musicPlayerController = MPMusicPlayerController.applicationQueuePlayer
-    var username: String?
+    var username: Username?
     weak var nowPlayingManager: NowPlayingManager?
     weak var playlistManager: PlaylistManager?
     weak var queueManager: QueueManager?
@@ -31,13 +31,16 @@ class MusicManager: ObservableObject, MusicProtocol {
         endNotifications()
     }
     
-    func setUp(nowPlayingManager: NowPlayingManager,
-                         playlistManager: PlaylistManager,
-                         queueManager: QueueManager,
-                         blockedTracksManager: BlockedTracksManager,
-                         settingsManager: SettingsManager,
-                         authManager: AuthorisationManager,
-                         username: String, remoteManager: RemoteManager) {
+    func setUp(
+        nowPlayingManager: NowPlayingManager,
+        playlistManager: PlaylistManager,
+        queueManager: QueueManager,
+        blockedTracksManager: BlockedTracksManager,
+        settingsManager: SettingsManager,
+        authManager: AuthorisationManager,
+        username: Username,
+        remoteManager: RemoteManager
+    ) {
         self.nowPlayingManager = nowPlayingManager
         self.playlistManager = playlistManager
         self.queueManager = queueManager

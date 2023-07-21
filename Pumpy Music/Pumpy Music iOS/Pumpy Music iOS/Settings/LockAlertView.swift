@@ -82,7 +82,8 @@ extension SettingsView {
     }
     
     func savedUsername() -> String? {
-        return settingsVM.username
+        guard case let .account(username) = settingsVM.username else { return nil }
+        return username
     }
     
     func savedPassword() -> String {

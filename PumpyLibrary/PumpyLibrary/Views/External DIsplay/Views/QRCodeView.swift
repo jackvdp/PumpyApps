@@ -51,11 +51,11 @@ struct QRCodeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             QRCodeView<MockPlaylistManager>(width: 1080, height: 1920)
-                .environmentObject(ExternalDisplayManager(username: "Test", playlistManager: MockPlaylistManager()))
+                .environmentObject(ExternalDisplayManager(username: .account("test"), playlistManager: MockPlaylistManager()))
                 .previewLayout(.sizeThatFits)
                 .frame(width: 1080, height: 1920)
             QRCodeView<MockPlaylistManager>(width: 1920, height: 1080)
-                .environmentObject(ExternalDisplayManager(username: "Test", playlistManager: MockPlaylistManager()))
+                .environmentObject(ExternalDisplayManager(username: .account("test"), playlistManager: MockPlaylistManager()))
                 .previewLayout(.sizeThatFits)
                 .frame(width: 1920, height: 1080)
         }

@@ -43,8 +43,13 @@ public struct AccountView<A:AccountManagerProtocol>: View {
         .foregroundColor(.white)
     }
     
+    @ViewBuilder
     var versionLabel: some View {
-        Text("Account: \(accountVM.user?.username ?? "") | v\(K.versionNumber)")
+        let username: String = {
+            guard case let .account(name) = accountVM.user?.username else { return "" }
+            return name
+        }()
+        Text("Account: \(username) | v\(K.versionNumber)")
             .foregroundColor(.gray)
             .lineLimit(1)
             .padding(.horizontal)

@@ -18,7 +18,7 @@ class PlaybackData {
     
     private let debouncer = Debouncer()
     
-    private func saveCurrentPlaybackInfo(_ playbackItem: PlaybackItem, for username: String) {
+    private func saveCurrentPlaybackInfo(_ playbackItem: PlaybackItem, for username: Username) {
         debouncer.handle {
             FireMethods.save(object: playbackItem,
                              name: username,
@@ -28,7 +28,7 @@ class PlaybackData {
     }
     
     
-    func savePlaylistsOnline(for username: String) {
+    func savePlaylistsOnline(for username: Username) {
         let playlists = MusicContent.getPlaylists().map {
             PlaylistOnline(name: $0.name ?? "",
                            id: $0.cloudGlobalID ?? "")
@@ -40,18 +40,20 @@ class PlaybackData {
     }
 
     
-    func saveTracksOnline(playlist: String, for username: String) {
+    func saveTracksOnline(playlist: String, for username: Username) {
         let firebaseTracks = MusicContent.getOnlineTracks(chosenPlaylist: playlist)
 
-        FireMethods.save(dict: [
-            K.FStore.trackCollection : firebaseTracks,
-            K.FStore.playlistName : playlist
-        ],
-        name: username,
-        documentName: K.FStore.trackCollection)
+        FireMethods.save(
+            dict: [
+                K.FStore.trackCollection : firebaseTracks,
+                K.FStore.playlistName : playlist
+            ],
+            name: username,
+            documentName: K.FStore.trackCollection
+        )
     }
     
-    func saveCurrentQueueOnline(items: [Track], for username: String) {
+    func saveCurrentQueueOnline(items: [Track], for username: Username) {
         let tracks: [TrackOnline] = items.compactMap {
             TrackOnline(name: $0.name,
                         artist: $0.artistName,
@@ -63,7 +65,7 @@ class PlaybackData {
                          dataFieldName: K.FStore.upNext)
     }
     
-    func updatePlaybackInfoOnline(for username: String, item: QueueTrack?, index: Int, playbackState: Int, playlistLabel: String) {
+    func updatePlaybackInfoOnline(for username: Username, item: QueueTrack?, index: Int, playbackState: Int, playlistLabel: String) {
         var currentTrack = "Not Playing"
         var currentArtist = "– – – –"
         var id = String()

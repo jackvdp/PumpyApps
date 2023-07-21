@@ -16,7 +16,7 @@ class User: ObservableObject, UserProtocol {
     typealias M = MusicManager
     typealias P = PlaylistManager
     
-    let username: String
+    let username: Username
     weak var remoteManager: RemoteManager?
     weak var alarmManager: AlarmManager?
     weak var settingsManager: SettingsManager?
@@ -26,7 +26,7 @@ class User: ObservableObject, UserProtocol {
     weak var blockedTracksManager: BlockedTracksManager?
     weak var playlistManager: PlaylistManager?
     
-    init(username: String) {
+    init(username: Username) {
         self.username = username
         PlaybackData.shared.savePlaylistsOnline(for: username)
         ActiveInfo.save(.loggedIn, for: username)
@@ -65,5 +65,4 @@ class User: ObservableObject, UserProtocol {
         externalDisplayManager?.removeSettingsListener()
         playlistManager?.scheduleManager.removeObservers()
     }
-    
 }

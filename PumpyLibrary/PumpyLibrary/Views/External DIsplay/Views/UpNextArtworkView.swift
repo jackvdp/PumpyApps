@@ -61,7 +61,7 @@ struct UpNextArtworkView<N:NowPlayingProtocol,
 
 struct UpNextArtworkView_Previews: PreviewProvider {
     static let musicManager = MockMusicMananger()
-    static let extDisManger = ExternalDisplayManager(username: "Test",
+    static let extDisManger = ExternalDisplayManager(username: .account("Test"),
                                                      playlistManager: MockPlaylistManager())
     
     static var previews: some View {

@@ -13,10 +13,10 @@ import FirebaseFirestore
 
 public class ExternalDisplayManager<P:PlaylistProtocol>: ObservableObject {
     
-    let username: String
+    let username: Username
     weak var playlistManager: P?
     
-    public init(username: String, playlistManager: P) {
+    public init(username: Username, playlistManager: P) {
         self.username = username
         self.playlistManager = playlistManager
         downloadSettings()

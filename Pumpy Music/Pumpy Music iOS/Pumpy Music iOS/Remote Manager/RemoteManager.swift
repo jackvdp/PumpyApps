@@ -14,13 +14,13 @@ import PumpyShared
 class RemoteManager: ObservableObject {
     
     var remoteListener: ListenerRegistration?
-    var username: String?
+    var username: Username?
     weak var alarmManager: AlarmManager?
     weak var playlistManager: PlaylistManager?
     weak var queueManager: QueueManager?
     let debouncer = Debouncer()
     
-    func setUp(username: String,
+    func setUp(username: Username,
                queueManager: QueueManager,
                alarmManager: AlarmManager,
                playlistManager: PlaylistManager) {

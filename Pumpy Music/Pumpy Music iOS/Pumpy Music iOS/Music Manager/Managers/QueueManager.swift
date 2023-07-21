@@ -15,7 +15,7 @@ import PumpyShared
 
 class QueueManager: QueueProtocol {
     
-    var username: String?
+    var username: Username?
     let controller = MPMusicPlayerController.applicationQueuePlayer
     let recieveDebouncer = Debouncer()
     let respondDebouncer = Debouncer()
@@ -24,7 +24,7 @@ class QueueManager: QueueProtocol {
     @Published var queueIndex = 0
     @Published var analysingEnergy = false
     
-    func setUp(name: String,
+    func setUp(name: Username,
                authManager: AuthorisationManager) {
         username = name
         self.authManager = authManager

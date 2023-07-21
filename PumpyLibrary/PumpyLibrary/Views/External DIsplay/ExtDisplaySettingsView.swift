@@ -49,7 +49,10 @@ struct ExtDisplaySettingsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ExtDisplaySettingsView<MockPlaylistManager>()
-                .environmentObject(ExternalDisplayManager(username: "test", playlistManager: MockPlaylistManager()))
+                .environmentObject(ExternalDisplayManager(
+                    username: .account("test"),
+                    playlistManager: MockPlaylistManager()
+                ))
         }
     }
 }

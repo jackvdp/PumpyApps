@@ -85,7 +85,7 @@ class AccountManager: AccountManagerProtocol {
     }
     
     func loginSucceed(_ email: String) {
-        user = User(username: email.lowercased())
+        user = User(username: .account(email.lowercased()))
         defaults.set(usernameTF.lowercased(), forKey: K.username)
         defaults.set(passwordTF, forKey: K.password)
     }

@@ -12,7 +12,7 @@ import PumpyLibrary
 
 class ActiveInfo {
     
-    static func save(_ activeStatus: ActiveStatus, for username: String) {
+    static func save(_ activeStatus: ActiveStatus, for username: Username) {
         FireMethods.save(object: ActiveModel(activeStatus: activeStatus),
                          name: username,
                          documentName: K.FStore.activeStatus,

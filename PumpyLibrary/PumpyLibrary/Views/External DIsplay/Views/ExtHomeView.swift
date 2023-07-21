@@ -43,7 +43,7 @@ struct ExtHomeView<P:PlaylistProtocol,N:NowPlayingProtocol, Q:QueueProtocol,B:Bl
 
 struct ExHomeView_Previews: PreviewProvider {
     
-    static let extDisManger = ExternalDisplayManager(username: "Test", playlistManager: MockPlaylistManager())
+    static let extDisManger = ExternalDisplayManager(username: .account("Test"), playlistManager: MockPlaylistManager())
     
     static var previews: some View {
         extDisManger.liveSettings.displayContent = .upNext

@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 public class SettingsManager: ObservableObject {
     
-    public var username: String?
+    public var username: Username?
     var settingsListener: ListenerRegistration?
     private var overrideTimer: Timer?
     
@@ -25,7 +25,7 @@ public class SettingsManager: ObservableObject {
     
     public init() {}
     
-    public func setUp(username: String) {
+    public func setUp(username: Username) {
         self.username = username
         downloadSettings()
     }

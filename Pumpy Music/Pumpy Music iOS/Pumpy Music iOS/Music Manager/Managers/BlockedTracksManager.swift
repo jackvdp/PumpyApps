@@ -20,9 +20,9 @@ class BlockedTracksManager: BlockedTracksProtocol {
     }
     weak var queueManager: QueueManager?
     var remoteListener: FirebaseListener?
-    var username: String?
+    var username: Username?
     
-    func setUp(username: String, queueManager: QueueManager) {
+    func setUp(username: Username, queueManager: QueueManager) {
         self.username = username
         self.queueManager = queueManager
         listenForBlockedTracks()

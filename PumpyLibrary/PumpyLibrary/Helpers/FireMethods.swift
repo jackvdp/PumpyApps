@@ -16,12 +16,18 @@ public class FireMethods {
         return FirebaseStore.shared.db
     }
     
-    public static func listen<T>(name: String,
+    public static func listen<T>(name: Username,
                                  documentName: String,
                                  dataFieldName: String,
                                  decodeObject: T.Type,
-                                 completionHandler: @escaping (T) -> Void) -> ListenerRegistration where T: Decodable {
-        return db.collection(name).document(documentName).addSnapshotListener { (documentSnapshot, error) in
+                                 completionHandler: @escaping (T) -> Void) -> ListenerRegistration? where T: Decodable {
+        
+        guard case let .account(accountName) = name else {
+            print("Signed in as guest saving \(documentName)")
+            return nil
+        }
+        
+        return db.collection(accountName).document(documentName).addSnapshotListener { (documentSnapshot, error) in
             if let e = error {
                 print("error retrieving from Firestore \(documentName) \(dataFieldName), \(e)")
             } else {
@@ -41,12 +47,18 @@ public class FireMethods {
         }
     }
     
-    public static func get<T>(name: String,
+    public static func get<T>(name: Username,
                               documentName: String,
                               dataFieldName: String,
                               decodeObject: T.Type,
                               completionHandler: @escaping (T) -> Void) where T: Decodable {
-        db.collection(name).document(documentName).getDocument { (doc, error) in
+        
+        guard case let .account(accountName) = name else {
+            print("Signed in as guest saving \(documentName)")
+            return
+        }
+        
+        db.collection(accountName).document(documentName).getDocument { (doc, error) in
             if let e = error {
                 print("error retrieving from Firestore \(documentName) \(dataFieldName), \(e)")
             } else {
@@ -66,10 +78,16 @@ public class FireMethods {
         }
     }
     
-    public static func save<T>(object: T, name: String, documentName: String, dataFieldName: String) where T: Encodable {
+    public static func save<T>(object: T, name: Username, documentName: String, dataFieldName: String) where T: Encodable {
+        
+        guard case let .account(accountName) = name else {
+            print("Signed in as guest saving \(documentName) \(dataFieldName)")
+            return
+        }
+        
         let firebaseRemoteItem = try! FirebaseEncoder().encode(object)
 
-        db.collection(name).document(documentName).setData([
+        db.collection(accountName).document(documentName).setData([
             dataFieldName : firebaseRemoteItem,
         ]) { (error) in
             if let e = error {
@@ -80,8 +98,14 @@ public class FireMethods {
         }
     }
     
-    public static func save(dict: [String: Any], name: String, documentName: String) {
-        db.collection(name).document(documentName).setData(
+    public static func save(dict: [String: Any], name: Username, documentName: String) {
+        
+        guard case let .account(accountName) = name else {
+            print("Signed in as guest saving \(documentName)")
+            return
+        }
+        
+        db.collection(accountName).document(documentName).setData(
             dict
         ) { (error) in
             if let e = error {

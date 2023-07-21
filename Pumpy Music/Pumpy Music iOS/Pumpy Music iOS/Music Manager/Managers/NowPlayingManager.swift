@@ -34,7 +34,7 @@ class NowPlayingManager: NowPlayingProtocol {
         playButtonState = musicPlayerController.playbackState == .playing ? .playing : .notPlaying
     }
     
-    func updateTrackOnline(for username: String, playlist: String) {
+    func updateTrackOnline(for username: Username, playlist: String) {
         respondDebouncer.handle() { [weak self] in
             
             guard let self,
