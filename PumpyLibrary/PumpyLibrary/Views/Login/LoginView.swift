@@ -65,6 +65,7 @@ public struct LoginView<A: AccountManagerProtocol>: View {
         }) {
             Text(pageSwitchText)
                 .foregroundColor(.white)
+                .underline()
         }
     }
     
@@ -74,6 +75,7 @@ public struct LoginView<A: AccountManagerProtocol>: View {
         }) {
             Text("Sign in as guest")
                 .foregroundColor(.white)
+                .underline()
         }
     }
 }
