@@ -90,6 +90,10 @@ class AccountManager: AccountManagerProtocol {
         defaults.set(passwordTF, forKey: K.password)
     }
     
+    func signinAsGuest() {
+        user = User(username: .guest)
+    }
+    
     func signOut() {
         usernameTF = String()
         passwordTF = String()

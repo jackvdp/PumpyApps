@@ -24,6 +24,7 @@ public protocol AccountManagerProtocol: ObservableObject {
     func deleteAccount(completion: @escaping (Bool)->())
     func changePassword(newPassword: String,
                         completion: @escaping (Bool)->())
+    func signinAsGuest()
     var user: U? { get set }
 }
 
@@ -59,6 +60,8 @@ class MockAccountManager: AccountManagerProtocol {
     
     func changePassword(newPassword: String,
                         completion: @escaping (Bool)->()) {}
+    
+    func signinAsGuest() {}
 }
 
 public enum SignType {

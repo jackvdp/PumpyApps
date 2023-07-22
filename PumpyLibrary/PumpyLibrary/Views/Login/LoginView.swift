@@ -7,45 +7,29 @@
 //
 
 import SwiftUI
-import ActivityIndicatorView
 
 public struct LoginView<A: AccountManagerProtocol>: View {
-    public init(usernamePlaceholder: String, buttonText: String, pageSwitchText: String) {
-        self.usernamePlaceholder = usernamePlaceholder
+    public init(buttonText: String, pageSwitchText: String) {
         self.buttonText = buttonText
         self.pageSwitchText = pageSwitchText
     }
     
     @EnvironmentObject var accountVM: A
-    let usernamePlaceholder: String
     let buttonText: String
     let pageSwitchText: String
-    @Namespace var background
     
     public var body: some View {
-        ZStack {
-            VStack {
-                Spacer()
-                PumpyView()
-                Spacer()
-                TextFieldView(string: $accountVM.usernameTF, placeholder: usernamePlaceholder)
-                SecureTextFieldView(string: $accountVM.passwordTF, placeholder: "Enter your password")
-                LogInButtonView(title: buttonText, action: {accountVM.attemptSign()})
-                Spacer()
-                Button(action: {
-                    accountVM.togglePageState()
-                }) {
-                    Text(pageSwitchText)
-                        .foregroundColor(.white)
-                }
-            }
-            .padding(.all, 10.0)
-            ActivityView(activityIndicatorVisible: $accountVM.activityIndicatorVisible)
+        VStack(spacing: 20) {
+            PumpyView()
+            Spacer()
+            signinFields
+            switchLoginRegisterButton
+            Spacer()
+            signinAsGuestButton
         }
-        .background(
-            backgroundGradient
-                .id(background)
-        )
+        .padding(.all, 10.0)
+        .overlay(ActivityView(activityIndicatorVisible: $accountVM.activityIndicatorVisible))
+        .background(backgroundGradient)
         .alert(isPresented: $accountVM.showingAlert) {
             Alert(title: Text("Error"),
                   message: Text(accountVM.errorAlert),
@@ -58,28 +42,49 @@ public struct LoginView<A: AccountManagerProtocol>: View {
     }
 
     var backgroundGradient: some View {
-        LinearGradient(gradient: Gradient(colors: [.black, .pumpyBlue, .pumpyPurple, .pumpyPink]),
-                       startPoint: .top,
-                       endPoint: .bottom)
+        LinearGradient(
+            gradient: Gradient(
+                colors: [.black, .pumpyBlue, .pumpyPurple, .pumpyPink]
+            ),
+            startPoint: .top,
+            endPoint: .bottom
+        )
         .edgesIgnoringSafeArea(.all)
+    }
+    
+    @ViewBuilder
+    var signinFields: some View {
+        TextFieldView(string: $accountVM.usernameTF, placeholder: "E-mail address")
+        SecureTextFieldView(string: $accountVM.passwordTF, placeholder: "Enter your password")
+        LogInButtonView(title: buttonText) { accountVM.attemptSign() }
+    }
+    
+    var switchLoginRegisterButton: some View {
+        Button(action: {
+            accountVM.togglePageState()
+        }) {
+            Text(pageSwitchText)
+                .foregroundColor(.white)
+        }
+    }
+    
+    var signinAsGuestButton: some View {
+        Button(action: {
+            accountVM.signinAsGuest()
+        }) {
+            Text("Sign in as guest")
+                .foregroundColor(.white)
+        }
     }
 }
 
-#if DEBUG
-struct LoginView_Previews: PreviewProvider {
-        
-    static var previews: some View {
-        LoginView<MockAccountManager>(usernamePlaceholder: "Login", buttonText: "Login", pageSwitchText: "Register")
-            .environmentObject(MockAccountManager())
-    }
-}
-#endif
+// MARK: Pumpy Logo
 
 public struct PumpyView: View {
     @Environment(\.horizontalSizeClass) var hSize
     @Environment(\.verticalSizeClass) var vSize
     
-    public init() { }
+    public init() {}
     
     public var body: some View {
         Image(K.pumpyImage)
@@ -88,6 +93,8 @@ public struct PumpyView: View {
             .frame(maxWidth: hSize == .regular || vSize == .regular ? 400 : nil)
     }
 }
+
+// MARK: - Text fields
 
 struct TextFieldView: View {
     @Binding var string: String
@@ -98,10 +105,11 @@ struct TextFieldView: View {
     var body: some View {
         TextField(placeholder, text: $string)
             .textContentType(.emailAddress)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .autocorrectionDisabled()
+            .textFieldStyle(.roundedBorder)
             .colorScheme(.light)
             .accentColor(.pumpyPink)
-            .padding(.all, 10)
+            .padding(.horizontal, 10)
             .frame(maxWidth: hSize == .regular || vSize == .regular ? 400 : nil)
     }
 }
@@ -114,14 +122,17 @@ struct SecureTextFieldView: View {
     
     var body: some View {
         SecureField(placeholder, text: $string)
+            .textContentType(.password)
+            .autocorrectionDisabled()
             .textFieldStyle(.roundedBorder)
             .colorScheme(.light)
             .accentColor(.pumpyPink)
             .padding(.horizontal, 10)
-            .padding(.bottom, 50)
             .frame(maxWidth: hSize == .regular || vSize == .regular ? 400 : nil)
     }
 }
+
+// MARK: - Login Button
 
 struct LogInButtonView: View {
     let title: String
@@ -135,32 +146,18 @@ struct LogInButtonView: View {
         .foregroundColor(.pumpyPink)
         .background(Color.white)
         .cornerRadius(10)
+        .padding()
     }
 }
 
-public struct ActivityView: View {
-    @Binding var activityIndicatorVisible: Bool
-    let size: Double
-    
-    public init(activityIndicatorVisible: Binding<Bool>, size: Double = 50.0) {
-        self._activityIndicatorVisible = activityIndicatorVisible
-        self.size = size
-    }
-    
-    public var body: some View {
-        ZStack {
-            Rectangle()
-                .foregroundColor(.black)
-                .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                .opacity(0.5)
-                .isHidden(!activityIndicatorVisible)
-            noBackground
-        }
-    }
-    
-    public var noBackground: some View {
-        ActivityIndicatorView(isVisible: $activityIndicatorVisible, type: .arcs())
-            .frame(width: size, height: size)
-            .foregroundColor(Color.pumpyPink)
+// MARK: - Previews
+
+#if DEBUG
+struct LoginView_Previews: PreviewProvider {
+        
+    static var previews: some View {
+        LoginView<MockAccountManager>(buttonText: "Login", pageSwitchText: "Register")
+            .environmentObject(MockAccountManager())
     }
 }
+#endif

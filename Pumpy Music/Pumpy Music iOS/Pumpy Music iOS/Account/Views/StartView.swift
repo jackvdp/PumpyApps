@@ -34,7 +34,6 @@ struct StartView: View {
     
     var loginView: some View {
         LoginView<AccountManager>(
-            usernamePlaceholder: "Enter your username",
             buttonText: "Log In",
             pageSwitchText: "Register"
         )
@@ -42,7 +41,6 @@ struct StartView: View {
     
     var registerView: some View {
         LoginView<AccountManager>(
-            usernamePlaceholder: "Enter your email address",
             buttonText: "Register",
             pageSwitchText: "Already have an account?"
         )
