@@ -125,6 +125,7 @@
 		C0F669D829E405E600BDD7B9 /* LabaManagerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F669D729E405E600BDD7B9 /* LabaManagerToolbar.swift */; };
 		C0F869A729E5704200DD2BA0 /* GenreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F869A629E5704200DD2BA0 /* GenreList.swift */; };
 		C0F969C32A6C3D020018E887 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F969C22A6C3D020018E887 /* ActivityView.swift */; };
+		C0F969C62A6C3FAD0018E887 /* PumpyTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F969C52A6C3FAD0018E887 /* PumpyTabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -247,6 +248,7 @@
 		C0F669D729E405E600BDD7B9 /* LabaManagerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabaManagerToolbar.swift; sourceTree = "<group>"; };
 		C0F869A629E5704200DD2BA0 /* GenreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreList.swift; sourceTree = "<group>"; };
 		C0F969C22A6C3D020018E887 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		C0F969C52A6C3FAD0018E887 /* PumpyTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpyTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -533,6 +535,7 @@
 		6DEE0CE4288DA511006A0CC4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C0F969C42A6C3F9B0018E887 /* TabBar */,
 				6D972DA328A2F80E00CFD9D7 /* Login */,
 				6D972DAA28A301D900CFD9D7 /* Player */,
 				6D62209728B66ABA0002968D /* Menu */,
@@ -617,6 +620,14 @@
 				C0278AFC29D9958F00FAB3DE /* Views */,
 			);
 			path = "Music Lab";
+			sourceTree = "<group>";
+		};
+		C0F969C42A6C3F9B0018E887 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				C0F969C52A6C3FAD0018E887 /* PumpyTabView.swift */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -771,6 +782,7 @@
 				6DB8C01428A3B120006C1B85 /* SetScheduleView.swift in Sources */,
 				C0F669D829E405E600BDD7B9 /* LabaManagerToolbar.swift in Sources */,
 				C0CC4D3F29BB3839002A0204 /* CheckboxStyleToggle.swift in Sources */,
+				C0F969C62A6C3FAD0018E887 /* PumpyTabView.swift in Sources */,
 				6D972DBA28A301F200CFD9D7 /* PlayerView.swift in Sources */,
 				C0000EB328D2677300F909FD /* SearchViewModel.swift in Sources */,
 				6DB8C02E28A3D161006C1B85 /* PreviewMocks.swift in Sources */,

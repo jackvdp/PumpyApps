@@ -9,7 +9,10 @@ import SwiftUI
 
 extension View {
     public func pumpyBackground() -> some View {
-        self.background(BackgroundView.gradient)
+        self
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(BackgroundView.gradient)
+            .edgesIgnoringSafeArea(.all)
     }
     
     public func playerBackground() -> some View {
