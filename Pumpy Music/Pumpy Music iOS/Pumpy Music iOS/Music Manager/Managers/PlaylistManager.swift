@@ -41,7 +41,12 @@ class PlaylistManager: PlaylistProtocol {
         self.queueManager = queueManager
     }
     
-    // MARK: - Public Functions
+    /// Get library playlists
+    func getPlaylists() -> [PumpyLibrary.Playlist] {
+        MusicContent.getPlaylists()
+    }
+    
+    // MARK: - Play From Playlist Object
     
     func playNow(playlist: PumpyLibrary.Playlist, secondaryPlaylists: [SecondaryPlaylist] = []) {
         if let mpPlaylist = playlist as? MPMediaPlaylist, let name = mpPlaylist.name {
@@ -64,11 +69,6 @@ class PlaylistManager: PlaylistProtocol {
         } else {
             playNext(catalogPlaylist: playlist)
         }
-    }
-    
-    /// Get library playlists
-    func getPlaylists() -> [PumpyLibrary.Playlist] {
-        MusicContent.getPlaylists()
     }
     
     // MARK: - Play From Name
@@ -108,6 +108,8 @@ class PlaylistManager: PlaylistProtocol {
             self?.playQueueNext(name: name, queue: queue)
         }
     }
+    
+    // MARK: - ** Private Functions **
     
     // MARK: - Play From Items
     
