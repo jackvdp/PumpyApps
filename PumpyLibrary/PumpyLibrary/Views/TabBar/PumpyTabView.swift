@@ -8,9 +8,17 @@
 import SwiftUI
 import Introspect
 
-struct PumpyTabView: View {
+struct PumpyTabView<H:HomeProtocol,
+                    P:PlaylistProtocol,
+                    N:NowPlayingProtocol,
+                    B:BlockedTracksProtocol,
+                    T:TokenProtocol,
+                    Q:QueueProtocol,
+                    U:UserProtocol>: View {
     
-    @State private var selectedTab = Tabs.home.rawValue
+    typealias GenericTabs = Tabs<H,P,N,B,T,Q>
+    
+    @State private var selectedTab = GenericTabs.home.rawValue
     @Namespace private var animation
     @Namespace private var capsule
     
@@ -24,10 +32,8 @@ struct PumpyTabView: View {
     
     var tabView: some View {
         TabView(selection: $selectedTab) {
-            ForEach(Tabs.allCases, id: \.rawValue) {
-                $0
-                .tag($0.rawValue)
-                .edgesIgnoringSafeArea(.all)
+            ForEach(GenericTabs.allCases, id: \.rawValue) { tab in
+                tab.tag(tab.rawValue).edgesIgnoringSafeArea(.all)
             }
         }
         .introspectTabBarController { setTabAppearance($0) }
@@ -35,7 +41,7 @@ struct PumpyTabView: View {
     
     var tabBar: some View {
         HStack {
-            ForEach(Tabs.allCases, id: \.rawValue) { tab in
+            ForEach(GenericTabs.allCases, id: \.rawValue) { tab in
                 Button {
                     withAnimation {
                         selectedTab = tab.rawValue
@@ -71,7 +77,12 @@ struct PumpyTabView: View {
     }
 }
 
-enum Tabs: Int, CaseIterable, View {
+enum Tabs<H:HomeProtocol,
+          P:PlaylistProtocol,
+          N:NowPlayingProtocol,
+          B:BlockedTracksProtocol,
+          T:TokenProtocol,
+          Q:QueueProtocol>: Int, CaseIterable, View {
     case home, library, lab, search
     
     var body: some View {
@@ -79,7 +90,7 @@ enum Tabs: Int, CaseIterable, View {
         case .home:
             Text(self.rawValue.description)
         case .library:
-            Text(self.rawValue.description)
+            PlaylistTable<H,P,N,B,T,Q>()
         case .lab:
             Text(self.rawValue.description)
         case .search:
@@ -106,7 +117,7 @@ enum Tabs: Int, CaseIterable, View {
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing:0) {
-            PumpyTabView()
+            PumpyTabView<MockHomeVM, MockPlaylistManager, MockNowPlayingManager, MockBlockedTracks, MockTokenManager, MockQueueManager, MockUser>()
             MenuTrackView<MockTokenManager, MockNowPlayingManager, MockBlockedTracks, MockPlaylistManager, MockHomeVM>()
         }
         .edgesIgnoringSafeArea(.all)

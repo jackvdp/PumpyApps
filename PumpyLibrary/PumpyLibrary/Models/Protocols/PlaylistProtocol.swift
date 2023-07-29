@@ -15,6 +15,7 @@ public protocol PlaylistProtocol: ObservableObject {
     func playPlaylist(playlist: PumpyLibrary.Playlist, from: Int)
     func playNow(playlistID: String)
     func playNext(playlistID: String)
+    func getPlaylists() -> [Playlist]
 }
 
 public class MockPlaylistManager: PlaylistProtocol {
@@ -26,5 +27,6 @@ public class MockPlaylistManager: PlaylistProtocol {
     public func playPlaylist(playlist: PumpyLibrary.Playlist, from: Int) {}
     public func playNow(playlistID: String) {}
     public func playNext(playlistID: String) {}
+    public func getPlaylists() -> [Playlist] { return [] }
     
 }

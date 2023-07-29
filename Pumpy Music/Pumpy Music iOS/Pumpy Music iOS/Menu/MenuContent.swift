@@ -33,7 +33,7 @@ struct MenuContent: View {
                                BlockedTracksManager,
                                AuthorisationManager,
                                QueueManager
-                               >(getPlaylists: MusicContent.getPlaylists), isActive: $homeVM.triggerNavigation) {
+                               >(), isActive: $homeVM.triggerNavigation) {
                     MenuRow(title: "Music Library", imageName: "music.note.list")
                 }.tag(1)
             }

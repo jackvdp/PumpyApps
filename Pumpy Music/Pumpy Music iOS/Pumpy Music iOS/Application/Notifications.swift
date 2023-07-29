@@ -29,7 +29,6 @@ extension AppDelegate {
     // Remote notificaitons
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        print("Tada")
         if let dataString = userInfo["action"] as? String {
             if let data = Data(base64Encoded: dataString) {
                 let jsonDecoder = JSONDecoder()

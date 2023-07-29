@@ -66,6 +66,11 @@ class PlaylistManager: PlaylistProtocol {
         }
     }
     
+    /// Get library playlists
+    func getPlaylists() -> [PumpyLibrary.Playlist] {
+        MusicContent.getPlaylists()
+    }
+    
     // MARK: - Play From Name
     
     func playNow(playlistName: String, secondaryPlaylists: [SecondaryPlaylist] = []) {

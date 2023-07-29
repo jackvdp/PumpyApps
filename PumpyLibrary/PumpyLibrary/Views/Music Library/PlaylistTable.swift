@@ -14,14 +14,12 @@ public struct PlaylistTable<H:HomeProtocol,
                             T:TokenProtocol,
                             Q:QueueProtocol>: View {
     
-    public init(getPlaylists: @escaping () -> [Playlist]) {
-        self.getPlaylists = getPlaylists
-    }
+    public init() {}
     
     @State private var playlists = [Playlist]()
     @State private var searchText = ""
     @State private var tableView: UITableView?
-    var getPlaylists: ()->[Playlist]
+    @EnvironmentObject var playlistManager: P
 
     public var body: some View {
         PumpyList {
@@ -34,7 +32,7 @@ public struct PlaylistTable<H:HomeProtocol,
         .listStyle(.plain)
         .searchable(text: $searchText, prompt: "Playlists...")
         .onAppear() {
-            playlists = getPlaylists()
+            playlists = playlistManager.getPlaylists()
         }
         .navigationBarTitle("Playlists")
         .accentColor(.pumpyPink)
@@ -53,6 +51,6 @@ public struct PlaylistTable<H:HomeProtocol,
 
 struct PlaylistTable_Previews: PreviewProvider {
     static var previews: some View {
-        PlaylistTable<MockHomeVM,MockPlaylistManager,MockNowPlayingManager,MockBlockedTracks,MockTokenManager,MockQueueManager>(getPlaylists: {return []})
+        PlaylistTable<MockHomeVM,MockPlaylistManager,MockNowPlayingManager,MockBlockedTracks,MockTokenManager,MockQueueManager>().environmentObject(MockPlaylistManager())
     }
 }
