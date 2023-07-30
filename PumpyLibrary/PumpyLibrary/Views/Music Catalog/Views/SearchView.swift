@@ -153,13 +153,16 @@ struct SearchView<H:HomeProtocol,
     @ViewBuilder
     var searchStageView: some View {
         if viewModel.searchSuggestions.isNotEmpty {
+            // SEARCH SUGGESTIONS
             List {
                 ForEach(viewModel.searchSuggestions, id: \.self) { suggestion in
                     searchRow(suggestion)
                 }
                 .listRowBackground(Color.primary.opacity(0.1))
             }
+            .clearListBackgroundIOS16()
         } else {
+            // RECENT SEARCHES
             List {
                 if viewModel.recentSearches.isNotEmpty {
                     Text("RECENT SEARCHES").font(.callout).bold()
