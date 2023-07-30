@@ -26,31 +26,52 @@ struct UserView: View {
     @StateObject private var labManager = MusicLabManager()
 
     var body: some View {
-        PumpyTabView<
-            HomeVM,
-            PlaylistManager,
-            NowPlayingManager,
-            BlockedTracksManager,
-            AuthorisationManager,
-            QueueManager,
-            User
-        >()
-            .environmentObject(settingsManager)
-            .environmentObject(blockedTracksManager)
-            .environmentObject(nowPlayingManager)
-            .environmentObject(homeVM)
-            .environmentObject(user)
-            .environmentObject(alarmManager)
-            .environmentObject(authManager)
-            .environmentObject(queueManager)
-            .environmentObject(playlistManager)
-            .environmentObject(remoteManager)
-            .environmentObject(labManager)
-            .musicToasts()
-            .onAppear() {
-                setUp()
-                authManager.fetchTokens()
-            }
+        VStack(spacing: 0) {
+            PumpyTabView<
+                HomeVM,
+                PlaylistManager,
+                NowPlayingManager,
+                BlockedTracksManager,
+                AuthorisationManager,
+                QueueManager,
+                User
+            >()
+            Divider()
+            MenuTrackView<
+                AuthorisationManager,
+                NowPlayingManager,
+                BlockedTracksManager,
+                PlaylistManager,
+                HomeVM
+            >()
+        }
+        .ignoresSafeArea(edges: .bottom)
+        .fullScreenCover(isPresented: $homeVM.showPlayer) {
+            PlayerView<
+                PlaylistManager,
+                QueueManager,
+                NowPlayingManager,
+                BlockedTracksManager,
+                HomeVM,
+                AuthorisationManager
+            >()
+        }
+        .environmentObject(settingsManager)
+        .environmentObject(blockedTracksManager)
+        .environmentObject(nowPlayingManager)
+        .environmentObject(homeVM)
+        .environmentObject(user)
+        .environmentObject(alarmManager)
+        .environmentObject(authManager)
+        .environmentObject(queueManager)
+        .environmentObject(playlistManager)
+        .environmentObject(remoteManager)
+        .environmentObject(labManager)
+        .musicToasts()
+        .onAppear() {
+            setUp()
+            authManager.fetchTokens()
+        }
     }
 
     func setUp() {
