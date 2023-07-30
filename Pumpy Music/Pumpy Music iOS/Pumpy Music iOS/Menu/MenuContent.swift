@@ -13,7 +13,7 @@ import PumpyAnalytics
 struct MenuContent: View {
     @EnvironmentObject var settings: SettingsManager
     @EnvironmentObject var tokenManager: AuthorisationManager
-    @EnvironmentObject var homeVM: HomeVM
+    @EnvironmentObject var homeVM: HomePlayerManager
     @EnvironmentObject var user: User
     
     var body: some View {
@@ -27,20 +27,20 @@ struct MenuContent: View {
         Section {
             if settings.onlineSettings.showMusicLibrary {
                 NavigationLink(destination: PlaylistTable<
-                               HomeVM,
+                               HomePlayerManager,
                                PlaylistManager,
                                NowPlayingManager,
                                BlockedTracksManager,
                                AuthorisationManager,
                                QueueManager
-                               >(), isActive: $homeVM.triggerNavigation) {
+                               >()) {
                     MenuRow(title: "Music Library", imageName: "music.note.list")
                 }.tag(1)
             }
             if settings.onlineSettings.showMusicStore {
                 NavigationLink(destination:
                                 CatalogView<
-                                   HomeVM,
+                                   HomePlayerManager,
                                    PlaylistManager,
                                    NowPlayingManager,
                                    BlockedTracksManager,
@@ -56,7 +56,7 @@ struct MenuContent: View {
                                BlockedTracksManager,
                                AuthorisationManager,
                                QueueManager,
-                               PlaylistManager,HomeVM
+                               PlaylistManager,HomePlayerManager
                                >()) {
                     MenuRow(title: "Music Lab", imageName: "testtube.2")
                         .environmentObject(tokenManager)

@@ -136,7 +136,7 @@ public struct MenuView<H:HomeProtocol,
     
     func activatePage(_ geo: GeometryProxy) {
         if isLandscape(geo: geo) {
-            homeVM.triggerNavigation = true
+//            homeVM.triggerNavigation = true
         }
     }
 }

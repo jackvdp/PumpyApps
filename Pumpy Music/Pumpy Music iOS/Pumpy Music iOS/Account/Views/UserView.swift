@@ -13,7 +13,7 @@ import PumpyAnalytics
 struct UserView: View {
     
     @ObservedObject var user: User
-    @StateObject private var homeVM = HomeVM()
+    @StateObject private var homeVM = HomePlayerManager()
     @StateObject private var musicManager = MusicManager()
     @StateObject private var authManager = AuthorisationManager()
     @StateObject private var nowPlayingManager = NowPlayingManager()
@@ -28,7 +28,7 @@ struct UserView: View {
     var body: some View {
         VStack(spacing: 0) {
             PumpyTabView<
-                HomeVM,
+                HomePlayerManager,
                 PlaylistManager,
                 NowPlayingManager,
                 BlockedTracksManager,
@@ -42,7 +42,7 @@ struct UserView: View {
                 NowPlayingManager,
                 BlockedTracksManager,
                 PlaylistManager,
-                HomeVM
+                HomePlayerManager
             >()
         }
         .ignoresSafeArea(edges: .bottom)
@@ -52,7 +52,7 @@ struct UserView: View {
                 QueueManager,
                 NowPlayingManager,
                 BlockedTracksManager,
-                HomeVM,
+                HomePlayerManager,
                 AuthorisationManager
             >()
         }

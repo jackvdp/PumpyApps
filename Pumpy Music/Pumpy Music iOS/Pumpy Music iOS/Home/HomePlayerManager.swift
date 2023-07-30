@@ -10,11 +10,10 @@ import Foundation
 import SwiftUI
 import PumpyLibrary
 
-class HomeVM: HomeProtocol {
+class HomePlayerManager: HomeProtocol {
 
     @Published var pageType: PageType = .artwork
-    @Published var showPlayer = true
-    @Published var triggerNavigation: Bool = false
+    @Published var showPlayer = false
     
     func playPause(alarmData: AlarmManager, playlistManager: any PlaylistProtocol) {
         MusicCoreFunctions.togglePlayPause(alarms: alarmData.alarms,
