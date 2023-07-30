@@ -96,10 +96,10 @@ enum Tabs<H:HomeProtocol,
             case .lab:
                 MusicLabView<N,B,T,Q,P,H>()
             case .search:
-                Text(rawValue.description).pumpyBackground()
+                SearchView<H,P,N,B,T,Q>()
             }
         }
-        .accentColor(.pink)
+        .accentColor(.pumpyPink)
     }
     
     var icon: String {
