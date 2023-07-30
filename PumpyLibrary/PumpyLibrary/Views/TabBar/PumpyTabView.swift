@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Introspect
+import PumpyAnalytics
 
 public struct PumpyTabView<H:HomeProtocol,
                     P:PlaylistProtocol,
@@ -93,7 +94,7 @@ enum Tabs<H:HomeProtocol,
             case .library:
                 PlaylistTable<H,P,N,B,T,Q>()
             case .lab:
-                Text(rawValue.description).pumpyBackground()
+                MusicLabView<N,B,T,Q,P,H>()
             case .search:
                 Text(rawValue.description).pumpyBackground()
             }
@@ -131,6 +132,8 @@ struct TabBarView_Previews: PreviewProvider {
         .environmentObject(MockPlaylistManager())
         .environmentObject(MockHomeVM())
         .environmentObject(MusicLabManager())
+        .environmentObject(MockTokenManager())
+        .environmentObject(AuthorisationManager())
     }
 }
 
