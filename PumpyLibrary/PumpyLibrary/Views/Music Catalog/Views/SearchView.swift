@@ -43,7 +43,6 @@ struct SearchView<H:HomeProtocol,
                     placement: .navigationBarDrawer(displayMode: .always),
                     prompt: "Playlists, Artists, Songs")
         .pumpyBackground()
-        .labManagerToolbar(destination: MusicLabView<N,B,T,Q,P,H>())
         .onSubmit(of: .search, runSearch)
         .onChange(of: viewModel.searchText, perform: handleSearchTextChanged)
         .navigationBarTitleDisplayMode(.inline)
