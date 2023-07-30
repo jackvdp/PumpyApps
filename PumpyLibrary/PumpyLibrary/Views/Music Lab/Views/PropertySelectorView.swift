@@ -57,6 +57,7 @@ struct PropertySelector: View {
     var sliders: some View {
         RangeSlider(lowerValue: $prop.lowerValue,
                     upperValue: $prop.higherValue)
+        .padding(.horizontal, 12)
         .disabled(!prop.active)
     }
     

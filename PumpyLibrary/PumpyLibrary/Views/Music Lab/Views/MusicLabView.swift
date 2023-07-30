@@ -137,8 +137,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
         }
         .accentColor(.pumpyPink)
         .buttonStyle(.borderedProminent)
-        .padding(.horizontal)
-        .padding(.bottom, 8)
+        .padding([.horizontal, .bottom])
     }
 
     var mask: some View {
