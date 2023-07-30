@@ -27,6 +27,5 @@ public class MockPlaylistManager: PlaylistProtocol {
     public func playPlaylist(playlist: PumpyLibrary.Playlist, from: Int) {}
     public func playNow(playlistID: String) {}
     public func playNext(playlistID: String) {}
-    public func getPlaylists() -> [Playlist] { return [] }
-    
+    public func getPlaylists() -> [Playlist] { return [MockData.playlist, MockData.playlist] }
 }

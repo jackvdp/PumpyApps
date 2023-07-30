@@ -7,6 +7,36 @@
 
 import SwiftUI
 
+public struct PumpyListForEach<Data, ID, Content>: View where Data : RandomAccessCollection, ID : Hashable, Content: View {
+    
+    public init(_ data: Data,
+                id: KeyPath<Data.Element, ID>,
+                content: @escaping (Data.Element) -> Content) {
+        self.data = data
+        self.id = id
+        self.content = content
+    }
+    
+    let data: Data
+    let id: KeyPath<Data.Element, ID>
+    @ViewBuilder let content: (Data.Element) -> Content
+    
+    public var body: some View {
+        if data.isEmpty {
+            Color.clear
+        } else {
+            List {
+                ForEach(data, id: id) { element in
+                    content(element)
+                }
+                .listRowBackground(Color.clear)
+            }
+            .background(Color.clear)
+            .clearListBackgroundIOS16()
+        }
+    }
+}
+
 public struct PumpyList<Content: View>: View {
     
     public init(@ViewBuilder content: () -> Content) {

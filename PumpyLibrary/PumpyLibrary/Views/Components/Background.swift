@@ -11,8 +11,7 @@ extension View {
     public func pumpyBackground() -> some View {
         self
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(BackgroundView.gradient)
-            .edgesIgnoringSafeArea(.all)
+            .background(BackgroundView.gradient.edgesIgnoringSafeArea(.all))
     }
     
     public func playerBackground() -> some View {
@@ -39,7 +38,7 @@ private struct BackgroundView: View {
     
     static var gradient: some View {
         let gradient = Gradient(colors: [
-            .black, .pumpyBlue, .pumpyBlue, .pumpyPurple, .pumpyPurple
+            .pumpyBlue, .pumpyBlue, .pumpyBlue, .pumpyPurple, .pumpyPurple
         ])
         return LinearGradient(gradient: gradient,
                               startPoint: .top,

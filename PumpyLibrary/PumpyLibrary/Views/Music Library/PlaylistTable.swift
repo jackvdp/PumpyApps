@@ -18,28 +18,26 @@ public struct PlaylistTable<H:HomeProtocol,
     
     @State private var playlists = [Playlist]()
     @State private var searchText = ""
-    @State private var tableView: UITableView?
     @EnvironmentObject var playlistManager: P
 
     public var body: some View {
-        PumpyList {
-            ForEach(filteredPlaylists.indices, id: \.self) { i in
-                NavigationLink(destination: TrackTable<H,P,N,B,T,Q>(playlist: filteredPlaylists[i])) {
-                    PlaylistRow(playlist: filteredPlaylists[i])
-                }
+        PumpyListForEach(filteredPlaylists, id: \.cloudGlobalID) { playlist in
+            NavigationLink(destination: TrackTable<H,P,N,B,T,Q>(playlist: playlist)) {
+                PlaylistRow(playlist: playlist)
             }
         }
         .listStyle(.plain)
         .searchable(text: $searchText, prompt: "Playlists...")
+        .navigationBarTitle("Library")
+        .navigationBarTitleDisplayMode(.large)
+        .accentColor(.pumpyPink)
+        .pumpyBackground()
         .onAppear() {
             playlists = playlistManager.getPlaylists()
         }
-        .navigationBarTitle("Playlists")
-        .accentColor(.pumpyPink)
-        .pumpyBackground()
     }
     
-    var filteredPlaylists: [Playlist] {
+    private var filteredPlaylists: [Playlist] {
         if searchText.isEmpty {
             return playlists
         } else {

@@ -8,7 +8,7 @@
 import SwiftUI
 import Introspect
 
-struct PumpyTabView<H:HomeProtocol,
+public struct PumpyTabView<H:HomeProtocol,
                     P:PlaylistProtocol,
                     N:NowPlayingProtocol,
                     B:BlockedTracksProtocol,
@@ -16,17 +16,17 @@ struct PumpyTabView<H:HomeProtocol,
                     Q:QueueProtocol,
                     U:UserProtocol>: View {
     
+    public init() {}
+    
     typealias GenericTabs = Tabs<H,P,N,B,T,Q>
     
     @State private var selectedTab = GenericTabs.home.rawValue
     @Namespace private var animation
     @Namespace private var capsule
     
-    var body: some View {
+    public var body: some View {
         tabView
-            .overlay(alignment: .bottom) {
-                tabBar
-            }
+            .overlay(alignment: .bottom) { tabBar }
             .pumpyBackground()
     }
     
@@ -86,16 +86,19 @@ enum Tabs<H:HomeProtocol,
     case home, library, lab, search
     
     var body: some View {
-        switch self {
-        case .home:
-            Text(self.rawValue.description)
-        case .library:
-            PlaylistTable<H,P,N,B,T,Q>()
-        case .lab:
-            Text(self.rawValue.description)
-        case .search:
-            Text(self.rawValue.description)
+        NavigationView {
+            switch self {
+            case .home:
+                Text(rawValue.description).pumpyBackground()
+            case .library:
+                PlaylistTable<H,P,N,B,T,Q>()
+            case .lab:
+                Text(rawValue.description).pumpyBackground()
+            case .search:
+                Text(rawValue.description).pumpyBackground()
+            }
         }
+        .accentColor(.pink)
     }
     
     var icon: String {
@@ -127,5 +130,7 @@ struct TabBarView_Previews: PreviewProvider {
         .environmentObject(MockBlockedTracks())
         .environmentObject(MockPlaylistManager())
         .environmentObject(MockHomeVM())
+        .environmentObject(MusicLabManager())
     }
 }
+

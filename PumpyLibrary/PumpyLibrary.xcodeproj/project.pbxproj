@@ -113,6 +113,7 @@
 		C0A24B4829B7F3AB0044BEA0 /* SafeAreaInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A24B4729B7F3AB0044BEA0 /* SafeAreaInsets.swift */; };
 		C0A861C029212F2200D75A8D /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A861BF29212F2200D75A8D /* List.swift */; };
 		C0BBEFA8291806ED008200DB /* ContextiOS16.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BBEFA7291806ED008200DB /* ContextiOS16.swift */; };
+		C0BE35712A75603E008F1612 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BE35702A75603E008F1612 /* NavigationView.swift */; };
 		C0C0177629CF34990030E7A9 /* RangeSlider in Frameworks */ = {isa = PBXBuildFile; productRef = C0C0177529CF34990030E7A9 /* RangeSlider */; };
 		C0C0177829CF68EA0030E7A9 /* SeedAttributesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C0177729CF68EA0030E7A9 /* SeedAttributesTests.swift */; };
 		C0CBA99729151BCB001A90AE /* PumpyAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */; };
@@ -237,6 +238,7 @@
 		C0A24B4729B7F3AB0044BEA0 /* SafeAreaInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInsets.swift; sourceTree = "<group>"; };
 		C0A861BF29212F2200D75A8D /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		C0BBEFA7291806ED008200DB /* ContextiOS16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextiOS16.swift; sourceTree = "<group>"; };
+		C0BE35702A75603E008F1612 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		C0C0177729CF68EA0030E7A9 /* SeedAttributesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedAttributesTests.swift; sourceTree = "<group>"; };
 		C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyAnalytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0CC4D3C29BA9078002A0204 /* PropertySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertySelectorView.swift; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 				C0606E6929FD2B0B00157AE1 /* SearchToolbar.swift */,
 				C0803A872A2FE3DF009EC18D /* AddToLabButtons.swift */,
 				C0F969C22A6C3D020018E887 /* ActivityView.swift */,
+				C0BE35702A75603E008F1612 /* NavigationView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -822,6 +825,7 @@
 				6D267C5F28A2581F0094AAF1 /* GetArtwork.swift in Sources */,
 				6DD8490928A449BD00794FDB /* UpNextArtworkView.swift in Sources */,
 				6DAC17C128A5090B009D46BC /* SettingsModel.swift in Sources */,
+				C0BE35712A75603E008F1612 /* NavigationView.swift in Sources */,
 				C0278AFB29D9908D00FAB3DE /* LabResultsView.swift in Sources */,
 				6DB8C02128A3B135006C1B85 /* AlarmManager.swift in Sources */,
 				C08E0AF5293209F100D83774 /* MenuView.swift in Sources */,

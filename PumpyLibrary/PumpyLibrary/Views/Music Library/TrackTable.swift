@@ -38,7 +38,6 @@ struct TrackTable<H:HomeProtocol,
         .searchable(text: $searchText, prompt: "Tracks...")
         .navigationBarTitle("")
         .navigationBarTitleDisplayMode(.inline)
-        .labManagerToolbar(destination: MusicLabView<N,B,T,Q,P,H>())
         .pumpyBackground()
     }
     

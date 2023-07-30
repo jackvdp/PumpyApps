@@ -26,38 +26,33 @@ struct UserView: View {
     @StateObject private var labManager = MusicLabManager()
 
     var body: some View {
-        viewAndDependencies
-            .onAppear() {
-                setUp()
-                authManager.fetchTokens()
-            }
-            .musicToasts()
-    }
-  
-    var viewAndDependencies: some View {
-        MenuView<
+        PumpyTabView<
             HomeVM,
             PlaylistManager,
             NowPlayingManager,
             BlockedTracksManager,
             AuthorisationManager,
             QueueManager,
-            User,
-            MenuContent
-        >(settings: settingsManager,
-          blockedTracksManager: blockedTracksManager,
-          nowPlayingManager: nowPlayingManager,
-          playlistManager: playlistManager,
-          homeVM: homeVM,
-          user: user,
-          alarmManager: alarmManager,
-          authManager: authManager,
-          queueManager: queueManager,
-          labManager: labManager,
-          content: {MenuContent()})
-        .environmentObject(labManager)
+            User
+        >()
+            .environmentObject(settingsManager)
+            .environmentObject(blockedTracksManager)
+            .environmentObject(nowPlayingManager)
+            .environmentObject(homeVM)
+            .environmentObject(user)
+            .environmentObject(alarmManager)
+            .environmentObject(authManager)
+            .environmentObject(queueManager)
+            .environmentObject(playlistManager)
+            .environmentObject(remoteManager)
+            .environmentObject(labManager)
+            .musicToasts()
+            .onAppear() {
+                setUp()
+                authManager.fetchTokens()
+            }
     }
-    
+
     func setUp() {
         musicManager.setUp(nowPlayingManager: nowPlayingManager,
                            playlistManager: playlistManager,
