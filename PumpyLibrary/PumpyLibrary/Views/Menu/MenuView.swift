@@ -19,12 +19,12 @@ public struct MenuView<H:HomeProtocol,
                        U:UserProtocol,
                        Content:View>: View {
     
-    public init(settings: SettingsManager, blockedTracksManager: B, nowPlayingManager: N, playlistManager: P, homeVM: H, user: U, alarmManager: AlarmManager, authManager: AuthorisationManager, queueManager: Q, labManager: MusicLabManager, content: @escaping () -> Content) {
+    public init(settings: SettingsManager, blockedTracksManager: B, nowPlayingManager: N, playlistManager: P, playerManager: H, user: U, alarmManager: AlarmManager, authManager: AuthorisationManager, queueManager: Q, labManager: MusicLabManager, content: @escaping () -> Content) {
         self.settings = settings
         self.blockedTracksManager = blockedTracksManager
         self.nowPlayingManager = nowPlayingManager
         self.playlistManager = playlistManager
-        self.homeVM = homeVM
+        self.playerManager = playerManager
         self.user = user
         self.alarmManager = alarmManager
         self.authManager = authManager
@@ -37,7 +37,7 @@ public struct MenuView<H:HomeProtocol,
     @ObservedObject var blockedTracksManager: B
     @ObservedObject var nowPlayingManager: N
     @ObservedObject var playlistManager: P
-    @ObservedObject var homeVM: H
+    @ObservedObject var playerManager: H
     @ObservedObject var user: U
     @ObservedObject var alarmManager: AlarmManager
     @ObservedObject var authManager: AuthorisationManager
@@ -55,7 +55,7 @@ public struct MenuView<H:HomeProtocol,
         .fullScreenCover(isPresented: $showPlayer) {
             playerView
         }
-        .onChange(of: homeVM.showPlayer) { newValue in
+        .onChange(of: playerManager.showPlayer) { newValue in
             showPlayer = newValue
         }
     }
@@ -87,7 +87,7 @@ public struct MenuView<H:HomeProtocol,
             .environmentObject(alarmManager)
             .environmentObject(authManager)
             .environmentObject(queueManager)
-            .environmentObject(homeVM)
+            .environmentObject(playerManager)
             .environmentObject(user)
             .environmentObject(labManager)
         }
@@ -104,7 +104,7 @@ public struct MenuView<H:HomeProtocol,
             .environmentObject(alarmManager)
             .environmentObject(authManager)
             .environmentObject(queueManager)
-            .environmentObject(homeVM)
+            .environmentObject(playerManager)
             .environmentObject(labManager)
     }
     
@@ -117,7 +117,7 @@ public struct MenuView<H:HomeProtocol,
                  .environmentObject(alarmManager)
                  .environmentObject(authManager)
                  .environmentObject(queueManager)
-                 .environmentObject(homeVM)
+                 .environmentObject(playerManager)
                  .environmentObject(labManager)
     }
 
@@ -160,7 +160,7 @@ struct MenuView_Previews: PreviewProvider {
         pm.playlistLabel = "Playlist: A Bit of Lunch"
         return pm
     }
-    static var homeVM: MockHomeVM {
+    static var playerManager: MockHomeVM {
         let v = MockHomeVM()
         v.showPlayer = false
         return v
@@ -179,7 +179,7 @@ struct MenuView_Previews: PreviewProvider {
                                 blockedTracksManager: MockBlockedTracks(),
                                 nowPlayingManager: MockNowPlayingManager(),
                                 playlistManager: playlist,
-                                homeVM: homeVM,
+                                playerManager: playerManager,
                                 user: user,
                                 alarmManager: AlarmManager(),
                                 authManager: AuthorisationManager(),

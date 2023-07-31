@@ -11,18 +11,21 @@ public class AnalyseController {
     
     public init() {}
     
+    private let analyseTracksUseCase = AnalyseTracks()
+    private let analyseMediaPlayerTracksUseCase = AnalyseMediaPlayerTracks()
+    
     public func analyseTracks(tracks: [Track], authManager: AuthorisationManager, completion: @escaping ([Track]) -> ()) {
-        AnalyseTracks().execute(tracks: tracks,
-                                authManager: authManager,
-                                completion: completion)
+        analyseTracksUseCase.execute(tracks: tracks,
+                                     authManager: authManager,
+                                     completion: completion)
     }
     
     public func analyseMediaPlayerTracks(amIDs: [String],
                                          authManager: AuthorisationManager,
                                          completion: @escaping ([Track])->()) {
-        AnalyseMediaPlayerTracks().execute(ids: amIDs,
-                                           authManager: authManager,
-                                           completion: completion)
+        analyseMediaPlayerTracksUseCase.execute(ids: amIDs,
+                                                authManager: authManager,
+                                                completion: completion)
     }
     
 }

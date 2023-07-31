@@ -9,20 +9,22 @@ import Foundation
 
 class AnalyseTracks {
     
+    let getSpotifyItemUseCase = GetAudioFeaturesAndSpotifyItem()
+    var observer: NSObjectProtocol?
+    
     func execute(tracks: [Track], authManager: AuthorisationManager, completion: @escaping ([Track]) -> ()) {
-        GetAudioFeaturesAndSpotifyItem().forPlaylist(tracks: tracks, authManager: authManager)
+        getSpotifyItemUseCase.forPlaylist(tracks: tracks, authManager: authManager)
         subscribeToTracks(tracks: tracks, completion: completion)
     }
     
     func subscribeToTracks(tracks: [Track], completion: @escaping ([Track]) -> ()) {
         let nc = NotificationCenter.default
-        var observer: NSObjectProtocol?
-        observer = nc.addObserver(forName: .TracksGotAnalysed, object: nil, queue: nil) { _ in
-            
+        observer = nc.addObserver(forName: .TracksGotAnalysed, object: nil, queue: nil) { [weak self] obs in
+            guard let self else { return }
             let tracksStillAnalysing = tracks.filter { $0.inProgress.analysing }
             
             if tracksStillAnalysing.isEmpty {
-                nc.removeObserver(observer as Any)
+                nc.removeObserver(self.observer as Any)
                 completion(tracks)
             }
             

@@ -11,6 +11,8 @@ import SwiftyJSON
 
 class GetSpotifyItem {
     
+    let gateway = SpotifyTrackAPI()
+    
     func forPlaylistFromISRC(tracks: [Track], authManager: AuthorisationManager, completion: @escaping ([Track]) -> () = {_ in }) {
         guard tracks.count > 0 else { completion([]); return }
         let unmatchedTracks = getTracksWithoutSpotItem(tracks: tracks)
@@ -23,11 +25,11 @@ class GetSpotifyItem {
             var count = 0
             let total = trackChunks[i].count
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(i * 2)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(i * 2)) { [weak self] in
                 
                 for track in trackChunks[i] {
                     
-                    SpotifyTrackAPI().getSpotifyTrackFromISRC(isrc: track.isrc, authManager: authManager) { item in
+                    self?.gateway.getSpotifyTrackFromISRC(isrc: track.isrc, authManager: authManager) { item in
                         
                         count += 1
                         if let item = item {
@@ -51,7 +53,7 @@ class GetSpotifyItem {
         
         for chunk in chunks {
             let ids = chunk.compactMap { $0.spotifyItem?.id }
-            SpotifyTrackAPI().getSpotifyTracksFromIdPack(ids: ids, authManager: authManager) { json in
+            gateway.getSpotifyTracksFromIdPack(ids: ids, authManager: authManager) { json in
                 if let json = json {
                     let items = SpotifyItemParser().parseForSpotifyItemsFromTracksAPI(json)
                     for track in chunk {

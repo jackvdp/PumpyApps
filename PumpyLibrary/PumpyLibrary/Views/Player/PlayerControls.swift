@@ -17,7 +17,7 @@ struct PlayerControls<P:PlaylistProtocol,
                       H:HomeProtocol,
                       Q:QueueProtocol>: View {
     
-    @EnvironmentObject var homeVM: H
+    @EnvironmentObject var playerManager: H
     @EnvironmentObject var playlistManager: P
     @EnvironmentObject var nowPlayingManager: N
     @EnvironmentObject var queueManager: Q
@@ -57,11 +57,11 @@ struct PlayerControls<P:PlaylistProtocol,
             .frame(width: 40, height: 40, alignment: .center)
             .accentColor(.white)
             .onTapGesture {
-                homeVM.playPause(alarmData: alarmData,
+                playerManager.playPause(alarmData: alarmData,
                                  playlistManager: playlistManager)
             }
             .onLongPressGesture(minimumDuration: 2) {
-                homeVM.coldStart(alarmData: alarmData,
+                playerManager.coldStart(alarmData: alarmData,
                                  playlistManager: playlistManager)
             }
         
@@ -69,7 +69,7 @@ struct PlayerControls<P:PlaylistProtocol,
 
     var fastForwardButton: some View {
         Button(action: {
-            homeVM.skipToNextItem()
+            playerManager.skipToNextItem()
         }) {
             Image(systemName: "forward.fill")
                 .resizable()
@@ -81,7 +81,7 @@ struct PlayerControls<P:PlaylistProtocol,
     
     var backButton: some View {
         Button(action: {
-            homeVM.skipBack()
+            playerManager.skipBack()
         }) {
             Image(systemName: "backward.fill")
                 .resizable()
@@ -94,11 +94,11 @@ struct PlayerControls<P:PlaylistProtocol,
     var upNextButton: some View {
         Button(action: {
             withAnimation {
-                switch homeVM.pageType {
+                switch playerManager.pageType {
                 case .artwork:
-                    homeVM.pageType = .upNext
+                    playerManager.pageType = .upNext
                 case .upNext:
-                    homeVM.pageType = .artwork
+                    playerManager.pageType = .artwork
                 }
             }
         }) {
@@ -106,7 +106,7 @@ struct PlayerControls<P:PlaylistProtocol,
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 25, height: 25, alignment: .center)
-                .accentColor(homeVM.pageType == .upNext ? .pumpyPink : .white)
+                .accentColor(playerManager.pageType == .upNext ? .pumpyPink : .white)
         }
         .buttonStyle(.plain)
     }

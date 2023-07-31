@@ -9,6 +9,9 @@ import Foundation
 
 class GetAudioFeaturesAndSpotifyItem {
     
+    private let getSpotifyItemUseCase = GetSpotifyItem()
+    private let featuresGateway = SpotifyFeaturesAPI()
+    
     func forPlaylist(tracks: [Track], authManager: AuthorisationManager, completion: @escaping () -> () = {}) {
         // Get Unanalysed Tracks
         let unAnalysedTracks = FeaturesHelper.getUnAnalysedTracks(tracks: tracks)
@@ -25,15 +28,15 @@ class GetAudioFeaturesAndSpotifyItem {
         let unMatchedTracks = unAnalysedTracks.filter { $0.spotifyItem == nil }
 
         // Get features for unmatchedTracks
-        GetSpotifyItem().forPlaylistFromISRC(tracks: unMatchedTracks, authManager: authManager) { tracks in
-            self.getFeatures(tracks: tracks, authManager: authManager, completion: completion)
+        getSpotifyItemUseCase.forPlaylistFromISRC(tracks: unMatchedTracks, authManager: authManager) { [weak self] tracks in
+            self?.getFeatures(tracks: tracks, authManager: authManager, completion: completion)
         }
         
         // Get features for matchedTracks
         getFeatures(tracks: matchedTracks, authManager: authManager, completion: completion)
         
         // Get Spotify item for only partial matched tracks (SYB tracks)
-        GetSpotifyItem().forPlaylistFromSpotID(tracks: matchedTracks, authManager: authManager)
+        getSpotifyItemUseCase.forPlaylistFromSpotID(tracks: matchedTracks, authManager: authManager)
     }
     
     private func getFeatures(tracks: [Track], authManager: AuthorisationManager, completion: @escaping () -> ()) {
@@ -51,7 +54,7 @@ class GetAudioFeaturesAndSpotifyItem {
             
             let ids = page.compactMap { $0.spotifyItem?.id }
             
-            SpotifyFeaturesAPI(authManager).getManyAudioFeaturesFromSpotifyID(ids: ids) { features in
+            featuresGateway.getManyAudioFeaturesFromSpotifyID(ids: ids, authManager: authManager) { features in
 
                 pageCount += 1
                 
