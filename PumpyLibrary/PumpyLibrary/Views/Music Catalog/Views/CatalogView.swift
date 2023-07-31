@@ -16,24 +16,35 @@ public struct CatalogView<H:HomeProtocol,
                           Q:QueueProtocol>: View {
     
     @EnvironmentObject var authManager: AuthorisationManager
+    
     @State var collections = [SuggestedCollection]()
+    @UserDefaultsStorage(
+        key: "lastCollection",
+        defaultValue: Optional<[SuggestedCollection]>.none
+    ) var lastCollection
+    
     @State var pageState: PageState = .loading
+    let browseController = BrowseController()
     
     public init() {}
     
     public var body: some View {
-        VStack {
-            switch pageState {
-            case .loading:
-                loadingView
-            case .catalog:
-                completeView
+        Group {
+            if let lastCollection, collections.isEmpty {
+                collectionsView(lastCollection)
+            } else {
+                switch pageState {
+                case .loading:
+                    loadingView
+                case .catalog:
+                    completeView
+                }
             }
         }
         .pumpyBackground()
-        .navigationTitle("Catalog")
+        .navigationTitle("Home")
         .listStyle(.plain)
-        .onAppear() {
+        .onChange(of: authManager.appleMusicToken) { _ in
             getCollections()
         }
     }
@@ -48,17 +59,15 @@ public struct CatalogView<H:HomeProtocol,
     @ViewBuilder
     var completeView: some View {
         if collections.isNotEmpty {
-            successView
+            collectionsView(collections)
         } else {
             failedView
         }
     }
     
-    var successView: some View {
-        PumpyList {
-            ForEach(collections, id: \.self) { collection in
-                CollectionView<H,P,N,B,T,Q>(collection: collection)
-            }
+    func collectionsView(_ collections: [SuggestedCollection]) -> some View {
+        PumpyListForEach(collections, id: \.self) { collection in
+            CollectionView<H,P,N,B,T,Q>(collection: collection)
         }
     }
     
@@ -78,12 +87,13 @@ public struct CatalogView<H:HomeProtocol,
     
     func getCollections() {
         pageState = .loading
-        BrowseController().getAppleMusicSuggestions(authManager: authManager) { collection, error in
+        browseController.getAppleMusicSuggestions(authManager: authManager) { collection, error in
             if error != nil {
                 print(error?.localizedDescription ?? "Error fetching results from catalog")
             }
             
-            self.collections = collection
+            collections = collection
+            lastCollection = collection
             withAnimation { pageState = .catalog }
         }
     }

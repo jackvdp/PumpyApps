@@ -90,7 +90,7 @@ enum Tabs<H:HomeProtocol,
         NavigationView {
             switch self {
             case .home:
-                Text(rawValue.description).pumpyBackground()
+                CatalogView<H,P,N,B,T,Q>()
             case .library:
                 PlaylistTable<H,P,N,B,T,Q>()
             case .lab:

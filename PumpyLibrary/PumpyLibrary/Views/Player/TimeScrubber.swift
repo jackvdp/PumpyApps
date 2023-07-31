@@ -45,7 +45,6 @@ struct TimeScrubber: View {
             setTimeLabels()
             setPercentageDone(animated: false)
         }
-        .padding(.horizontal)
     }
     
     // MARK: - Slider

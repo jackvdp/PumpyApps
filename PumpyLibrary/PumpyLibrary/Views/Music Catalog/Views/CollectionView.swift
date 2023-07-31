@@ -21,9 +21,8 @@ struct CollectionView<H:HomeProtocol,
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            title
-                .padding(.horizontal, 20)
-            ScrollView(.horizontal) {
+            title.padding(.horizontal, 20)
+            ScrollView(.horizontal, showsIndicators: false) {
                 items
             }
             .frame(height: conditionForBig() ? bigSize : smallSize)

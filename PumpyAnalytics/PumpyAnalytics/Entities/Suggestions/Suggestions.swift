@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SuggestedCollection: Hashable {
+public struct SuggestedCollection: Hashable, Codable {
     public init(title: String, items: [SuggestedItem], types: [SuggestedType]) {
         self.title = title
         self.items = items
@@ -17,18 +17,18 @@ public struct SuggestedCollection: Hashable {
     public var title: String
     public var items: [SuggestedItem]
     public var types: [SuggestedType]
-    var id = UUID()
+    var id = UUID().uuidString
     
     public static func == (lhs: SuggestedCollection, rhs: SuggestedCollection) -> Bool {
         return lhs.id == rhs.id
     }
-    
+
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
 
-public struct SuggestedItem {
+public struct SuggestedItem: Codable {
     public var name: String
     public var id: String
     public var type: SuggestedType
@@ -36,7 +36,7 @@ public struct SuggestedItem {
     public var curator: String
 }
 
-public enum SuggestedType: String {
+public enum SuggestedType: String, Codable {
     case albums, playlists
 }
 

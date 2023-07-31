@@ -48,7 +48,7 @@ struct PlayerControls<P:PlaylistProtocol,
                 Spacer()
                 AirPlayView().frame(width: 25, height: 15)
                 Spacer()
-            }
+            }.frame(maxWidth: .infinity)
         }.padding(.horizontal)
     }
     

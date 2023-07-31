@@ -8,10 +8,13 @@
 import Foundation
 
 class GetSuggestions {
+    
+    let gateway = SuggestionsGateway()
 
     func execute(authManager: AuthorisationManager, completion: @escaping ([SuggestedCollection], ErrorMessage?)->()) {
         
-        SuggestionsGateway().get(authManager: authManager) { suggestions, code in
+        gateway.get(authManager: authManager) { [weak self] suggestions, code in
+            guard let self else { return }
             let (collection, error) = self.handleResponse(suggestions: suggestions, code: code)
             completion(collection, error)
         }

@@ -10,6 +10,7 @@ import Foundation
 public class BrowseController {
     
     public init() {}
+    let getSuggestionsUseCase = GetSuggestions()
     
     deinit {
         print("Bye bye 3")
@@ -17,7 +18,7 @@ public class BrowseController {
     
     public func getAppleMusicSuggestions(authManager: AuthorisationManager,
                                          completion: @escaping ([SuggestedCollection], ErrorMessage?)->()) {
-        GetSuggestions().execute(authManager: authManager, completion: completion)
+        getSuggestionsUseCase.execute(authManager: authManager, completion: completion)
     }
     
 }
