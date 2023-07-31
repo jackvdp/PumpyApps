@@ -26,10 +26,11 @@ class GetSpotifyItem {
             let total = trackChunks[i].count
             
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(i * 2)) { [weak self] in
+                guard let self else { return }
                 
                 for track in trackChunks[i] {
                     
-                    self?.gateway.getSpotifyTrackFromISRC(isrc: track.isrc, authManager: authManager) { item in
+                    self.gateway.getSpotifyTrackFromISRC(isrc: track.isrc, authManager: authManager) { item in
                         
                         count += 1
                         if let item = item {
