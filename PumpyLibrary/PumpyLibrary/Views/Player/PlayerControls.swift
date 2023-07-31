@@ -39,7 +39,6 @@ struct PlayerControls<P:PlaylistProtocol,
                 Spacer()
             }
             HStack {
-                Spacer()
                 changeEnergyButton.disabled(notPlaying)
                 Spacer()
                 upNextButton.disabled(notPlaying)
@@ -47,8 +46,7 @@ struct PlayerControls<P:PlaylistProtocol,
                 moreInfoButton.frame(width: 25).disabled(notPlaying)
                 Spacer()
                 AirPlayView().frame(width: 25, height: 15)
-                Spacer()
-            }.frame(maxWidth: .infinity)
+            }
         }.padding(.horizontal)
     }
     
@@ -199,6 +197,7 @@ struct PlayerControls_Previews: PreviewProvider {
                        MockNowPlayingManager,
                        MockHomeVM,
                        MockQueueManager>(isPortrait: false, notPlaying: false)
+            .border(.red)
             .environmentObject(MockHomeVM())
             .environmentObject(nowPlaying)
             .environmentObject(MockQueueManager())
@@ -206,7 +205,6 @@ struct PlayerControls_Previews: PreviewProvider {
             .environmentObject(AlarmManager())
             .environmentObject(AuthorisationManager())
             .preferredColorScheme(.dark)
-            .padding()
         PlayerControls<MockPlaylistManager,
                        MockNowPlayingManager,
                        MockHomeVM,
