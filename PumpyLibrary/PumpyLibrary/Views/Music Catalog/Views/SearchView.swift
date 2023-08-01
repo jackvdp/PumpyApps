@@ -45,7 +45,8 @@ struct SearchView<H:HomeProtocol,
         .pumpyBackground()
         .onSubmit(of: .search, runSearch)
         .onChange(of: viewModel.searchText, perform: handleSearchTextChanged)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle("Search")
     }
     
     // MARK: - Components
