@@ -36,9 +36,6 @@
 		C0500677294A676E00A8B50E /* PumpyAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0500676294A676E00A8B50E /* PumpyAnalytics.framework */; };
 		C0500679294A676E00A8B50E /* PumpyLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0500678294A676E00A8B50E /* PumpyLibrary.framework */; };
 		C050067B294A676E00A8B50E /* PumpyShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C050067A294A676E00A8B50E /* PumpyShared.framework */; };
-		C05D340626281B94009DFC2A /* CapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D340526281B94009DFC2A /* CapabilitiesView.swift */; };
-		C05D340B26281BA4009DFC2A /* CapabilitiesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05D340A26281BA4009DFC2A /* CapabilitiesVM.swift */; };
-		C061CB7824AA949200E18F98 /* LockAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C061CB7724AA949200E18F98 /* LockAlertView.swift */; };
 		C068FB19252F85A5006F7349 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C068FB18252F85A5006F7349 /* NetworkExtension.framework */; };
 		C0725DDC2617757D0095EDD9 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0725DDB2617757C0095EDD9 /* AccountManager.swift */; };
 		C075CC6D2947602B002A8F30 /* MusicManagerLeakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C075CC6C2947602B002A8F30 /* MusicManagerLeakTests.swift */; };
@@ -50,7 +47,6 @@
 		C0B5BCB52395CF1000102F50 /* Core Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03176922395C69900B5D766 /* Core Functions.swift */; };
 		C0B5BCB82396A59600102F50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03176932395C69900B5D766 /* SceneDelegate.swift */; };
 		C0B5F714251D172700D8073C /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B5F713251D172700D8073C /* Notifications.swift */; };
-		C0BE156F25FE28620066B274 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BE156E25FE28620066B274 /* SettingsView.swift */; };
 		C0D60C5B23313D6A0010F653 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D60C5A23313D6A0010F653 /* AppDelegate.swift */; };
 		C0D60C6223313D6B0010F653 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0D60C6123313D6B0010F653 /* Assets.xcassets */; };
 		C0D60C6523313D6B0010F653 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0D60C6323313D6B0010F653 /* LaunchScreen.storyboard */; };
@@ -112,9 +108,6 @@
 		C0500676294A676E00A8B50E /* PumpyAnalytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyAnalytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0500678294A676E00A8B50E /* PumpyLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C050067A294A676E00A8B50E /* PumpyShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C05D340526281B94009DFC2A /* CapabilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CapabilitiesView.swift; path = "Pumpy Music iOS/Settings/Capabilitites/CapabilitiesView.swift"; sourceTree = SOURCE_ROOT; };
-		C05D340A26281BA4009DFC2A /* CapabilitiesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesVM.swift; sourceTree = "<group>"; };
-		C061CB7724AA949200E18F98 /* LockAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockAlertView.swift; sourceTree = "<group>"; };
 		C068FB18252F85A5006F7349 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		C0725DDB2617757C0095EDD9 /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		C075CC6A2947602B002A8F30 /* Pumpy MusicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pumpy MusicTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,7 +119,6 @@
 		C0A6CAF524A8FA6F00F66187 /* PlaybackData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackData.swift; sourceTree = "<group>"; };
 		C0AE9CBA291D260F00142243 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		C0B5F713251D172700D8073C /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
-		C0BE156E25FE28620066B274 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C0D60C5723313D6A0010F653 /* Pumpy Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pumpy Music.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0D60C5A23313D6A0010F653 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0D60C6123313D6B0010F653 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -264,15 +256,6 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		C05D340F26281C8C009DFC2A /* Capabilitites */ = {
-			isa = PBXGroup;
-			children = (
-				C05D340A26281BA4009DFC2A /* CapabilitiesVM.swift */,
-				C05D340526281B94009DFC2A /* CapabilitiesView.swift */,
-			);
-			path = Capabilitites;
-			sourceTree = "<group>";
-		};
 		C05D9B4F262EC08E00A03068 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,16 +266,6 @@
 				C0FCE334260B07BA00D4E608 /* AppleMusicAPI.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		C0725DFE2618479C0095EDD9 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				C05D340F26281C8C009DFC2A /* Capabilitites */,
-				C0BE156E25FE28620066B274 /* SettingsView.swift */,
-				C061CB7724AA949200E18F98 /* LockAlertView.swift */,
-			);
-			path = Settings;
 			sourceTree = "<group>";
 		};
 		C075CC6B2947602B002A8F30 /* Pumpy MusicTests */ = {
@@ -350,7 +323,6 @@
 				6D972DC128A3079000CFD9D7 /* Home */,
 				C0373F4225F9828A005028CF /* Menu */,
 				C0130B4A26CBD1440056E5F6 /* Blocked Tracks */,
-				C0725DFE2618479C0095EDD9 /* Settings */,
 				C00EA26524EB1FDC00D0C107 /* Music Manager */,
 				C0A6CAFC24A8FE0A00F66187 /* Remote Manager */,
 				C0D60C6123313D6B0010F653 /* Assets.xcassets */,
@@ -493,12 +465,10 @@
 			files = (
 				C0FCE335260B07BA00D4E608 /* AppleMusicAPI.swift in Sources */,
 				6DC5EE09289EB20F00AB5410 /* QueueManager.swift in Sources */,
-				C05D340626281B94009DFC2A /* CapabilitiesView.swift in Sources */,
 				C0A6CAF624A8FA6F00F66187 /* PlaybackData.swift in Sources */,
 				C0B5BCB52395CF1000102F50 /* Core Functions.swift in Sources */,
 				6D961997288C475D009040A3 /* User.swift in Sources */,
 				C0130B4C26CBD2140056E5F6 /* BlockedTracksView.swift in Sources */,
-				C05D340B26281BA4009DFC2A /* CapabilitiesVM.swift in Sources */,
 				6D4F5C3E28B0FDAB00FA1982 /* Queue + Energy.swift in Sources */,
 				C00CA9D52689BF53000BF2DC /* BlockedTracksManager.swift in Sources */,
 				C031EAC826C6F97400D3A18A /* NowPlayingManager.swift in Sources */,
@@ -507,9 +477,7 @@
 				C0725DDC2617757D0095EDD9 /* AccountManager.swift in Sources */,
 				6DC5EE07289E866100AB5410 /* PlaylistManager.swift in Sources */,
 				C0035217290D72A30006ACDE /* ScheduleManager.swift in Sources */,
-				C061CB7824AA949200E18F98 /* LockAlertView.swift in Sources */,
 				C07865132619D5CB001FB32B /* ActiveInfo.swift in Sources */,
-				C0BE156F25FE28620066B274 /* SettingsView.swift in Sources */,
 				C0B5BCB82396A59600102F50 /* SceneDelegate.swift in Sources */,
 				6DC5EE0D289ED80000AB5410 /* Music Extensions.swift in Sources */,
 				C0130B5226CBD52B0056E5F6 /* BlockedTrackViewModel.swift in Sources */,

@@ -96,6 +96,9 @@
 		C0035220290D7FD40006ACDE /* PumpyLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D851514288D3A3F006397CC /* PumpyLibrary.framework */; platformFilter = ios; };
 		C01720BF28F17B9B003BA158 /* TrackPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01720BE28F17B9B003BA158 /* TrackPreview.swift */; };
 		C01720C328F17EE7003BA158 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01720C228F17EE7003BA158 /* ArtworkView.swift */; };
+		C01B959F2A79A0DA00ED6778 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01B959E2A79A0DA00ED6778 /* SettingsView.swift */; };
+		C01B95A12A79A10F00ED6778 /* CapabilitiesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01B95A02A79A10F00ED6778 /* CapabilitiesVM.swift */; };
+		C01B95A32A79A11F00ED6778 /* CapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01B95A22A79A11F00ED6778 /* CapabilitiesView.swift */; };
 		C0278AFB29D9908D00FAB3DE /* LabResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0278AFA29D9908D00FAB3DE /* LabResultsView.swift */; };
 		C03DBCE12A78F7DD0007A260 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03DBCE02A78F7DD0007A260 /* HomeView.swift */; };
 		C0420C7F2A38A546000B8485 /* ArtworkHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0420C7E2A38A546000B8485 /* ArtworkHelpers.swift */; };
@@ -224,6 +227,9 @@
 		C003521E290D7FD40006ACDE /* AlarmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTests.swift; sourceTree = "<group>"; };
 		C01720BE28F17B9B003BA158 /* TrackPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPreview.swift; sourceTree = "<group>"; };
 		C01720C228F17EE7003BA158 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
+		C01B959E2A79A0DA00ED6778 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C01B95A02A79A10F00ED6778 /* CapabilitiesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesVM.swift; sourceTree = "<group>"; };
+		C01B95A22A79A11F00ED6778 /* CapabilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesView.swift; sourceTree = "<group>"; };
 		C0278AFA29D9908D00FAB3DE /* LabResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabResultsView.swift; sourceTree = "<group>"; };
 		C03DBCE02A78F7DD0007A260 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C0420C7E2A38A546000B8485 /* ArtworkHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkHelpers.swift; sourceTree = "<group>"; };
@@ -425,6 +431,9 @@
 		6DAC17C228A50924009D46BC /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				C01B95A22A79A11F00ED6778 /* CapabilitiesView.swift */,
+				C01B95A02A79A10F00ED6778 /* CapabilitiesVM.swift */,
+				C01B959E2A79A0DA00ED6778 /* SettingsView.swift */,
 				6DAC17BE28A508F2009D46BC /* SettingsManager.swift */,
 				6DAC17C028A5090B009D46BC /* SettingsModel.swift */,
 			);
@@ -797,6 +806,7 @@
 				6DB8C02E28A3D161006C1B85 /* PreviewMocks.swift in Sources */,
 				6DB8C01628A3B120006C1B85 /* ScheduleView.swift in Sources */,
 				6DB8C02028A3B135006C1B85 /* DetailInfo.swift in Sources */,
+				C01B95A32A79A11F00ED6778 /* CapabilitiesView.swift in Sources */,
 				6D972DB528A301F200CFD9D7 /* PlayerControls.swift in Sources */,
 				6DB8C02828A3BD6B006C1B85 /* BlockedTracksProtocol.swift in Sources */,
 				6D972DBD28A301F200CFD9D7 /* DislikeButton.swift in Sources */,
@@ -814,6 +824,7 @@
 				6DEE0CE0288DA20A006A0CC4 /* FormViewRow.swift in Sources */,
 				C0BBEFA8291806ED008200DB /* ContextiOS16.swift in Sources */,
 				C01720C328F17EE7003BA158 /* ArtworkView.swift in Sources */,
+				C01B959F2A79A0DA00ED6778 /* SettingsView.swift in Sources */,
 				6DB8C01A28A3B120006C1B85 /* ButtonsView.swift in Sources */,
 				C0803A882A2FE3DF009EC18D /* AddToLabButtons.swift in Sources */,
 				C03DBCE12A78F7DD0007A260 /* HomeView.swift in Sources */,
@@ -870,6 +881,7 @@
 				6DAC17BF28A508F2009D46BC /* SettingsManager.swift in Sources */,
 				6D267C5D28A251460094AAF1 /* MusicModels.swift in Sources */,
 				C0A24B4829B7F3AB0044BEA0 /* SafeAreaInsets.swift in Sources */,
+				C01B95A12A79A10F00ED6778 /* CapabilitiesVM.swift in Sources */,
 				C077977928D355AA00EC9D5F /* ItemGridComponent.swift in Sources */,
 				6DE6C05528C0AF660045587C /* TrackTable.swift in Sources */,
 				6D1577C028BE19BC004BAB47 /* AccountView.swift in Sources */,

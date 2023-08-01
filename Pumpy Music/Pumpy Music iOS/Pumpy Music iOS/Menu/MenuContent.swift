@@ -85,9 +85,9 @@ struct MenuContent: View {
 
     var settingsAndExtDisplay: some View {
         Section {
-            NavigationLink(destination: SettingsView()) {
-                MenuRow(title: "Settings", imageName: "gear")
-            }
+//            NavigationLink(destination: SettingsView()) {
+//                MenuRow(title: "Settings", imageName: "gear")
+//            }
             if settings.onlineSettings.showExternalDisplay {
                 NavigationLink(destination: ExtDisplaySettingsView<PlaylistManager>()) {
                     MenuRow(title: "External Display", imageName: "tv")

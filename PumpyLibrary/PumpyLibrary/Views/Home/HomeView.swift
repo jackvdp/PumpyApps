@@ -36,7 +36,7 @@ struct HomeView<H:HomeProtocol,
         }
         ToolbarItem(placement: .navigationBarTrailing) {
             NavigationLink(destination: {
-                Text("Settings")
+                SettingsView()
             }, label: {
                 Image(systemName: "gearshape")
             })
@@ -64,6 +64,7 @@ struct NewHomeView_Previews: PreviewProvider {
         .environmentObject(MockQueueManager())
         .environmentObject(MusicLabManager())
         .environmentObject(ToastManager())
+        .environmentObject(SettingsManager())
         .preferredColorScheme(.dark)
         .accentColor(.pumpyPink)
     }

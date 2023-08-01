@@ -7,41 +7,26 @@
 //
 
 import SwiftUI
-import PumpyLibrary
 
 struct CapabilitiesView: View {
     
     @StateObject var capaVM = CapabilitiesViewModel()
-    @EnvironmentObject var accountVM: AccountManager
     
     var body: some View {
         PumpyList {
-            Section {
-                CheckRowView(text: "Music Authorised",
-                             granted: capaVM.libraryAccess,
-                             action: capaVM.getLibraryAccess)
-                CheckRowView(text: "Store Authorised",
-                             granted: capaVM.storeAccess,
-                             action: {})
-                CheckRowView(text: "Logged in to Pumpy",
-                             granted: (accountVM.user != nil),
-                             action: {
-                                accountVM.user = nil
-                             })
-                CheckRowView(text: "Music Token",
-                             granted: capaVM.tokenRecieved,
-                             action: {})
-            }
+            CheckRowView(text: "Music Authorised",
+                         granted: capaVM.libraryAccess,
+                         action: capaVM.getLibraryAccess)
+            CheckRowView(text: "Store Authorised",
+                         granted: capaVM.storeAccess,
+                         action: {})
+            CheckRowView(text: "Music Token",
+                         granted: capaVM.tokenRecieved,
+                         action: {})
         }
+        .listStyle(.plain)
         .pumpyBackground()
         .navigationBarTitle("Capabilities")
-    }
-}
-
-struct CapabilitiesView_Previews: PreviewProvider {
-    static var previews: some View {
-        CapabilitiesView()
-            .environmentObject(AccountManager())
     }
 }
 
@@ -76,5 +61,17 @@ struct CheckRowView: View {
                 action()
             }
         }
+    }
+}
+
+// MARK: Preview
+
+struct CapabilitiesView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            CapabilitiesView()
+        }
+        .preferredColorScheme(.dark)
+        .accentColor(.pumpyPink)
     }
 }

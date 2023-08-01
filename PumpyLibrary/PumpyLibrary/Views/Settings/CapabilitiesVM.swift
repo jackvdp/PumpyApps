@@ -10,7 +10,6 @@ import Foundation
 import UserNotifications
 import StoreKit
 import MediaPlayer
-import PumpyLibrary
 import PumpyAnalytics
 
 class CapabilitiesViewModel: ObservableObject {
@@ -41,16 +40,11 @@ class CapabilitiesViewModel: ObservableObject {
     
     func checkLibraryAccess() -> Bool {
         let status = MPMediaLibrary.authorizationStatus()
-        if status == .authorized {
-            return true
-        } else {
-            return false
-        }
+        return status == .authorized
     }
     
     func checkAppleMusicSub(completion: @escaping (Bool) -> Void) {
-        let controller = SKCloudServiceController()
-        controller.requestCapabilities { (capabilities, error) in
+        storeController.requestCapabilities { (capabilities, error) in
             guard error == nil else { return }
             if capabilities.contains(.musicCatalogPlayback) {
                 completion(true)
