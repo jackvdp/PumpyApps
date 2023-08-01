@@ -8,12 +8,15 @@
 import SwiftUI
 import PumpyAnalytics
 
-struct HomeView<H:HomeProtocol,
-                P:PlaylistProtocol,
-                N:NowPlayingProtocol,
-                B:BlockedTracksProtocol,
-                T:TokenProtocol,
-                Q:QueueProtocol>: View {
+struct HomeView<
+    A:AccountManagerProtocol,
+    H:HomeProtocol,
+    P:PlaylistProtocol,
+    N:NowPlayingProtocol,
+    B:BlockedTracksProtocol,
+    T:TokenProtocol,
+    Q:QueueProtocol
+>: View {
     var body: some View {
         VStack(spacing: 0) {
             CatalogView<H,P,N,B,T,Q>()
@@ -27,7 +30,7 @@ struct HomeView<H:HomeProtocol,
     var navBarButtons: some ToolbarContent {
         ToolbarItem(placement: .navigationBarLeading) {
             NavigationLink(destination: {
-                Text("Account")
+                AccountView<A>()
             }, label: {
                 Image(systemName: "person")
             })
@@ -49,7 +52,8 @@ struct HomeView<H:HomeProtocol,
 struct NewHomeView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            HomeView<MockHomeVM,
+            HomeView<MockAccountManager,
+                     MockHomeVM,
                      MockPlaylistManager,
                      MockNowPlayingManager,
                      MockBlockedTracks,
@@ -65,6 +69,7 @@ struct NewHomeView_Previews: PreviewProvider {
         .environmentObject(MusicLabManager())
         .environmentObject(ToastManager())
         .environmentObject(SettingsManager())
+        .environmentObject(MockAccountManager())
         .preferredColorScheme(.dark)
         .accentColor(.pumpyPink)
     }

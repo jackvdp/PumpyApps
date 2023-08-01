@@ -28,6 +28,7 @@ struct UserView: View {
     var body: some View {
         VStack(spacing: 0) {
             PumpyTabView<
+                AccountManager,
                 HomePlayerManager,
                 PlaylistManager,
                 NowPlayingManager,

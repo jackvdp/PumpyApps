@@ -9,17 +9,20 @@ import SwiftUI
 import Introspect
 import PumpyAnalytics
 
-public struct PumpyTabView<H:HomeProtocol,
-                    P:PlaylistProtocol,
-                    N:NowPlayingProtocol,
-                    B:BlockedTracksProtocol,
-                    T:TokenProtocol,
-                    Q:QueueProtocol,
-                    U:UserProtocol>: View {
+public struct PumpyTabView<
+    A:AccountManagerProtocol,
+    H:HomeProtocol,
+    P:PlaylistProtocol,
+    N:NowPlayingProtocol,
+    B:BlockedTracksProtocol,
+    T:TokenProtocol,
+    Q:QueueProtocol,
+    U:UserProtocol
+>: View {
     
     public init() {}
     
-    typealias GenericTabs = Tabs<H,P,N,B,T,Q>
+    typealias GenericTabs = Tabs<A,H,P,N,B,T,Q>
     
     @State private var selectedTab = GenericTabs.home.rawValue
     @Namespace private var animation
@@ -78,19 +81,23 @@ public struct PumpyTabView<H:HomeProtocol,
     }
 }
 
-enum Tabs<H:HomeProtocol,
-          P:PlaylistProtocol,
-          N:NowPlayingProtocol,
-          B:BlockedTracksProtocol,
-          T:TokenProtocol,
-          Q:QueueProtocol>: Int, CaseIterable, View {
+enum Tabs<
+    A:AccountManagerProtocol,
+    H:HomeProtocol,
+    P:PlaylistProtocol,
+    N:NowPlayingProtocol,
+    B:BlockedTracksProtocol,
+    T:TokenProtocol,
+    Q:QueueProtocol
+>: Int, CaseIterable, View {
+    
     case home, library, lab, search
     
     var body: some View {
         NavigationView {
             switch self {
             case .home:
-                HomeView<H,P,N,B,T,Q>()
+                HomeView<A,H,P,N,B,T,Q>()
             case .library:
                 PlaylistTable<H,P,N,B,T,Q>()
             case .lab:
@@ -121,8 +128,23 @@ enum Tabs<H:HomeProtocol,
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing:0) {
-            PumpyTabView<MockHomeVM, MockPlaylistManager, MockNowPlayingManager, MockBlockedTracks, MockTokenManager, MockQueueManager, MockUser>()
-            MenuTrackView<MockTokenManager, MockNowPlayingManager, MockBlockedTracks, MockPlaylistManager, MockHomeVM>()
+            PumpyTabView<
+                MockAccountManager,
+                MockHomeVM,
+                MockPlaylistManager,
+                MockNowPlayingManager,
+                MockBlockedTracks,
+                MockTokenManager,
+                MockQueueManager,
+                MockUser
+            >()
+            MenuTrackView<
+                MockTokenManager,
+                MockNowPlayingManager,
+                MockBlockedTracks,
+                MockPlaylistManager,
+                MockHomeVM
+            >()
         }
         .edgesIgnoringSafeArea(.all)
         .preferredColorScheme(.dark)

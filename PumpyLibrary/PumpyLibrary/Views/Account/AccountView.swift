@@ -23,6 +23,7 @@ public struct AccountView<A:AccountManagerProtocol>: View {
             accountButtons
             versionLabel
         }
+        .listStyle(.plain)
         .pumpyBackground()
         .navigationBarTitle("Account")
         .alert(isPresented: $showError) {
@@ -87,6 +88,10 @@ public struct AccountView<A:AccountManagerProtocol>: View {
 
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView<MockAccountManager>()
+        NavigationView {
+            AccountView<MockAccountManager>()
+        }
+        .preferredColorScheme(.dark)
+        .environmentObject(MockAccountManager())
     }
 }
