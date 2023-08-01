@@ -41,8 +41,6 @@ public struct CatalogView<H:HomeProtocol,
                 }
             }
         }
-        .pumpyBackground()
-        .navigationTitle("Home")
         .listStyle(.plain)
         .onChange(of: authManager.appleMusicToken) { _ in
             getCollections()

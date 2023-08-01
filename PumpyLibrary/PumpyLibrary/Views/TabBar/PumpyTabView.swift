@@ -90,7 +90,7 @@ enum Tabs<H:HomeProtocol,
         NavigationView {
             switch self {
             case .home:
-                CatalogView<H,P,N,B,T,Q>()
+                HomeView<H,P,N,B,T,Q>()
             case .library:
                 PlaylistTable<H,P,N,B,T,Q>()
             case .lab:

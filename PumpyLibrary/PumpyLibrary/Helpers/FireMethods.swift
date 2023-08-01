@@ -85,7 +85,7 @@ public class FireMethods {
             return
         }
         
-        let firebaseRemoteItem = try! FirebaseEncoder().encode(object)
+        guard let firebaseRemoteItem = try? FirebaseEncoder().encode(object) else { return }
 
         db.collection(accountName).document(documentName).setData([
             dataFieldName : firebaseRemoteItem,
