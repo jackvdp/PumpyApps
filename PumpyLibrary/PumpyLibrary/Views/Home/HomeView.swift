@@ -17,6 +17,7 @@ struct HomeView<
     T:TokenProtocol,
     Q:QueueProtocol
 >: View {
+    
     var body: some View {
         VStack(spacing: 0) {
             CatalogView<H,P,N,B,T,Q>()

@@ -19,15 +19,43 @@ public struct AccountView<A:AccountManagerProtocol>: View {
     public init() {}
     
     public var body: some View {
-        PumpyList {
-            accountButtons
-            versionLabel
+        Group {
+            if case let .account(user) = accountVM.user?.username {
+                loggedInView(user)
+            } else {
+                guestView
+            }
         }
         .listStyle(.plain)
         .pumpyBackground()
         .navigationBarTitle("Account")
         .alert(isPresented: $showError) {
             standardAlertBox
+        }
+    }
+    
+    var guestView: some View {
+        ScrollView {
+            VStack(spacing: 32) {
+                Text("**You're currently signed in as a guest.**").underline()
+                Text("By creating an account, you unlock a range of benefits including:\n\n• **Playlist Automation:** Save your personalized playlist automation schedule for a seamless music experience.\n\n• **Track Preferences:** Like your favorite songs to easily access them later or block tracks that you don't prefer, tailoring the music experience to your taste")
+                    .multilineTextAlignment(.leading)
+                Button("Sign in") {
+                    accountVM.signOut()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.pumpyPink)
+                Text("*No personal information is recorded. The only data stored are user settings, liked/blocked tracks and playlist schedule.*").opacity(0.5).font(.callout)
+            }
+            .padding(32)
+            .multilineTextAlignment(.center)
+        }
+    }
+    
+    func loggedInView(_ user: String) -> some View {
+        PumpyList {
+            accountButtons
+            versionLabel(user)
         }
     }
     
@@ -44,13 +72,8 @@ public struct AccountView<A:AccountManagerProtocol>: View {
         .foregroundColor(.white)
     }
     
-    @ViewBuilder
-    var versionLabel: some View {
-        let username: String = {
-            guard case let .account(name) = accountVM.user?.username else { return "" }
-            return name
-        }()
-        Text("Account: \(username) | v\(K.versionNumber)")
+    func versionLabel(_ user: String) -> some View {
+        Text("Account: \(user) | v\(K.versionNumber)")
             .foregroundColor(.gray)
             .lineLimit(1)
             .padding(.horizontal)
