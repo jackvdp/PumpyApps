@@ -37,6 +37,8 @@ public struct MockData {
 }
 
 public struct PreviewPlaylist: Playlist {
+    public var name: String? { title }
+    
     public var title: String?
     public var artwork: UIImage?
     public var songs: [Track]

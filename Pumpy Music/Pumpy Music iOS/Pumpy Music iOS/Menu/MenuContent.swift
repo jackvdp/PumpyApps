@@ -67,11 +67,11 @@ struct MenuContent: View {
 
     var scheduleAndBlocked: some View {
         Section {
-            if settings.onlineSettings.showScheduler {
-                NavigationLink(destination: ScheduleView(getPlists: MusicContent.getPlaylists)) {
-                    MenuRow(title: "Playlist Schedule", imageName: "clock")
-                }
-            }
+//            if settings.onlineSettings.showScheduler {
+//                NavigationLink(destination: ScheduleView(getPlists: MusicContent.getPlaylists)) {
+//                    MenuRow(title: "Playlist Schedule", imageName: "clock")
+//                }
+//            }
             if settings.onlineSettings.showBlocked {
                 if let token = tokenManager.appleMusicToken, let sfID = tokenManager.appleMusicStoreFront {
                     NavigationLink(destination: BlockedTracksView(token: token, storeFront: sfID)) {

@@ -8,15 +8,13 @@
 
 import SwiftUI
 
-public struct ScheduleView: View {
+public struct ScheduleView<P:PlaylistProtocol>: View {
     
     @StateObject var scheduleViewModel = ScheduleViewModel()
     @EnvironmentObject var alarmManager: AlarmManager
-    let getPlists: () -> [ScheduledPlaylist]
+    @EnvironmentObject var playlistManager: P
     
-    public init(getPlists: @escaping () -> [ScheduledPlaylist]) {
-        self.getPlists = getPlists
-    }
+    public init() {}
     
     public var body: some View {
         ZStack(alignment: .bottom) {
@@ -59,9 +57,13 @@ public struct ScheduleView: View {
     
     func alarmRow(_ alarm: Alarm) -> some View {
         NavigationLink(isActive: $scheduleViewModel.showSetScheduleSheet) {
-            SetScheduleView(schVM: SetScheduleViewModel(alarm: scheduleViewModel.selectedAlarm,
-                                                        alarmManager: alarmManager,
-                                                        getPlists: getPlists))
+            SetScheduleView(
+                schVM: SetScheduleViewModel(
+                    alarm: scheduleViewModel.selectedAlarm,
+                    alarmManager: alarmManager,
+                    getPlists: playlistManager.getPlaylists
+                )
+            )
         } label: {
             Button(action: {
                 scheduleViewModel.setAndShowAlarm(alarm)
@@ -101,7 +103,7 @@ public struct ScheduleView: View {
 
 #if DEBUG
 struct ScheduleView_Previews: PreviewProvider {
-    static let scheduleView = ScheduleView(getPlists: {return []})
+    static let scheduleView = ScheduleView<MockPlaylistManager>()
     
     static var previews: some View {
         return NavigationView {

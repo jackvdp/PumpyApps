@@ -31,7 +31,7 @@ struct HomeView<
     var rows: some View {
         VStack(spacing: 0) {
             Divider()
-            NavigationLink(destination: ScheduleView(getPlists: { return [] })) {
+            NavigationLink(destination: ScheduleView<P>()) {
                 MenuRow(title: "Playlist Schedule", imageName: "clock", showChevron: true)
             }
             Divider()

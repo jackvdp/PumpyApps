@@ -16,7 +16,7 @@ public protocol MusicCollection {
     var artworkURL: String? { get }
 }
 
-public protocol Playlist: MusicCollection {
+public protocol Playlist: MusicCollection, ScheduledPlaylist {
     var title: String? { get }
     var artworkURL: String? { get }
     var songs: [Track] { get }
@@ -43,6 +43,8 @@ public struct QueuePlaylist: Playlist {
     public var artworkURL: String? = nil
     public var shortDescription: String?
     public var longDescription: String?
+    
+    public var name: String? { title }
 }
 
 /// Used as an interface for dealing with queue tracks i.e. by NowPlayingManager/QueueManager/UpNextList
