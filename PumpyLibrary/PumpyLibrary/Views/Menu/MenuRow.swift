@@ -10,13 +10,15 @@ import SwiftUI
 
 public struct MenuRow: View {
     
-    public init(title: String, imageName: String) {
+    public init(title: String, imageName: String, showChevron: Bool = false) {
         self.title = title
         self.imageName = imageName
+        self.showChevron = showChevron
     }
     
     let title: String
     let imageName: String
+    let showChevron: Bool
     
     public var body: some View {
         HStack(alignment: .center, spacing: 20.0) {
@@ -26,6 +28,10 @@ public struct MenuRow: View {
                 .frame(width: 30, height: 30)
             Text(title)
                 .font(.headline)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            if showChevron {
+                Image(systemName: "chevron.right")
+            }
         }
         .padding(.all, 10.0)
     }

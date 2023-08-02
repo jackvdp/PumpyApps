@@ -20,11 +20,28 @@ struct HomeView<
     
     var body: some View {
         VStack(spacing: 0) {
+            rows
             CatalogView<H,P,N,B,T,Q>()
         }
         .pumpyBackground()
         .navigationTitle("Home")
         .toolbar { navBarButtons }
+    }
+    
+    var rows: some View {
+        VStack(spacing: 0) {
+            Divider()
+            NavigationLink(destination: ScheduleView(getPlists: { return [] })) {
+                MenuRow(title: "Playlist Schedule", imageName: "clock", showChevron: true)
+            }
+            Divider()
+            NavigationLink(destination: Text("Blocked tracks")) {
+                MenuRow(title: "Blocked Tracks", imageName: "hand.thumbsdown", showChevron: true)
+            }
+            Divider()
+        }
+        .padding(.horizontal)
+        .buttonStyle(.plain)
     }
     
     @ToolbarContentBuilder
