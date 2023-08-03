@@ -7,13 +7,10 @@
 //
 
 import SwiftUI
-import PumpyLibrary
 
-struct BlockedTracksView: View {
+struct BlockedTracksView<B:BlockedTracksProtocol>: View {
     
-    @EnvironmentObject var blockedTracksManager: BlockedTracksManager
-    let token: String
-    let storeFront: String
+    @EnvironmentObject var blockedTracksManager: B
     @State private var showAlert = false
     
     var body: some View {
@@ -25,9 +22,7 @@ struct BlockedTracksView: View {
             } else {
                 PumpyList {
                     ForEach(blockedTracksManager.blockedTracks, id: \.self) { track in
-                        BlockedTracksRowView(blockedTrackVM: BlockedTrackViewModel(track,
-                                                                                   token: token,
-                                                                                   storeFront: storeFront))
+                        BlockedTracksRowView(track: track)
                     }
                     .onDelete(perform: delete)
                 }
@@ -66,7 +61,7 @@ struct BlockedTracksView: View {
 #if DEBUG
 struct BlockedTracksView_Previews: PreviewProvider {
     static var previews: some View {
-        BlockedTracksView(token: "", storeFront: "")
+        BlockedTracksView<MockBlockedTracks>()
             .environmentObject(MockBlockedTracks())
     }
 }

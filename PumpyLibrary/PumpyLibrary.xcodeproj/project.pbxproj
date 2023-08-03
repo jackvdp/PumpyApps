@@ -123,6 +123,8 @@
 		C0CBA99729151BCB001A90AE /* PumpyAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */; };
 		C0CC4D3D29BA9078002A0204 /* PropertySelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CC4D3C29BA9078002A0204 /* PropertySelectorView.swift */; };
 		C0CC4D3F29BB3839002A0204 /* CheckboxStyleToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CC4D3E29BB3839002A0204 /* CheckboxStyleToggle.swift */; };
+		C0DCEAF82A7B9A1900125EE4 /* BlockedTracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCEAF72A7B9A1900125EE4 /* BlockedTracksView.swift */; };
+		C0DCEAFA2A7B9A1C00125EE4 /* BlockedTracksRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCEAF92A7B9A1C00125EE4 /* BlockedTracksRowView.swift */; };
 		C0F54F2029B93ECC00B886C0 /* SettingsModelDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F1F29B93ECC00B886C0 /* SettingsModelDecoding.swift */; };
 		C0F54F2329B94C2800B886C0 /* MusicLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F2229B94C2800B886C0 /* MusicLabView.swift */; };
 		C0F54F2529B9D0BE00B886C0 /* MusicLabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F54F2429B9D0BE00B886C0 /* MusicLabManager.swift */; };
@@ -250,6 +252,8 @@
 		C0CBA99629151BCB001A90AE /* PumpyAnalytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyAnalytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0CC4D3C29BA9078002A0204 /* PropertySelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertySelectorView.swift; sourceTree = "<group>"; };
 		C0CC4D3E29BB3839002A0204 /* CheckboxStyleToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxStyleToggle.swift; sourceTree = "<group>"; };
+		C0DCEAF72A7B9A1900125EE4 /* BlockedTracksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockedTracksView.swift; sourceTree = "<group>"; };
+		C0DCEAF92A7B9A1C00125EE4 /* BlockedTracksRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedTracksRowView.swift; sourceTree = "<group>"; };
 		C0F54F1F29B93ECC00B886C0 /* SettingsModelDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModelDecoding.swift; sourceTree = "<group>"; };
 		C0F54F2229B94C2800B886C0 /* MusicLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLabView.swift; sourceTree = "<group>"; };
 		C0F54F2429B9D0BE00B886C0 /* MusicLabManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLabManager.swift; sourceTree = "<group>"; };
@@ -555,6 +559,7 @@
 				6D2F0B6C28C604EF002D9B89 /* Music Catalog */,
 				C0F54F2129B94C0A00B886C0 /* Music Lab */,
 				6DB8C00A28A3B0F9006C1B85 /* Scheduler */,
+				C0DCEAF62A7B98B900125EE4 /* BlockedTracks */,
 				6DD848FF28A4499000794FDB /* External DIsplay */,
 				6DAC17C228A50924009D46BC /* Settings */,
 				C08E0AFB29321E3D00D83774 /* Account */,
@@ -630,6 +635,15 @@
 				6D1577C528BF687B004BAB47 /* Account+Delete.swift */,
 			);
 			path = Account;
+			sourceTree = "<group>";
+		};
+		C0DCEAF62A7B98B900125EE4 /* BlockedTracks */ = {
+			isa = PBXGroup;
+			children = (
+				C0DCEAF72A7B9A1900125EE4 /* BlockedTracksView.swift */,
+				C0DCEAF92A7B9A1C00125EE4 /* BlockedTracksRowView.swift */,
+			);
+			path = BlockedTracks;
 			sourceTree = "<group>";
 		};
 		C0F54F2129B94C0A00B886C0 /* Music Lab */ = {
@@ -838,6 +852,7 @@
 				6DE6C05728C0AF660045587C /* PlaylistTable.swift in Sources */,
 				6DAC17BD28A507F0009D46BC /* MusicProtocol.swift in Sources */,
 				C01720BF28F17B9B003BA158 /* TrackPreview.swift in Sources */,
+				C0DCEAF82A7B9A1900125EE4 /* BlockedTracksView.swift in Sources */,
 				6DEAAC8A28C8FBFA0033ED19 /* Firebase.swift in Sources */,
 				C07DC8942A2CB608005A142F /* TimeScrubber.swift in Sources */,
 				6D267C5F28A2581F0094AAF1 /* GetArtwork.swift in Sources */,
@@ -855,6 +870,7 @@
 				6DB8C02228A3B135006C1B85 /* ScheduledUser.swift in Sources */,
 				6D972D9F28A2F74B00CFD9D7 /* LoginView.swift in Sources */,
 				C0F54F2329B94C2800B886C0 /* MusicLabView.swift in Sources */,
+				C0DCEAFA2A7B9A1C00125EE4 /* BlockedTracksRowView.swift in Sources */,
 				6D267C5928A250150094AAF1 /* ActiveModel.swift in Sources */,
 				6D972DA528A2F82100CFD9D7 /* AccountProtocol.swift in Sources */,
 				6DF768FC28C62ED500E3959F /* CollectionView.swift in Sources */,

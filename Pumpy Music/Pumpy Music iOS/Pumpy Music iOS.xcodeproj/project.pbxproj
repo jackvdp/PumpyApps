@@ -24,9 +24,6 @@
 		C0035217290D72A30006ACDE /* ScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0035216290D72A30006ACDE /* ScheduleManager.swift */; };
 		C0071F3A2653D4D200B16401 /* MusicContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0071F392653D4D200B16401 /* MusicContent.swift */; };
 		C00CA9D52689BF53000BF2DC /* BlockedTracksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00CA9D42689BF53000BF2DC /* BlockedTracksManager.swift */; };
-		C0130B4C26CBD2140056E5F6 /* BlockedTracksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0130B4B26CBD2140056E5F6 /* BlockedTracksView.swift */; };
-		C0130B5026CBD5040056E5F6 /* BlockedTracksRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0130B4F26CBD5040056E5F6 /* BlockedTracksRowView.swift */; };
-		C0130B5226CBD52B0056E5F6 /* BlockedTrackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0130B5126CBD52B0056E5F6 /* BlockedTrackViewModel.swift */; };
 		C020E4F9291518B100811488 /* PumpyShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020E4F8291518B100811488 /* PumpyShared.framework */; };
 		C020E4FA291518B100811488 /* PumpyShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C020E4F8291518B100811488 /* PumpyShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C031993523BFD105007B1A4D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C031993423BFD105007B1A4D /* GoogleService-Info.plist */; };
@@ -41,7 +38,6 @@
 		C075CC6D2947602B002A8F30 /* MusicManagerLeakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C075CC6C2947602B002A8F30 /* MusicManagerLeakTests.swift */; };
 		C07865132619D5CB001FB32B /* ActiveInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07865122619D5CB001FB32B /* ActiveInfo.swift */; };
 		C0798655262D5CC9003A426E /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0798654262D5CC9003A426E /* MusicManager.swift */; };
-		C08E0AEC2931760000D83774 /* MenuContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08E0AEB2931760000D83774 /* MenuContent.swift */; };
 		C0A6CAF624A8FA6F00F66187 /* PlaybackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A6CAF524A8FA6F00F66187 /* PlaybackData.swift */; };
 		C0AE9CBB291D260F00142243 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AE9CBA291D260F00142243 /* UserView.swift */; };
 		C0B5BCB52395CF1000102F50 /* Core Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03176922395C69900B5D766 /* Core Functions.swift */; };
@@ -95,9 +91,6 @@
 		C0035216290D72A30006ACDE /* ScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleManager.swift; sourceTree = "<group>"; };
 		C0071F392653D4D200B16401 /* MusicContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicContent.swift; sourceTree = "<group>"; };
 		C00CA9D42689BF53000BF2DC /* BlockedTracksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedTracksManager.swift; sourceTree = "<group>"; };
-		C0130B4B26CBD2140056E5F6 /* BlockedTracksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedTracksView.swift; sourceTree = "<group>"; };
-		C0130B4F26CBD5040056E5F6 /* BlockedTracksRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedTracksRowView.swift; sourceTree = "<group>"; };
-		C0130B5126CBD52B0056E5F6 /* BlockedTrackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedTrackViewModel.swift; sourceTree = "<group>"; };
 		C020E4F8291518B100811488 /* PumpyShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PumpyShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C03176922395C69900B5D766 /* Core Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core Functions.swift"; sourceTree = "<group>"; };
 		C03176932395C69900B5D766 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,7 +108,6 @@
 		C07865122619D5CB001FB32B /* ActiveInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveInfo.swift; sourceTree = "<group>"; };
 		C078F06423C4D17700190352 /* Pumpy Music.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pumpy Music.entitlements"; sourceTree = "<group>"; };
 		C0798654262D5CC9003A426E /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
-		C08E0AEB2931760000D83774 /* MenuContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContent.swift; sourceTree = "<group>"; };
 		C0A6CAF524A8FA6F00F66187 /* PlaybackData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackData.swift; sourceTree = "<group>"; };
 		C0AE9CBA291D260F00142243 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		C0B5F713251D172700D8073C /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -171,40 +163,6 @@
 				C05D9B4F262EC08E00A03068 /* Model */,
 			);
 			path = "Music Manager";
-			sourceTree = "<group>";
-		};
-		C0130B4A26CBD1440056E5F6 /* Blocked Tracks */ = {
-			isa = PBXGroup;
-			children = (
-				C0130B5626CBE5690056E5F6 /* View */,
-				C0130B5526CBE5610056E5F6 /* ViewModel */,
-			);
-			path = "Blocked Tracks";
-			sourceTree = "<group>";
-		};
-		C0130B5526CBE5610056E5F6 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				C0130B5126CBD52B0056E5F6 /* BlockedTrackViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		C0130B5626CBE5690056E5F6 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C0130B4B26CBD2140056E5F6 /* BlockedTracksView.swift */,
-				C0130B4F26CBD5040056E5F6 /* BlockedTracksRowView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C0373F4225F9828A005028CF /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				C08E0AEB2931760000D83774 /* MenuContent.swift */,
-			);
-			path = Menu;
 			sourceTree = "<group>";
 		};
 		C046009D23895DC9008151A5 /* Frameworks */ = {
@@ -321,8 +279,6 @@
 				C0B5F6F2251D15A100D8073C /* Application */,
 				C0D60C9E2333C1490010F653 /* Account */,
 				6D972DC128A3079000CFD9D7 /* Home */,
-				C0373F4225F9828A005028CF /* Menu */,
-				C0130B4A26CBD1440056E5F6 /* Blocked Tracks */,
 				C00EA26524EB1FDC00D0C107 /* Music Manager */,
 				C0A6CAFC24A8FE0A00F66187 /* Remote Manager */,
 				C0D60C6123313D6B0010F653 /* Assets.xcassets */,
@@ -468,7 +424,6 @@
 				C0A6CAF624A8FA6F00F66187 /* PlaybackData.swift in Sources */,
 				C0B5BCB52395CF1000102F50 /* Core Functions.swift in Sources */,
 				6D961997288C475D009040A3 /* User.swift in Sources */,
-				C0130B4C26CBD2140056E5F6 /* BlockedTracksView.swift in Sources */,
 				6D4F5C3E28B0FDAB00FA1982 /* Queue + Energy.swift in Sources */,
 				C00CA9D52689BF53000BF2DC /* BlockedTracksManager.swift in Sources */,
 				C031EAC826C6F97400D3A18A /* NowPlayingManager.swift in Sources */,
@@ -480,16 +435,13 @@
 				C07865132619D5CB001FB32B /* ActiveInfo.swift in Sources */,
 				C0B5BCB82396A59600102F50 /* SceneDelegate.swift in Sources */,
 				6DC5EE0D289ED80000AB5410 /* Music Extensions.swift in Sources */,
-				C0130B5226CBD52B0056E5F6 /* BlockedTrackViewModel.swift in Sources */,
 				C0071F3A2653D4D200B16401 /* MusicContent.swift in Sources */,
 				C0798655262D5CC9003A426E /* MusicManager.swift in Sources */,
 				6D45ED9228A5A0C0002EC94C /* StartView.swift in Sources */,
 				C0D60C5B23313D6A0010F653 /* AppDelegate.swift in Sources */,
 				C04A655923DF4F6300DD5FBB /* RemoteManager.swift in Sources */,
-				C0130B5026CBD5040056E5F6 /* BlockedTracksRowView.swift in Sources */,
 				6D972DC328A307A300CFD9D7 /* HomePlayerManager.swift in Sources */,
 				C0E6E0012631B9B000265B9E /* Music Models.swift in Sources */,
-				C08E0AEC2931760000D83774 /* MenuContent.swift in Sources */,
 				C0B5F714251D172700D8073C /* Notifications.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

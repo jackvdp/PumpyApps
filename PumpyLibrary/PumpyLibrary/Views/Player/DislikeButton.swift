@@ -35,6 +35,7 @@ struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
                 .rotationEffect(.degrees(rotation))
         }
         .buttonStyle(.plain)
+        .disabled(track.getBlockedTrack() == nil)
         .alert(isPresented: $showAlert, content: createAlert)
         .onReceive(blockedTracksManager.blockedTracks.publisher) { _ in
             setButton()
@@ -62,7 +63,8 @@ struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
                      primaryButton: .default(Text("Cancel"), action: {}),
                      secondaryButton: .destructive(Text("Block"),
                                                    action: {
-            blockedTracksManager.addTrackToBlockedList(track.getBlockedTrack())
+            guard let track = track.getBlockedTrack() else { return }
+            blockedTracksManager.addTrackToBlockedList(track)
         }))
     }
 

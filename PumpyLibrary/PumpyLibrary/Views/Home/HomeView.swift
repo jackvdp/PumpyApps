@@ -35,7 +35,7 @@ struct HomeView<
                 MenuRow(title: "Playlist Schedule", imageName: "clock", showChevron: true)
             }
             Divider()
-            NavigationLink(destination: Text("Blocked tracks")) {
+            NavigationLink(destination: BlockedTracksView<B>()) {
                 MenuRow(title: "Blocked Tracks", imageName: "hand.thumbsdown", showChevron: true)
             }
             Divider()

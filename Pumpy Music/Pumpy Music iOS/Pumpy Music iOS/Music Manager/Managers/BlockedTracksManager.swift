@@ -52,7 +52,8 @@ class BlockedTracksManager: BlockedTracksProtocol {
         }
     }
     
-    func unblockTrackOrAskToBlock(track: BlockedTrack) -> Bool {
+    func unblockTrackOrAskToBlock(track: BlockedTrack?) -> Bool {
+        guard let track else { return false }
         if blockedTracks.contains(where: { $0.playbackID == track.playbackID }) {
             removeTrack(id: track.playbackID)
         } else {
