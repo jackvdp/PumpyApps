@@ -64,7 +64,7 @@ public struct CatalogView<H:HomeProtocol,
     }
     
     func collectionsView(_ collections: [SuggestedCollection]) -> some View {
-        PumpyListForEach(collections, id: \.self) { collection in
+        ForEach(collections, id: \.self) { collection in
             CollectionView<H,P,N,B,T,Q>(collection: collection)
         }
     }

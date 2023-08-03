@@ -27,7 +27,7 @@ struct CollectionView<H:HomeProtocol,
             }
             .frame(height: conditionForBig() ? bigSize : smallSize)
         }
-        .padding(.horizontal, -20)
+        .padding(.top)
     }
     
     var title: some View {

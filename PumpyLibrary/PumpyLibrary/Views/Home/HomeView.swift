@@ -19,9 +19,11 @@ struct HomeView<
 >: View {
     
     var body: some View {
-        VStack(spacing: 0) {
-            rows
-            CatalogView<H,P,N,B,T,Q>()
+        ScrollView {
+            VStack(spacing: 0) {
+                rows
+                CatalogView<H,P,N,B,T,Q>()
+            }
         }
         .pumpyBackground()
         .navigationTitle("Home")
