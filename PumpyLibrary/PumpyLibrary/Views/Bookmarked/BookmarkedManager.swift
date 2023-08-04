@@ -8,7 +8,9 @@
 import Foundation
 import PumpyShared
 
-class BookmarkedManager: ObservableObject {
+public class BookmarkedManager: ObservableObject {
+    
+    public init() {}
     
     @Published private(set) var bookmarkedItems = [BookmarkedItem]() {
         didSet {
@@ -19,7 +21,7 @@ class BookmarkedManager: ObservableObject {
     private var username: Username?
     private let debouncer = Debouncer()
     
-    func setUp(username: Username) {
+    public func setUp(username: Username) {
         self.username = username
         listenForBookmarks()
     }

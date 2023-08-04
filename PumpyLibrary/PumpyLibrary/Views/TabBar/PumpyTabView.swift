@@ -99,11 +99,11 @@ enum Tabs<
             case .home:
                 HomeView<A,H,P,N,B,T,Q>()
             case .library:
-                PlaylistTable<H,P,N,B,T,Q>()
+                PlaylistTable<P,N,B,T,Q>()
             case .lab:
-                MusicLabView<N,B,T,Q,P,H>()
+                MusicLabView<N,B,T,Q,P>()
             case .search:
-                SearchView<H,P,N,B,T,Q>()
+                SearchView<P,N,B,T,Q>()
             }
         }
         .accentColor(.pumpyPink)

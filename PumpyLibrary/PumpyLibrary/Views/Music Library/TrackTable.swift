@@ -10,8 +10,7 @@ import SwiftUI
 import AlertToast
 import PumpyShared
 
-struct TrackTable<H:HomeProtocol,
-                  P:PlaylistProtocol,
+struct TrackTable<P:PlaylistProtocol,
                   N:NowPlayingProtocol,
                   B:BlockedTracksProtocol,
                   T:TokenProtocol,
@@ -20,7 +19,6 @@ struct TrackTable<H:HomeProtocol,
     @EnvironmentObject var playlistManager: P
     @EnvironmentObject var labManager: MusicLabManager
     @EnvironmentObject var toastManager: ToastManager
-    @EnvironmentObject var homeVM: H
     let playlist: PumpyLibrary.Playlist
     @State private var searchText = ""
     
@@ -124,8 +122,7 @@ struct TrackTable_Previews: PreviewProvider {
 
     static var previews: some View {
         NavigationView {
-                TrackTable<MockHomeVM,
-                           MockPlaylistManager,
+                TrackTable<MockPlaylistManager,
                            MockNowPlayingManager,
                            MockBlockedTracks,
                            MockTokenManager,

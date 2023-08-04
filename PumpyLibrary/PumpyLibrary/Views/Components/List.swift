@@ -11,7 +11,7 @@ public struct PumpyListForEach<Data, ID, Content>: View where Data : RandomAcces
     
     public init(_ data: Data,
                 id: KeyPath<Data.Element, ID>,
-                content: @escaping (Data.Element) -> Content) {
+                @ViewBuilder content: @escaping (Data.Element) -> Content) {
         self.data = data
         self.id = id
         self.content = content
@@ -19,7 +19,7 @@ public struct PumpyListForEach<Data, ID, Content>: View where Data : RandomAcces
     
     let data: Data
     let id: KeyPath<Data.Element, ID>
-    @ViewBuilder let content: (Data.Element) -> Content
+    let content: (Data.Element) -> Content
     
     public var body: some View {
         if data.isEmpty {

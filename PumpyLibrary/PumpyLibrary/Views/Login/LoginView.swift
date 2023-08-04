@@ -20,6 +20,7 @@ public struct LoginView<A: AccountManagerProtocol>: View {
     
     public var body: some View {
         VStack(spacing: 20) {
+            Spacer()
             PumpyView()
             Spacer()
             signinFields

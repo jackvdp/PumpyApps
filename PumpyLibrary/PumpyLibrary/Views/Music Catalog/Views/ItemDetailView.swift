@@ -8,8 +8,7 @@
 import SwiftUI
 import PumpyAnalytics
 
-struct ItemDetailView<H:HomeProtocol,
-                      P:PlaylistProtocol,
+struct ItemDetailView<P:PlaylistProtocol,
                       N:NowPlayingProtocol,
                       B:BlockedTracksProtocol,
                       T:TokenProtocol,
@@ -59,7 +58,7 @@ struct ItemDetailView<H:HomeProtocol,
     @ViewBuilder
     func successView(_ playlist: PumpyAnalytics.Playlist) -> some View {
         if let plist = playlist as? Playlist {
-            TrackTable<H,P,N,B,T,Q>(playlist: plist)
+            TrackTable<P,N,B,T,Q>(playlist: plist)
                 .transition(.opacity)
                 .id(screen)
         } else {
@@ -73,8 +72,7 @@ struct ItemDetailView_Previews: PreviewProvider {
     static let snapshot = PlaylistSnapshot(sourceID: "1234", type: .am(id: "1234"))
     
     static var previews: some View {
-        ItemDetailView<MockHomeVM,
-                       MockPlaylistManager,
+        ItemDetailView<MockPlaylistManager,
                        MockNowPlayingManager,
                        MockBlockedTracks,
                        MockTokenManager,

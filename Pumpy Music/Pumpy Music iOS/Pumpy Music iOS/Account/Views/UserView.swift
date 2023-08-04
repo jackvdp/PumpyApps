@@ -24,6 +24,7 @@ struct UserView: View {
     @StateObject private var alarmManager = AlarmManager()
     @StateObject private var remoteManager = RemoteManager()
     @StateObject private var labManager = MusicLabManager()
+    @StateObject private var bookmarkManager = BookmarkedManager()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -68,6 +69,7 @@ struct UserView: View {
         .environmentObject(playlistManager)
         .environmentObject(remoteManager)
         .environmentObject(labManager)
+        .environmentObject(bookmarkManager)
         .musicToasts()
         .onAppear() {
             setUp()
@@ -99,6 +101,7 @@ struct UserView: View {
                             queueManager: queueManager,
                             alarmManager: alarmManager,
                             playlistManager: playlistManager)
+        bookmarkManager.setUp(username: user.username)
         (UIApplication.shared.delegate as! AppDelegate).remoteDataManager = remoteManager
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.user = user
     }

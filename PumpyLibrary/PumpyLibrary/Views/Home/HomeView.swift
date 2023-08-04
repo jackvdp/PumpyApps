@@ -38,6 +38,10 @@ struct HomeView<
             }
             Divider()
             NavigationLink(destination: BlockedTracksView<B>()) {
+                MenuRow(title: "Bookmarked", imageName: "hand.thumbsup", showChevron: true)
+            }
+            Divider()
+            NavigationLink(destination: BlockedTracksView<B>()) {
                 MenuRow(title: "Blocked Tracks", imageName: "hand.thumbsdown", showChevron: true)
             }
             Divider()

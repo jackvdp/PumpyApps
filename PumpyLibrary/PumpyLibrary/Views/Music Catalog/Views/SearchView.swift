@@ -8,8 +8,7 @@
 import SwiftUI
 import PumpyAnalytics
 
-struct SearchView<H:HomeProtocol,
-                  P:PlaylistProtocol,
+struct SearchView<P:PlaylistProtocol,
                   N:NowPlayingProtocol,
                   B:BlockedTracksProtocol,
                   T:TokenProtocol,
@@ -95,7 +94,7 @@ struct SearchView<H:HomeProtocol,
         return ScrollView(.horizontal) {
             LazyHGrid(rows: playlistRows, alignment: .center, spacing: 20) {
                 ForEach(playlists, id: \.sourceID) { item in
-                    NavigationLink(destination: ItemDetailView<H,P,N,B,T,Q>(snapshot: item)) {
+                    NavigationLink(destination: ItemDetailView<P,N,B,T,Q>(snapshot: item)) {
                         ItemGridComponent(name: item.name ?? "",
                                           curator: item.curator ?? "",
                                           itemArtworkURL: item.artworkURL ?? "",
@@ -218,12 +217,13 @@ struct SearchView<H:HomeProtocol,
 
 struct CatalogSearchView_Previews: PreviewProvider {
     
-    static var searchView = SearchView<MockHomeVM,
-                                   MockPlaylistManager,
-                                   MockNowPlayingManager,
-                                   MockBlockedTracks,
-                                   MockTokenManager,
-                                   MockQueueManager>()
+    static var searchView = SearchView<
+        MockPlaylistManager,
+        MockNowPlayingManager,
+        MockBlockedTracks,
+        MockTokenManager,
+        MockQueueManager
+    >()
     
     static var previews: some View {
         Group {

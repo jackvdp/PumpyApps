@@ -8,8 +8,7 @@
 import SwiftUI
 import PumpyAnalytics
 
-struct ItemView<H:HomeProtocol,
-                P:PlaylistProtocol,
+struct ItemView<P:PlaylistProtocol,
                 N:NowPlayingProtocol,
                 B:BlockedTracksProtocol,
                 T:TokenProtocol,
@@ -19,7 +18,7 @@ struct ItemView<H:HomeProtocol,
     let size: Int
     
     var body: some View {
-        NavigationLink(destination: ItemDetailView<H,P,N,B,T,Q>(snapshot: snapshot)) {
+        NavigationLink(destination: ItemDetailView<P,N,B,T,Q>(snapshot: snapshot)) {
             ItemGridComponent(name: item.name,
                               curator: item.curator,
                               itemArtworkURL: item.artworkURL,
@@ -37,8 +36,7 @@ struct ItemView<H:HomeProtocol,
 
 struct ItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemView<MockHomeVM,
-                 MockPlaylistManager,
+        ItemView<MockPlaylistManager,
                  MockNowPlayingManager,
                  MockBlockedTracks,
                  MockTokenManager,
@@ -47,8 +45,7 @@ struct ItemView_Previews: PreviewProvider {
             .frame(height: 100)
             .previewLayout(.sizeThatFits)
             .border(Color.red)
-        ItemView<MockHomeVM,
-                 MockPlaylistManager,
+        ItemView<MockPlaylistManager,
                  MockNowPlayingManager,
                  MockBlockedTracks,
                  MockTokenManager,
@@ -56,8 +53,7 @@ struct ItemView_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
             .frame(height: 200)
             .previewLayout(.sizeThatFits)
-        ItemView<MockHomeVM,
-                 MockPlaylistManager,
+        ItemView<MockPlaylistManager,
                  MockNowPlayingManager,
                  MockBlockedTracks,
                  MockTokenManager,

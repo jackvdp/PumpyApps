@@ -7,8 +7,7 @@
 //
 
 import SwiftUI
-public struct PlaylistTable<H:HomeProtocol,
-                            P:PlaylistProtocol,
+public struct PlaylistTable<P:PlaylistProtocol,
                             N:NowPlayingProtocol,
                             B:BlockedTracksProtocol,
                             T:TokenProtocol,
@@ -22,7 +21,7 @@ public struct PlaylistTable<H:HomeProtocol,
 
     public var body: some View {
         PumpyListForEach(filteredPlaylists, id: \.cloudGlobalID) { playlist in
-            NavigationLink(destination: TrackTable<H,P,N,B,T,Q>(playlist: playlist)) {
+            NavigationLink(destination: TrackTable<P,N,B,T,Q>(playlist: playlist)) {
                 PlaylistRow(playlist: playlist)
             }
         }
@@ -49,6 +48,6 @@ public struct PlaylistTable<H:HomeProtocol,
 
 struct PlaylistTable_Previews: PreviewProvider {
     static var previews: some View {
-        PlaylistTable<MockHomeVM,MockPlaylistManager,MockNowPlayingManager,MockBlockedTracks,MockTokenManager,MockQueueManager>().environmentObject(MockPlaylistManager())
+        PlaylistTable<MockPlaylistManager,MockNowPlayingManager,MockBlockedTracks,MockTokenManager,MockQueueManager>().environmentObject(MockPlaylistManager())
     }
 }

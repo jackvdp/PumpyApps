@@ -12,8 +12,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
                            B:BlockedTracksProtocol,
                            T:TokenProtocol,
                            Q:QueueProtocol,
-                           P:PlaylistProtocol,
-                           H:HomeProtocol>: View {
+                           P:PlaylistProtocol>: View {
     
     @EnvironmentObject var labManager: MusicLabManager
     @EnvironmentObject var playlistManager: P
@@ -128,7 +127,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
     }
     
     var button: some View {
-        NavigationLink(destination: LabResultView<H,P,N,B,T,Q>()) {
+        NavigationLink(destination: LabResultView<P,N,B,T,Q>()) {
             Text("Create")
                 .bold()
                 .padding(4)
@@ -171,18 +170,24 @@ struct MusicLabView_Previews: PreviewProvider {
         Group {
             NavigationView {
                 VStack {
-                    MusicLabView<MockNowPlayingManager,
-                    MockBlockedTracks,
-                    MockTokenManager,
-                    MockQueueManager,MockPlaylistManager,MockHomeVM>()
-                    MenuTrackView<MockTokenManager,MockNowPlayingManager, MockBlockedTracks,MockPlaylistManager, MockHomeVM>()
+                    MusicLabView<
+                        MockNowPlayingManager,
+                        MockBlockedTracks,
+                        MockTokenManager,
+                        MockQueueManager,
+                        MockPlaylistManager
+                    >()
+                    MenuTrackView<MockTokenManager,MockNowPlayingManager, MockBlockedTracks,MockPlaylistManager,MockHomeVM>()
                 }
             }.environmentObject(labManager)
             NavigationView {
-                MusicLabView<MockNowPlayingManager,
-                MockBlockedTracks,
-                MockTokenManager,
-                MockQueueManager,MockPlaylistManager,MockHomeVM>()
+                MusicLabView<
+                    MockNowPlayingManager,
+                    MockBlockedTracks,
+                    MockTokenManager,
+                    MockQueueManager,
+                    MockPlaylistManager
+                >()
             }.environmentObject(MusicLabManager())
         }
             .preferredColorScheme(.dark)

@@ -72,6 +72,8 @@ public struct QueueTrack: Track, Equatable {
 // MARK: - Blocked
 
 public struct CodableTrack: Codable, Hashable, MusicCollection {
+    
+    
     public init(title: String,
                 artist: String,
                 isExplicit: Bool,
@@ -89,6 +91,16 @@ public struct CodableTrack: Codable, Hashable, MusicCollection {
     public var isExplicit: Bool
     public var artworkURL: String?
     public var playbackID: String
+}
+
+extension CodableTrack: PumpyLibrary.Track {
+    public var name: String { title }
+    
+    public var artistName: String { artist }
+    
+    public var amStoreID: String? { playbackID }
+    
+    public var isExplicitItem: Bool { isExplicit }
 }
 
 extension Track {

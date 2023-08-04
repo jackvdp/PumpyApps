@@ -39,7 +39,7 @@ struct CollectionView<H:HomeProtocol,
     var items: some View {
         LazyHGrid(rows: rows, alignment: .center, spacing: 20) {
             ForEach(collection.items, id: \.id) { item in
-                ItemView<H,P,N,B,T,Q>(
+                ItemView<P,N,B,T,Q>(
                     item: item,
                     size: conditionForBig() ? Int(bigSize) : Int(smallSize)
                 )

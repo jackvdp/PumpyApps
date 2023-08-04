@@ -8,8 +8,7 @@
 import SwiftUI
 import PumpyAnalytics
 
-struct LabResultView<H:HomeProtocol,
-                     P:PlaylistProtocol,
+struct LabResultView<P:PlaylistProtocol,
                      N:NowPlayingProtocol,
                      B:BlockedTracksProtocol,
                      T:TokenProtocol,
@@ -25,7 +24,7 @@ struct LabResultView<H:HomeProtocol,
             case .loading:
                 ActivityView(activityIndicatorVisible: .constant(true)).noBackground
             case .playlist(let playlist):
-                TrackTable<H,P,N,B,T,Q>(playlist: playlist)
+                TrackTable<P,N,B,T,Q>(playlist: playlist)
             case .error:
                 Text("Error.\nPlease try again")
             }
