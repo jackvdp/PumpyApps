@@ -71,7 +71,7 @@ public struct QueueTrack: Track, Equatable {
 
 // MARK: - Blocked
 
-public struct BlockedTrack: Codable, Hashable, MusicCollection {
+public struct CodableTrack: Codable, Hashable, MusicCollection {
     public init(title: String,
                 artist: String,
                 isExplicit: Bool,
@@ -92,9 +92,9 @@ public struct BlockedTrack: Codable, Hashable, MusicCollection {
 }
 
 extension Track {
-    public func getBlockedTrack() -> BlockedTrack? {
+    public func getBlockedTrack() -> CodableTrack? {
         guard let amStoreID else { return nil }
-        return BlockedTrack(title: name,
+        return CodableTrack(title: name,
                             artist: artistName,
                             isExplicit: isExplicitItem,
                             artworkURL: artworkURL,

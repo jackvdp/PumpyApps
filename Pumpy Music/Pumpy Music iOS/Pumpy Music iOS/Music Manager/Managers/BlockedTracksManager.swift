@@ -13,7 +13,7 @@ import PumpyLibrary
 
 class BlockedTracksManager: BlockedTracksProtocol {
     
-    @Published var blockedTracks = [BlockedTrack]() {
+    @Published var blockedTracks = [CodableTrack]() {
         didSet {
             saveBlockedTracks(blockedTracks: blockedTracks)
         }
@@ -37,13 +37,13 @@ class BlockedTracksManager: BlockedTracksProtocol {
             remoteListener = FireMethods.listen(name: username,
                                                 documentName: K.FStore.blockedTracks,
                                                 dataFieldName: K.FStore.blockedTracks,
-                                                decodeObject: [BlockedTrack].self) { [weak self] blocked in
+                                                decodeObject: [CodableTrack].self) { [weak self] blocked in
                 self?.blockedTracks = blocked
             }
         }
     }
     
-    func saveBlockedTracks(blockedTracks: [BlockedTrack]) {
+    func saveBlockedTracks(blockedTracks: [CodableTrack]) {
         if let username {
             FireMethods.save(object: blockedTracks,
                              name: username,
@@ -52,7 +52,7 @@ class BlockedTracksManager: BlockedTracksProtocol {
         }
     }
     
-    func unblockTrackOrAskToBlock(track: BlockedTrack?) -> Bool {
+    func unblockTrackOrAskToBlock(track: CodableTrack?) -> Bool {
         guard let track else { return false }
         if blockedTracks.contains(where: { $0.playbackID == track.playbackID }) {
             removeTrack(id: track.playbackID)
@@ -62,7 +62,7 @@ class BlockedTracksManager: BlockedTracksProtocol {
         return false
     }
     
-    func addTrackToBlockedList(_ track: BlockedTrack) {
+    func addTrackToBlockedList(_ track: CodableTrack) {
         blockedTracks.append(track)
         queueManager?.removeFromQueue(id: track.playbackID)
     }

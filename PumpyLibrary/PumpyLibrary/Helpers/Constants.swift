@@ -50,6 +50,7 @@ public struct K {
         public static let repeatTrack = "Repeat Track"
         public static let downloadedTracks = "Downloaded Tracks"
         public static let blockedTracks = "Blocked Tracks"
+        public static let bookmarked = "Bookmarked"
         public static let time = "Time"
         public static let deviceName = "Device Name"
     }

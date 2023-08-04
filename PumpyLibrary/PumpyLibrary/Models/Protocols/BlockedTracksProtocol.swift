@@ -8,16 +8,16 @@
 import Foundation
 
 public protocol BlockedTracksProtocol: ObservableObject {
-    var blockedTracks: [BlockedTrack] { get set }
-    func unblockTrackOrAskToBlock(track: BlockedTrack?) -> Bool
-    func addTrackToBlockedList(_ track: BlockedTrack)
+    var blockedTracks: [CodableTrack] { get set }
+    func unblockTrackOrAskToBlock(track: CodableTrack?) -> Bool
+    func addTrackToBlockedList(_ track: CodableTrack)
     func removeTrack(id: String)
 }
 
 public class MockBlockedTracks: BlockedTracksProtocol {
     public init() {}
-    public var blockedTracks = [BlockedTrack]()
-    public func unblockTrackOrAskToBlock(track: BlockedTrack?) -> Bool {return false}
-    public func addTrackToBlockedList(_ track: BlockedTrack) {}
+    public var blockedTracks = [CodableTrack]()
+    public func unblockTrackOrAskToBlock(track: CodableTrack?) -> Bool {return false}
+    public func addTrackToBlockedList(_ track: CodableTrack) {}
     public func removeTrack(id: String) {}
 }

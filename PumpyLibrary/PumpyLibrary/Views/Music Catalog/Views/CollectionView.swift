@@ -39,19 +39,17 @@ struct CollectionView<H:HomeProtocol,
     var items: some View {
         LazyHGrid(rows: rows, alignment: .center, spacing: 20) {
             ForEach(collection.items, id: \.id) { item in
-                ItemView<H,P,N,B,T,Q>(item: item,
-                                      size: conditionForBig() ? Int(bigSize) : Int(smallSize))
+                ItemView<H,P,N,B,T,Q>(
+                    item: item,
+                    size: conditionForBig() ? Int(bigSize) : Int(smallSize)
+                )
             }
         }
         .padding()
     }
     
     var rows: [GridItem] {
-        if conditionForBig() {
-            return [GridItem(.fixed(bigSize))]
-        } else {
-            return [GridItem(.fixed(smallSize))]
-        }
+        [GridItem(.fixed(conditionForBig() ? bigSize : smallSize))]
     }
     
     func conditionForBig() -> Bool {

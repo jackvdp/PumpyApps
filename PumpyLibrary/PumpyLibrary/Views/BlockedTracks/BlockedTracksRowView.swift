@@ -10,7 +10,7 @@ import SwiftUI
 
 struct BlockedTracksRowView: View {
     
-    let track: BlockedTrack
+    let track: CodableTrack
     
     var body: some View {
         HStack(alignment: .center, spacing: 20.0) {
