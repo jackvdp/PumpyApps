@@ -11,14 +11,17 @@ public struct PumpyListForEach<Data, ID, Content>: View where Data : RandomAcces
     
     public init(_ data: Data,
                 id: KeyPath<Data.Element, ID>,
+                onDelete: Optional<(IndexSet) -> Void> = nil,
                 @ViewBuilder content: @escaping (Data.Element) -> Content) {
         self.data = data
         self.id = id
         self.content = content
+        self.onDelete = onDelete
     }
     
     let data: Data
     let id: KeyPath<Data.Element, ID>
+    let onDelete: Optional<(IndexSet) -> Void>
     let content: (Data.Element) -> Content
     
     public var body: some View {
@@ -29,6 +32,7 @@ public struct PumpyListForEach<Data, ID, Content>: View where Data : RandomAcces
                 ForEach(data, id: id) { element in
                     content(element)
                 }
+                .onDelete(perform: onDelete)
                 .listRowBackground(Color.clear)
             }
             .background(Color.clear)
@@ -43,7 +47,7 @@ public struct PumpyList<Content: View>: View {
         self.content = content()
     }
     
-    @ViewBuilder var content: Content
+    var content: Content
     
     public var body: some View {
         List() {
@@ -58,8 +62,7 @@ public struct PumpyList<Content: View>: View {
 struct ClearListBackground: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 16.0, *) {
-            content
-                .scrollContentBackground(.hidden)
+            content.scrollContentBackground(.hidden)
         } else {
             content
         }

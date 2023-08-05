@@ -19,12 +19,12 @@ struct BookmarkedView<
     @EnvironmentObject var bookmarkManager: BookmarkedManager
     
     var body: some View {
-        PumpyListForEach(bookmarkManager.bookmarkedItems, id: \.id) { item in
+        PumpyListForEach(bookmarkManager.bookmarkedItems, id: \.id, onDelete: onDelete) { item in
             switch item {
             case .track(let track):
                 TrackRow<T,N,B,P,Q>(track: track)
             case .playlist(let snapshot):
-                SnapshotView<T,N,B,P,Q>(snapshot: snapshot)
+                snapshotView(snapshot)
             }
         }
         .listStyle(.plain)
@@ -32,12 +32,29 @@ struct BookmarkedView<
         .navigationBarTitle("Bookmarks")
         .navigationBarTitleDisplayMode(.large)
     }
+    
+    func snapshotView(_ snapshot: PlaylistSnapshot) -> some View {
+        NavigationLink(destination: ItemDetailView<P,N,B,T,Q>(snapshot: snapshot)) {
+            HStack {
+                ArtworkView(url: snapshot.artworkURL, size: 80)
+                Text(snapshot.name ?? "Playlist")
+                    .font(.headline)
+                    .lineLimit(1)
+                Spacer()
+            }
+        }
+    }
+    
+    func onDelete(_ index: IndexSet) {
+        
+    }
 }
 
 struct BookmarkedView_Previews: PreviewProvider {
     
     static var bookmarkManager: BookmarkedManager {
         let manager = BookmarkedManager()
+        manager.addTrackToBookmarks(.playlist(PumpyAnalytics.MockData.snapshot))
         manager.addTrackToBookmarks(.track(MockData.track.getBlockedTrack()!))
         manager.addTrackToBookmarks(.track(MockData.track.getBlockedTrack()!))
         return manager
@@ -60,28 +77,4 @@ struct BookmarkedView_Previews: PreviewProvider {
         .preferredColorScheme(.dark)
         .accentColor(.pumpyPink)
     }
-}
-
-struct SnapshotView<
-    T:TokenProtocol,
-    N:NowPlayingProtocol,
-    B:BlockedTracksProtocol,
-    P:PlaylistProtocol,
-    Q:QueueProtocol
->: View {
-    
-    let snapshot: PlaylistSnapshot
-    
-    var body: some View {
-        NavigationLink(destination: ItemDetailView<P,N,B,T,Q>(snapshot: snapshot)) {
-            HStack {
-                ArtworkView(url: snapshot.artworkURL, size: 80)
-                Text(snapshot.name ?? "Playlist")
-                    .font(.headline)
-                    .lineLimit(1)
-                Spacer()
-            }
-        }
-    }
-    
 }
