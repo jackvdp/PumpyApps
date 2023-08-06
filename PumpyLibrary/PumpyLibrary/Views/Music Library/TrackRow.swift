@@ -56,7 +56,7 @@ public struct TrackRow<T:TokenProtocol,
             ArtworkView(collection: track, size: 60)
             trackDetails
             Spacer()
-            DislikeButton<N,B>(track: track, size: 20)
+            LikeDislikeButtons<N,B>(track: track, size: 20)
                 .padding(.horizontal)
         }
         .opacity(trackAMID != nil ? 1 : 0.3)
@@ -166,30 +166,25 @@ public struct TrackRow<T:TokenProtocol,
 
 struct TrackRow_Previews: PreviewProvider {
     
-    static let track = MockData.track
-    
     static var previews: some View {
-        TrackRow<MockTokenManager,
-                 MockNowPlayingManager,
-                 MockBlockedTracks,
-                 MockPlaylistManager,
-                 MockQueueManager>(track: track, tapAction: {})
-            .environmentObject(MockTokenManager())
-            .environmentObject(MockNowPlayingManager())
-            .environmentObject(MockBlockedTracks())
-            .environmentObject(MockQueueManager())
-            .environmentObject(MockPlaylistManager())
-            .preferredColorScheme(.dark)
-        TrackRow<MockTokenManager,
-                 MockNowPlayingManager,
-                 MockBlockedTracks,
-                 MockPlaylistManager,
-                 MockQueueManager>(track: track).menu
-            .environmentObject(MockTokenManager())
-            .environmentObject(MockNowPlayingManager())
-            .environmentObject(MockBlockedTracks())
-            .environmentObject(MockQueueManager())
-            .environmentObject(MockPlaylistManager())
-            .preferredColorScheme(.dark)
+        Group {
+            TrackRow<MockTokenManager,
+                     MockNowPlayingManager,
+                     MockBlockedTracks,
+                     MockPlaylistManager,
+                     MockQueueManager>(track: MockData.track, tapAction: {})
+            TrackRow<MockTokenManager,
+                     MockNowPlayingManager,
+                     MockBlockedTracks,
+                     MockPlaylistManager,
+                     MockQueueManager>(track: MockData.track).menu
+        }
+        .environmentObject(MockTokenManager())
+        .environmentObject(MockNowPlayingManager())
+        .environmentObject(MockBlockedTracks())
+        .environmentObject(MockQueueManager())
+        .environmentObject(MockPlaylistManager())
+        .environmentObject(BookmarkedManager())
+        .preferredColorScheme(.dark)
     }
 }

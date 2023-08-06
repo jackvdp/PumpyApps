@@ -19,12 +19,20 @@ struct BookmarkedView<
     @EnvironmentObject var bookmarkManager: BookmarkedManager
     
     var body: some View {
-        PumpyListForEach(bookmarkManager.bookmarkedItems, id: \.id, onDelete: onDelete) { item in
-            switch item {
-            case .track(let track):
-                TrackRow<T,N,B,P,Q>(track: track)
-            case .playlist(let snapshot):
-                snapshotView(snapshot)
+        Group {
+            if bookmarkManager.bookmarkedItems.isEmpty {
+                Text("No Bookmarked Items")
+                    .foregroundColor(Color.gray)
+                    .font(.largeTitle)
+            } else {
+                PumpyListForEach(bookmarkManager.bookmarkedItems, id: \.id, onDelete: onDelete) { item in
+                    switch item {
+                    case .track(let track):
+                        TrackRow<T,N,B,P,Q>(track: track)
+                    case .playlist(let snapshot):
+                        snapshotView(snapshot)
+                    }
+                }
             }
         }
         .listStyle(.plain)

@@ -7,16 +7,16 @@
 //
 
 import SwiftUI
-import MediaPlayer
-import MusicKit
 
-struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
+struct DislikeButton<
+    N:NowPlayingProtocol,
+    B:BlockedTracksProtocol
+>: View {
     
     let track: Track
     var nowPlayingManager: N?
     @EnvironmentObject var blockedTracksManager: B
     
-    @State private var rotation: Double = 0
     @State private var colour: Color = .white
     @State private var showAlert = false
     var size: CGFloat = 30
@@ -27,12 +27,11 @@ struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
                 showAlert = true
             }
         }) {
-            Image(systemName: "hand.thumbsup")
+            Image(systemName: "hand.thumbsdown")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: size, height: size, alignment: .center)
                 .foregroundColor(colour)
-                .rotationEffect(.degrees(rotation))
         }
         .buttonStyle(.plain)
         .disabled(track.getBlockedTrack() == nil)
@@ -48,10 +47,8 @@ struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
     func setButton() {
         withAnimation {
             if blockedTracksManager.blockedTracks.contains(where: { $0.playbackID == track.amStoreID}) {
-                rotation = 180
                 colour = .red
             } else {
-                rotation = 0
                 colour = .white
             }
         }
@@ -71,16 +68,17 @@ struct DislikeButton<N:NowPlayingProtocol, B:BlockedTracksProtocol>: View {
 }
 
 #if DEBUG
-//struct DislikeButton_Previews: PreviewProvider {
+struct DislikeButton_Previews: PreviewProvider {
     
-//    static let musicManager = MusicManager(username: "Test", settingsManager: SettingsManager(username: "Test"))
-//
-//    static let track = PreviewTrack(title: "Song name", artist: "Artist name", playbackStoreID: "", isExplicitItem: true)
-//
-//    static var previews: some View {
-//        DislikeButton(track: track)
-//            .environmentObject(musicManager.blockedTracksManager)
-//    }
-//}
+    static var previews: some View {
+        DislikeButton<
+            MockNowPlayingManager,
+            MockBlockedTracks
+        >(track: MockData.track)
+            .environmentObject(MockBlockedTracks())
+            .environmentObject(MockNowPlayingManager())
+            .preferredColorScheme(.dark)
+    }
+}
 #endif
 

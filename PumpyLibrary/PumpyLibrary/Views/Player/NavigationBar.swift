@@ -17,7 +17,7 @@ struct NavigationBar<B: BlockedTracksProtocol, N:NowPlayingProtocol, H:HomeProto
     var body: some View {
         HStack {
             if let track = nowPlayingManager.currentTrack {
-                DislikeButton<N,B>(track: track, nowPlayingManager: nowPlayingManager)
+                LikeDislikeButtons<N,B>(track: track, nowPlayingManager: nowPlayingManager)
             }
             Spacer()
             PumpyView()
