@@ -19,7 +19,6 @@ struct TimeScrubber: View {
     @State private var startTime = Self.noTimeLabel
     @State private var endTime = Self.noTimeLabel
     @State private var timePercentage: Double = 0
-    let opacity: CGFloat
     private static let noTimeLabel = "--:--"
     
     var body: some View {
@@ -31,7 +30,7 @@ struct TimeScrubber: View {
                 audioVariant
                 Spacer()
                 Text(endTime).monospacedDigit()
-            }.opacity(opacity)
+            }
             .foregroundColor(Color.white)
             .font(.footnote)
         }
@@ -59,9 +58,9 @@ struct TimeScrubber: View {
                 HorizontalValueSliderStyle(
                     track:
                         HorizontalValueTrack(
-                            view: Capsule().foregroundColor(.white).opacity(opacity)
+                            view: Capsule().foregroundColor(.white)
                         )
-                        .background(Capsule().foregroundColor(Color.white.opacity(0.25).opacity(opacity)))
+                        .background(Capsule().foregroundColor(Color.white.opacity(0.25)))
                         .frame(height: 3),
                     thumb: Circle().foregroundColor(.white),
                     thumbSize: CGSize(width: 8, height: 8)
@@ -159,7 +158,7 @@ struct TimeScrubber: View {
 
 struct TimeScrubber_Previews: PreviewProvider {
     static var previews: some View {
-        TimeScrubber(opacity: 1)
+        TimeScrubber()
             .padding()
             .background(.blue)
     }
