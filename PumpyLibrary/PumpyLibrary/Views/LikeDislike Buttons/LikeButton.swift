@@ -19,7 +19,7 @@ struct LikeButton<
     
     var body: some View {
         Button(action: buttonPressed) {
-            Image(systemName: "hand.thumbsup")
+            Image(systemName: "bookmark")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: size, height: size, alignment: .center)

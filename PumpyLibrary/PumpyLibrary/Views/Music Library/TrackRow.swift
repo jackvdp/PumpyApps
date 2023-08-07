@@ -56,7 +56,7 @@ public struct TrackRow<N:NowPlayingProtocol,
             trackDetails
             Spacer()
             LikeDislikeButtons<N,B>(track: track, size: 20)
-                .padding(.horizontal)
+                .padding(.leading)
         }
         .opacity(trackAMID != nil ? 1 : 0.3)
         .background {

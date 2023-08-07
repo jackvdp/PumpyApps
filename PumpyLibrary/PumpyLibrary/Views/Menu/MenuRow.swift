@@ -24,10 +24,9 @@ public struct MenuRow: View {
         HStack(alignment: .center, spacing: 20.0) {
             Image(systemName: imageName)
                 .foregroundColor(Color.white)
-                .font(.system(size: 25, weight: .light))
-                .frame(width: 30, height: 30)
+                .font(.body)
             Text(title)
-                .font(.headline)
+                .font(.body)
                 .frame(maxWidth: .infinity, alignment: .leading)
             if showChevron {
                 Image(systemName: "chevron.right")

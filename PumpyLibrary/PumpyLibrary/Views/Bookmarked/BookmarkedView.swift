@@ -78,6 +78,7 @@ struct BookmarkedView_Previews: PreviewProvider {
         .environmentObject(MockBlockedTracks())
         .environmentObject(MockQueueManager())
         .environmentObject(MockPlaylistManager())
+        .environmentObject(AuthorisationManager())
         .environmentObject(bookmarkManager)
         .preferredColorScheme(.dark)
         .accentColor(.pumpyPink)
