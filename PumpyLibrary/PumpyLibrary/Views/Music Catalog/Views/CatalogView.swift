@@ -64,7 +64,7 @@ public struct CatalogView<H:HomeProtocol,
     
     func collectionsView(_ collections: [SuggestedCollection]) -> some View {
         ForEach(collections, id: \.self) { collection in
-            CollectionView<H,P,N,B,Q>(collection: collection)
+            CollectionView<P,N,B,Q>(collection: collection)
         }
     }
     

@@ -21,6 +21,7 @@ public struct K {
     public static let pumpyImage = "Pumpy Logo Transparent"
     public static let stopMusic = "Stop Music"
     public static let defaultArtwork = "Pumpy Artwork"
+    public static let recentlyPlayedKey = "recentlyPlayed"
     
     public struct Alarm {
         public static let playlistLabel = "playlistLabel"

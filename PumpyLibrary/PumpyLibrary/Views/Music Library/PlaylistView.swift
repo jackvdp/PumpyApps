@@ -21,7 +21,8 @@ struct PlaylistView<
     @EnvironmentObject var labManager: MusicLabManager
     @EnvironmentObject var toastManager: ToastManager
     @EnvironmentObject var bookmarkManager: BookmarkedManager
-    let playlist: PumpyLibrary.Playlist
+    @EnvironmentObject var recentlyPlayedManager: RecentlyPlayedManager
+    let playlist: Playlist
     @State private var searchText = ""
     
     var body: some View {
@@ -80,7 +81,10 @@ struct PlaylistView<
     var tracksList: some View {
         ForEach(filteredTracks.indices, id: \.self) { i in
             TrackRow<N,B,P,Q>(track: filteredTracks[i],
-                              tapAction: { playFromPosition(track: filteredTracks[i]) })
+                              tapAction: {
+                recentlyPlayedManager.addItem(.playlist(playlist.snaposhot()))
+                playFromPosition(track: filteredTracks[i])
+            })
         }
     }
     
@@ -105,11 +109,13 @@ struct PlaylistView<
     
     func playNext() {
         toastManager.showingPlayNextToast = true
+        recentlyPlayedManager.addItem(.playlist(playlist.snaposhot()))
         playlistManager.playNext(playlist: playlist,
                                  secondaryPlaylists: [])
     }
     
     func playNow() {
+        recentlyPlayedManager.addItem(.playlist(playlist.snaposhot()))
         playlistManager.playNow(playlist: playlist,
                                 secondaryPlaylists: [])
     }

@@ -21,6 +21,7 @@ struct HomeView<
         ScrollView {
             VStack(spacing: 0) {
                 rows
+                RecentlyPlayedView<P,N,B,Q>()
                 CatalogView<H,P,N,B,Q>()
             }
         }

@@ -8,11 +8,12 @@
 import SwiftUI
 import PumpyAnalytics
 
-struct CollectionView<H:HomeProtocol,
-                      P:PlaylistProtocol,
-                      N:NowPlayingProtocol,
-                      B:BlockedTracksProtocol,
-                      Q:QueueProtocol>: View {
+struct CollectionView<
+    P:PlaylistProtocol,
+    N:NowPlayingProtocol,
+    B:BlockedTracksProtocol,
+    Q:QueueProtocol
+>: View {
     
     let collection: SuggestedCollection
     let bigSize: CGFloat = 300
@@ -68,8 +69,7 @@ struct CollectionView_Previews: PreviewProvider {
         NavigationView {
             PumpyList {
                 ForEach(collections, id: \.self) { collection in
-                    CollectionView<MockHomeVM,
-                                   MockPlaylistManager,
+                    CollectionView<MockPlaylistManager,
                                    MockNowPlayingManager,
                                    MockBlockedTracks,
                                    MockQueueManager>(collection: collection)

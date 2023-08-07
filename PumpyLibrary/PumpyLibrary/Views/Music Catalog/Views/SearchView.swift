@@ -82,27 +82,7 @@ struct SearchView<P:PlaylistProtocol,
     func titleAndGrid(text: String, playlists: [PlaylistSnapshot]) -> some View {
         VStack {
             title(text)
-            playlistGrids(playlists)
-        }
-    }
-    
-    func playlistGrids(_ playlists: [PlaylistSnapshot]) -> some View {
-        let playlistRows = Array(repeating: GridItem(.fixed(200)),
-                                 count: playlists.count == 1 ? 1 : 2)
-        
-        return ScrollView(.horizontal) {
-            LazyHGrid(rows: playlistRows, alignment: .center, spacing: 20) {
-                ForEach(playlists, id: \.sourceID) { item in
-                    NavigationLink(destination: ItemDetailView<P,N,B,Q>(snapshot: item)) {
-                        ItemGridComponent(name: item.name ?? "",
-                                          curator: item.curator ?? "",
-                                          itemArtworkURL: item.artworkURL ?? "",
-                                          size: 200)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-            .padding(.horizontal)
+            PlaylistGrid<P,N,B,Q>(playlists: playlists)
         }
     }
     
