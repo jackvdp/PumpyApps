@@ -8,13 +8,12 @@
 
 import SwiftUI
 
-public struct PlaylistTable<
+public struct LibraryView<
     P:PlaylistProtocol,
     N:NowPlayingProtocol,
     B:BlockedTracksProtocol,
     Q:QueueProtocol
 >: View {
-                            
     
     public init() {}
     
@@ -32,6 +31,7 @@ public struct PlaylistTable<
         .searchable(text: $searchText, prompt: "Playlists...")
         .navigationBarTitle("Library")
         .navigationBarTitleDisplayMode(.large)
+        .toolbar { navBarButtons }
         .accentColor(.pumpyPink)
         .pumpyBackground()
         .onAppear() {
@@ -47,10 +47,31 @@ public struct PlaylistTable<
         }
     }
     
+    @ToolbarContentBuilder
+    var navBarButtons: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Button(action: {
+                //
+            }, label: {
+                Image(systemName: "bookmark")
+            })
+            .foregroundColor(.white)
+            .buttonStyle(.plain)
+        }
+    }
 }
 
 struct PlaylistTable_Previews: PreviewProvider {
     static var previews: some View {
-        PlaylistTable<MockPlaylistManager,MockNowPlayingManager,MockBlockedTracks,MockQueueManager>().environmentObject(MockPlaylistManager())
+        NavigationView {
+            LibraryView<
+                MockPlaylistManager,
+                MockNowPlayingManager,
+                MockBlockedTracks,
+                MockQueueManager
+            >()
+        }
+        .environmentObject(MockPlaylistManager())
+        .preferredColorScheme(.dark)
     }
 }

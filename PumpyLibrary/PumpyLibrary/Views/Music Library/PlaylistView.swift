@@ -10,7 +10,7 @@ import SwiftUI
 import AlertToast
 import PumpyShared
 
-struct TrackTable<P:PlaylistProtocol,
+struct PlaylistView<P:PlaylistProtocol,
                   N:NowPlayingProtocol,
                   B:BlockedTracksProtocol,
                   Q:QueueProtocol>: View {
@@ -121,7 +121,7 @@ struct TrackTable_Previews: PreviewProvider {
 
     static var previews: some View {
         NavigationView {
-                TrackTable<MockPlaylistManager,
+                PlaylistView<MockPlaylistManager,
                            MockNowPlayingManager,
                            MockBlockedTracks,
                            MockQueueManager>(playlist: playlist)
