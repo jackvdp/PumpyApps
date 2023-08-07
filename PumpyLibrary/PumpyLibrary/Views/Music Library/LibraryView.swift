@@ -23,7 +23,7 @@ public struct LibraryView<
 
     public var body: some View {
         PumpyListForEach(filteredPlaylists, id: \.cloudGlobalID) { playlist in
-            NavigationLink(destination: TrackTable<P,N,B,Q>(playlist: playlist)) {
+            NavigationLink(destination: PlaylistView<P,N,B,Q>(playlist: playlist)) {
                 PlaylistRow(playlist: playlist)
             }
         }
@@ -31,7 +31,6 @@ public struct LibraryView<
         .searchable(text: $searchText, prompt: "Playlists...")
         .navigationBarTitle("Library")
         .navigationBarTitleDisplayMode(.large)
-        .toolbar { navBarButtons }
         .accentColor(.pumpyPink)
         .pumpyBackground()
         .onAppear() {
@@ -47,18 +46,6 @@ public struct LibraryView<
         }
     }
     
-    @ToolbarContentBuilder
-    var navBarButtons: some ToolbarContent {
-        ToolbarItem(placement: .navigationBarTrailing) {
-            Button(action: {
-                //
-            }, label: {
-                Image(systemName: "bookmark")
-            })
-            .foregroundColor(.white)
-            .buttonStyle(.plain)
-        }
-    }
 }
 
 struct PlaylistTable_Previews: PreviewProvider {

@@ -75,12 +75,14 @@ struct HomeView<
 struct NewHomeView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            HomeView<MockAccountManager,
-                     MockHomeVM,
-                     MockPlaylistManager,
-                     MockNowPlayingManager,
-                     MockBlockedTracks,
-                     MockQueueManager>()
+            HomeView<
+                MockAccountManager,
+                MockHomeVM,
+                MockPlaylistManager,
+                MockNowPlayingManager,
+                MockBlockedTracks,
+                MockQueueManager
+            >()
         }
         .environmentObject(AuthorisationManager())
         .environmentObject(MockHomeVM())

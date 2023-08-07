@@ -74,6 +74,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
     
     func playFromPosition(tracks: [Track], index: Int) {
         let playlist = QueuePlaylist(title: "Music Lab Items",
+                                     curator: "Music Lab",
                                      songs: tracks,
                                      cloudGlobalID: nil,
                                      artworkURL: nil)

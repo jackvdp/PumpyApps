@@ -23,7 +23,7 @@ struct LabResultView<P:PlaylistProtocol,
             case .loading:
                 ActivityView(activityIndicatorVisible: .constant(true)).noBackground
             case .playlist(let playlist):
-                TrackTable<P,N,B,Q>(playlist: playlist)
+                PlaylistView<P,N,B,Q>(playlist: playlist)
             case .error:
                 Text("Error.\nPlease try again")
             }

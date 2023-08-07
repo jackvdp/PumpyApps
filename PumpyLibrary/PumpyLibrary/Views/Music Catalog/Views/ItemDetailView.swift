@@ -57,7 +57,7 @@ struct ItemDetailView<P:PlaylistProtocol,
     @ViewBuilder
     func successView(_ playlist: PumpyAnalytics.Playlist) -> some View {
         if let plist = playlist as? Playlist {
-            TrackTable<P,N,B,Q>(playlist: plist)
+            PlaylistView<P,N,B,Q>(playlist: plist)
                 .transition(.opacity)
                 .id(screen)
         } else {

@@ -26,7 +26,7 @@ struct LikeButton<
                 .foregroundColor(colour)
         }
         .buttonStyle(.plain)
-        .disabled(track.getBlockedTrack() == nil)
+        .disabled(track.codableTrack() == nil)
         .onReceive(bookmarkManager.$bookmarkedItems) { _ in
             setButton()
         }
@@ -36,7 +36,7 @@ struct LikeButton<
     }
     
     func buttonPressed() {
-        guard let codableTrack = track.getBlockedTrack() else { return }
+        guard let codableTrack = track.codableTrack() else { return }
         if bookmarkManager.bookmarkedItems.contains(where: { $0.id == track.amStoreID}) {
             bookmarkManager.removeItem(.track(codableTrack))
         } else {
@@ -61,7 +61,7 @@ struct LikeButton_Previews: PreviewProvider {
     
     static var bookmarkManagerWithTrack: BookmarkedManager {
         let manager = BookmarkedManager()
-        manager.addTrackToBookmarks(.track(MockData.track.getBlockedTrack()!))
+        manager.addTrackToBookmarks(.track(MockData.track.codableTrack()!))
         return manager
     }
     

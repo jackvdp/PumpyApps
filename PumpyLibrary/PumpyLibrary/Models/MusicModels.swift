@@ -18,11 +18,27 @@ public protocol MusicCollection {
 
 public protocol Playlist: MusicCollection, ScheduledPlaylist {
     var title: String? { get }
+    var curator: String { get }
     var artworkURL: String? { get }
     var songs: [Track] { get }
     var cloudGlobalID: String? { get }
     var shortDescription: String? { get }
     var longDescription: String? { get }
+    var type: PlaylistType { get }
+    var sourceID: String { get }
+}
+
+extension Playlist {
+    func snaposhot() -> PlaylistSnapshot {
+        PlaylistSnapshot(
+            name: title,
+            curator: curator,
+            artworkURL: artworkURL,
+            shortDescription: shortDescription,
+            sourceID: sourceID,
+            type: type
+        )
+    }
 }
 
 public protocol Track: MusicCollection {
@@ -38,6 +54,7 @@ public protocol Track: MusicCollection {
 /// Used to put a custom array (normally a subset of a playlist) of tracks into the queue
 public struct QueuePlaylist: Playlist {
     public var title: String?
+    public var curator: String
     public var songs: [Track]
     public var cloudGlobalID: String?
     public var artworkURL: String? = nil
@@ -45,6 +62,8 @@ public struct QueuePlaylist: Playlist {
     public var longDescription: String?
     
     public var name: String? { title }
+    public var sourceID: String { cloudGlobalID ?? "" }
+    public var type: PlaylistType { .am(id: cloudGlobalID ?? "") }
 }
 
 /// Used as an interface for dealing with queue tracks i.e. by NowPlayingManager/QueueManager/UpNextList
@@ -104,7 +123,7 @@ extension CodableTrack: PumpyLibrary.Track {
 }
 
 extension Track {
-    public func getBlockedTrack() -> CodableTrack? {
+    public func codableTrack() -> CodableTrack? {
         guard let amStoreID else { return nil }
         return CodableTrack(title: name,
                             artist: artistName,
@@ -124,6 +143,7 @@ public enum PlayButton: String {
 // MARK: - Extend Anlaytics Models
 
 extension AMPlaylist: PumpyLibrary.Playlist {
+    
     public var longDescription: String? {
         self.description
     }
@@ -138,6 +158,10 @@ extension AMPlaylist: PumpyLibrary.Playlist {
 
     public var cloudGlobalID: String? {
         self.sourceID
+    }
+    
+    public var type: PumpyAnalytics.PlaylistType {
+        .am(id: sourceID)
     }
 }
 
@@ -156,6 +180,10 @@ extension SpotifyPlaylist: PumpyLibrary.Playlist {
     public var cloudGlobalID: String? {
         nil
     }
+    
+    public var type: PumpyAnalytics.PlaylistType {
+        .spotify(id: sourceID)
+    }
 }
 
 extension SYBPlaylist: PumpyLibrary.Playlist {
@@ -173,6 +201,10 @@ extension SYBPlaylist: PumpyLibrary.Playlist {
     public var cloudGlobalID: String? {
         nil
     }
+    
+    public var type: PumpyAnalytics.PlaylistType {
+        .syb(id: sourceID)
+    }
 }
 
 extension RecommendedPlaylist: PumpyLibrary.Playlist {
@@ -189,6 +221,10 @@ extension RecommendedPlaylist: PumpyLibrary.Playlist {
 
     public var cloudGlobalID: String? {
         nil
+    }
+    
+    public var type: PumpyAnalytics.PlaylistType {
+        .recommended(tracks.compactMap { $0.spotifyItem?.id })
     }
 }
 

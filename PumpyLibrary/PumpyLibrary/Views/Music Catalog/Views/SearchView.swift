@@ -190,6 +190,7 @@ struct SearchView<P:PlaylistProtocol,
     
     func playFromPosition(tracks: [Track], index: Int) {
         let playlist = QueuePlaylist(title: viewModel.searchText,
+                                     curator: "",
                                      songs: tracks,
                                      cloudGlobalID: nil,
                                      artworkURL: nil)

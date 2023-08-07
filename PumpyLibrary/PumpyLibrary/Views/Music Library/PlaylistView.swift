@@ -10,14 +10,17 @@ import SwiftUI
 import AlertToast
 import PumpyShared
 
-struct PlaylistView<P:PlaylistProtocol,
-                  N:NowPlayingProtocol,
-                  B:BlockedTracksProtocol,
-                  Q:QueueProtocol>: View {
+struct PlaylistView<
+    P:PlaylistProtocol,
+    N:NowPlayingProtocol,
+    B:BlockedTracksProtocol,
+    Q:QueueProtocol
+>: View {
     
     @EnvironmentObject var playlistManager: P
     @EnvironmentObject var labManager: MusicLabManager
     @EnvironmentObject var toastManager: ToastManager
+    @EnvironmentObject var bookmarkManager: BookmarkedManager
     let playlist: PumpyLibrary.Playlist
     @State private var searchText = ""
     
@@ -35,6 +38,7 @@ struct PlaylistView<P:PlaylistProtocol,
         .searchable(text: $searchText, prompt: "Tracks...")
         .navigationBarTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar { navBarButtons }
         .pumpyBackground()
     }
     
@@ -80,6 +84,23 @@ struct PlaylistView<P:PlaylistProtocol,
         }
     }
     
+    // MARK: - Toolbar
+    
+    @ToolbarContentBuilder
+    var navBarButtons: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Button(action: {
+                bookmarkManager.toggleBookmarkedItem(.playlist(playlist.snaposhot()))
+            }, label: {
+                Image(systemName: "bookmark")
+            })
+            .foregroundColor(
+                bookmarkManager.bookmarkedItems.contains(.playlist(playlist.snaposhot())) ? .cyan : .white
+            )
+            .buttonStyle(.plain)
+        }
+    }
+    
     // MARK: - Methods
     
     func playNext() {
@@ -115,8 +136,10 @@ struct PlaylistView<P:PlaylistProtocol,
 #if DEBUG
 struct TrackTable_Previews: PreviewProvider {
     
-    static var playlist: PreviewPlaylist {
-        return MockData.playlist
+    static var bookmarks: BookmarkedManager {
+        let manager = BookmarkedManager()
+        manager.addTrackToBookmarks(.playlist(MockData.playlist.snaposhot()))
+        return manager
     }
 
     static var previews: some View {
@@ -124,7 +147,7 @@ struct TrackTable_Previews: PreviewProvider {
                 PlaylistView<MockPlaylistManager,
                            MockNowPlayingManager,
                            MockBlockedTracks,
-                           MockQueueManager>(playlist: playlist)
+                           MockQueueManager>(playlist: MockData.playlist)
         }
         .preferredColorScheme(.dark)
         .environmentObject(MockPlaylistManager())
@@ -134,6 +157,7 @@ struct TrackTable_Previews: PreviewProvider {
         .environmentObject(MockQueueManager())
         .environmentObject(MusicLabManager())
         .environmentObject(AlarmManager())
+        .environmentObject(bookmarks)
     }
 }
 #endif

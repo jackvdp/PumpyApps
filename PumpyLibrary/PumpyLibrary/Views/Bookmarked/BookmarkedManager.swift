@@ -52,6 +52,14 @@ public class BookmarkedManager: ObservableObject {
         }
     }
     
+    func toggleBookmarkedItem(_ item: BookmarkedItem) {
+        if bookmarkedItems.contains(item) {
+            bookmarkedItems.removeAll(where: { $0.id == item.id})
+        } else {
+            bookmarkedItems.append(item)
+        }
+    }
+    
     func addTrackToBookmarks(_ item: BookmarkedItem) {
         if !bookmarkedItems.contains(item) {
             bookmarkedItems.append(item)

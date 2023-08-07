@@ -97,7 +97,7 @@ enum Tabs<
             case .home:
                 HomeView<A,H,P,N,B,Q>()
             case .library:
-                PlaylistTable<P,N,B,Q>()
+                LibraryView<P,N,B,Q>()
             case .lab:
                 MusicLabView<N,B,Q,P>()
             case .search:

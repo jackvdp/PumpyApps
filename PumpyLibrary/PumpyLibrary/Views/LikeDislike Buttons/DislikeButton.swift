@@ -23,7 +23,7 @@ struct DislikeButton<
     
     var body: some View {
         Button(action: {
-            if blockedTracksManager.unblockTrackOrAskToBlock(track: track.getBlockedTrack()) {
+            if blockedTracksManager.unblockTrackOrAskToBlock(track: track.codableTrack()) {
                 showAlert = true
             }
         }) {
@@ -34,7 +34,7 @@ struct DislikeButton<
                 .foregroundColor(colour)
         }
         .buttonStyle(.plain)
-        .disabled(track.getBlockedTrack() == nil)
+        .disabled(track.codableTrack() == nil)
         .alert(isPresented: $showAlert, content: createAlert)
         .onReceive(blockedTracksManager.blockedTracks.publisher) { _ in
             setButton()
@@ -60,7 +60,7 @@ struct DislikeButton<
                      primaryButton: .default(Text("Cancel"), action: {}),
                      secondaryButton: .destructive(Text("Block"),
                                                    action: {
-            guard let track = track.getBlockedTrack() else { return }
+            guard let track = track.codableTrack() else { return }
             blockedTracksManager.addTrackToBlockedList(track)
         }))
     }

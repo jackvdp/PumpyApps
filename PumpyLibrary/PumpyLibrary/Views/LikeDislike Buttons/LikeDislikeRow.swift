@@ -38,7 +38,7 @@ struct LikeDislikeButton_Previews: PreviewProvider {
     
     static var bookmarkManagerWithTrack: BookmarkedManager {
         let manager = BookmarkedManager()
-        manager.addTrackToBookmarks(.track(MockData.track.getBlockedTrack()!))
+        manager.addTrackToBookmarks(.track(MockData.track.codableTrack()!))
         return manager
     }
     

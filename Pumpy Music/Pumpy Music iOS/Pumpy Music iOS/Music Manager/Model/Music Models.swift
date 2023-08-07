@@ -10,8 +10,9 @@ import Foundation
 import MediaPlayer
 import SwiftUI
 import PumpyLibrary
+import PumpyAnalytics
 
-extension MPMediaItem: Track {
+extension MPMediaItem: PumpyLibrary.Track {
     
     public var name: String {
         self.title ?? ""
@@ -41,21 +42,35 @@ extension MPMediaItem: Track {
 
 }
 
-extension MPMediaPlaylist: Playlist, ScheduledPlaylist {
+extension MPMediaPlaylist: PumpyLibrary.Playlist, ScheduledPlaylist {
+    
     public var shortDescription: String? {
-        self.descriptionText
+        descriptionText
     }
     
     public var longDescription: String? {
-        self.descriptionText
+        descriptionText
     }
     
     public var title: String? {
-        self.name
+        name
     }
     
-    public var songs: [Track] {
-        return items
+    public var songs: [PumpyLibrary.Track] {
+        items
     }
+    
+    public var curator: String {
+        authorDisplayName ?? ""
+    }
+    
+    public var type: PumpyAnalytics.PlaylistType {
+        .am(id: cloudGlobalID ?? "")
+    }
+    
+    public var sourceID: String {
+        cloudGlobalID ?? ""
+    }
+    
 }
 

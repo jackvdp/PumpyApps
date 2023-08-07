@@ -62,8 +62,8 @@ struct BookmarkedView_Previews: PreviewProvider {
     static var bookmarkManager: BookmarkedManager {
         let manager = BookmarkedManager()
         manager.addTrackToBookmarks(.playlist(PumpyAnalytics.MockData.snapshot))
-        manager.addTrackToBookmarks(.track(MockData.track.getBlockedTrack()!))
-        manager.addTrackToBookmarks(.track(MockData.track.getBlockedTrack()!))
+        manager.addTrackToBookmarks(.track(MockData.track.codableTrack()!))
+        manager.addTrackToBookmarks(.track(MockData.track.codableTrack()!))
         return manager
     }
     

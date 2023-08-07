@@ -48,7 +48,7 @@ public enum PlaylistType: Codable, Equatable {
     case spotify(id: String)
     case custom(CustomPlaylistLogic)
     case text
-    case recommended([String])
+    case recommended(_ spotifyTrackIDs: [String])
     
     public static func == (lhs: PlaylistType, rhs: PlaylistType) -> Bool {
         switch (lhs, rhs) {

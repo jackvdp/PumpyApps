@@ -41,7 +41,7 @@ struct BlockedTracksRowView: View {
 struct BlockedTracksRowView_Previews: PreviewProvider {
     static var previews: some View {
         BlockedTracksRowView(
-            track: MockData.track.getBlockedTrack()!
+            track: MockData.track.codableTrack()!
         )
     }
 }

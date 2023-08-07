@@ -9,6 +9,7 @@
 import Foundation
 import MediaPlayer
 import MusicKit
+import PumpyAnalytics
 
 public struct MockData {
     public static let playlist = PreviewPlaylist(title: "Test",
@@ -27,7 +28,7 @@ public struct MockData {
                                                  <i>Lorem</i> <b>ipsum</b> orem ipsum orem ipsumorem ipsum orem ipsum orem ipsumorem ipsum orem ipsum orem ipsum orem ipsum
                                                                                                   
                                                  <i>Lorem</i> <b>ipsum</b> orem ipsum orem ipsumorem ipsum orem ipsum orem ipsumorem ipsum orem ipsum orem ipsum orem ipsum
-                                                 """)
+                                                 """, curator: "Artist")
     public static let tracks = Array(repeating: MockData.track, count: 20)
     public static let track = QueueTrack(title: "Test",
                                                artist: "Test",
@@ -37,8 +38,6 @@ public struct MockData {
 }
 
 public struct PreviewPlaylist: Playlist {
-    public var name: String? { title }
-    
     public var title: String?
     public var artwork: UIImage?
     public var songs: [Track]
@@ -47,6 +46,14 @@ public struct PreviewPlaylist: Playlist {
     public var artworkURL: String?
     public var shortDescription: String?
     public var longDescription: String?
+    
+    public var curator: String
+    
+    public var type: PumpyAnalytics.PlaylistType { .am(id: sourceID)}
+    
+    public var sourceID: String { cloudGlobalID ?? "" }
+    
+    public var name: String? { title }
 }
 
 public struct PreviewTrack: Track {
