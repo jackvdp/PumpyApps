@@ -22,7 +22,18 @@ public class MusicLabManager: ObservableObject {
     
     func createMix(authManager: AuthorisationManager, completion: @escaping (RecommendedPlaylist?) -> ()) {
         let seeding = properties.transformToAnalyticsSeeding(tracks: seedTracks, genres: selectedGenres)
+        
+        var name: String  {
+            if seedTracks.isEmpty && selectedGenres.isEmpty { return "Music Lab Mix" } else {
+                let artistsAndGenres = [seedTracks.map { "\($0.artist)" }.removingDuplicates(), selectedGenres].flatMap { $0 }
+                return "\(artistsAndGenres.joined(separator: "/")) Mix"
+            }
+        }
+        let artworkURL: String? = seedTracks.compactMap { $0.artworkURL }.first
+        
         playlistController.createFromSuggestions(seeding: seeding,
+                                                 playlistName: name,
+                                                 artworkURL: artworkURL,
                                                  authManager: authManager) { playlist, error in
             completion(playlist)
             playlist?.getTracksData()

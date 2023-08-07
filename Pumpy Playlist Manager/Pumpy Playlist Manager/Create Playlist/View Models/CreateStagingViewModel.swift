@@ -10,6 +10,8 @@ import PumpyAnalytics
 
 class CreateStagingViewModel: ObservableObject {
     
+    let controller = PlaylistController()
+    
     let nav: CreateNavigationManager
     @Published var seeding = PlaylistSeeding(trackIDs: [],
                                              artistIDs: [],
@@ -25,8 +27,13 @@ class CreateStagingViewModel: ObservableObject {
         let trackIDs = tracks.compactMap { $0.spotifyItem?.id }
         seeding.trackIDs = trackIDs
         
-        PlaylistController().createFromSuggestions(seeding: seeding,
-                                                           authManager: authManager) { playlist, error in
+        let name: String  = "\(tracks.map { "\($0.artist)" }.joined(separator: "/")) Mix"
+        let artworkURL: String? = tracks.compactMap { $0.artworkURL }.first
+        
+        controller.createFromSuggestions(seeding: seeding,
+                                         playlistName: name,
+                                         artworkURL: artworkURL,
+                                         authManager: authManager) { playlist, error in
             
             guard let playlist = playlist else {
                 return

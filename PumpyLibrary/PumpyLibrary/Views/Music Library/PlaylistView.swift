@@ -54,8 +54,14 @@ struct PlaylistView<
     }
     
     var playlistName: some View {
-        Text(playlist.title ?? "Playlist")
-            .font(.title3).bold()
+        VStack(spacing: 0) {
+            Text(playlist.title ?? "Playlist")
+                .font(.title3).bold()
+            if playlist.curator != "" {
+                Text(playlist.curator)
+                    .font(.headline).bold().opacity(0.5)
+            }
+        }
     }
     
     var playButtons: some View {
