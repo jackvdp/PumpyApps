@@ -13,7 +13,6 @@ import PumpyShared
 struct TrackTable<P:PlaylistProtocol,
                   N:NowPlayingProtocol,
                   B:BlockedTracksProtocol,
-                  T:TokenProtocol,
                   Q:QueueProtocol>: View {
     
     @EnvironmentObject var playlistManager: P
@@ -76,7 +75,7 @@ struct TrackTable<P:PlaylistProtocol,
     
     var tracksList: some View {
         ForEach(filteredTracks.indices, id: \.self) { i in
-            TrackRow<T,N,B,P,Q>(track: filteredTracks[i],
+            TrackRow<N,B,P,Q>(track: filteredTracks[i],
                                 tapAction: { playFromPosition(track: filteredTracks[i]) })
         }
     }
@@ -125,7 +124,6 @@ struct TrackTable_Previews: PreviewProvider {
                 TrackTable<MockPlaylistManager,
                            MockNowPlayingManager,
                            MockBlockedTracks,
-                           MockTokenManager,
                            MockQueueManager>(playlist: playlist)
         }
         .preferredColorScheme(.dark)
@@ -133,7 +131,6 @@ struct TrackTable_Previews: PreviewProvider {
         .environmentObject(MockHomeVM())
         .environmentObject(MockNowPlayingManager())
         .environmentObject(MockBlockedTracks())
-        .environmentObject(MockTokenManager())
         .environmentObject(MockQueueManager())
         .environmentObject(MusicLabManager())
         .environmentObject(AlarmManager())

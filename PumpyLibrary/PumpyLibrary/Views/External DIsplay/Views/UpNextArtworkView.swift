@@ -11,8 +11,7 @@ import SwiftUI
 struct UpNextArtworkView<N:NowPlayingProtocol,
                          P:PlaylistProtocol,
                          B:BlockedTracksProtocol,
-                         Q:QueueProtocol,
-                         T:TokenProtocol>: View {
+                         Q:QueueProtocol>: View {
     
     let geo: GeometryProxy
     @EnvironmentObject var extDisMgr: ExternalDisplayManager<P>
@@ -32,7 +31,7 @@ struct UpNextArtworkView<N:NowPlayingProtocol,
                            showPlaylistLabel: false)
                     .padding(geo.size.height * 0.05)
                     .frame(height: extDisMgr.frameHeight(geo.size.height * 0.1))
-                UpNextView<Q,N,B,T,P>(fontStyle: .custom(subFont, size: geo.size.width * 0.03 * 0.75), opacity: 0.5, showButton: false)
+                UpNextView<Q,N,B,P>(fontStyle: .custom(subFont, size: geo.size.width * 0.03 * 0.75), opacity: 0.5, showButton: false)
                     .padding(geo.size.height * 0.05)
                     .frame(height: extDisMgr.frameHeight(geo.size.height * 0.5))
             }
@@ -51,7 +50,7 @@ struct UpNextArtworkView<N:NowPlayingProtocol,
                         .frame(width: geo.size.width * 0.5)
                 }.frame(width: extDisMgr.frameHeight(geo.size.width * 0.5))
                 VStack {
-                    UpNextView<Q,N,B,T,P>(fontStyle: .custom(subFont, size: geo.size.height * 0.03 * 0.75), opacity: 0.5, showButton: false)
+                    UpNextView<Q,N,B,P>(fontStyle: .custom(subFont, size: geo.size.height * 0.03 * 0.75), opacity: 0.5, showButton: false)
                         .padding(geo.size.height * 0.05)
                 }.frame(width: extDisMgr.frameHeight(geo.size.width * 0.5))
             }
@@ -68,12 +67,12 @@ struct UpNextArtworkView_Previews: PreviewProvider {
         extDisManger.liveSettings.showQRCode = true
         extDisManger.liveSettings.displayContent = .upNextArtwokAndTitles
         return Group {
-            ExtHomeView<MockPlaylistManager,MockNowPlayingManager,MockQueueManager,MockBlockedTracks,MockTokenManager>()
+            ExtHomeView<MockPlaylistManager,MockNowPlayingManager,MockQueueManager,MockBlockedTracks>()
                 .environmentObject(musicManager)
                 .environmentObject(extDisManger)
                 .previewLayout(.sizeThatFits)
                 .frame(width: 1080, height: 1920)
-            ExtHomeView<MockPlaylistManager,MockNowPlayingManager,MockQueueManager,MockBlockedTracks,MockTokenManager>()
+            ExtHomeView<MockPlaylistManager,MockNowPlayingManager,MockQueueManager,MockBlockedTracks>()
                 .environmentObject(musicManager)
                 .environmentObject(extDisManger)
                 .previewLayout(.sizeThatFits)

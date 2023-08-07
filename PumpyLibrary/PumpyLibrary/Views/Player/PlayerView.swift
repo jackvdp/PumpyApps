@@ -12,8 +12,7 @@ public struct PlayerView<P: PlaylistProtocol,
                          Q:QueueProtocol,
                          N:NowPlayingProtocol,
                          B: BlockedTracksProtocol,
-                         H:HomeProtocol,
-                         T:TokenProtocol>: View {
+                         H:HomeProtocol>: View {
     
     public init() {}
 
@@ -60,7 +59,7 @@ public struct PlayerView<P: PlaylistProtocol,
             Spacer(minLength: 20)
             TimeScrubber()
         case .upNext:
-            UpNextView<Q,N,B,T,P>()
+            UpNextView<Q,N,B,P>()
                 .padding(.horizontal, -20)
         }
         songDetailsAndControls
@@ -76,7 +75,7 @@ public struct PlayerView<P: PlaylistProtocol,
                 songDetailsAndControls
             }
             VStack {
-                UpNextView<Q,N,B,T,P>()
+                UpNextView<Q,N,B,P>()
             }
         }
     }
@@ -116,15 +115,13 @@ struct HomeView_Previews: PreviewProvider {
                      MockQueueManager,
                      MockNowPlayingManager,
                      MockBlockedTracks,
-                     MockHomeVM,
-                     MockTokenManager>()
+                     MockHomeVM>()
                 .previewDisplayName("Portrait")
             PlayerView<MockPlaylistManager,
                      MockQueueManager,
                      MockNowPlayingManager,
                      MockBlockedTracks,
-                     MockHomeVM,
-                     MockTokenManager>()
+                     MockHomeVM>()
                 .previewInterfaceOrientation(.landscapeLeft)
                 .previewDisplayName("Landscape")
         }
@@ -133,7 +130,6 @@ struct HomeView_Previews: PreviewProvider {
             .environmentObject(MockNowPlayingManager())
             .environmentObject(MockBlockedTracks())
             .environmentObject(MockHomeVM())
-            .environmentObject(MockTokenManager())
             .environmentObject(MockHomeVM())
             .preferredColorScheme(.dark)
     }

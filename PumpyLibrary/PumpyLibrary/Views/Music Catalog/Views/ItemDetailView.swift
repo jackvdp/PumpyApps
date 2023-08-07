@@ -11,7 +11,6 @@ import PumpyAnalytics
 struct ItemDetailView<P:PlaylistProtocol,
                       N:NowPlayingProtocol,
                       B:BlockedTracksProtocol,
-                      T:TokenProtocol,
                       Q:QueueProtocol>: View {
     
     @StateObject private var viewModel = ItemDetailViewModel()
@@ -58,7 +57,7 @@ struct ItemDetailView<P:PlaylistProtocol,
     @ViewBuilder
     func successView(_ playlist: PumpyAnalytics.Playlist) -> some View {
         if let plist = playlist as? Playlist {
-            TrackTable<P,N,B,T,Q>(playlist: plist)
+            TrackTable<P,N,B,Q>(playlist: plist)
                 .transition(.opacity)
                 .id(screen)
         } else {
@@ -75,7 +74,6 @@ struct ItemDetailView_Previews: PreviewProvider {
         ItemDetailView<MockPlaylistManager,
                        MockNowPlayingManager,
                        MockBlockedTracks,
-                       MockTokenManager,
                        MockQueueManager>(snapshot: snapshot).failedView
             .preferredColorScheme(.dark)
     }

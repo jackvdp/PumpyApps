@@ -11,7 +11,6 @@ import PumpyAnalytics
 struct LabResultView<P:PlaylistProtocol,
                      N:NowPlayingProtocol,
                      B:BlockedTracksProtocol,
-                     T:TokenProtocol,
                      Q:QueueProtocol>: View {
     
     @EnvironmentObject var labManager: MusicLabManager
@@ -24,7 +23,7 @@ struct LabResultView<P:PlaylistProtocol,
             case .loading:
                 ActivityView(activityIndicatorVisible: .constant(true)).noBackground
             case .playlist(let playlist):
-                TrackTable<P,N,B,T,Q>(playlist: playlist)
+                TrackTable<P,N,B,Q>(playlist: playlist)
             case .error:
                 Text("Error.\nPlease try again")
             }

@@ -11,7 +11,6 @@ import PumpyAnalytics
 struct SearchView<P:PlaylistProtocol,
                   N:NowPlayingProtocol,
                   B:BlockedTracksProtocol,
-                  T:TokenProtocol,
                   Q:QueueProtocol>: View {
     
     @StateObject private var viewModel = SearchViewModel()
@@ -94,7 +93,7 @@ struct SearchView<P:PlaylistProtocol,
         return ScrollView(.horizontal) {
             LazyHGrid(rows: playlistRows, alignment: .center, spacing: 20) {
                 ForEach(playlists, id: \.sourceID) { item in
-                    NavigationLink(destination: ItemDetailView<P,N,B,T,Q>(snapshot: item)) {
+                    NavigationLink(destination: ItemDetailView<P,N,B,Q>(snapshot: item)) {
                         ItemGridComponent(name: item.name ?? "",
                                           curator: item.curator ?? "",
                                           itemArtworkURL: item.artworkURL ?? "",
@@ -109,7 +108,7 @@ struct SearchView<P:PlaylistProtocol,
     
     func tracksList(_ tracks: [Track]) -> some View {
         ForEach(tracks.indices, id: \.self) { i in
-            TrackRow<T,N,B,P,Q>(track: tracks[i],
+            TrackRow<N,B,P,Q>(track: tracks[i],
                                 tapAction: { playFromPosition(tracks: tracks, index: i) })
             .padding(.leading)
             Divider()
@@ -221,7 +220,6 @@ struct CatalogSearchView_Previews: PreviewProvider {
         MockPlaylistManager,
         MockNowPlayingManager,
         MockBlockedTracks,
-        MockTokenManager,
         MockQueueManager
     >()
     
@@ -240,7 +238,6 @@ struct CatalogSearchView_Previews: PreviewProvider {
         }
         .listStyle(.plain)
         .preferredColorScheme(.dark)
-        .environmentObject(MockTokenManager())
         .environmentObject(MockPlaylistManager())
         .environmentObject(MockNowPlayingManager())
         .environmentObject(MockQueueManager())

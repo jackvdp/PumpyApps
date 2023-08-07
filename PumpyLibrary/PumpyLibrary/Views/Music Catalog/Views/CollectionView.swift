@@ -12,7 +12,6 @@ struct CollectionView<H:HomeProtocol,
                       P:PlaylistProtocol,
                       N:NowPlayingProtocol,
                       B:BlockedTracksProtocol,
-                      T:TokenProtocol,
                       Q:QueueProtocol>: View {
     
     let collection: SuggestedCollection
@@ -39,7 +38,7 @@ struct CollectionView<H:HomeProtocol,
     var items: some View {
         LazyHGrid(rows: rows, alignment: .center, spacing: 20) {
             ForEach(collection.items, id: \.id) { item in
-                ItemView<P,N,B,T,Q>(
+                ItemView<P,N,B,Q>(
                     item: item,
                     size: conditionForBig() ? Int(bigSize) : Int(smallSize)
                 )
@@ -73,7 +72,6 @@ struct CollectionView_Previews: PreviewProvider {
                                    MockPlaylistManager,
                                    MockNowPlayingManager,
                                    MockBlockedTracks,
-                                   MockTokenManager,
                                    MockQueueManager>(collection: collection)
                 }
             }

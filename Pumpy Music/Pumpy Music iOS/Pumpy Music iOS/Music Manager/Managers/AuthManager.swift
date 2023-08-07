@@ -9,7 +9,7 @@
 import PumpyAnalytics
 import PumpyLibrary
 
-extension AuthorisationManager: TokenProtocol {
+extension AuthorisationManager {
     public var appleMusicStoreFront: String? {
         get {
             return storefront

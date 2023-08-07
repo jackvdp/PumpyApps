@@ -14,7 +14,6 @@ struct HomeView<
     P:PlaylistProtocol,
     N:NowPlayingProtocol,
     B:BlockedTracksProtocol,
-    T:TokenProtocol,
     Q:QueueProtocol
 >: View {
     
@@ -22,7 +21,7 @@ struct HomeView<
         ScrollView {
             VStack(spacing: 0) {
                 rows
-                CatalogView<H,P,N,B,T,Q>()
+                CatalogView<H,P,N,B,Q>()
             }
         }
         .pumpyBackground()
@@ -37,7 +36,7 @@ struct HomeView<
                 MenuRow(title: "Playlist Schedule", imageName: "clock", showChevron: true)
             }
             Divider()
-            NavigationLink(destination: BookmarkedView<T,N,B,P,Q>()) {
+            NavigationLink(destination: BookmarkedView<N,B,P,Q>()) {
                 MenuRow(title: "Bookmarked", imageName: "hand.thumbsup", showChevron: true)
             }
             Divider()
@@ -81,7 +80,6 @@ struct NewHomeView_Previews: PreviewProvider {
                      MockPlaylistManager,
                      MockNowPlayingManager,
                      MockBlockedTracks,
-                     MockTokenManager,
                      MockQueueManager>()
         }
         .environmentObject(AuthorisationManager())

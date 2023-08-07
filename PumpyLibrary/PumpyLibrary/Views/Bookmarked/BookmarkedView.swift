@@ -9,7 +9,6 @@ import SwiftUI
 import PumpyAnalytics
 
 struct BookmarkedView<
-    T:TokenProtocol,
     N:NowPlayingProtocol,
     B:BlockedTracksProtocol,
     P:PlaylistProtocol,
@@ -28,7 +27,7 @@ struct BookmarkedView<
                 PumpyListForEach(bookmarkManager.bookmarkedItems, id: \.id, onDelete: onDelete) { item in
                     switch item {
                     case .track(let track):
-                        TrackRow<T,N,B,P,Q>(track: track)
+                        TrackRow<N,B,P,Q>(track: track)
                     case .playlist(let snapshot):
                         snapshotView(snapshot)
                     }
@@ -42,7 +41,7 @@ struct BookmarkedView<
     }
     
     func snapshotView(_ snapshot: PlaylistSnapshot) -> some View {
-        NavigationLink(destination: ItemDetailView<P,N,B,T,Q>(snapshot: snapshot)) {
+        NavigationLink(destination: ItemDetailView<P,N,B,Q>(snapshot: snapshot)) {
             HStack {
                 ArtworkView(url: snapshot.artworkURL, size: 80)
                 Text(snapshot.name ?? "Playlist")
@@ -70,13 +69,11 @@ struct BookmarkedView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            BookmarkedView<MockTokenManager,
-                           MockNowPlayingManager,
+            BookmarkedView<MockNowPlayingManager,
                            MockBlockedTracks,
                            MockPlaylistManager,
                            MockQueueManager>()
         }
-        .environmentObject(MockTokenManager())
         .environmentObject(MockNowPlayingManager())
         .environmentObject(MockBlockedTracks())
         .environmentObject(MockQueueManager())

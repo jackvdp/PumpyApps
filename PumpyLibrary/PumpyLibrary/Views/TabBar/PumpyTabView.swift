@@ -15,14 +15,13 @@ public struct PumpyTabView<
     P:PlaylistProtocol,
     N:NowPlayingProtocol,
     B:BlockedTracksProtocol,
-    T:TokenProtocol,
     Q:QueueProtocol,
     U:UserProtocol
 >: View {
     
     public init() {}
     
-    typealias GenericTabs = Tabs<A,H,P,N,B,T,Q>
+    typealias GenericTabs = Tabs<A,H,P,N,B,Q>
     
     @State private var selectedTab = GenericTabs.home.rawValue
     @Namespace private var animation
@@ -87,7 +86,6 @@ enum Tabs<
     P:PlaylistProtocol,
     N:NowPlayingProtocol,
     B:BlockedTracksProtocol,
-    T:TokenProtocol,
     Q:QueueProtocol
 >: Int, CaseIterable, View {
     
@@ -97,13 +95,13 @@ enum Tabs<
         NavigationView {
             switch self {
             case .home:
-                HomeView<A,H,P,N,B,T,Q>()
+                HomeView<A,H,P,N,B,Q>()
             case .library:
-                PlaylistTable<P,N,B,T,Q>()
+                PlaylistTable<P,N,B,Q>()
             case .lab:
-                MusicLabView<N,B,T,Q,P>()
+                MusicLabView<N,B,Q,P>()
             case .search:
-                SearchView<P,N,B,T,Q>()
+                SearchView<P,N,B,Q>()
             }
         }
         .accentColor(.pumpyPink)
@@ -134,12 +132,10 @@ struct TabBarView_Previews: PreviewProvider {
                 MockPlaylistManager,
                 MockNowPlayingManager,
                 MockBlockedTracks,
-                MockTokenManager,
                 MockQueueManager,
                 MockUser
             >()
             MenuTrackView<
-                MockTokenManager,
                 MockNowPlayingManager,
                 MockBlockedTracks,
                 MockPlaylistManager,
@@ -154,7 +150,6 @@ struct TabBarView_Previews: PreviewProvider {
         .environmentObject(MockPlaylistManager())
         .environmentObject(MockHomeVM())
         .environmentObject(MusicLabManager())
-        .environmentObject(MockTokenManager())
         .environmentObject(AuthorisationManager())
     }
 }

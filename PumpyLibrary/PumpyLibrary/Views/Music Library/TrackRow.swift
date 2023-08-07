@@ -11,8 +11,7 @@ import MediaPlayer
 import PumpyShared
 import PumpyAnalytics
 
-public struct TrackRow<T:TokenProtocol,
-                       N:NowPlayingProtocol,
+public struct TrackRow<N:NowPlayingProtocol,
                        B:BlockedTracksProtocol,
                        P:PlaylistProtocol,
                        Q:QueueProtocol>: View {
@@ -22,7 +21,7 @@ public struct TrackRow<T:TokenProtocol,
     @State private var buttonTapped = false
     @State private var trackAMID: String?
     @State private var analysedTrack: PumpyAnalytics.Track?
-    @EnvironmentObject var tokenManager: T
+    @EnvironmentObject var tokenManager: AuthorisationManager
     @EnvironmentObject var queueManager: Q
     @EnvironmentObject var toastManager: ToastManager
 
@@ -168,18 +167,15 @@ struct TrackRow_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            TrackRow<MockTokenManager,
-                     MockNowPlayingManager,
+            TrackRow<MockNowPlayingManager,
                      MockBlockedTracks,
                      MockPlaylistManager,
                      MockQueueManager>(track: MockData.track, tapAction: {})
-            TrackRow<MockTokenManager,
-                     MockNowPlayingManager,
+            TrackRow<MockNowPlayingManager,
                      MockBlockedTracks,
                      MockPlaylistManager,
                      MockQueueManager>(track: MockData.track).menu
         }
-        .environmentObject(MockTokenManager())
         .environmentObject(MockNowPlayingManager())
         .environmentObject(MockBlockedTracks())
         .environmentObject(MockQueueManager())

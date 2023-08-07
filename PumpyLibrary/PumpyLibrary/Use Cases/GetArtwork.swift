@@ -18,13 +18,13 @@ public class ArtworkHandler {
 
     public func getArtwork(from track: Track,
                            size: Int,
-                           authManager: any TokenProtocol,
+                           authManager: AuthorisationManager,
                            completion: @escaping (URL?) -> Void) {
         if let artworkString = track.artworkURL {
             completion(Self.makeMusicStoreURL(artworkString, size: size))
         } else {
             guard let id = track.amStoreID,
-                  let storefront = authManager.appleMusicStoreFront else { return }
+                  let storefront = authManager.storefront else { return }
             gateway.getArtworkURL(id: id, storeFront: storefront) { (artworkString) in
                 completion(Self.makeMusicStoreURL(artworkString, size: size))
             }

@@ -34,13 +34,11 @@ struct UserView: View {
                 PlaylistManager,
                 NowPlayingManager,
                 BlockedTracksManager,
-                AuthorisationManager,
                 QueueManager,
                 User
             >()
             Divider()
             MenuTrackView<
-                AuthorisationManager,
                 NowPlayingManager,
                 BlockedTracksManager,
                 PlaylistManager,
@@ -54,8 +52,7 @@ struct UserView: View {
                 QueueManager,
                 NowPlayingManager,
                 BlockedTracksManager,
-                HomePlayerManager,
-                AuthorisationManager
+                HomePlayerManager
             >()
         }
         .environmentObject(settingsManager)

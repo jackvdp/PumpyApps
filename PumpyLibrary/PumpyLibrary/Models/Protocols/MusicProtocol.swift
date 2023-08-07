@@ -6,14 +6,14 @@
 //
 
 import Foundation
+import PumpyAnalytics
 
 public protocol MusicProtocol: ObservableObject {
-    associatedtype T: TokenProtocol
     associatedtype P: PlaylistProtocol
     associatedtype Q: QueueProtocol
     associatedtype B: BlockedTracksProtocol
     
-    var authManager: T? { get }
+    var authManager: AuthorisationManager? { get }
     var playlistManager: P? { get }
     var queueManager: Q? { get }
     var blockedTracksManager: B? { get }
@@ -22,7 +22,6 @@ public protocol MusicProtocol: ObservableObject {
 }
 
 public class MockMusicMananger: MusicProtocol {
-    public typealias T = MockTokenManager
      
     public typealias P = MockPlaylistManager
     
@@ -30,7 +29,7 @@ public class MockMusicMananger: MusicProtocol {
     
     public typealias B = MockBlockedTracks
     
-    public var authManager: MockTokenManager? = MockTokenManager()
+    public var authManager: AuthorisationManager?
     
     public var playlistManager: MockPlaylistManager? = MockPlaylistManager()
     

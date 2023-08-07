@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct ExternalDisplayView<A: AccountManagerProtocol, P:PlaylistProtocol,N:NowPlayingProtocol, Q:QueueProtocol,B:BlockedTracksProtocol,T:TokenProtocol>: View {
+public struct ExternalDisplayView<A: AccountManagerProtocol, P:PlaylistProtocol,N:NowPlayingProtocol, Q:QueueProtocol,B:BlockedTracksProtocol>: View {
     
     @EnvironmentObject var accountManager: A
     
@@ -16,7 +16,7 @@ public struct ExternalDisplayView<A: AccountManagerProtocol, P:PlaylistProtocol,
     
     public var body: some View {
         if let user = accountManager.user {
-//            ExtHomeView<P,N,Q,B,T>()
+//            ExtHomeView<P,N,Q,B>()
 //                .environmentObject(user.musicManager)
 //                .environmentObject(user.externalDisplayManager)
             ExtLoggedOffView()
@@ -29,7 +29,7 @@ public struct ExternalDisplayView<A: AccountManagerProtocol, P:PlaylistProtocol,
 #if DEBUG
 struct ExternalDisplayView_Previews: PreviewProvider {
     static var previews: some View {
-        ExternalDisplayView<MockAccountManager,MockPlaylistManager,MockNowPlayingManager,MockQueueManager,MockBlockedTracks,MockTokenManager>()
+        ExternalDisplayView<MockAccountManager,MockPlaylistManager,MockNowPlayingManager,MockQueueManager,MockBlockedTracks>()
             .environmentObject(MockAccountManager())
             .previewLayout(.sizeThatFits)
             .frame(width: 1920, height: 1080)

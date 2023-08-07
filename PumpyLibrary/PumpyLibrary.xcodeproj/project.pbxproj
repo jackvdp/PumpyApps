@@ -63,7 +63,6 @@
 		6DB8C02C28A3C8A6006C1B85 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 6DB8C02B28A3C8A6006C1B85 /* Fonts */; };
 		6DB8C02E28A3D161006C1B85 /* PreviewMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB8C02D28A3D161006C1B85 /* PreviewMocks.swift */; };
 		6DB8C03028A3D319006C1B85 /* TrackRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB8C02F28A3D319006C1B85 /* TrackRow.swift */; };
-		6DB8C03228A3D826006C1B85 /* TokenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB8C03128A3D826006C1B85 /* TokenProtocol.swift */; };
 		6DB8C03428A3D91F006C1B85 /* AudioFeaturesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB8C03328A3D91E006C1B85 /* AudioFeaturesModel.swift */; };
 		6DBA8A8A28BB64B1000A25FD /* MenuRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBA8A8928BB64B1000A25FD /* MenuRow.swift */; };
 		6DD8490628A449BD00794FDB /* LoggedOffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD8490028A449BD00794FDB /* LoggedOffView.swift */; };
@@ -207,7 +206,6 @@
 		6DB8C02B28A3C8A6006C1B85 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		6DB8C02D28A3D161006C1B85 /* PreviewMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewMocks.swift; sourceTree = "<group>"; };
 		6DB8C02F28A3D319006C1B85 /* TrackRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackRow.swift; sourceTree = "<group>"; };
-		6DB8C03128A3D826006C1B85 /* TokenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProtocol.swift; sourceTree = "<group>"; };
 		6DB8C03328A3D91E006C1B85 /* AudioFeaturesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFeaturesModel.swift; sourceTree = "<group>"; };
 		6DBA8A8928BB64B1000A25FD /* MenuRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuRow.swift; sourceTree = "<group>"; };
 		6DD8490028A449BD00794FDB /* LoggedOffView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedOffView.swift; sourceTree = "<group>"; };
@@ -433,7 +431,6 @@
 				6DB8C02528A3B349006C1B85 /* PlaylistProtocol.swift */,
 				6DB8C02728A3BD6B006C1B85 /* BlockedTracksProtocol.swift */,
 				6DB8C02928A3C6FE006C1B85 /* QueueProtocol.swift */,
-				6DB8C03128A3D826006C1B85 /* TokenProtocol.swift */,
 				6DAC17BC28A507F0009D46BC /* MusicProtocol.swift */,
 				6DAC17C528A50BAE009D46BC /* UserProtocol.swift */,
 			);
@@ -899,7 +896,6 @@
 				C0BE35732A76B05D008F1612 /* UserDefaultsStored.swift in Sources */,
 				6D267C6328A2588B0094AAF1 /* AMArtworkGateway.swift in Sources */,
 				6DB8C01928A3B120006C1B85 /* FilterButtonView.swift in Sources */,
-				6DB8C03228A3D826006C1B85 /* TokenProtocol.swift in Sources */,
 				6D1577CA28BF939C004BAB47 /* SetScheduleViewModel.swift in Sources */,
 				6DB8C02228A3B135006C1B85 /* ScheduledUser.swift in Sources */,
 				6D972D9F28A2F74B00CFD9D7 /* LoginView.swift in Sources */,

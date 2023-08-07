@@ -12,7 +12,6 @@ import MediaPlayer
 public struct UpNextView<Q: QueueProtocol,
                          N:NowPlayingProtocol,
                          B:BlockedTracksProtocol,
-                         T: TokenProtocol,
                          P:PlaylistProtocol>: View {
     
     @EnvironmentObject var queueManager: Q
@@ -80,7 +79,7 @@ public struct UpNextView<Q: QueueProtocol,
     var history: some View {
         Section(header: Text("History")) {
             ForEach(0..<queueManager.queueIndex, id: \.self) { i in
-                TrackRow<T,N,B,P,Q>(track: queueManager.queueTracks[i])
+                TrackRow<N,B,P,Q>(track: queueManager.queueTracks[i])
                     .deleteDisabled(true)
                     .foregroundColor(.white)
                     .id(queueManager.queueTracks[i].amStoreID)
@@ -93,7 +92,7 @@ public struct UpNextView<Q: QueueProtocol,
     
     var nowPlaying: some View {
         Section(header: Text("Now Playing")) {
-            TrackRow<T,N,B,P,Q>(track: queueManager.queueTracks[queueManager.queueIndex])
+            TrackRow<N,B,P,Q>(track: queueManager.queueTracks[queueManager.queueIndex])
                 .deleteDisabled(true)
                 .foregroundColor(.white)
                 .id(queueManager.queueTracks[queueManager.queueIndex].amStoreID)
@@ -120,7 +119,7 @@ public struct UpNextView<Q: QueueProtocol,
     var playingNext: some View {
         Section(header: Text("Playing Next")) {
            ForEach(queueManager.queueIndex + 1..<queueManager.queueTracks.count, id: \.self) { i in
-               TrackRow<T,N,B,P,Q>(track: queueManager.queueTracks[i])
+               TrackRow<N,B,P,Q>(track: queueManager.queueTracks[i])
                    .foregroundColor(.white)
                    .id(queueManager.queueTracks[i].amStoreID)
            }
@@ -147,13 +146,11 @@ struct UpNextView_Previews: PreviewProvider {
             MockQueueManager,
             MockNowPlayingManager,
             MockBlockedTracks,
-            MockTokenManager,
             MockPlaylistManager
         >()
             .environmentObject(queueManager)
             .environmentObject(MockBlockedTracks())
             .environmentObject(MockNowPlayingManager())
-            .environmentObject(MockTokenManager())
             .environmentObject(MockPlaylistManager())
             .preferredColorScheme(.dark)
             .background(Color.indigo)

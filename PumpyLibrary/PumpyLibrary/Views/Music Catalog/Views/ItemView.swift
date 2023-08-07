@@ -11,14 +11,13 @@ import PumpyAnalytics
 struct ItemView<P:PlaylistProtocol,
                 N:NowPlayingProtocol,
                 B:BlockedTracksProtocol,
-                T:TokenProtocol,
                 Q:QueueProtocol>: View {
     
     let item: SuggestedItem
     let size: Int
     
     var body: some View {
-        NavigationLink(destination: ItemDetailView<P,N,B,T,Q>(snapshot: snapshot)) {
+        NavigationLink(destination: ItemDetailView<P,N,B,Q>(snapshot: snapshot)) {
             ItemGridComponent(name: item.name,
                               curator: item.curator,
                               itemArtworkURL: item.artworkURL,
@@ -39,7 +38,6 @@ struct ItemView_Previews: PreviewProvider {
         ItemView<MockPlaylistManager,
                  MockNowPlayingManager,
                  MockBlockedTracks,
-                 MockTokenManager,
                  MockQueueManager>(item: PumpyAnalytics.MockData.item, size: 200)
             .preferredColorScheme(.dark)
             .frame(height: 100)
@@ -48,7 +46,6 @@ struct ItemView_Previews: PreviewProvider {
         ItemView<MockPlaylistManager,
                  MockNowPlayingManager,
                  MockBlockedTracks,
-                 MockTokenManager,
                  MockQueueManager>(item: PumpyAnalytics.MockData.item, size: 200)
             .preferredColorScheme(.dark)
             .frame(height: 200)
@@ -56,7 +53,6 @@ struct ItemView_Previews: PreviewProvider {
         ItemView<MockPlaylistManager,
                  MockNowPlayingManager,
                  MockBlockedTracks,
-                 MockTokenManager,
                  MockQueueManager>(item: PumpyAnalytics.MockData.item, size: 200)
             .preferredColorScheme(.dark)
             .frame(height: 400)

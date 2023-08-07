@@ -10,7 +10,6 @@ import PumpyAnalytics
 
 public struct MusicLabView<N:NowPlayingProtocol,
                            B:BlockedTracksProtocol,
-                           T:TokenProtocol,
                            Q:QueueProtocol,
                            P:PlaylistProtocol>: View {
     
@@ -67,7 +66,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
     
     var tracks: some View {
         ForEach(labManager.seedTracks.indices, id: \.self) { i in
-            TrackRow<T,N,B,P,Q>(track: labManager.seedTracks[i],
+            TrackRow<N,B,P,Q>(track: labManager.seedTracks[i],
                                 tapAction: { playFromPosition(tracks: labManager.seedTracks, index: i) })
         }
         .onDelete(perform: labManager.removeTrack)
@@ -127,7 +126,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
     }
     
     var button: some View {
-        NavigationLink(destination: LabResultView<P,N,B,T,Q>()) {
+        NavigationLink(destination: LabResultView<P,N,B,Q>()) {
             Text("Create")
                 .bold()
                 .padding(4)
@@ -173,18 +172,16 @@ struct MusicLabView_Previews: PreviewProvider {
                     MusicLabView<
                         MockNowPlayingManager,
                         MockBlockedTracks,
-                        MockTokenManager,
                         MockQueueManager,
                         MockPlaylistManager
                     >()
-                    MenuTrackView<MockTokenManager,MockNowPlayingManager, MockBlockedTracks,MockPlaylistManager,MockHomeVM>()
+                    MenuTrackView<MockNowPlayingManager, MockBlockedTracks,MockPlaylistManager,MockHomeVM>()
                 }
             }.environmentObject(labManager)
             NavigationView {
                 MusicLabView<
                     MockNowPlayingManager,
                     MockBlockedTracks,
-                    MockTokenManager,
                     MockQueueManager,
                     MockPlaylistManager
                 >()
@@ -193,7 +190,6 @@ struct MusicLabView_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
             .environmentObject(MockNowPlayingManager())
             .environmentObject(MockBlockedTracks())
-            .environmentObject(MockTokenManager())
             .environmentObject(MockQueueManager())
             .environmentObject(MockPlaylistManager())
             .environmentObject(AlarmManager())

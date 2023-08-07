@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
+import PumpyAnalytics
 
-public struct MenuTrackView<T:TokenProtocol,
-                            N:NowPlayingProtocol,
+public struct MenuTrackView<N:NowPlayingProtocol,
                             B:BlockedTracksProtocol,
                             P:PlaylistProtocol,
                             H:HomeProtocol>: View {
     
     @EnvironmentObject var nowPlayingManager: N
-    @EnvironmentObject var tokenManager: T
+    @EnvironmentObject var tokenManager: AuthorisationManager
     @EnvironmentObject var playlistManager: P
     @EnvironmentObject var homeVM: H
     @EnvironmentObject var alarmManager: AlarmManager
@@ -131,7 +131,6 @@ struct MenuTrack_Previews: PreviewProvider {
         .edgesIgnoringSafeArea(.bottom)
         .background(Color.indigo)
         .environmentObject(MockBlockedTracks())
-        .environmentObject(MockTokenManager())
         .environmentObject(MockHomeVM())
         .environmentObject(AlarmManager())
     }
@@ -148,8 +147,7 @@ struct MenuTrack_Previews: PreviewProvider {
         return p
     }
     
-    static var trackView = MenuTrackView<MockTokenManager,
-                                         MockNowPlayingManager,
+    static var trackView = MenuTrackView<MockNowPlayingManager,
                                          MockBlockedTracks,
                                          MockPlaylistManager,
                                          MockHomeVM>()

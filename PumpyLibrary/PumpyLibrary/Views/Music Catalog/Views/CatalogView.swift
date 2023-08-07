@@ -12,7 +12,6 @@ public struct CatalogView<H:HomeProtocol,
                           P:PlaylistProtocol,
                           N:NowPlayingProtocol,
                           B:BlockedTracksProtocol,
-                          T:TokenProtocol,
                           Q:QueueProtocol>: View {
     
     @EnvironmentObject var authManager: AuthorisationManager
@@ -65,7 +64,7 @@ public struct CatalogView<H:HomeProtocol,
     
     func collectionsView(_ collections: [SuggestedCollection]) -> some View {
         ForEach(collections, id: \.self) { collection in
-            CollectionView<H,P,N,B,T,Q>(collection: collection)
+            CollectionView<H,P,N,B,Q>(collection: collection)
         }
     }
     
@@ -111,7 +110,6 @@ struct CatalogView_Previews: PreviewProvider {
                         MockPlaylistManager,
                         MockNowPlayingManager,
                         MockBlockedTracks,
-                        MockTokenManager,
                         MockQueueManager>()
         }
         .environmentObject(authManager)
@@ -121,7 +119,6 @@ struct CatalogView_Previews: PreviewProvider {
                         MockPlaylistManager,
                         MockNowPlayingManager,
                         MockBlockedTracks,
-                        MockTokenManager,
                         MockQueueManager>().loadingView
         }
         .environmentObject(authManager)
