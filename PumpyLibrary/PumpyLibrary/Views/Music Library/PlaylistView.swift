@@ -61,7 +61,7 @@ struct PlaylistView<
                 Text(playlist.curator)
                     .font(.headline).bold().opacity(0.5)
             }
-        }
+        }.multilineTextAlignment(.center)
     }
     
     var playButtons: some View {

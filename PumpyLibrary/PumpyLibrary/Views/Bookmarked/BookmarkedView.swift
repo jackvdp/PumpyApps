@@ -45,11 +45,19 @@ struct BookmarkedView<
     
     func snapshotView(_ snapshot: PlaylistSnapshot) -> some View {
         NavigationLink(destination: ItemDetailView<P,N,B,Q>(snapshot: snapshot)) {
-            HStack {
+            HStack(spacing: 20) {
                 ArtworkView(url: snapshot.artworkURL, size: 80)
-                Text(snapshot.name ?? "Playlist")
-                    .font(.headline)
-                    .lineLimit(1)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(snapshot.name ?? "Playlist")
+                        .font(.headline)
+                        .lineLimit(1)
+                    if let curator = snapshot.curator {
+                        Text(curator)
+                            .font(.subheadline)
+                            .opacity(0.5)
+                            .lineLimit(1)
+                    }
+                }
                 Spacer()
             }
         }

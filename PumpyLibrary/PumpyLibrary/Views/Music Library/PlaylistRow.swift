@@ -15,8 +15,15 @@ struct PlaylistRow : View {
     var body: some View {
         HStack(alignment: .center, spacing: 20.0) {
             ArtworkView(collection: playlist, size: 75)
-            Text(playlist.title ?? "")
-                .font(.headline)
+            VStack(alignment: .leading, spacing: 5) {
+                Text(playlist.title ?? "Playlist")
+                    .font(.headline)
+                if playlist.curator != "" {
+                    Text(playlist.curator)
+                        .font(.subheadline)
+                        .opacity(0.5)
+                }
+            }
         }
         .padding(.all, 10.0)
     }
