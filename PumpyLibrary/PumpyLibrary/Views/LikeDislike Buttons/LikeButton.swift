@@ -12,10 +12,8 @@ struct LikeButton<
 >: View {
     
     let track: Track
-    var nowPlayingManager: N?
     @EnvironmentObject var bookmarkManager: BookmarkedManager
-    @State private var colour: Color = .white
-    var size: CGFloat = 30
+    var size: CGFloat
     
     var body: some View {
         Button(action: buttonPressed) {
@@ -23,16 +21,12 @@ struct LikeButton<
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: size, height: size, alignment: .center)
-                .foregroundColor(colour)
+                .foregroundColor(
+                    bookmarkManager.bookmarkedItems.contains(where: { $0.id == track.amStoreID}) ? .cyan : .white
+                )
         }
         .buttonStyle(.plain)
         .disabled(track.codableTrack() == nil)
-        .onReceive(bookmarkManager.$bookmarkedItems) { _ in
-            setButton()
-        }
-        .onChange(of: nowPlayingManager?.currentTrack?.amStoreID) { _ in
-            setButton()
-        }
     }
     
     func buttonPressed() {
@@ -41,16 +35,6 @@ struct LikeButton<
             bookmarkManager.removeItem(.track(codableTrack))
         } else {
             bookmarkManager.addTrackToBookmarks(.track(codableTrack))
-        }
-    }
-    
-    func setButton() {
-        withAnimation {
-            if bookmarkManager.bookmarkedItems.contains(where: { $0.id == track.amStoreID}) {
-                colour = .cyan
-            } else {
-                colour = .white
-            }
         }
     }
 
@@ -69,15 +53,15 @@ struct LikeButton_Previews: PreviewProvider {
         HStack(spacing: 24) {
             LikeButton<
                 MockNowPlayingManager
-            >(track: MockData.track)
+            >(track: MockData.track, size: 30)
                 .environmentObject(BookmarkedManager())
             LikeButton<
                 MockNowPlayingManager
-            >(track: MockData.track)
+            >(track: MockData.track, size: 30)
                 .environmentObject(bookmarkManagerWithTrack)
             DislikeButton<
                 MockNowPlayingManager, MockBlockedTracks
-            >(track: MockData.track)
+            >(track: MockData.track, size: 30)
                 .environmentObject(MockBlockedTracks())
         }
         .environmentObject(MockNowPlayingManager())

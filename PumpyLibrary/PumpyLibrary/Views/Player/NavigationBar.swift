@@ -15,15 +15,16 @@ struct NavigationBar<B: BlockedTracksProtocol, N:NowPlayingProtocol, H:HomeProto
     @EnvironmentObject var homeVM: H
      
     var body: some View {
-        HStack {
-            if let track = nowPlayingManager.currentTrack {
-                LikeDislikeButtons<N,B>(track: track, nowPlayingManager: nowPlayingManager)
+        ZStack {
+            HStack {
+                if let track = nowPlayingManager.currentTrack {
+                    LikeDislikeButtons<N,B>(track: track, nowPlayingManager: nowPlayingManager)
+                }
+                Spacer()
+                menuButton
             }
-            Spacer()
             PumpyView()
                 .frame(width: 120, height: 40)
-            Spacer()
-            menuButton
         }
     }
     

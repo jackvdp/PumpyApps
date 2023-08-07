@@ -14,12 +14,9 @@ struct DislikeButton<
 >: View {
     
     let track: Track
-    var nowPlayingManager: N?
     @EnvironmentObject var blockedTracksManager: B
-    
-    @State private var colour: Color = .white
     @State private var showAlert = false
-    var size: CGFloat = 30
+    var size: CGFloat
     
     var body: some View {
         Button(action: {
@@ -31,27 +28,13 @@ struct DislikeButton<
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: size, height: size, alignment: .center)
-                .foregroundColor(colour)
+                .foregroundColor(
+                    blockedTracksManager.blockedTracks.contains(where: { $0.playbackID == track.amStoreID}) ? .red : .white
+                )
         }
         .buttonStyle(.plain)
         .disabled(track.codableTrack() == nil)
         .alert(isPresented: $showAlert, content: createAlert)
-        .onReceive(blockedTracksManager.blockedTracks.publisher) { _ in
-            setButton()
-        }
-        .onChange(of: nowPlayingManager?.currentTrack?.amStoreID) { _ in
-            setButton()
-        }
-    }
-    
-    func setButton() {
-        withAnimation {
-            if blockedTracksManager.blockedTracks.contains(where: { $0.playbackID == track.amStoreID}) {
-                colour = .red
-            } else {
-                colour = .white
-            }
-        }
     }
     
     func createAlert() -> Alert {
@@ -74,7 +57,7 @@ struct DislikeButton_Previews: PreviewProvider {
         DislikeButton<
             MockNowPlayingManager,
             MockBlockedTracks
-        >(track: MockData.track)
+        >(track: MockData.track, size: 30)
             .environmentObject(MockBlockedTracks())
             .environmentObject(MockNowPlayingManager())
             .preferredColorScheme(.dark)

@@ -14,18 +14,16 @@ struct LikeDislikeButtons<
     
     let track: Track
     var nowPlayingManager: N?
-    var size: CGFloat = 30
+    var size: CGFloat = 25
     
     var body: some View {
         HStack(spacing: 24) {
             LikeButton<N>(
                 track: track,
-                nowPlayingManager: nowPlayingManager,
                 size: size
             )
             DislikeButton<N,B>(
                 track: track,
-                nowPlayingManager: nowPlayingManager,
                 size: size
             )
         }
