@@ -97,6 +97,8 @@ class AccountManager: AccountManagerProtocol {
     func signOut() {
         usernameTF = String()
         passwordTF = String()
+        defaults.set("", forKey: K.username)
+        defaults.set("", forKey: K.password)
         user?.signOut()
         user = nil
     }
