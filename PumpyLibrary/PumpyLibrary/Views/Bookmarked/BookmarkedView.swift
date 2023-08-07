@@ -16,6 +16,7 @@ struct BookmarkedView<
 >: View {
     
     @EnvironmentObject var bookmarkManager: BookmarkedManager
+    @EnvironmentObject var queueManager: Q
     
     var body: some View {
         Group {
@@ -27,7 +28,9 @@ struct BookmarkedView<
                 PumpyListForEach(bookmarkManager.bookmarkedItems, id: \.id, onDelete: onDelete) { item in
                     switch item {
                     case .track(let track):
-                        TrackRow<N,B,P,Q>(track: track)
+                        TrackRow<N,B,P,Q>(track: track) {
+                            queueManager.playTrackNow(id: track.playbackID)
+                        }
                     case .playlist(let snapshot):
                         snapshotView(snapshot)
                     }

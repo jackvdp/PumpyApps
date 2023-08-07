@@ -80,7 +80,7 @@ struct PlaylistView<
     var tracksList: some View {
         ForEach(filteredTracks.indices, id: \.self) { i in
             TrackRow<N,B,P,Q>(track: filteredTracks[i],
-                                tapAction: { playFromPosition(track: filteredTracks[i]) })
+                              tapAction: { playFromPosition(track: filteredTracks[i]) })
         }
     }
     
