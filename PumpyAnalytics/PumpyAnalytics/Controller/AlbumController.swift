@@ -11,13 +11,15 @@ public class AlbumController {
     
     public init() {}
     
+    private let useCase = GetAMAlbum()
+    
     public func get(albumID: String,
                     authManager: AuthorisationManager,
                     completion: @escaping (AMAlbum?, ErrorMessage?) -> ()) {
         
-        GetAMAlbum().execute(id: albumID,
-                             authManager: authManager,
-                             completion: completion)
+        useCase.execute(id: albumID,
+                        authManager: authManager,
+                        completion: completion)
         
     }
     

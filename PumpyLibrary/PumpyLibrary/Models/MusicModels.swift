@@ -245,3 +245,25 @@ extension PumpyAnalytics.Track: Track {
         self.isExplicit
     }
 }
+
+extension AMAlbum: PumpyLibrary.Playlist {
+    public var title: String? {
+        name
+    }
+    
+    public var songs: [Track] {
+        tracks
+    }
+    
+    public var cloudGlobalID: String? {
+        sourceID
+    }
+    
+    public var longDescription: String? {
+        description
+    }
+    
+    public var type: PumpyAnalytics.PlaylistType {
+        .am(id: sourceID)
+    }
+}

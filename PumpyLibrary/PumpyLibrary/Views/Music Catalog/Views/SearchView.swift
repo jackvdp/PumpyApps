@@ -8,10 +8,12 @@
 import SwiftUI
 import PumpyAnalytics
 
-struct SearchView<P:PlaylistProtocol,
-                  N:NowPlayingProtocol,
-                  B:BlockedTracksProtocol,
-                  Q:QueueProtocol>: View {
+struct SearchView<
+    P:PlaylistProtocol,
+    N:NowPlayingProtocol,
+    B:BlockedTracksProtocol,
+    Q:QueueProtocol
+>: View {
     
     @StateObject private var viewModel = SearchViewModel()
     @EnvironmentObject var authManager: AuthorisationManager

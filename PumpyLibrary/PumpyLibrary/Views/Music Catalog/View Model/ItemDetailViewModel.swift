@@ -11,6 +11,8 @@ import PumpyAnalytics
 class ItemDetailViewModel: ObservableObject {
     
     @Published var pageState = PageState.loading
+    private let albumController = AlbumController()
+    private let playlistController = PlaylistController()
     
     func getItem(snapshot: PlaylistSnapshot, authManager: AuthorisationManager) {
         switch snapshot.type {
@@ -27,8 +29,8 @@ class ItemDetailViewModel: ObservableObject {
     
     private func getPlaylist(snapshot: PlaylistSnapshot, authManager: AuthorisationManager) {
         
-        PlaylistController().get(libraryPlaylist: snapshot,
-                                 authManager: authManager) { [weak self] playlist, error in
+        playlistController.get(libraryPlaylist: snapshot,
+                               authManager: authManager) { [weak self] playlist, error in
             
             guard let self = self else { return }
             
@@ -49,7 +51,8 @@ class ItemDetailViewModel: ObservableObject {
     
     private func getAlbum(id: String, authManager: AuthorisationManager) {
         
-        AlbumController().get(albumID: id, authManager: authManager) { [weak self] amAlbum, error in
+        albumController.get(albumID: id,
+                            authManager: authManager) { [weak self] amAlbum, error in
             guard let self = self else { return }
             
             guard let amAlbum = amAlbum else {

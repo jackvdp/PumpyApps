@@ -27,18 +27,17 @@ struct ItemDetailView<P:PlaylistProtocol,
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .transition(.opacity)
                     .id(screen)
+                    .onAppear() {
+                        viewModel.getItem(snapshot: snapshot,
+                                          authManager: authManager)
+                    }
             case .success(let playlist):
                 successView(playlist)
             case .failed:
                 failedView
             }
-            
         }
         .pumpyBackground()
-        .onAppear() {
-            viewModel.getItem(snapshot: snapshot,
-                              authManager: authManager)
-        }
         .onChange(of: viewModel.pageState) { newValue in
             withAnimation {
                 pageState = newValue
