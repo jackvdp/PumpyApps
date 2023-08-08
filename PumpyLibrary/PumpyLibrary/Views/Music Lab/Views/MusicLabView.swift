@@ -14,24 +14,24 @@ public struct MusicLabView<N:NowPlayingProtocol,
                            P:PlaylistProtocol>: View {
     
     @EnvironmentObject var labManager: MusicLabManager
-    @EnvironmentObject var playlistManager: P
+    @EnvironmentObject var queueManager: Q
     @EnvironmentObject var authManager: AuthorisationManager
     
     public init() {}
     
     public var body: some View {
-        PumpyList {
-            tracks
-            genres
-            sliders
+        ScrollView {
+            VStack {
+                tracks
+                Divider()
+                genres
+                Divider()
+                sliders
+            }
+            .padding(.horizontal)
         }
-        .listStyle(.plain)
-        .mask {
-            mask
-        }
-        .overlay(alignment: .bottom) {
-            button
-        }
+        .mask { mask }
+        .overlay(alignment: .bottom) { button }
         .navigationTitle("Music Lab")
         .pumpyBackground()
         .onAppear() {
@@ -65,20 +65,17 @@ public struct MusicLabView<N:NowPlayingProtocol,
     // MARK: - Tracks
     
     var tracks: some View {
-        ForEach(labManager.seedTracks.indices, id: \.self) { i in
-            TrackRow<N,B,P,Q>(track: labManager.seedTracks[i],
-                                tapAction: { playFromPosition(tracks: labManager.seedTracks, index: i) })
+        ForEach(labManager.seedTracks, id: \.sourceID) { track in
+            Divider()
+            TrackRow<N,B,P,Q>(track: track,
+                              tapAction: { playFromPosition(track: track) })
         }
         .onDelete(perform: labManager.removeTrack)
     }
     
-    func playFromPosition(tracks: [Track], index: Int) {
-        let playlist = QueuePlaylist(title: "Music Lab Items",
-                                     curator: "Music Lab",
-                                     songs: tracks,
-                                     cloudGlobalID: nil,
-                                     artworkURL: nil)
-        playlistManager.playPlaylist(playlist: playlist, from: index)
+    func playFromPosition(track: Track) {
+        guard let id = track.amStoreID else { return }
+        queueManager.playTrackNow(id: id)
     }
     
     // MARK: - Attribute Sliders
@@ -86,8 +83,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
     var sliders: some View {
         VStack(alignment: .leading) {
             tunableAttributesHeader
-            ForEach(labManager.properties.indices, id: \.self) { index in
-                let property = labManager.properties[index]
+            ForEach(labManager.properties, id: \.name) { property in
                 PropertySelector(prop: property)
                     .padding()
                     .background(.ultraThinMaterial.opacity(0.5))
