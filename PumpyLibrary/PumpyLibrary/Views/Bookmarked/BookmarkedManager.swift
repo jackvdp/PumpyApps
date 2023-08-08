@@ -70,6 +70,10 @@ public class BookmarkedManager: ObservableObject {
         bookmarkedItems.removeAll(where: { $0.id == item.id})
     }
     
+    func removeAll() {
+        bookmarkedItems.removeAll()
+    }
+    
     func removeListener() {
         remoteListener?.remove()
     }

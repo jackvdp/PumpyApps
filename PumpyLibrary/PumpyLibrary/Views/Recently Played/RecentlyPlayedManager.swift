@@ -15,7 +15,10 @@ public class RecentlyPlayedManager: ObservableObject {
     @Published private(set) var items = BoundedArray<BookmarkedItem>(maxSize: 10)
     
     func addItem(_ item: BookmarkedItem) {
-        self.items.prepend(item)
+        if items.contains(where: { $0.id == item.id}) {
+            items.removeAll(where: { $0.id == item.id })
+        }
+        items.prepend(item)
     }
     
 }
@@ -43,7 +46,7 @@ struct BoundedArray<T:Codable>: RandomAccessCollection {
     }
 
     mutating func prepend(_ element: T) {
-        array.append(element)
+        array.insert(element, at: 0)
         while array.count > maxSize {
             array.removeLast()
         }
@@ -51,5 +54,9 @@ struct BoundedArray<T:Codable>: RandomAccessCollection {
 
     subscript(index: Int) -> T {
         return array[index]
+    }
+    
+    mutating func removeAll(where method: (T) -> (Bool)) {
+        array.removeAll(where: method)
     }
 }

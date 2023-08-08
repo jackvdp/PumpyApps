@@ -17,6 +17,7 @@ struct BookmarkedView<
     
     @EnvironmentObject var bookmarkManager: BookmarkedManager
     @EnvironmentObject var queueManager: Q
+    @State private var showAlert = false
     
     var body: some View {
         Group {
@@ -41,6 +42,12 @@ struct BookmarkedView<
         .pumpyBackground()
         .navigationBarTitle("Bookmarks")
         .navigationBarTitleDisplayMode(.large)
+        .navigationBarItems(trailing: Button(action: {
+            showAlert = true
+        }, label: { Text("Reset") }))
+        .alert(isPresented: $showAlert) {
+            createAlert()
+        }
     }
     
     func snapshotView(_ snapshot: PlaylistSnapshot) -> some View {
@@ -63,8 +70,21 @@ struct BookmarkedView<
         }
     }
     
-    func onDelete(_ index: IndexSet) {
-        
+    func onDelete(_ offsets: IndexSet) {
+        offsets.forEach { i in
+            if let item = bookmarkManager.bookmarkedItems[safe: i] {
+                bookmarkManager.removeItem(item)
+            }
+        }
+    }
+    
+    func createAlert() -> Alert {
+         Alert(
+            title: Text("Remove all bookmarks?"),
+            message: Text("This cannot be undone."),
+            primaryButton: .default(Text("Cancel"), action: {}),
+            secondaryButton: .destructive(Text("Remove"), action: bookmarkManager.removeAll)
+         )
     }
 }
 
