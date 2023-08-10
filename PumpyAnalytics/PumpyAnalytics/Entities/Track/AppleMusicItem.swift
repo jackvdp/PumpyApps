@@ -36,3 +36,10 @@ public enum MusicStoreType: String, Codable {
     case album = "album"
     case station = "radioStation"
 }
+
+public extension AppleMusicItem {
+    /// Used to create a blank item used for converting tracks to AM Library
+    public static func blankItemWithID(_ id: String) -> AppleMusicItem {
+        AppleMusicItem(isrc: "", id: id, name: "", artistName: "", genres: [], type: .track)
+    }
+}

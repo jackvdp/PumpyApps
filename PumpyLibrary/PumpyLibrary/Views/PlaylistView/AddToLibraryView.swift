@@ -22,27 +22,30 @@ struct AddToLibraryView<P: PlaylistProtocol>: View {
     }
     
     var body: some View {
-        if libraryManager.playlistsCurrentlyConverting.contains(playlist.sourceID) {
-            ProgressView()
-        } else {
-            Button(action: {
-                if !inLibrary {
-                    libraryManager.addToLibrary(playlist, authManager: authManager, toastManager: toastManager)
+        Group {
+            if libraryManager.playlistsCurrentlyConverting.contains(playlist.sourceID) {
+                ProgressView()
+            } else {
+                Button(action: {
+                    if !inLibrary {
+                        libraryManager.addToLibrary(playlist, authManager: authManager, toastManager: toastManager)
+                    }
+                }, label: {
+                    Image(systemName: inLibrary ? "checkmark" : "plus" )
+                })
+                .foregroundColor(.white)
+                .buttonStyle(.plain)
+                .alert(isPresented: $showAddToLibraryAlert) {
+                    Alert(
+                        title: Text("Add to Library?"),
+                        message: Text("Add to your Apple Music Library?"),
+                        primaryButton: .default(Text("Add")),
+                        secondaryButton: .cancel()
+                    )
                 }
-            }, label: {
-                Image(systemName: inLibrary ? "checkmark" : "plus" )
-            })
-            .foregroundColor(.white)
-            .buttonStyle(.plain)
-            .alert(isPresented: $showAddToLibraryAlert) {
-                Alert(
-                    title: Text("Add to Library?"),
-                    message: Text("Add to your Apple Music Library?"),
-                    primaryButton: .default(Text("Add")),
-                    secondaryButton: .cancel()
-                )
             }
         }
+        .padding(.leading)
     }
 }
 

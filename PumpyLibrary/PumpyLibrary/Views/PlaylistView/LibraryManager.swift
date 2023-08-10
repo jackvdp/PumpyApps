@@ -64,7 +64,7 @@ public class LibraryManager: ObservableObject {
                     isExplicit: song.isExplicitItem,
                     sourceID: amID,
                     authManager: authManager,
-                    appleMusicItem: nil,
+                    appleMusicItem: AppleMusicItem.blankItemWithID(amID),
                     spotifyItem: nil
                 )
             }

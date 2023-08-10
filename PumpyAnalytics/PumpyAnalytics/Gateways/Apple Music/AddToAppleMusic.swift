@@ -26,7 +26,6 @@ class AddToAppleMusicGateway {
                    method: .post,
                    encoding: JSONEncoding.default,
                    headers: headers).response { res in
-            print("***", res.response?.statusCode)
             completion(res.response?.statusCode)
         }
         
