@@ -8,10 +8,12 @@
 import SwiftUI
 import PumpyAnalytics
 
-struct ItemDetailView<P:PlaylistProtocol,
-                      N:NowPlayingProtocol,
-                      B:BlockedTracksProtocol,
-                      Q:QueueProtocol>: View {
+struct ItemDetailView<
+    P:PlaylistProtocol,
+    N:NowPlayingProtocol,
+    B:BlockedTracksProtocol,
+    Q:QueueProtocol
+>: View {
     
     @StateObject private var viewModel = ItemDetailViewModel()
     @EnvironmentObject var authManager: AuthorisationManager

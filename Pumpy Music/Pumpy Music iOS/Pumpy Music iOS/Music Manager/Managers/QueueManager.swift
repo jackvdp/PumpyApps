@@ -83,16 +83,17 @@ class QueueManager: QueueProtocol {
     
     func playTrackNow(id: String) {
         recieveDebouncer.handle() { [weak self] in
+            guard let self else { return }
             let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [id])
-            if !(self?.queueTracks.isEmpty ?? true) {
-                self?.controller.prepend(descriptor)
-                self?.controller.skipToNextItem()
-                if self?.controller.playbackState != .playing {
-                    self?.controller.play()
+            if !(self.queueTracks.isEmpty) {
+                self.controller.prepend(descriptor)
+                self.controller.skipToNextItem()
+                if self.controller.playbackState != .playing {
+                    self.controller.play()
                 }
             } else {
-                self?.controller.setQueue(with: descriptor)
-                self?.controller.play()
+                self.controller.setQueue(with: descriptor)
+                self.controller.play()
             }
         }
     }

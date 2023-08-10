@@ -10,6 +10,9 @@ import Foundation
 import MediaPlayer
 import PumpyLibrary
 import PumpyAnalytics
+import PumpyShared
+import MusicKit
+import Combine
 
 class MusicManager: ObservableObject, MusicProtocol {
     let musicPlayerController = MPMusicPlayerController.applicationQueuePlayer
@@ -21,6 +24,9 @@ class MusicManager: ObservableObject, MusicProtocol {
     weak var settingsManager: SettingsManager?
     weak var authManager: AuthorisationManager?
     weak var remoteManager: RemoteManager?
+    
+    private let queueDebouncer = Debouncer()
+    private let updateStateThrottle = Throttle(minimumDelay: 0.5)
     
     init() {
         setUpNotifications()
@@ -53,6 +59,8 @@ class MusicManager: ObservableObject, MusicProtocol {
     
     // MARK: - Setup Notifications
     
+    private var cancellable: AnyCancellable?
+    
     func setUpNotifications() {
         musicPlayerController.beginGeneratingPlaybackNotifications()
         addMusicObserver(for: .MPMusicPlayerControllerNowPlayingItemDidChange,
@@ -63,6 +71,9 @@ class MusicManager: ObservableObject, MusicProtocol {
                          action: #selector(handleQueueDidUpdateState))
         addMusicObserver(for: .MPMediaLibraryDidChange,
                          action: #selector(handleLibraryDidChangeState))
+        cancellable = ApplicationMusicPlayer.shared.queue.objectWillChange.sink { [weak self] in
+            self?.handleQueueDidUpdate()
+        }
     }
     
     func endNotifications() {
@@ -78,16 +89,27 @@ class MusicManager: ObservableObject, MusicProtocol {
     // MARK: - Respond to Notifications
     
     @objc func handleMusicPlayerManagerDidUpdateState(_ notification: Notification) {
-        queueManager?.getIndex()
-        nowPlayingManager?.updateTrackData()
-        if let playlistManager, let username {
-            nowPlayingManager?.updateTrackOnline(for: username,
-                                                 playlist: playlistManager.playlistLabel)
+        updateStateThrottle.throttle { [weak self] in
+            guard let self else { return }
+            self.queueManager?.getIndex()
+            self.nowPlayingManager?.updateTrackData()
+            if let playlistManager = self.playlistManager, let username = self.username {
+                self.nowPlayingManager?.updateTrackOnline(for: username,
+                                                          playlist: playlistManager.playlistLabel)
+            }
         }
     }
     
     @objc func handleQueueDidUpdateState(_ notification: Notification) {
-        queueManager?.getUpNext()
+        queueDebouncer.handle { [weak self] in
+            self?.queueManager?.getUpNext()
+        }
+    }
+    
+    func handleQueueDidUpdate() {
+        queueDebouncer.handle { [weak self] in
+            self?.queueManager?.getUpNext()
+        }
     }
     
     @objc func handleLibraryDidChangeState(_ notification: Notification) {
