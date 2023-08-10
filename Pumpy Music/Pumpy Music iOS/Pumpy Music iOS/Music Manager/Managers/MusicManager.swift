@@ -72,7 +72,7 @@ class MusicManager: ObservableObject, MusicProtocol {
         addMusicObserver(for: .MPMediaLibraryDidChange,
                          action: #selector(handleLibraryDidChangeState))
         cancellable = ApplicationMusicPlayer.shared.queue.objectWillChange.sink { [weak self] in
-            self?.handleQueueDidUpdate()
+            self?.handleQueueDidUpdateState(Notification(name: .MPMusicPlayerControllerQueueDidChange))
         }
     }
     
@@ -83,6 +83,7 @@ class MusicManager: ObservableObject, MusicProtocol {
             .MPMusicPlayerControllerQueueDidChange,
             .MPMediaLibraryDidChange
         ])
+        cancellable?.cancel()
         musicPlayerController.endGeneratingPlaybackNotifications()
     }
     
@@ -101,12 +102,6 @@ class MusicManager: ObservableObject, MusicProtocol {
     }
     
     @objc func handleQueueDidUpdateState(_ notification: Notification) {
-        queueDebouncer.handle { [weak self] in
-            self?.queueManager?.getUpNext()
-        }
-    }
-    
-    func handleQueueDidUpdate() {
         queueDebouncer.handle { [weak self] in
             self?.queueManager?.getUpNext()
         }
