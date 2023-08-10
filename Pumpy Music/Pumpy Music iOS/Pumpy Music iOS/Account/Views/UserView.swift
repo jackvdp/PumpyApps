@@ -26,6 +26,7 @@ struct UserView: View {
     @StateObject private var labManager = MusicLabManager()
     @StateObject private var bookmarkManager = BookmarkedManager()
     @StateObject private var recentlyPlayedManager = RecentlyPlayedManager()
+    @StateObject private var libraryManager = LibraryManager()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -69,6 +70,7 @@ struct UserView: View {
         .environmentObject(labManager)
         .environmentObject(bookmarkManager)
         .environmentObject(recentlyPlayedManager)
+        .environmentObject(libraryManager)
         .musicToasts()
         .onAppear() {
             setUp()

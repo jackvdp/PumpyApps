@@ -109,6 +109,9 @@ struct PlaylistView<
             )
             .buttonStyle(.plain)
         }
+        ToolbarItem(placement: .navigationBarTrailing) {
+            AddToLibraryView<P>(playlist: playlist)
+        }
     }
     
     // MARK: - Methods

@@ -116,6 +116,8 @@
 		C0CBCCFB28D8F6AC00161660 /* MockAlbumGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CBCCFA28D8F6AC00161660 /* MockAlbumGateway.swift */; };
 		C0CBCCFE28D903DD00161660 /* AMAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CBCCFD28D903DD00161660 /* AMAlbum.swift */; };
 		C0CBCD0028D90C5500161660 /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CBCCFF28D90C5500161660 /* AlbumController.swift */; };
+		C0F7B0042A8515A00032CB0C /* AddToAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F7B0032A8515A00032CB0C /* AddToAM.swift */; };
+		C0F7B0062A8519F10032CB0C /* AddToAppleMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F7B0052A8519F10032CB0C /* AddToAppleMusic.swift */; };
 		C0F869A029E5623800DD2BA0 /* GenreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F8699F29E5623800DD2BA0 /* GenreController.swift */; };
 		C0F869A229E5633B00DD2BA0 /* GetGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F869A129E5633B00DD2BA0 /* GetGenres.swift */; };
 		C0F869A529E564C800DD2BA0 /* SpotGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F869A429E564C800DD2BA0 /* SpotGenres.swift */; };
@@ -238,6 +240,8 @@
 		C0CBCCFA28D8F6AC00161660 /* MockAlbumGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAlbumGateway.swift; sourceTree = "<group>"; };
 		C0CBCCFD28D903DD00161660 /* AMAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMAlbum.swift; sourceTree = "<group>"; };
 		C0CBCCFF28D90C5500161660 /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
+		C0F7B0032A8515A00032CB0C /* AddToAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToAM.swift; sourceTree = "<group>"; };
+		C0F7B0052A8519F10032CB0C /* AddToAppleMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToAppleMusic.swift; sourceTree = "<group>"; };
 		C0F8699F29E5623800DD2BA0 /* GenreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreController.swift; sourceTree = "<group>"; };
 		C0F869A129E5633B00DD2BA0 /* GetGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGenres.swift; sourceTree = "<group>"; };
 		C0F869A429E564C800DD2BA0 /* SpotGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotGenres.swift; sourceTree = "<group>"; };
@@ -412,6 +416,7 @@
 				6D549805283C1D8B00F3DF59 /* PlaylistAPI.swift */,
 				6D549808283C1D8B00F3DF59 /* TracksAPI.swift */,
 				6D549809283C1D8B00F3DF59 /* CreatePlaylistAPI.swift */,
+				C0F7B0052A8519F10032CB0C /* AddToAppleMusic.swift */,
 				6D54980A283C1D8B00F3DF59 /* SearchAPI.swift */,
 				C0BBDAF728D3CE7600BB7AF1 /* SearchTracksAPI.swift */,
 				6D549806283C1D8B00F3DF59 /* PlaylistRequestModel.swift */,
@@ -578,6 +583,7 @@
 			isa = PBXGroup;
 			children = (
 				6D54986A283CE0F400F3DF59 /* ConvertToAM.swift */,
+				C0F7B0032A8515A00032CB0C /* AddToAM.swift */,
 			);
 			path = "Convert Playlist";
 			sourceTree = "<group>";
@@ -879,6 +885,7 @@
 				C0F869A229E5633B00DD2BA0 /* GetGenres.swift in Sources */,
 				6D549803283C1D3D00F3DF59 /* SpotSearchParser.swift in Sources */,
 				6D549836283CDB8D00F3DF59 /* SortPlaylist.swift in Sources */,
+				C0F7B0062A8519F10032CB0C /* AddToAppleMusic.swift in Sources */,
 				6D71E59E28971A72002E5FF4 /* MatchToAM.swift in Sources */,
 				6D549814283C1D9B00F3DF59 /* LibraryParser.swift in Sources */,
 				6D5497F2283C1D2400F3DF59 /* SpotPlaylistSearch.swift in Sources */,
@@ -892,6 +899,7 @@
 				6D54983E283CDBA300F3DF59 /* GetSpotifyItem.swift in Sources */,
 				C0CBCCF028D8E25600161660 /* GetAMAlbum.swift in Sources */,
 				6D54984F283CDD0500F3DF59 /* GetSpotPlaylist.swift in Sources */,
+				C0F7B0042A8515A00032CB0C /* AddToAM.swift in Sources */,
 				6D6C35A42851F4E800FE2196 /* FeaturesHelper.swift in Sources */,
 				6D54983C283CDBA300F3DF59 /* GetMusicItem.swift in Sources */,
 				C0CBCCF228D8E26E00161660 /* AlbumAPI.swift in Sources */,

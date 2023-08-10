@@ -16,6 +16,8 @@ public class ToastManager: ObservableObject {
     @Published var showLabAddToast = false
     @Published var showLabRemoveToast = false
     @Published var showLabNotAnalysedToast = false
+    @Published var showLibraryAddedToast = false
+    @Published var showLibraryAddedErrorToast = false
     
 }
 
@@ -43,6 +45,12 @@ struct MusicToasts: ViewModifier {
             .toast(isPresenting: $toastManager.showLabNotAnalysedToast) {
                 labNotAnalsyedToast
             }
+            .toast(isPresenting: $toastManager.showLibraryAddedToast) {
+                libraryAddToast
+            }
+            .toast(isPresenting: $toastManager.showLibraryAddedErrorToast) {
+                libraryErrorToast
+            }
     }
     
     var playNextToast: AlertToast {
@@ -67,6 +75,19 @@ struct MusicToasts: ViewModifier {
         AlertToast(displayMode: .alert,
                    type: .systemImage("exclamationmark.triangle", .pumpyPink),
                    title: "Not analysed",
+                   subTitle: "Try again.")
+    }
+    
+    var libraryAddToast: AlertToast {
+        AlertToast(displayMode: .alert,
+                   type: .systemImage("plus", .pumpyPink),
+                   title: "Added to Library")
+    }
+    
+    var libraryErrorToast: AlertToast {
+        AlertToast(displayMode: .alert,
+                   type: .systemImage("exclamationmark.triangle", .pumpyPink),
+                   title: "Item not added to library",
                    subTitle: "Try again.")
     }
     

@@ -48,25 +48,38 @@ public class PlaylistController {
     
     // MARK: - Convert playlists to platform
     
+    private let addToAMUseCase = AddToAppleMusicLibrary()
+    
+    /// Adds an Apple Music playlist tyo user's library
+    public func addToAppleMusic(playlistID: String,
+                                authManager: AuthorisationManager,
+                                completion: @escaping (ErrorMessage?) -> ()) {
+        addToAMUseCase.execute(
+            playlistID: playlistID,
+            authManager: authManager,
+            completion: completion
+        )
+    }
+    
+    private let convertToAMUseCase = ConvertPlaylistToAppleMusic()
+    
     public func convertToAppleMusic(playlistName: String,
                                     tracks: [Track],
                                     authManager: AuthorisationManager,
                                     completion: @escaping (ErrorMessage?) -> ()) {
-        
-        ConvertPlaylistToAppleMusic()
-            .execute(playlistName: playlistName,
-                     tracks: tracks,
-                     authManager: authManager,
-                     completion: completion)
-        
+        convertToAMUseCase.execute(
+            playlistName: playlistName,
+            tracks: tracks,
+            authManager: authManager,
+            completion: completion
+        )
     }
     
     public func convertToSpotify(playlistName: String,
                                  tracks: [Track],
                                  authManager: AuthorisationManager,
                                  completion: @escaping (Bool, String?) -> ()) {
-        
-        
+        fatalError("Not implemented yet")
     }
 
     public func getSnapshotIDFromURL(playlistURL: String) -> (PlaylistSnapshot?, ErrorMessage?) {
