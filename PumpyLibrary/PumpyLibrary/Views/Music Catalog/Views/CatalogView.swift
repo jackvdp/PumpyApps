@@ -8,11 +8,13 @@
 import SwiftUI
 import PumpyAnalytics
 
-public struct CatalogView<H:HomeProtocol,
-                          P:PlaylistProtocol,
-                          N:NowPlayingProtocol,
-                          B:BlockedTracksProtocol,
-                          Q:QueueProtocol>: View {
+public struct CatalogView<
+    H:HomeProtocol,
+    P:PlaylistProtocol,
+    N:NowPlayingProtocol,
+    B:BlockedTracksProtocol,
+    Q:QueueProtocol
+>: View {
     
     @EnvironmentObject var authManager: AuthorisationManager
     
@@ -85,8 +87,8 @@ public struct CatalogView<H:HomeProtocol,
     func getCollections() {
         pageState = .loading
         browseController.getAppleMusicSuggestions(authManager: authManager) { collection, error in
-            if error != nil {
-                print(error?.localizedDescription ?? "Error fetching results from catalog")
+            if let error {
+                print(error.localizedDescription)
             }
             
             collections = collection

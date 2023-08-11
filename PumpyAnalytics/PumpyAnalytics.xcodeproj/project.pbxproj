@@ -104,6 +104,9 @@
 		C08CD13229114D4C0052FE26 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = C08CD13129114D4C0052FE26 /* Apollo */; };
 		C08CD13429114D4C0052FE26 /* ApolloCodegenLib in Frameworks */ = {isa = PBXBuildFile; productRef = C08CD13329114D4C0052FE26 /* ApolloCodegenLib */; };
 		C08CD13629114D4C0052FE26 /* ApolloWebSocket in Frameworks */ = {isa = PBXBuildFile; productRef = C08CD13529114D4C0052FE26 /* ApolloWebSocket */; };
+		C09B72E02A866526007AEBE5 /* GetAMStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09B72DF2A866526007AEBE5 /* GetAMStation.swift */; };
+		C09B72E22A866545007AEBE5 /* StationsGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09B72E12A866545007AEBE5 /* StationsGateway.swift */; };
+		C09B72E52A866579007AEBE5 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09B72E42A866579007AEBE5 /* Station.swift */; };
 		C0AE03C729F126FF00547147 /* GetSearchSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AE03C629F126FF00547147 /* GetSearchSuggestions.swift */; };
 		C0BBDAF828D3CE7600BB7AF1 /* SearchTracksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BBDAF728D3CE7600BB7AF1 /* SearchTracksAPI.swift */; };
 		C0BBDAFA28D3D60F00BB7AF1 /* SongSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BBDAF928D3D60F00BB7AF1 /* SongSearch.swift */; };
@@ -118,6 +121,7 @@
 		C0CBCD0028D90C5500161660 /* AlbumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CBCCFF28D90C5500161660 /* AlbumController.swift */; };
 		C0F7B0042A8515A00032CB0C /* AddToAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F7B0032A8515A00032CB0C /* AddToAM.swift */; };
 		C0F7B0062A8519F10032CB0C /* AddToAppleMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F7B0052A8519F10032CB0C /* AddToAppleMusic.swift */; };
+		C0F7B0082A858FB70032CB0C /* StationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F7B0072A858FB70032CB0C /* StationController.swift */; };
 		C0F869A029E5623800DD2BA0 /* GenreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F8699F29E5623800DD2BA0 /* GenreController.swift */; };
 		C0F869A229E5633B00DD2BA0 /* GetGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F869A129E5633B00DD2BA0 /* GetGenres.swift */; };
 		C0F869A529E564C800DD2BA0 /* SpotGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F869A429E564C800DD2BA0 /* SpotGenres.swift */; };
@@ -228,6 +232,9 @@
 		C06067F929F3D79F0042BEEF /* SearchSuggestionsGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionsGateway.swift; sourceTree = "<group>"; };
 		C06067FB29F3D87E0042BEEF /* SearchSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestions.swift; sourceTree = "<group>"; };
 		C07B55CA2916F333006B3536 /* AnalyseMediaPlayerTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyseMediaPlayerTracks.swift; sourceTree = "<group>"; };
+		C09B72DF2A866526007AEBE5 /* GetAMStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAMStation.swift; sourceTree = "<group>"; };
+		C09B72E12A866545007AEBE5 /* StationsGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsGateway.swift; sourceTree = "<group>"; };
+		C09B72E42A866579007AEBE5 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		C0AE03C629F126FF00547147 /* GetSearchSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchSuggestions.swift; sourceTree = "<group>"; };
 		C0BBDAF728D3CE7600BB7AF1 /* SearchTracksAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTracksAPI.swift; sourceTree = "<group>"; };
 		C0BBDAF928D3D60F00BB7AF1 /* SongSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSearch.swift; sourceTree = "<group>"; };
@@ -242,6 +249,7 @@
 		C0CBCCFF28D90C5500161660 /* AlbumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumController.swift; sourceTree = "<group>"; };
 		C0F7B0032A8515A00032CB0C /* AddToAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToAM.swift; sourceTree = "<group>"; };
 		C0F7B0052A8519F10032CB0C /* AddToAppleMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToAppleMusic.swift; sourceTree = "<group>"; };
+		C0F7B0072A858FB70032CB0C /* StationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationController.swift; sourceTree = "<group>"; };
 		C0F8699F29E5623800DD2BA0 /* GenreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreController.swift; sourceTree = "<group>"; };
 		C0F869A129E5633B00DD2BA0 /* GetGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGenres.swift; sourceTree = "<group>"; };
 		C0F869A429E564C800DD2BA0 /* SpotGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotGenres.swift; sourceTree = "<group>"; };
@@ -423,6 +431,7 @@
 				6D467F7C28C277E00042C2C8 /* SuggestionsAPI.swift */,
 				C0CBCCF128D8E26E00161660 /* AlbumAPI.swift */,
 				C06067F929F3D79F0042BEEF /* SearchSuggestionsGateway.swift */,
+				C09B72E12A866545007AEBE5 /* StationsGateway.swift */,
 			);
 			path = "Apple Music";
 			sourceTree = "<group>";
@@ -491,6 +500,7 @@
 				6D341ED5285F881C003EE110 /* Authorisation */,
 				6D549874283D1EE300F3DF59 /* Playlist */,
 				C0CBCCFC28D9037800161660 /* Album */,
+				C09B72E32A86656E007AEBE5 /* Station */,
 				6D549873283D171800F3DF59 /* Track */,
 				6D549875283D1F1300F3DF59 /* Features */,
 				6D467F8128C32F570042C2C8 /* Suggestions */,
@@ -505,6 +515,7 @@
 				6D6C3599285141B000FE2196 /* Get Library Playlists */,
 				6D549845283CDCF200F3DF59 /* Get Playlist */,
 				C0CBCCEE28D8E23500161660 /* Get Album */,
+				C09B72DE2A866514007AEBE5 /* Get Station */,
 				6D549837283CDB9900F3DF59 /* Get Features */,
 				6D549879283D2B6400F3DF59 /* Convert Playlist */,
 				6D54987A283D2BDB00F3DF59 /* Create Playlists */,
@@ -522,6 +533,7 @@
 			children = (
 				6D549849283CDD0500F3DF59 /* PlaylistController.swift */,
 				C0CBCCFF28D90C5500161660 /* AlbumController.swift */,
+				C0F7B0072A858FB70032CB0C /* StationController.swift */,
 				6D549884283FA0D700F3DF59 /* SearchController.swift */,
 				6D6C359C2851437F00FE2196 /* LibraryController.swift */,
 				6D4F5C3828AFE70A00FA1982 /* AnalyseController.swift */,
@@ -655,6 +667,22 @@
 				6DCB087D2899539D0059EEBB /* GetPlaylistFromURLtest.swift */,
 			);
 			path = IdFromURL;
+			sourceTree = "<group>";
+		};
+		C09B72DE2A866514007AEBE5 /* Get Station */ = {
+			isa = PBXGroup;
+			children = (
+				C09B72DF2A866526007AEBE5 /* GetAMStation.swift */,
+			);
+			path = "Get Station";
+			sourceTree = "<group>";
+		};
+		C09B72E32A86656E007AEBE5 /* Station */ = {
+			isa = PBXGroup;
+			children = (
+				C09B72E42A866579007AEBE5 /* Station.swift */,
+			);
+			path = Station;
 			sourceTree = "<group>";
 		};
 		C0BBDAFB28D3DB1200BB7AF1 /* Search */ = {
@@ -881,6 +909,7 @@
 				C0CBCD0028D90C5500161660 /* AlbumController.swift in Sources */,
 				C0AE03C729F126FF00547147 /* GetSearchSuggestions.swift in Sources */,
 				6D549824283CDB6F00F3DF59 /* Notifcations.swift in Sources */,
+				C09B72E52A866579007AEBE5 /* Station.swift in Sources */,
 				6D6C359D2851437F00FE2196 /* LibraryController.swift in Sources */,
 				C0F869A229E5633B00DD2BA0 /* GetGenres.swift in Sources */,
 				6D549803283C1D3D00F3DF59 /* SpotSearchParser.swift in Sources */,
@@ -889,6 +918,7 @@
 				6D71E59E28971A72002E5FF4 /* MatchToAM.swift in Sources */,
 				6D549814283C1D9B00F3DF59 /* LibraryParser.swift in Sources */,
 				6D5497F2283C1D2400F3DF59 /* SpotPlaylistSearch.swift in Sources */,
+				C09B72E22A866545007AEBE5 /* StationsGateway.swift in Sources */,
 				6D5497F6283C1D2400F3DF59 /* SpotPlaylistAPI.swift in Sources */,
 				6D549826283CDB6F00F3DF59 /* SpotifyItem.swift in Sources */,
 				C044A50F2910757D00E17A09 /* TextPlaylist.swift in Sources */,
@@ -920,6 +950,7 @@
 				6D5497FF283C1D3D00F3DF59 /* SpotPlaylistParser.swift in Sources */,
 				6D549885283FA0D700F3DF59 /* SearchController.swift in Sources */,
 				6D549854283CDD7200F3DF59 /* SearchSYB.swift in Sources */,
+				C09B72E02A866526007AEBE5 /* GetAMStation.swift in Sources */,
 				6D54981B283C1DD200F3DF59 /* Apollo.swift in Sources */,
 				6D5497E5283C1CE700F3DF59 /* AuthorisationManager.swift in Sources */,
 				6DECEF7C2860F0840020B2D2 /* SpotifyTracks.swift in Sources */,
@@ -950,6 +981,7 @@
 				6D549883283F9D0100F3DF59 /* GetPlaylist.swift in Sources */,
 				6D549830283CDB8D00F3DF59 /* AMPlaylist.swift in Sources */,
 				6D549877283D1FBA00F3DF59 /* PlaylistSnapshot.swift in Sources */,
+				C0F7B0082A858FB70032CB0C /* StationController.swift in Sources */,
 				6D549831283CDB8D00F3DF59 /* SYBPlaylist.swift in Sources */,
 				6D54981A283C1DD200F3DF59 /* API.swift in Sources */,
 				6D54980C283C1D8B00F3DF59 /* PlaylistRequestModel.swift in Sources */,

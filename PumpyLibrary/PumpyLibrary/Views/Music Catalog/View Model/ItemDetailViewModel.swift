@@ -13,12 +13,15 @@ class ItemDetailViewModel: ObservableObject {
     @Published var pageState = PageState.loading
     private let albumController = AlbumController()
     private let playlistController = PlaylistController()
+    private let stationController = StationController()
     
     func getItem(snapshot: PlaylistSnapshot, authManager: AuthorisationManager) {
         switch snapshot.type {
         case .am(id: let id):
-            if id.contains("pl") {
+            if id.contains("pl.") {
                 getPlaylist(snapshot: snapshot, authManager: authManager)
+            } else if id.contains("ra.") {
+                getStation(id: id, authManager: authManager)
             } else {
                 getAlbum(id: id, authManager: authManager)
             }
@@ -66,6 +69,22 @@ class ItemDetailViewModel: ObservableObject {
             }
         }
         
+    }
+    
+    private func getStation(id: String, authManager: AuthorisationManager) {
+        stationController.get(stationID: id, authManager: authManager) { [weak self] station, error in
+            guard let self = self else { return }
+            
+            guard let station else {
+                print("\(error?.title ?? "") \(error?.message ?? "")")
+                self.pageState = .failed
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.pageState = .success(station)
+            }
+        }
     }
     
     enum PageState: Equatable {

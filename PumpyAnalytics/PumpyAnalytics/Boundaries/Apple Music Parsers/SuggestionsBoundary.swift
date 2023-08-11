@@ -40,7 +40,7 @@ struct Suggestions: Codable {
             case .albums:
                 return SuggestedType.albums
             case .stations:
-                return nil
+                return SuggestedType.stations
             }
         }
     }

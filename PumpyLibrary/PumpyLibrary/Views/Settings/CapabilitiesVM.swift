@@ -14,27 +14,15 @@ import PumpyAnalytics
 
 class CapabilitiesViewModel: ObservableObject {
     
-    @Published var notificationsAllowed: Bool = false
     @Published var libraryAccess: Bool = false
     @Published var storeAccess: Bool = false
     @Published var tokenRecieved: Bool = false
+    private let storeController = SKCloudServiceController()
     
     init() {
-        checkNotificationsAllowed { [weak self] (status) in
-            self?.notificationsAllowed = true
-        }
         libraryAccess = checkLibraryAccess()
         checkAppleMusicSub { [weak self] (status) in
             self?.storeAccess = status
-        }
-        getToken()
-    }
-    
-    func checkNotificationsAllowed(completion: @escaping (Bool) -> Void) {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            if settings.authorizationStatus == .authorized {
-                completion(true)
-            }
         }
     }
     
@@ -52,35 +40,7 @@ class CapabilitiesViewModel: ObservableObject {
         }
         
     }
-    
-    let storeController = SKCloudServiceController()
-    
-    func getToken() {
-        storeController.requestUserToken(forDeveloperToken: PumpyAnalytics.K.MusicStore.developerToken) { [weak self] token, errror in
-            if let _ = token {
-                self?.tokenRecieved = true
-            } else {
-                if let e = errror {
-                    print(e)
-                }
-            }
-        }
-    }
-    
-    let notificationCentre = UNUserNotificationCenter.current()
-    
-    func getNotificationAccesss() {
-        notificationCentre.requestAuthorization(options: [.alert, .sound, .badge, .carPlay]) { [weak self] (granted, error) in
-            if granted {
-                self?.checkNotificationsAllowed { (status) in
-                    self?.notificationsAllowed = true
-                }
-            } else {
-                print("Not allowed.")
-            }
-        }
-    }
-    
+
     func getLibraryAccess() {
         MPMediaLibrary.requestAuthorization { [weak self] (status) in
             guard let self else { return }

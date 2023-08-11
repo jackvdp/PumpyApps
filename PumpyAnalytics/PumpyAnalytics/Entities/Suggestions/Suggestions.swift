@@ -37,6 +37,6 @@ public struct SuggestedItem: Codable {
 }
 
 public enum SuggestedType: String, Codable {
-    case albums, playlists
+    case albums, playlists, stations
 }
 

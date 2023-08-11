@@ -267,3 +267,25 @@ extension AMAlbum: PumpyLibrary.Playlist {
         .am(id: sourceID)
     }
 }
+
+extension AMStation: PumpyLibrary.Playlist {
+    public var title: String? {
+        name
+    }
+    
+    public var songs: [Track] {
+        tracks
+    }
+    
+    public var cloudGlobalID: String? {
+        sourceID
+    }
+    
+    public var longDescription: String? {
+        description
+    }
+    
+    public var type: PumpyAnalytics.PlaylistType {
+        .am(id: sourceID)
+    }
+}

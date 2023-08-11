@@ -7,22 +7,27 @@
 //
 
 import SwiftUI
+import PumpyAnalytics
 
 struct CapabilitiesView: View {
     
     @StateObject var capaVM = CapabilitiesViewModel()
+    @EnvironmentObject var authManager: AuthorisationManager
     
     var body: some View {
         PumpyList {
-            CheckRowView(text: "Music Authorised",
+            CheckRowView(text: "Library Access Authorised",
                          granted: capaVM.libraryAccess,
                          action: capaVM.getLibraryAccess)
             CheckRowView(text: "Store Authorised",
                          granted: capaVM.storeAccess,
                          action: {})
-            CheckRowView(text: "Music Token",
-                         granted: capaVM.tokenRecieved,
+            CheckRowView(text: "Apple Music Token",
+                         granted: authManager.appleMusicToken != nil,
                          action: {})
+            CheckRowView(text: "Spotify Token",
+                         granted: authManager.spotifyToken != nil,
+                         action: authManager.getSpotifyToken)
         }
         .listStyle(.plain)
         .pumpyBackground()
