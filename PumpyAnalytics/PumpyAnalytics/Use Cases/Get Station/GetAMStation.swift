@@ -17,8 +17,9 @@ class GetStationUseCase {
                  completion: @escaping (AMStation?, ErrorMessage?) -> ()) {
         
         Task {
-            let (_, tracks) = await stationTracksGateway.post(stationID: stationID, authManager: authManager)
-            let (_, stations) = await stationGateway.get(stationID: stationID, authManager: authManager)
+            async let (_, tracksToFetch) = stationTracksGateway.post(stationID: stationID, authManager: authManager)
+            async let (_, stationsToFetch) = stationGateway.get(stationID: stationID, authManager: authManager)
+            let (tracks, stations) = await (tracksToFetch, stationsToFetch)
             
             guard let station = stations?.data.first, let tracks else {
                 completion(nil, ErrorMessage("No station found", "No station found"))
