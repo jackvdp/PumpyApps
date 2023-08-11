@@ -59,8 +59,8 @@ public struct MenuTrackView<N:NowPlayingProtocol,
             Image(systemName: "play.fill")
         }
         .buttonStyle(.plain)
-        .font(.title)
-        .padding()
+        .font(.title2)
+        .padding(8)
     }
     
     // MARK: Track view
@@ -70,7 +70,7 @@ public struct MenuTrackView<N:NowPlayingProtocol,
         artwork
         songDetails(track)
         Spacer()
-        dislikeButton(track: track)
+        playerControls
     }
     
     var artwork: ArtworkView {
@@ -83,7 +83,7 @@ public struct MenuTrackView<N:NowPlayingProtocol,
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center, spacing: 10.0) {
                 Text(track.name)
-                    .font(.headline)
+                    .font(.callout).bold()
                     .lineLimit(1)
                 if track.isExplicitItem {
                     Image(systemName: "e.square")
@@ -93,18 +93,35 @@ public struct MenuTrackView<N:NowPlayingProtocol,
                 }
             }
             Text(track.artistName)
-                .font(.subheadline)
+                .font(.footnote)
                 .lineLimit(1)
             if playlistManager.playlistLabel != "" {
                 Text(playlistManager.playlistLabel)
-                    .font(.subheadline)
+                    .font(.footnote)
                     .lineLimit(1)
             }
         }
     }
     
-    func dislikeButton(track: Track) -> some View {
-        DislikeButton<N,B>(track: track, size: 20)
+    @ViewBuilder
+    var playerControls: some View {
+        Button {
+            homeVM.playPause(alarmData: alarmManager,
+                             playlistManager: playlistManager)
+        } label: {
+            Image(systemName: nowPlayingManager.playButtonState == .playing ? "pause.fill" : "play.fill")
+        }
+        .buttonStyle(.plain)
+        .font(.title2)
+        .padding(.leading, 8)
+        Button {
+            homeVM.skipToNextItem()
+        } label: {
+            Image(systemName: "forward.fill")
+        }
+        .buttonStyle(.plain)
+        .font(.title2)
+        .padding(8)
     }
 }
 
