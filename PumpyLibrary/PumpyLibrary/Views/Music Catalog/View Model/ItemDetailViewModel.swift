@@ -77,7 +77,9 @@ class ItemDetailViewModel: ObservableObject {
             
             guard let station else {
                 print("\(error?.title ?? "") \(error?.message ?? "")")
-                self.pageState = .failed
+                DispatchQueue.main.async {
+                    self.pageState = .failed
+                }
                 return
             }
             
