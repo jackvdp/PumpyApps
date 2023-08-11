@@ -53,7 +53,8 @@ struct CollectionView<
     }
     
     func conditionForBig() -> Bool {
-        collection.types == [.playlists]
+        if collection.title.contains("Made for You") { return false }
+        return collection.types == [.playlists] || collection.types == [.stations]
     }
 }
 

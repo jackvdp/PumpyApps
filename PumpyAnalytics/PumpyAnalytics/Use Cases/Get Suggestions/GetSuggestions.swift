@@ -26,15 +26,19 @@ class GetSuggestions {
             return ([], self.handleError(code: code))
         }
         
-        let collections: [SuggestedCollection] = suggestions.data.compactMap { suggestion in
-            
-            if suggestion.attributes.title.stringForDisplay.contains("Station") { return nil }
+        var collections: [SuggestedCollection] = suggestions.data.compactMap { suggestion in
 
             let items = getItems(suggestion: suggestion)
             
             return SuggestedCollection(title: suggestion.attributes.title.stringForDisplay,
                                        items: items,
                                        types: suggestion.attributes.resourceTypes.compactMap { $0.publicType })
+        }
+        
+        // Place stations at the top of the list
+        if let stations = collections.first(where: { $0.title.contains("Station") }) {
+            collections.removeAll(where: { $0 == stations })
+            collections.insert(stations, at: 0)
         }
         
         return (collections, nil)
