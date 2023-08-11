@@ -47,6 +47,12 @@ class GetStationTracksGateway {
         let response = await AF.request(url,
                                         method: .post,
                                         headers: headers).serializingDecodable(StationTracks.self).response
+        guard let value = response.value else {
+            print(response.error)
+            print(response.response?.statusCode)
+            return (400, nil)
+        }
+        
         return(response.response?.statusCode, response.value)
         
     }

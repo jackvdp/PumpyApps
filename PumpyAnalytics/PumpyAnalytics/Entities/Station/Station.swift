@@ -30,9 +30,10 @@ extension StationTracks {
         let albumName: String
         let genreNames: [String]
         let trackNumber, durationInMillis: Int
-        let releaseDate, isrc: String
+        let releaseDate: String?
+        let isrc: String
         let artwork: Artwork
-        let composerName: String
+        let composerName: String?
         let url: String
         let playParams: PlayParams
         let playAssets: [PlayAsset]
