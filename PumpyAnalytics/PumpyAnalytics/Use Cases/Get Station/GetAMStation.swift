@@ -19,12 +19,11 @@ class GetStationUseCase {
         Task {
             async let (_, tracksToFetch) = stationTracksGateway.post(stationID: stationID, authManager: authManager)
             async let (_, stationsToFetch) = stationGateway.get(stationID: stationID, authManager: authManager)
-            async let (_, secondTracksToFetch) = stationTracksGateway.post(stationID: stationID, authManager: authManager)
-            let (tracks, stations, secondTracks) = await (tracksToFetch, stationsToFetch, secondTracksToFetch)
+            let (tracks, stations) = await (tracksToFetch, stationsToFetch)
             
-            guard let station = stations?.data.first, let tracks, let secondTracks else {
+            guard let station = stations?.data.first, let tracks else {
                 completion(nil, ErrorMessage(
-                    "No station found", "One was nil: \(String(describing: tracks)), \(String(describing: stations)), \(String(describing: secondTracks))")
+                    "No station found", "One was nil: \(String(describing: tracks)), \(String(describing: stations))")
                 )
                 return
             }
@@ -32,13 +31,17 @@ class GetStationUseCase {
             var analyticTracks: [Track] = tracks.data.map { trk in
                 convertTrackToAnalyticsTrack(trk, authManager: authManager)
             }
-            let secondAnalyticTracks: [Track] = secondTracks.data.compactMap { trk in
-                if !analyticTracks.contains(where: { $0.isrc == trk.attributes.isrc }) {
-                    return convertTrackToAnalyticsTrack(trk, authManager: authManager)
+            
+            async let (_, secondTracksToFetch) = stationTracksGateway.post(stationID: stationID, authManager: authManager)
+            if let secondTracks = await secondTracksToFetch {
+                let secondAnalyticTracks: [Track] = secondTracks.data.compactMap { trk in
+                    if !analyticTracks.contains(where: { $0.isrc == trk.attributes.isrc }) {
+                        return convertTrackToAnalyticsTrack(trk, authManager: authManager)
+                    }
+                    return nil
                 }
-                return nil
+                analyticTracks.append(contentsOf: secondAnalyticTracks)
             }
-            analyticTracks.append(contentsOf: secondAnalyticTracks)
             
             let amStation = AMStation(
                 name: station.name,
