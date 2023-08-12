@@ -11,34 +11,43 @@ public class PlaylistController {
     
     public init() {}
     
+    // MARK: GET
+    
+    private let getUseCase = GetPlaylist()
+    
+    /// Get a playlist (e.g. Spotify, AM, SYB, Recommended) from a given snapshot
     public func get(libraryPlaylist: PlaylistSnapshot,
                     authManager: AuthorisationManager,
                     completion: @escaping (Playlist?, ErrorMessage?) -> ()) {
-        
-        GetPlaylist().execute(snapshot: libraryPlaylist,
-                              authManager: authManager,
-                              completion: completion)
-        
+        getUseCase.execute(snapshot: libraryPlaylist,
+                           authManager: authManager,
+                           completion: completion)
     }
     
+    // MARK: MERGE
+    
+    private let mergeUseCase = MergePlaylists()
+    
+    /// Merge a number of playlists together into one playlist
     public func merge(name: String?,
                       libraryPlaylists: [PlaylistSnapshot],
                       authManager: AuthorisationManager,
                       completion: @escaping (CustomPlaylist) -> ()) {
-        
-        MergePlaylists().excute(name: name,
-                                snapshots: libraryPlaylists,
-                                authManager: authManager,
-                                completion: completion)
+        mergeUseCase.excute(name: name,
+                            snapshots: libraryPlaylists,
+                            authManager: authManager,
+                            completion: completion)
     }
     
+    // MARK: SPLIT
+    
+    /// Split a playlist into a number of playlists according to defined logic
     public func split(analysedTracks: [Track],
                       playlistName: String,
                       curator: String?,
                       logic: CustomPlaylistLogic,
                       authManager: AuthorisationManager) -> [CustomPlaylist] {
-        
-        return SplitTracksIntoPlaylists()
+        SplitTracksIntoPlaylists()
             .createNewPlaylists(analysedTracks: analysedTracks,
                                 playlistName: playlistName,
                                 curator: curator ?? "Custom",
@@ -46,7 +55,7 @@ public class PlaylistController {
                                 authManager: authManager)
     }
     
-    // MARK: - Convert playlists to platform
+    // MARK: - Add or Convert playlists to platform
     
     private let addToAMUseCase = AddToAppleMusicLibrary()
     

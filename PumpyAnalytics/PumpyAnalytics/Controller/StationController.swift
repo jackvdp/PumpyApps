@@ -13,7 +13,7 @@ public class StationController {
     
     private let useCase = GetStationUseCase()
     
-    /// Returns an Apple Music station with 10 songs for the given station ID
+    /// Returns an Apple Music station with 20 songs for the given station ID
     public func get(stationID: String,
                     authManager: AuthorisationManager,
                     completion: @escaping (AMStation?, ErrorMessage?) -> ()) {
