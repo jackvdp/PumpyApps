@@ -8,10 +8,12 @@
 import SwiftUI
 import PumpyAnalytics
 
-public struct MenuTrackView<N:NowPlayingProtocol,
-                            B:BlockedTracksProtocol,
-                            P:PlaylistProtocol,
-                            H:HomeProtocol>: View {
+public struct MenuTrackView<
+    N:NowPlayingProtocol,
+    B:BlockedTracksProtocol,
+    P:PlaylistProtocol,
+    H:HomeProtocol
+>: View {
     
     @EnvironmentObject var nowPlayingManager: N
     @EnvironmentObject var tokenManager: AuthorisationManager
@@ -74,9 +76,11 @@ public struct MenuTrackView<N:NowPlayingProtocol,
     }
     
     var artwork: ArtworkView {
-        return ArtworkView(collection: nowPlayingManager.currentTrack,
-                           setBackground: true,
-                           size: size)
+        ArtworkView(
+            collection: nowPlayingManager.currentTrack,
+            setBackground: true,
+            size: size
+        )
     }
         
     func songDetails(_ track: Track) -> some View {

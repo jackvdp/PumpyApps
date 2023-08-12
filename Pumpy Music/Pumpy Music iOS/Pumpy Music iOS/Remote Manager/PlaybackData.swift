@@ -16,7 +16,7 @@ class PlaybackData {
     static let shared = PlaybackData()
     private init() {}
     
-    private let debouncer = Debouncer()
+    private let debouncer = Debouncer(1)
     
     private func saveCurrentPlaybackInfo(_ playbackItem: PlaybackItem, for username: Username) {
         debouncer.handle {

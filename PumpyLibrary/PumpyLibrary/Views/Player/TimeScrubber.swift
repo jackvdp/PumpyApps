@@ -15,7 +15,7 @@ struct TimeScrubber: View {
     var player = ApplicationMusicPlayer.shared
     @ObservedObject var queue = ApplicationMusicPlayer.shared.queue
     @ObservedObject var state = ApplicationMusicPlayer.shared.state
-    private let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+    private let timer = Timer.publish(every: 1, on: .current, in: .common).autoconnect()
     @State private var startTime = Self.noTimeLabel
     @State private var endTime = Self.noTimeLabel
     @State private var timePercentage: Double = 0
