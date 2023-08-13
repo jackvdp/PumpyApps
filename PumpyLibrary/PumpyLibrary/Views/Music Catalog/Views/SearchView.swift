@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PumpyAnalytics
+import PumpyShared
 
 struct SearchView<
     P:PlaylistProtocol,
@@ -90,8 +91,8 @@ struct SearchView<
     
     func tracksList(_ tracks: [Track]) -> some View {
         ForEach(tracks.indices, id: \.self) { i in
-            TrackRow<N,B,P,Q>(track: tracks[i],
-                                tapAction: { playFromPosition(tracks: tracks, index: i) })
+            TrackRow<N,B,P,Q>(track: tracks[i], authManager: authManager,
+                              tapAction: { playFromPosition(tracks: tracks, index: i) })
             .padding(.leading)
             Divider()
         }

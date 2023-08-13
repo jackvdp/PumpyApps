@@ -10,42 +10,35 @@ import MusicKit
 
 class AnalyseMediaPlayerTracks {
     
-    func execute(ids: [String], authManager: AuthorisationManager, completion: @escaping ([Track])->()) {
-        Task {
-            let tracks = await getISRCsOfAMTracks(ids: ids, authManager: authManager)
-            AnalyseTracks().execute(tracks: tracks,
-                                    authManager: authManager,
-                                    completion: completion)
-        }
+    private let getSpotifyItemUseCase = GetAudioFeaturesAndSpotifyItem()
+    
+    func execute(tracks: [Track], authManager: AuthorisationManager) async {
+        await getISRCsOfAMTracks(tracks: tracks, authManager: authManager)
+        await getSpotifyItemUseCase.forPlaylist(tracks: tracks, authManager: authManager)
     }
     
-    private func getISRCsOfAMTracks(ids: [String], authManager: AuthorisationManager) async -> [Track] {
-        let musicItemIDs = ids.map { MusicItemID($0) }
+    private func getISRCsOfAMTracks(tracks: [Track], authManager: AuthorisationManager) async {
+        let musicItemIDs = tracks.map { MusicItemID($0.sourceID) }
         let request = MusicCatalogResourceRequest<Song>(matching: \.id, memberOf: musicItemIDs)
         do {
             let response = try await request.response()
-            let tracks: [Track] = response.items.compactMap { song in
-                guard let isrc = song.isrc else { return nil }
-                return Track(title: song.title,
-                             artist: song.artistName,
-                             album: song.albumTitle ?? "",
-                             isrc: isrc,
-                             artworkURL: song.artwork?.url(width: 400, height: 400)?.absoluteString,
-                             previewUrl: nil,
-                             isExplicit: false,
-                             sourceID: song.id.rawValue,
-                             authManager: authManager,
-                             appleMusicItem: AppleMusicItem(isrc: isrc,
-                                                            id: song.id.rawValue,
-                                                            name: song.title,
-                                                            artistName: song.artistName,
-                                                            genres: song.genreNames,
-                                                            type: .track))
+            response.items.forEach { song in
+                guard let isrc = song.isrc else { return }
+                tracks.filter { song.id.rawValue == $0.sourceID}.forEach { track in
+                    let amItem = AppleMusicItem(
+                        isrc: isrc,
+                        id: song.id.rawValue,
+                        name: song.title,
+                        artistName: song.artistName,
+                        genres: song.genreNames,
+                        type: .track
+                    )
+                    track.appleMusicItem = amItem
+                    track.isrc = isrc
+                }
             }
-            return tracks
         } catch {
-            print(error)
-            return []
+            print("Error fetching isrcs of AM Tracks", error)
         }
     }
     

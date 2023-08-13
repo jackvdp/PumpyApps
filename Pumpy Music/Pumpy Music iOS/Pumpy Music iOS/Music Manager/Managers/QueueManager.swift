@@ -23,6 +23,7 @@ class QueueManager: QueueProtocol {
     @Published var queueTracks = [PumpyLibrary.Track]()
     @Published var queueIndex = 0
     @Published var analysingEnergy = false
+    let analyseController = AnalyseController()
     
     func setUp(name: Username,
                authManager: AuthorisationManager) {

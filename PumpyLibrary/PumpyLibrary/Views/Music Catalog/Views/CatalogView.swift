@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PumpyAnalytics
+import PumpyShared
 
 public struct CatalogView<
     H:HomeProtocol,

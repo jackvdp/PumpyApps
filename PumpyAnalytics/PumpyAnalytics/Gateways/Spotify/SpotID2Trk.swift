@@ -11,36 +11,24 @@ import SwiftyJSON
 
 extension SpotifyTrackAPI {
     
-    func getSpotifyTracksFromIdPack(ids: [String], authManager: AuthorisationManager, completion: @escaping (JSON?) -> ()) {
-        guard let spotifyToken = authManager.spotifyToken else {
-            completion(nil)
-            return
-        }
+    func getSpotifyTracksFromIdPack(ids: [String], authManager: AuthorisationManager) async -> JSON? {
+        guard let spotifyToken = authManager.spotifyToken else { return nil }
         
         let idsConcat = ids.joined(separator: ",")
         let url = "https://api.spotify.com/v1/tracks?ids=\(idsConcat)"
         let headers = HTTPHeaders([HTTPHeader(name: "Authorization", value: "Bearer \(spotifyToken)")])
         
-        AF.request(url, headers: headers).response { response in
-            
-            if response.response?.statusCode == 429 {
-                SpotifyComponents().retry(response: response) {
-                    self.getSpotifyTracksFromIdPack(ids: ids, authManager: authManager) { item in
-                        completion(item)
-                    }
-                }
-            } else {
-                if let data = response.data {
-                    if let json = try? JSON(data: data) {
-                        completion(json)
-                        return
-                    }
-                }
-                completion(nil)
-            }
-            
+        let response = await AF.request(url, headers: headers).serializingData().response
+        
+        guard response.response?.statusCode != 429 else {
+            await SpotifyComponents().retryAsync(response: response)
+            return await getSpotifyTracksFromIdPack(ids: ids, authManager: authManager)
         }
         
+        if let data = response.data, let json = try? JSON(data: data) {
+            return json
+        }
+        return nil
     }
     
 }

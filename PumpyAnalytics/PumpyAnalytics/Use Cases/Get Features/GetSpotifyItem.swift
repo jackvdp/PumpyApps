@@ -13,61 +13,37 @@ class GetSpotifyItem {
     
     let gateway = SpotifyTrackAPI()
     
-    func forPlaylistFromISRC(tracks: [Track], authManager: AuthorisationManager, completion: @escaping ([Track]) -> () = {_ in }) {
-        guard tracks.count > 0 else { completion([]); return }
+    func forPlaylistFromISRC(tracks: [Track], authManager: AuthorisationManager) async {
         let unmatchedTracks = getTracksWithoutSpotItem(tracks: tracks)
-        if unmatchedTracks.isEmpty { completion([]); return }
-                
-        let trackChunks = unmatchedTracks.chunks(50)
+        if unmatchedTracks.isEmpty { return }
         
-        for i in 0..<trackChunks.count {
-            
-            var count = 0
-            let total = trackChunks[i].count
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(i * 2)) { [weak self] in
-                guard let self else { return }
-                
-                for track in trackChunks[i] {
-                    
-                    self.gateway.getSpotifyTrackFromISRC(isrc: track.isrc, authManager: authManager) { item in
-                        
-                        count += 1
-                        if let item = item {
-                            track.spotifyItem = item
-                        }
-                        
-                        if count == total {
-                            completion(trackChunks[i])
-                        }
-                    }
-                }
+        await unmatchedTracks.asyncForEach { [weak self] track in
+            guard let self, let isrc = track.isrc else { return }
+            if let item = await self.gateway.getSpotifyTrackFromISRC(isrc: isrc, authManager: authManager) {
+                track.spotifyItem = item
             }
         }
-        
     }
     
-    func forPlaylistFromSpotID(tracks: [Track], authManager: AuthorisationManager) {
+    func forPlaylistFromSpotID(tracks: [Track], authManager: AuthorisationManager) async {
         let tracksWithIdNoItem = tracks.filter { $0.spotifyItem != nil && $0.spotifyItem?.year == nil }
-        if tracksWithIdNoItem.count == 0 { return }
+        guard tracksWithIdNoItem.isNotEmpty else { return }
         let chunks = tracksWithIdNoItem.chunks(50)
         
-        for chunk in chunks {
+        await chunks.asyncForEach { chunk in
             let ids = chunk.compactMap { $0.spotifyItem?.id }
-            gateway.getSpotifyTracksFromIdPack(ids: ids, authManager: authManager) { json in
-                if let json = json {
-                    let items = SpotifyItemParser().parseForSpotifyItemsFromTracksAPI(json)
-                    for track in chunk {
-                        if let item = items.first(where: { $0.id == track.spotifyItem?.id }) {
-                            track.spotifyItem = item
-                        }
-                    }
+            let json = await gateway.getSpotifyTracksFromIdPack(ids: ids, authManager: authManager)
+            guard let json = json else { return }
+            let items = SpotifyItemParser().parseForSpotifyItemsFromTracksAPI(json)
+            for track in chunk {
+                items.filter { $0.id == track.spotifyItem?.id }.forEach { item in
+                    track.spotifyItem = item
                 }
             }
         }
     }
     
-    // MARK: Get
+    // MARK: Helpers
     
     func getTracksWithSpotItem(tracks: [Track]) -> [Track] {
         tracks.filter { track in
@@ -78,6 +54,17 @@ class GetSpotifyItem {
     func getTracksWithoutSpotItem(tracks: [Track]) -> [Track] {
         tracks.filter { track in
             track.spotifyItem == nil
+        }
+    }
+}
+
+extension Sequence {
+    /// Will do each task sequentially
+    func asyncForEach(
+        _ operation: (Element) async throws -> Void
+    ) async rethrows {
+        for element in self {
+            try await operation(element)
         }
     }
 }

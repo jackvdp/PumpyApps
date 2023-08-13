@@ -17,6 +17,7 @@ struct BookmarkedView<
     
     @EnvironmentObject var bookmarkManager: BookmarkedManager
     @EnvironmentObject var queueManager: Q
+    @EnvironmentObject var authManager: AuthorisationManager
     @State private var showAlert = false
     
     var body: some View {
@@ -29,7 +30,7 @@ struct BookmarkedView<
                 PumpyListForEach(bookmarkManager.bookmarkedItems, id: \.id, onDelete: onDelete) { item in
                     switch item {
                     case .track(let track):
-                        TrackRow<N,B,P,Q>(track: track) {
+                        TrackRow<N,B,P,Q>(track: track, authManager: authManager) {
                             queueManager.playTrackNow(id: track.playbackID)
                         }
                     case .playlist(let snapshot):

@@ -39,6 +39,10 @@ extension MPMediaItem: PumpyLibrary.Track {
         }
         return nil
     }
+    
+    public func analyticsTrack(authManager: PumpyAnalytics.AuthorisationManager) -> PumpyAnalytics.Track {
+        PumpyAnalytics.Track(title: title ?? "", artist: artistName, album: albumTitle ?? "", isrc: nil, artworkURL: artworkURL, previewUrl: nil, isExplicit: isExplicitItem, sourceID: playbackStoreID, authManager: authManager)
+    }
 
 }
 

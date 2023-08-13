@@ -189,12 +189,6 @@ extension Notification.Name {
     
 }
 
-extension Array {
-    var isNotEmpty: Bool {
-        return !self.isEmpty
-    }
-}
-
 @propertyWrapper
 public struct CodableIgnored<T>: Codable {
     public var wrappedValue: T?

@@ -6,20 +6,17 @@
 //
 
 import Foundation
+import PumpyShared
 
 class GetAudioFeaturesAndSpotifyItem {
     
     private let getSpotifyItemUseCase = GetSpotifyItem()
     private let featuresGateway = SpotifyFeaturesAPI()
     
-    func forPlaylist(tracks: [Track], authManager: AuthorisationManager, completion: @escaping () -> () = {}) {
-        // Get Unanalysed Tracks
-        let unAnalysedTracks = FeaturesHelper.getUnAnalysedTracks(tracks: tracks)
-        
-        if unAnalysedTracks.isEmpty {
-            completion();
-            return
-        }
+    func forPlaylist(tracks: [Track], authManager: AuthorisationManager) async {
+        // Get Unanalysed tracks that are not currently being analysed
+        let unAnalysedTracks = FeaturesHelper.getUnAnalysedTracks(tracks: tracks).filter { !$0.inProgress.analysing }
+        guard unAnalysedTracks.isNotEmpty else { return }
         
         unAnalysedTracks.forEach { $0.inProgress.analysing = true }
         
@@ -27,49 +24,41 @@ class GetAudioFeaturesAndSpotifyItem {
         let matchedTracks = unAnalysedTracks.filter { $0.spotifyItem != nil }
         let unMatchedTracks = unAnalysedTracks.filter { $0.spotifyItem == nil }
 
-        // Get features for unmatchedTracks
-        getSpotifyItemUseCase.forPlaylistFromISRC(tracks: unMatchedTracks, authManager: authManager) { [weak self] tracks in
-            self?.getFeatures(tracks: tracks, authManager: authManager, completion: completion)
-        }
+        // Get spotify items for unmatchedTracks
+        await getSpotifyItemUseCase.forPlaylistFromISRC(tracks: unMatchedTracks, authManager: authManager)
         
-        // Get features for matchedTracks
-        getFeatures(tracks: matchedTracks, authManager: authManager, completion: completion)
+        // Get features for all tracks
+        await getFeatures(tracks: unAnalysedTracks, authManager: authManager)
         
         // Get Spotify item for only partial matched tracks (SYB tracks)
-        getSpotifyItemUseCase.forPlaylistFromSpotID(tracks: matchedTracks, authManager: authManager)
+        await getSpotifyItemUseCase.forPlaylistFromSpotID(tracks: matchedTracks, authManager: authManager)
     }
     
-    private func getFeatures(tracks: [Track], authManager: AuthorisationManager, completion: @escaping () -> ()) {
+    private func getFeatures(tracks: [Track], authManager: AuthorisationManager) async {
         
+        // Those tracks without id cannot be analysed
         let tracksNotAnalysing = tracks.filter { $0.spotifyItem?.id == nil }
         tracksNotAnalysing.forEach { $0.inProgress.analysing = false }
         
         let tracksAnalysing = tracks.filter { $0.spotifyItem?.id != nil }
         
         let chunks = tracksAnalysing.chunks(100)
-        let pages = chunks.count
-        var pageCount = 0
         
-        chunks.forEach { page in
+        await chunks.asyncForEach { group in
             
-            let ids = page.compactMap { $0.spotifyItem?.id }
+            let ids = group.compactMap { $0.spotifyItem?.id }
             
-            featuresGateway.getManyAudioFeaturesFromSpotifyID(ids: ids, authManager: authManager) { features in
-
-                pageCount += 1
-                
-                for track in tracks {
-                    if let feature = features.first(where: { $0.id == track.spotifyItem?.id }) {
-                        DispatchQueue.main.async {
-                            track.audioFeatures = feature
-                            if track == tracks.last && pageCount == pages {
-                                completion()
-                                chunks.forEach { $0.forEach { $0.inProgress.analysing = false }}
-                            }
-                        }
+            let features = await featuresGateway.getManyAudioFeaturesFromSpotifyID(ids: ids, authManager: authManager)
+            
+            for track in tracks {
+                features.filter { $0.id == track.spotifyItem?.id }.forEach { feature in
+                    DispatchQueue.main.async {
+                        track.audioFeatures = feature
                     }
                 }
             }
+            
+            chunks.forEach { $0.forEach { $0.inProgress.analysing = false }}
         }
     }
     

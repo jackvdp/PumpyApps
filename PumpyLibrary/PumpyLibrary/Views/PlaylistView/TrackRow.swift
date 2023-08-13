@@ -17,6 +17,7 @@ public struct TrackRow<N:NowPlayingProtocol,
                        Q:QueueProtocol>: View {
     
     let track: Track
+    @ObservedObject var analysisTrack: PumpyAnalytics.Track
     let tapAction: (()->())?
     @State private var buttonTapped = false
     @State private var trackAMID: String?
@@ -26,8 +27,10 @@ public struct TrackRow<N:NowPlayingProtocol,
     @EnvironmentObject var toastManager: ToastManager
 
     public init(track: Track,
+                authManager: AuthorisationManager,
                 tapAction: (()->())? = nil) {
         self.track = track
+        self.analysisTrack = track.analyticsTrack(authManager: authManager)
         self.tapAction = tapAction
     }
     
@@ -66,7 +69,7 @@ public struct TrackRow<N:NowPlayingProtocol,
         .contextWithPreview {
             menu
         } preview: {
-            TrackPreview(track: track, analysedTrack: $analysedTrack)
+            TrackPreview(track: analysisTrack)
                 .environmentObject(tokenManager)
         }
         .onAppear() {
@@ -119,7 +122,7 @@ public struct TrackRow<N:NowPlayingProtocol,
         } else {
             missingTrackMenu
         }
-        LabButtons(analysedTrack: $analysedTrack)
+        LabButtons(analysedTrack: analysisTrack)
     }
     
     @ViewBuilder
@@ -170,11 +173,11 @@ struct TrackRow_Previews: PreviewProvider {
             TrackRow<MockNowPlayingManager,
                      MockBlockedTracks,
                      MockPlaylistManager,
-                     MockQueueManager>(track: MockData.track, tapAction: {})
+                     MockQueueManager>(track: MockData.track, authManager: AuthorisationManager(), tapAction: {})
             TrackRow<MockNowPlayingManager,
                      MockBlockedTracks,
                      MockPlaylistManager,
-                     MockQueueManager>(track: MockData.track).menu
+                     MockQueueManager>(track: MockData.track, authManager: AuthorisationManager()).menu
         }
         .environmentObject(MockNowPlayingManager())
         .environmentObject(MockBlockedTracks())

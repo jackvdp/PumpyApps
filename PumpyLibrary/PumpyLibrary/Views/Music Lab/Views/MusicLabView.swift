@@ -68,6 +68,7 @@ public struct MusicLabView<N:NowPlayingProtocol,
         ForEach(labManager.seedTracks, id: \.sourceID) { track in
             Divider()
             TrackRow<N,B,P,Q>(track: track,
+                              authManager: authManager,
                               tapAction: { playFromPosition(track: track) })
         }
         .onDelete(perform: labManager.removeTrack)

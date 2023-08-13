@@ -9,6 +9,7 @@
 import SwiftUI
 import AlertToast
 import PumpyShared
+import PumpyAnalytics
 
 struct PlaylistView<
     P:PlaylistProtocol,
@@ -22,6 +23,7 @@ struct PlaylistView<
     @EnvironmentObject var toastManager: ToastManager
     @EnvironmentObject var bookmarkManager: BookmarkedManager
     @EnvironmentObject var recentlyPlayedManager: RecentlyPlayedManager
+    @EnvironmentObject var authManager: AuthorisationManager
     let playlist: Playlist
     @State private var searchText = ""
     
@@ -86,7 +88,7 @@ struct PlaylistView<
     
     var tracksList: some View {
         ForEach(filteredTracks.indices, id: \.self) { i in
-            TrackRow<N,B,P,Q>(track: filteredTracks[i],
+            TrackRow<N,B,P,Q>(track: filteredTracks[i], authManager: authManager,
                               tapAction: {
                 recentlyPlayedManager.addItem(.playlist(playlist.snaposhot()))
                 playFromPosition(track: filteredTracks[i])

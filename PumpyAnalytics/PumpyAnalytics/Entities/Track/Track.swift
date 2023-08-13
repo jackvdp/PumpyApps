@@ -12,7 +12,7 @@ public class Track: Identifiable, Hashable, ObservableObject {
     public var title: String
     public var artist: String
     public var album: String?
-    public var isrc: String
+    public var isrc: String?
     public var artworkURL: String?
     public var previewUrl: String?
     public var isExplicit: Bool
@@ -21,26 +21,17 @@ public class Track: Identifiable, Hashable, ObservableObject {
     public var authManager: AuthorisationManager
     @Published public var inProgress = InProgress()
     
-    @Published public var spotifyItem: SpotifyItem?{
-        didSet {
-            inProgress.gettingAM = false
-            MatchNotification().post()
-        }
+    @Published public var spotifyItem: SpotifyItem? {
+        didSet { inProgress.gettingSpotify = false }
     }
     @Published public var appleMusicItem: AppleMusicItem? {
-        didSet {
-            inProgress.gettingAM = false
-            MatchNotification().post()
-        }
+        didSet { inProgress.gettingAM = false }
     }
     @Published public var audioFeatures: AudioFeatures? {
-        didSet {
-            inProgress.analysing = false
-            StatsNotification().post()
-        }
+        didSet { inProgress.analysing = false }
     }
     
-    public init(title: String, artist: String, album: String, isrc: String, artworkURL: String?, previewUrl: String?, isExplicit: Bool, sourceID: String, authManager: AuthorisationManager, appleMusicItem: AppleMusicItem? = nil, spotifyItem: SpotifyItem? = nil) {
+    public init(title: String, artist: String, album: String, isrc: String?, artworkURL: String?, previewUrl: String?, isExplicit: Bool, sourceID: String, authManager: AuthorisationManager, appleMusicItem: AppleMusicItem? = nil, spotifyItem: SpotifyItem? = nil) {
         self.title = title
         self.artist = artist
         self.album = album
@@ -59,17 +50,16 @@ public class Track: Identifiable, Hashable, ObservableObject {
 extension Track {
     
     public static func == (lhs: Track, rhs: Track) -> Bool {
-        return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+        return lhs.sourceID == rhs.sourceID
     }
     
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(ObjectIdentifier(self))
+        hasher.combine(sourceID)
     }
         
     public struct InProgress {
-        
-        public var analysing = true
-        public var gettingSpotify = true
-        public var gettingAM = true
+        public var analysing = false
+        public var gettingSpotify = false
+        public var gettingAM = false
     }
 }

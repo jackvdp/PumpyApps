@@ -10,8 +10,7 @@ import PumpyAnalytics
 
 struct TrackPreview: View {
     
-    let track: Track
-    @Binding var analysedTrack: PumpyAnalytics.Track?
+    @ObservedObject var track: PumpyAnalytics.Track
     private let controller = AnalyseController()
     @EnvironmentObject var authManager: AuthorisationManager
     private let contentWidth: CGFloat = 200
@@ -19,22 +18,22 @@ struct TrackPreview: View {
     var body: some View {
         VStack(spacing: 10) {
             trackDetails
-            if let spotItem = analysedTrack?.spotifyItem,
-               let amItem = analysedTrack?.appleMusicItem {
+            if let spotItem = track.spotifyItem,
+               let amItem = track.appleMusicItem {
                 Divider()
                 trackFeatures(amItem, spotItem: spotItem)
-                    .animation(.easeIn, value: analysedTrack)
+                    .animation(.easeIn, value: track)
             }
-            if let analysis = analysedTrack?.audioFeatures {
+            if let analysis = track.audioFeatures {
                 Divider()
                 trackAnalysis(analysis)
-                    .animation(.easeIn, value: analysedTrack)
+                    .animation(.easeIn, value: track)
             }
         }
         .frame(width: contentWidth)
         .padding()
         .task {
-            analyseTrack()
+            await analyseTrack()
         }
     }
     
@@ -98,37 +97,15 @@ struct TrackPreview: View {
     
     // MARK: - Methods
     
-    private func analyseTrack() {
-        guard analysedTrack?.audioFeatures == nil else {
+    private func analyseTrack() async {
+        guard track.audioFeatures == nil else {
             // For tracks that have already been analysed through this process
             return
         }
-        if let analyticsTrack = track as? PumpyAnalytics.Track {
-            if analyticsTrack.audioFeatures != nil {
-                withAnimation {
-                    // For tracks that have already been analysed
-                    analysedTrack = analyticsTrack
-                }
-            } else {
-                controller.analyseTracks(tracks: [analyticsTrack],
-                                         authManager: authManager) { tracks in
-                    guard let track = tracks.first else { return }
-                    withAnimation {
-                        // For analytics tracks that haven't been analysed
-                        analysedTrack = track
-                    }
-                }
-            }
+        if track.isrc == nil {
+            await controller.analyseMediaPlayerTracks(tracks: [track], authManager: authManager)
         } else {
-            guard let id = track.amStoreID else { return }
-            controller.analyseMediaPlayerTracks(amIDs: [id],
-                                                authManager: authManager) { tracks in
-                guard let track = tracks.first else { return }
-                withAnimation {
-                    // For MPMediaItems
-                    analysedTrack = track
-                }
-            }
+            await controller.analyseTracks(tracks: [track], authManager: authManager)
         }
     }
     
@@ -141,7 +118,7 @@ struct TrackPreview_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            TrackPreview(track: analysedTrack, analysedTrack: .constant(analysedTrack))
+            TrackPreview(track: analysedTrack)
                 .border(.black)
                 .preferredColorScheme(.dark)
                 .padding()

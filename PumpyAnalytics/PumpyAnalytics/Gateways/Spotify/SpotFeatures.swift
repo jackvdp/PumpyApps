@@ -39,34 +39,23 @@ class SpotifyFeaturesAPI {
         }
     }
     
-    func getManyAudioFeaturesFromSpotifyID(ids: [String], authManager: AuthorisationManager, completion: @escaping ([AudioFeatures]) -> ()) {
-        guard let token = authManager.spotifyToken else {
-            completion([])
-            return
-        }
+    func getManyAudioFeaturesFromSpotifyID(ids: [String], authManager: AuthorisationManager) async -> [AudioFeatures] {
+        guard let token = authManager.spotifyToken else { return [] }
         
         let url = "https://api.spotify.com/v1/audio-features/?ids=\(ids.joined(separator: ","))"
         let headers = HTTPHeaders([HTTPHeader(name: "Authorization", value: "Bearer \(token)")])
         
-        AF.request(url, headers: headers).response { [weak self] response in
-            guard let self else { return }
-            
-            if response.response?.statusCode == 429 {
-                self.spotifyComponents.retry(response: response) { [weak self] in
-                    guard let self else { return }
-                    self.getManyAudioFeaturesFromSpotifyID(ids: ids, authManager: authManager, completion: completion)
-                }
-            } else {
-                if let d = response.data {
-                    let features = self.spotifyParser.parseForManyTrackFeatures(data: d)
-                    print("\(features.count) features || for \(ids.count) ids")
-                    completion(features)
-                    return
-                }
-                completion([])
-            }
+        let response = await AF.request(url, headers: headers).serializingData().response
+        
+        guard response.response?.statusCode != 429 else {
+            await spotifyComponents.retryAsync(response: response)
+            return await getManyAudioFeaturesFromSpotifyID(ids: ids, authManager: authManager)
         }
-            
+        
+        guard let data = response.data else { return [] }
+        let features = self.spotifyParser.parseForManyTrackFeatures(data: data)
+        print("\(features.count) features || for \(ids.count) ids")
+        return features
     }
     
 }

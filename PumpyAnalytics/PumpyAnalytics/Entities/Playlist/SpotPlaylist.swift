@@ -19,6 +19,9 @@ public class SpotifyPlaylist: Hashable, Identifiable, Playlist {
     public var uuid = UUID()
     public var authManager: AuthorisationManager
     
+    private lazy var getAudioFeaturesUseCase = GetAudioFeaturesAndSpotifyItem()
+    private lazy var matchToAMUseCase = MatchToAM()
+    
     public var snapshot: PlaylistSnapshot {
         PlaylistSnapshot(name: name,
                         artworkURL: artworkURL,
@@ -37,13 +40,14 @@ public class SpotifyPlaylist: Hashable, Identifiable, Playlist {
         self.authManager = authManager
         self.sourceID = sourceID
         removeDuplicates()
-        
-        print(self.sourceID)
     }
     
     public func getTracksData() {
-        GetAudioFeaturesAndSpotifyItem().forPlaylist(tracks: tracks, authManager: authManager)
-        MatchToAM().execute(tracks: tracks, authManager: authManager)
+        Task {
+            async let featuresResponse: () = getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
+            async let matchResponse: () = matchToAMUseCase.execute(tracks: tracks, authManager: authManager)
+            let (_, _) = await (featuresResponse, matchResponse)
+        }
     }
         
     public func removeDuplicates() {

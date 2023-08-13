@@ -62,4 +62,8 @@ public struct PreviewTrack: Track {
     public var artworkURL: String?
     public var amStoreID: String?
     public var isExplicitItem: Bool
+    
+    public func analyticsTrack(authManager: AuthorisationManager) -> PumpyAnalytics.Track {
+        PumpyAnalytics.Track(title: name, artist: artistName, album: "", isrc: nil, artworkURL: artworkURL, previewUrl: nil, isExplicit: isExplicitItem, sourceID: amStoreID ?? "", authManager: authManager)
+    }
 }

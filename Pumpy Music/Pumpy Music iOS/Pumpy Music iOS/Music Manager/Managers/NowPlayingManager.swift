@@ -14,7 +14,13 @@ import PumpyAnalytics
 import PumpyShared
 
 class NowPlayingManager: NowPlayingProtocol {
-    @Published var currentTrack: PumpyLibrary.Track?
+    @Published var currentTrack: PumpyLibrary.Track? {
+        didSet {
+            guard let currentTrack, let authManager else { currentAnalyticsTrack = nil; return }
+            currentAnalyticsTrack = currentTrack.analyticsTrack(authManager: authManager)
+        }
+    }
+    var currentAnalyticsTrack: PumpyAnalytics.Track?
     @Published var playButtonState: PlayButton = .notPlaying
     private let respondDebouncer = Debouncer()
     private let itemDebouncer = Debouncer()

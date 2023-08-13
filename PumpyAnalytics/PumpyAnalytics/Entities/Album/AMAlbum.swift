@@ -19,6 +19,8 @@ public class AMAlbum: Playlist {
     public var uuid = UUID()
     public var snapshot: PlaylistSnapshot
     
+    private lazy var getAudioFeaturesUseCase = GetAudioFeaturesAndSpotifyItem()
+    
     public init(name: String? = nil, curator: String, tracks: [Track], artworkURL: String? = nil, description: String? = nil, shortDescription: String? = nil, sourceID: String, authManager: AuthorisationManager) {
         self.name = name
         self.curator = curator
@@ -33,7 +35,9 @@ public class AMAlbum: Playlist {
     }
     
     public func getTracksData() {
-        GetAudioFeaturesAndSpotifyItem().forPlaylist(tracks: tracks, authManager: authManager)
+        Task {
+            await getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
+        }
     }
     
     public func removeDuplicates() {
@@ -54,6 +58,8 @@ public class AMStation: Playlist {
     public var uuid = UUID()
     public var snapshot: PlaylistSnapshot
     
+    private lazy var getAudioFeaturesUseCase = GetAudioFeaturesAndSpotifyItem()
+    
     public init(name: String? = nil, curator: String, tracks: [Track], artworkURL: String? = nil, description: String? = nil, shortDescription: String? = nil, sourceID: String, authManager: AuthorisationManager) {
         self.name = name
         self.curator = curator
@@ -68,7 +74,9 @@ public class AMStation: Playlist {
     }
     
     public func getTracksData() {
-        GetAudioFeaturesAndSpotifyItem().forPlaylist(tracks: tracks, authManager: authManager)
+        Task {
+            await getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
+        }
     }
     
     public func removeDuplicates() {

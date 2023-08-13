@@ -8,6 +8,7 @@
 import Foundation
 import PumpyAnalytics
 import SwiftUI
+import PumpyShared
 
 public class MusicLabManager: ObservableObject {
 

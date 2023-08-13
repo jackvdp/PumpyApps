@@ -28,6 +28,9 @@ public class CustomPlaylist: Hashable, Identifiable, Playlist {
         )
     }
     
+    private lazy var getAudioFeaturesUseCase = GetAudioFeaturesAndSpotifyItem()
+    private lazy var matchToAMUseCase = MatchToAM()
+    
     public init(name: String?, curator: String, tracks: [Track], artworkURL: String?, description: String?, shortDescription: String?, logic: CustomPlaylistLogic, authManager: AuthorisationManager, sourceID: String) {
         self.name = name
         self.curator = curator
@@ -42,8 +45,11 @@ public class CustomPlaylist: Hashable, Identifiable, Playlist {
     }
     
     public func getTracksData() {
-        GetAudioFeaturesAndSpotifyItem().forPlaylist(tracks: tracks, authManager: authManager)
-        MatchToAM().execute(tracks: tracks, authManager: authManager)
+        Task {
+            async let featuresResponse: () = getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
+            async let matchResponse: () = matchToAMUseCase.execute(tracks: tracks, authManager: authManager)
+            let (_, _) = await (featuresResponse, matchResponse)
+        }
     }
     
     public func removeDuplicates() {

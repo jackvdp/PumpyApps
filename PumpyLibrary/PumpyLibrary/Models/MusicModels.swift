@@ -47,6 +47,8 @@ public protocol Track: MusicCollection {
     var artworkURL: String? { get }
     var amStoreID: String? { get }
     var isExplicitItem: Bool { get }
+    
+    func analyticsTrack(authManager: AuthorisationManager) -> PumpyAnalytics.Track
 }
 
 // MARK: - Queue
@@ -78,6 +80,7 @@ public struct QueueTrack: Track, Equatable {
         self.artistName = artist
         self.artworkURL = artworkURL
         self.amStoreID = playbackStoreID
+        self.playbackStoreID = playbackStoreID
         self.isExplicitItem = isExplicitItem
     }
     
@@ -85,7 +88,12 @@ public struct QueueTrack: Track, Equatable {
     public var artistName: String
     public var artworkURL: String?
     public var amStoreID: String?
+    public var playbackStoreID: String
     public var isExplicitItem: Bool
+    
+    public func analyticsTrack(authManager: AuthorisationManager) -> PumpyAnalytics.Track {
+        PumpyAnalytics.Track(title: name, artist: artistName, album: "", isrc: nil, artworkURL: artworkURL, previewUrl: nil, isExplicit: isExplicitItem, sourceID: playbackStoreID, authManager: authManager)
+    }
 }
 
 // MARK: - Blocked
@@ -113,6 +121,7 @@ public struct CodableTrack: Codable, Hashable, MusicCollection {
 }
 
 extension CodableTrack: PumpyLibrary.Track {
+    
     public var name: String { title }
     
     public var artistName: String { artist }
@@ -120,6 +129,10 @@ extension CodableTrack: PumpyLibrary.Track {
     public var amStoreID: String? { playbackID }
     
     public var isExplicitItem: Bool { isExplicit }
+    
+    public func analyticsTrack(authManager: AuthorisationManager) -> PumpyAnalytics.Track {
+        PumpyAnalytics.Track(title: name, artist: artistName, album: "", isrc: nil, artworkURL: artworkURL, previewUrl: nil, isExplicit: isExplicitItem, sourceID: playbackID, authManager: authManager)
+    }
 }
 
 extension Track {
@@ -229,6 +242,8 @@ extension RecommendedPlaylist: PumpyLibrary.Playlist {
 }
 
 extension PumpyAnalytics.Track: Track {
+    
+    
     public var name: String {
         self.title
     }
@@ -243,6 +258,10 @@ extension PumpyAnalytics.Track: Track {
     
     public var isExplicitItem: Bool {
         self.isExplicit
+    }
+    
+    public func analyticsTrack(authManager: PumpyAnalytics.AuthorisationManager) -> PumpyAnalytics.Track {
+        return self
     }
 }
 

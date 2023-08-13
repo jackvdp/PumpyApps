@@ -11,21 +11,16 @@ public class AnalyseController {
     
     public init() {}
     
-    private let analyseTracksUseCase = AnalyseTracks()
-    private let analyseMediaPlayerTracksUseCase = AnalyseMediaPlayerTracks()
+    private lazy var getSpotifyItemUseCase = GetAudioFeaturesAndSpotifyItem()
+    private lazy var analyseMediaPlayerTracksUseCase = AnalyseMediaPlayerTracks()
     
-    public func analyseTracks(tracks: [Track], authManager: AuthorisationManager, completion: @escaping ([Track]) -> ()) {
-        analyseTracksUseCase.execute(tracks: tracks,
-                                     authManager: authManager,
-                                     completion: completion)
+    public func analyseTracks(tracks: [Track], authManager: AuthorisationManager) async {
+        await getSpotifyItemUseCase.forPlaylist(tracks: tracks, authManager: authManager)
     }
     
-    public func analyseMediaPlayerTracks(amIDs: [String],
-                                         authManager: AuthorisationManager,
-                                         completion: @escaping ([Track])->()) {
-        analyseMediaPlayerTracksUseCase.execute(ids: amIDs,
-                                                authManager: authManager,
-                                                completion: completion)
+    /// Analyse media player tracks. In contrast to the above method it also gets the isrc number
+    public func analyseMediaPlayerTracks(tracks: [Track], authManager: AuthorisationManager) async {
+        await analyseMediaPlayerTracksUseCase.execute(tracks: tracks, authManager: authManager)
     }
     
 }

@@ -137,48 +137,8 @@ struct PlayerControls<P:PlaylistProtocol,
         .buttonStyle(.plain)
     }
     
-    @State private var showPopup = false
-    @State private var analysedTrack: PumpyAnalytics.Track?
-    
     var moreInfoButton: some View {
-        Button(action: {
-            showPopup = true
-        }) {
-            Image(systemName: "ellipsis.circle")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 20, height: 20, alignment: .center)
-                .foregroundColor(.white)
-        }
-        .buttonStyle(.plain)
-        .popup(isPresented: $showPopup) {
-            if let track = nowPlayingManager.currentTrack {
-                VStack {
-                    TrackPreview(track: track, analysedTrack: $analysedTrack)
-                    LabButtons(analysedTrack: $analysedTrack)
-                        .buttonStyle(.bordered)
-                        .tint(.pumpyPink)
-                }
-                .padding()
-                .background(.black.opacity(0.6))
-                .cornerRadius(16)
-            } else {
-                Text("No track playing")
-            }
-        } customize: { popup in
-            popup
-                .type(.default)
-                .position(.bottom)
-                .animation(.spring())
-                .closeOnTapOutside(true)
-                .closeOnTap(false)
-                .backgroundView {
-                    Rectangle().foregroundStyle(Material.regular)
-                }
-        }
-        .onReceive(nowPlayingManager.currentTrack.publisher) { newValue in
-            analysedTrack = nil
-        }
+        MoreInfoButton(track: nowPlayingManager.currentAnalyticsTrack ?? PumpyAnalytics.MockData.track)
     }
 
 }
@@ -218,5 +178,3 @@ struct PlayerControls_Previews: PreviewProvider {
     }
 }
 #endif
-
-

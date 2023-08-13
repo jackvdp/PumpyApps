@@ -19,6 +19,8 @@ public class AMPlaylist: Hashable, Identifiable, Playlist {
     public var uuid = UUID()
     public var authManager: AuthorisationManager
     
+    private lazy var getAudioFeaturesUseCase = GetAudioFeaturesAndSpotifyItem()
+    
     public var snapshot: PlaylistSnapshot {
         PlaylistSnapshot(name: name,
                         artworkURL: artworkURL,
@@ -40,7 +42,9 @@ public class AMPlaylist: Hashable, Identifiable, Playlist {
     }
     
     public func getTracksData() {
-        GetAudioFeaturesAndSpotifyItem().forPlaylist(tracks: tracks, authManager: authManager)
+        Task {
+            await getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
+        }
     }
         
     public func removeDuplicates() {

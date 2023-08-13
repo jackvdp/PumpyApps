@@ -12,10 +12,10 @@ struct LabButtons: View {
     
     @EnvironmentObject var toastManager: ToastManager
     @EnvironmentObject var labManager: MusicLabManager
-    @Binding var analysedTrack: PumpyAnalytics.Track?
+    @ObservedObject var analysedTrack: PumpyAnalytics.Track
     
     var body: some View {
-        if let analysedTrack, labManager.includes(track: analysedTrack) {
+        if labManager.includes(track: analysedTrack) {
             Button {
                 labManager.removeTrack(analysedTrack)
                 toastManager.showLabRemoveToast = true
@@ -24,7 +24,7 @@ struct LabButtons: View {
             }.padding()
         } else {
             Button {
-                if let analysedTrack, analysedTrack.audioFeatures != nil {
+                if analysedTrack.audioFeatures != nil {
                     labManager.addTrack(analysedTrack)
                     toastManager.showLabAddToast = true
                 } else {

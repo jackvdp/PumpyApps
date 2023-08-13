@@ -20,7 +20,8 @@ class GetMusicItem {
     
     private func makeMusicStoreItems(tracks: [Track]) {
         tracks.forEach { track in
-            track.appleMusicItem = AppleMusicItem(isrc: track.isrc,
+            guard let isrc = track.isrc else { return }
+            track.appleMusicItem = AppleMusicItem(isrc: isrc,
                                                   id: track.sourceID,
                                                   name: track.title,
                                                   artistName: track.artist,

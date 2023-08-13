@@ -8,6 +8,8 @@
 
 import SwiftUI
 import MediaPlayer
+import PumpyShared
+import PumpyAnalytics
 
 public struct UpNextView<Q: QueueProtocol,
                          N:NowPlayingProtocol,
@@ -15,6 +17,7 @@ public struct UpNextView<Q: QueueProtocol,
                          P:PlaylistProtocol>: View {
     
     @EnvironmentObject var queueManager: Q
+    @EnvironmentObject var authManager: AuthorisationManager
     var fontStyle: Font
     var subFontOpacity: Double
     var showButton: Bool
@@ -79,7 +82,7 @@ public struct UpNextView<Q: QueueProtocol,
     var history: some View {
         Section(header: Text("History")) {
             ForEach(0..<queueManager.queueIndex, id: \.self) { i in
-                TrackRow<N,B,P,Q>(track: queueManager.queueTracks[i])
+                TrackRow<N,B,P,Q>(track: queueManager.queueTracks[i], authManager: authManager)
                     .deleteDisabled(true)
                     .foregroundColor(.white)
                     .id(queueManager.queueTracks[i].amStoreID)
@@ -92,7 +95,7 @@ public struct UpNextView<Q: QueueProtocol,
     
     var nowPlaying: some View {
         Section(header: Text("Now Playing")) {
-            TrackRow<N,B,P,Q>(track: queueManager.queueTracks[queueManager.queueIndex])
+            TrackRow<N,B,P,Q>(track: queueManager.queueTracks[queueManager.queueIndex], authManager: authManager)
                 .deleteDisabled(true)
                 .foregroundColor(.white)
                 .id(queueManager.queueTracks[queueManager.queueIndex].amStoreID)
@@ -119,7 +122,7 @@ public struct UpNextView<Q: QueueProtocol,
     var playingNext: some View {
         Section(header: Text("Playing Next")) {
            ForEach(queueManager.queueIndex + 1..<queueManager.queueTracks.count, id: \.self) { i in
-               TrackRow<N,B,P,Q>(track: queueManager.queueTracks[i])
+               TrackRow<N,B,P,Q>(track: queueManager.queueTracks[i], authManager: authManager)
                    .foregroundColor(.white)
                    .id(queueManager.queueTracks[i].amStoreID)
            }

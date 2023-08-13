@@ -36,13 +36,13 @@ extension QueueManager {
         analysingEnergy = true
         guard queueIndex + 1 < queueTracks.count && queueIndex >= 0 else { return }
         guard let authManager = authManager else { return }
-        let ids = queueTracks[queueIndex+1..<queueTracks.count].compactMap { $0.amStoreID }
-        AnalyseController().analyseMediaPlayerTracks(amIDs: ids,
-                                                     authManager: authManager) { [weak self] analysedTracks in
-            DispatchQueue.main.async {
+        let tracks = queueTracks[queueIndex+1..<queueTracks.count].compactMap { $0.analyticsTrack(authManager: authManager) }
+        Task {
+            await analyseController.analyseMediaPlayerTracks(tracks: tracks, authManager: authManager)
+            DispatchQueue.main.async { [weak self] in
                 self?.analysingEnergy = false
             }
-            completion(analysedTracks)
+            completion(tracks)
         }
     }
     

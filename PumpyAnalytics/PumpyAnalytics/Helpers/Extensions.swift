@@ -34,7 +34,7 @@ extension Array where Element == Track {
         var addedDict = [String: Track]()
         
         return filter {
-            addedDict.updateValue($0, forKey: $0.isrc) == nil
+            addedDict.updateValue($0, forKey: $0.sourceID) == nil
         }
     }
 }

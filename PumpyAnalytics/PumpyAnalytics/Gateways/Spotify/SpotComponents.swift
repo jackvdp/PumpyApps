@@ -25,4 +25,11 @@ class SpotifyComponents {
         }
     }
     
+    func retryAsync(response: DataResponse<Data, AFError>) async {
+        let retryIn = response.response?.headers.dictionary["retry-after"]
+        let retryInt = Int(retryIn ?? "2") ?? 2
+        let nanoseconds = UInt64(retryInt) * 1_000_000_000
+        try? await Task.sleep(nanoseconds: nanoseconds)
+    }
+    
 }
