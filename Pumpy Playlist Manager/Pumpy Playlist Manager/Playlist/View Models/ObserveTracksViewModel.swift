@@ -32,16 +32,16 @@ class ObserveTracksViewModel: ObservableObject {
         tracksWithStats = playlist.tracks.filter { $0.audioFeatures != nil }.count
         tracksMatched = playlist.tracks.filter { $0.appleMusicItem != nil }.count
         
-        NotificationCenter.default
-            .addObserver(self,
-                         selector: #selector(changeStats),
-                         name: .TracksGotAnalysed,
-                         object: nil)
-        NotificationCenter.default
-            .addObserver(self,
-                         selector: #selector(changeMatched),
-                         name: .TracksMatchedToAppleMusic,
-                         object: nil)
+//        NotificationCenter.default
+//            .addObserver(self,
+//                         selector: #selector(changeStats),
+//                         name: .TracksGotAnalysed,
+//                         object: nil)
+//        NotificationCenter.default
+//            .addObserver(self,
+//                         selector: #selector(changeMatched),
+//                         name: .TracksMatchedToAppleMusic,
+//                         object: nil)
     }
     
     @objc func changeStats() {

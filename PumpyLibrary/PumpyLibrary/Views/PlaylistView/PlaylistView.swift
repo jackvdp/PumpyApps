@@ -51,7 +51,7 @@ struct PlaylistView<
             let size: CGFloat = 200
             ArtworkView(url: url, size: size)
                 .frame(width: size, height: size)
-        } else { EmptyView() }
+        }
     }
     
     var playlistName: some View {

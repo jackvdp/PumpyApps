@@ -43,7 +43,7 @@ class ItemDetailViewModel: ObservableObject {
                 return
             }
             
-            playlist.getTracksData()
+            playlist.matchToAM()
             
             DispatchQueue.main.async {
                 self.pageState = .success(playlist)

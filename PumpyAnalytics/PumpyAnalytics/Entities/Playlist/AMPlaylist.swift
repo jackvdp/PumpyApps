@@ -46,6 +46,8 @@ public class AMPlaylist: Hashable, Identifiable, Playlist {
             await getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
         }
     }
+    
+    public func matchToAM() {}
         
     public func removeDuplicates() {
         tracks = tracks.removingDuplicates()

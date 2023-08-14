@@ -44,9 +44,14 @@ public class TrackPlaylist: Hashable, Identifiable, Playlist {
     
     public func getTracksData() {
         Task {
-            async let featuresResponse: () = getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
-            async let matchResponse: () = matchToAMUseCase.execute(tracks: tracks, authManager: authManager)
-            let (_, _) = await (featuresResponse, matchResponse)
+            await getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
+        }
+        matchToAM()
+    }
+    
+    public func matchToAM() {
+        Task {
+            await matchToAMUseCase.execute(tracks: tracks, authManager: authManager)
         }
     }
     

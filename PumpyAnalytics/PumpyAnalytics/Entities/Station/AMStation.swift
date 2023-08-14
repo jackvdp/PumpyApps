@@ -1,15 +1,13 @@
 //
-//  AMAlbum.swift
+//  AMStation.swift
 //  PumpyAnalytics
 //
-//  Created by Jack Vanderpump on 19/09/2022.
+//  Created by Jack Vanderpump on 14/08/2023.
 //
 
 import Foundation
 
-public class AMAlbum: Playlist {
-    
-    
+public class AMStation: Playlist {
     public var name: String?
     public var curator: String
     public var tracks: [Track]

@@ -21,6 +21,7 @@ public protocol Playlist {
     var snapshot: PlaylistSnapshot { get }
     
     func getTracksData()
+    func matchToAM()
     
     func removeDuplicates()
     

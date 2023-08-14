@@ -106,6 +106,7 @@
 		C09B72E22A866545007AEBE5 /* StationsGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09B72E12A866545007AEBE5 /* StationsGateway.swift */; };
 		C09B72E52A866579007AEBE5 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09B72E42A866579007AEBE5 /* Station.swift */; };
 		C09B72EB2A8A2642007AEBE5 /* AsyncRetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09B72EA2A8A2642007AEBE5 /* AsyncRetry.swift */; };
+		C09B72ED2A8A33FA007AEBE5 /* AMStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09B72EC2A8A33FA007AEBE5 /* AMStation.swift */; };
 		C0AE03C729F126FF00547147 /* GetSearchSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AE03C629F126FF00547147 /* GetSearchSuggestions.swift */; };
 		C0BBDAF828D3CE7600BB7AF1 /* SearchTracksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BBDAF728D3CE7600BB7AF1 /* SearchTracksAPI.swift */; };
 		C0BBDAFA28D3D60F00BB7AF1 /* SongSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BBDAF928D3D60F00BB7AF1 /* SongSearch.swift */; };
@@ -233,6 +234,7 @@
 		C09B72E12A866545007AEBE5 /* StationsGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsGateway.swift; sourceTree = "<group>"; };
 		C09B72E42A866579007AEBE5 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		C09B72EA2A8A2642007AEBE5 /* AsyncRetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncRetry.swift; sourceTree = "<group>"; };
+		C09B72EC2A8A33FA007AEBE5 /* AMStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMStation.swift; sourceTree = "<group>"; };
 		C0AE03C629F126FF00547147 /* GetSearchSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchSuggestions.swift; sourceTree = "<group>"; };
 		C0BBDAF728D3CE7600BB7AF1 /* SearchTracksAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTracksAPI.swift; sourceTree = "<group>"; };
 		C0BBDAF928D3D60F00BB7AF1 /* SongSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSearch.swift; sourceTree = "<group>"; };
@@ -677,6 +679,7 @@
 		C09B72E32A86656E007AEBE5 /* Station */ = {
 			isa = PBXGroup;
 			children = (
+				C09B72EC2A8A33FA007AEBE5 /* AMStation.swift */,
 				C09B72E42A866579007AEBE5 /* Station.swift */,
 			);
 			path = Station;
@@ -909,6 +912,7 @@
 				6D6C359D2851437F00FE2196 /* LibraryController.swift in Sources */,
 				C0F869A229E5633B00DD2BA0 /* GetGenres.swift in Sources */,
 				6D549803283C1D3D00F3DF59 /* SpotSearchParser.swift in Sources */,
+				C09B72ED2A8A33FA007AEBE5 /* AMStation.swift in Sources */,
 				6D549836283CDB8D00F3DF59 /* SortPlaylist.swift in Sources */,
 				C0F7B0062A8519F10032CB0C /* AddToAppleMusic.swift in Sources */,
 				6D71E59E28971A72002E5FF4 /* MatchToAM.swift in Sources */,
