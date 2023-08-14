@@ -20,7 +20,6 @@ public struct TrackRow<N:NowPlayingProtocol,
     @ObservedObject var analysisTrack: PumpyAnalytics.Track
     let tapAction: (()->())?
     @State private var buttonTapped = false
-    @State private var trackAMID: String?
     @State private var analysedTrack: PumpyAnalytics.Track?
     @EnvironmentObject var tokenManager: AuthorisationManager
     @EnvironmentObject var queueManager: Q
@@ -51,6 +50,10 @@ public struct TrackRow<N:NowPlayingProtocol,
         }
     }
     
+    var trackAMID: String? {
+        track.amStoreID ?? analysisTrack.appleMusicItem?.id ?? analysisTrack.amStoreID
+    }
+    
     // MARK: - Components
     
     var label: some View {
@@ -62,19 +65,12 @@ public struct TrackRow<N:NowPlayingProtocol,
                 .padding(.leading)
         }
         .opacity(trackAMID != nil ? 1 : 0.3)
-        .background {
-            analyticsInfo
-        }
         .contentShape(Rectangle())
         .contextWithPreview {
             menu
         } preview: {
             TrackPreview(track: analysisTrack)
                 .environmentObject(tokenManager)
-        }
-        .onAppear() {
-            // Check if track is already matched
-            trackAMID = track.amStoreID
         }
     }
     
@@ -94,22 +90,6 @@ public struct TrackRow<N:NowPlayingProtocol,
             Text(track.artistName)
                 .font(.subheadline)
                 .lineLimit(1)
-        }
-    }
-    
-    /// Used to track new data for matching
-    @ViewBuilder
-    var analyticsInfo: some View {
-        if let analyticsTrack = track as? PumpyAnalytics.Track {
-            EmptyView()
-                .frame(width: 0, height: 0)
-                .onReceive(analyticsTrack.$appleMusicItem) { newValue in
-                    if let myID = newValue?.id {
-                        withAnimation {
-                            trackAMID = myID
-                        }
-                    }
-                }
         }
     }
     
