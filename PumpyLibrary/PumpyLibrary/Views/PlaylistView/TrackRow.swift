@@ -50,10 +50,6 @@ public struct TrackRow<N:NowPlayingProtocol,
         }
     }
     
-    var trackAMID: String? {
-        track.amStoreID ?? analysisTrack.appleMusicItem?.id ?? analysisTrack.amStoreID
-    }
-    
     // MARK: - Components
     
     var label: some View {
@@ -64,7 +60,7 @@ public struct TrackRow<N:NowPlayingProtocol,
             LikeDislikeButtons<N,B>(track: track, size: 20)
                 .padding(.leading)
         }
-        .opacity(trackAMID != nil ? 1 : 0.3)
+        .opacity(track.amStoreID != nil ? 1 : 0.3)
         .contentShape(Rectangle())
         .contextWithPreview {
             menu

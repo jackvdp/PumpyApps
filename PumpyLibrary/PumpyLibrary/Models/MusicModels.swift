@@ -243,7 +243,6 @@ extension RecommendedPlaylist: PumpyLibrary.Playlist {
 
 extension PumpyAnalytics.Track: Track {
     
-    
     public var name: String {
         self.title
     }

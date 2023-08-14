@@ -17,7 +17,7 @@ struct MoreInfoButton: View {
         Button(action: {
             showPopup = true
         }) {
-            Image(systemName: "ellipsis.circle")
+            Image(systemName: "chart.bar.xaxis")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 20, height: 20, alignment: .center)
@@ -37,7 +37,7 @@ struct MoreInfoButton: View {
         } customize: { popup in
             popup
                 .type(.default)
-                .position(.bottom)
+                .position(.center)
                 .animation(.spring())
                 .closeOnTapOutside(true)
                 .closeOnTap(false)
