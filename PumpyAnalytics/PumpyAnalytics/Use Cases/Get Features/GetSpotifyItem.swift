@@ -20,7 +20,7 @@ class GetSpotifyItem {
         await unmatchedTracks.asyncForEach { [weak self] track in
             guard let self, let isrc = track.isrc else { return }
             if let item = await self.gateway.getSpotifyTrackFromISRC(isrc: isrc, authManager: authManager) {
-                track.spotifyItem = item
+                DispatchQueue.main.async { track.spotifyItem = item }
             }
         }
     }
@@ -37,7 +37,7 @@ class GetSpotifyItem {
             let items = SpotifyItemParser().parseForSpotifyItemsFromTracksAPI(json)
             for track in chunk {
                 items.filter { $0.id == track.spotifyItem?.id }.forEach { item in
-                    track.spotifyItem = item
+                    DispatchQueue.main.async { track.spotifyItem = item}
                 }
             }
         }

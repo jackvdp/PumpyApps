@@ -22,13 +22,13 @@ public class Track: Identifiable, Hashable, ObservableObject {
     @Published public var inProgress = InProgress()
     
     @Published public var spotifyItem: SpotifyItem? {
-        didSet { inProgress.gettingSpotify = false }
+        didSet { DispatchQueue.main.async { self.inProgress.gettingSpotify = false } }
     }
     @Published public var appleMusicItem: AppleMusicItem? {
-        didSet { inProgress.gettingAM = false }
+        didSet { DispatchQueue.main.async { self.inProgress.gettingAM = false } }
     }
     @Published public var audioFeatures: AudioFeatures? {
-        didSet { inProgress.analysing = false }
+        didSet { DispatchQueue.main.async { self.inProgress.analysing = false } }
     }
     
     public init(title: String, artist: String, album: String, isrc: String?, artworkURL: String?, previewUrl: String?, isExplicit: Bool, sourceID: String, authManager: AuthorisationManager, appleMusicItem: AppleMusicItem? = nil, spotifyItem: SpotifyItem? = nil) {

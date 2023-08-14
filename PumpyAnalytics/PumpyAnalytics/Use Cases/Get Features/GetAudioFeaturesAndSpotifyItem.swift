@@ -18,7 +18,7 @@ class GetAudioFeaturesAndSpotifyItem {
         let unAnalysedTracks = FeaturesHelper.getUnAnalysedTracks(tracks: tracks).filter { !$0.inProgress.analysing }
         guard unAnalysedTracks.isNotEmpty else { return }
         
-        unAnalysedTracks.forEach { $0.inProgress.analysing = true }
+        DispatchQueue.main.async { unAnalysedTracks.forEach {  $0.inProgress.analysing = true } }
         
         // Split matched tracks from unmatched tracks
         let matchedTracks = unAnalysedTracks.filter { $0.spotifyItem != nil }
@@ -38,7 +38,7 @@ class GetAudioFeaturesAndSpotifyItem {
         
         // Those tracks without id cannot be analysed
         let tracksNotAnalysing = tracks.filter { $0.spotifyItem?.id == nil }
-        tracksNotAnalysing.forEach { $0.inProgress.analysing = false }
+        DispatchQueue.main.async { tracksNotAnalysing.forEach { $0.inProgress.analysing = false } }
         
         let tracksAnalysing = tracks.filter { $0.spotifyItem?.id != nil }
         
@@ -58,7 +58,7 @@ class GetAudioFeaturesAndSpotifyItem {
                 }
             }
             
-            chunks.forEach { $0.forEach { $0.inProgress.analysing = false }}
+            DispatchQueue.main.async { chunks.forEach { $0.forEach { $0.inProgress.analysing = false }} }
         }
     }
     

@@ -9,12 +9,14 @@ import Foundation
 
 class GetMusicItem {
     
-    func get(from provider: PlaylistType, for tracks: [Track], authManager: AuthorisationManager) {
+    private let matchToAmUseCase = MatchToAM()
+    
+    func get(from provider: PlaylistType, for tracks: [Track], authManager: AuthorisationManager) async {
         switch provider {
         case .am:
             makeMusicStoreItems(tracks: tracks)
         default:
-            MatchToAM().execute(tracks: tracks, authManager: authManager)
+            await matchToAmUseCase.execute(tracks: tracks, authManager: authManager)
         }
     }
     

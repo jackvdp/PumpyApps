@@ -12,27 +12,24 @@ import SwiftyJSON
 
 class AMTracksAPI {
     
-    func getAppleItemFromISRCs(isrcs: String, authManager: AuthorisationManager, completion: @escaping ([AppleMusicItem])->()) {
+    private let retryRequest = RetryRequest()
+    
+    func getAppleItemFromISRCs(isrcs: String, authManager: AuthorisationManager) async -> [AppleMusicItem] {
         let storefront = authManager.storefront ?? "gb"
 
         let url = "https://api.music.apple.com/v1/catalog/\(storefront)/songs?filter[isrc]=\(isrcs)"
         let header = HTTPHeaders([HTTPHeader(name: K.MusicStore.authorisation, value: K.MusicStore.bearerToken)])
         
-        AF.request(url, headers: header).response { res in
-            guard let data = res.data else {
-                completion([])
-                return
-            }
-            
-            if res.response?.statusCode == 429 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.getAppleItemFromISRCs(isrcs: isrcs, authManager: authManager, completion: completion)
-                }
-            } else {
-                let items = AMTrackParser().convertISRCFilterToItems(data)
-                completion(items)
-            }
+        let res = await AF.request(url, headers: header).serializingData().response
+        
+        guard let data = res.data else { return [] }
+        
+        guard res.response?.statusCode != 429  else {
+            await retryRequest.retryAsync()
+            return await getAppleItemFromISRCs(isrcs: isrcs, authManager: authManager)
         }
+        
+        return AMTrackParser().convertISRCFilterToItems(data)
     }
     
     func searchForID(formattedTrackForSearch: String, authManager: AuthorisationManager, completion: @escaping ([AppleMusicItem])->()) {

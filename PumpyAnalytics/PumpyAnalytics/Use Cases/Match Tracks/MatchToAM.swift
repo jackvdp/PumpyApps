@@ -9,32 +9,33 @@ import Foundation
 
 class MatchToAM {
      
-    let gateway = AMTracksAPI()
+    private let gateway = AMTracksAPI()
     
-    func execute(tracks: [Track], authManager: AuthorisationManager) {
+    func execute(tracks: [Track], authManager: AuthorisationManager) async {
         let unmatchedTracks = tracks.filter { $0.appleMusicItem == nil }
         unmatchedTracks.forEach { $0.inProgress.gettingAM = true }
         let trackPacks = unmatchedTracks.chunks(25)
         
-        for pack in trackPacks {
+        await trackPacks.asyncForEach { pack in
             let isrcs = pack.compactMap { $0.isrc }.joined(separator: ",")
             
-            gateway.getAppleItemFromISRCs(isrcs: isrcs, authManager: authManager) { items in
-                for track in pack {
-                    self.matchTrackToItem(track: track,
-                                          items: items,
-                                          authManager: authManager)
-                }
+            let items = await gateway.getAppleItemFromISRCs(isrcs: isrcs, authManager: authManager)
+            
+            for track in pack {
+                matchTrackToItem(track: track,
+                                 items: items,
+                                 authManager: authManager)
             }
         }
     }
     
     private func matchTrackToItem(track: Track, items: [AppleMusicItem], authManager: AuthorisationManager) {
-        if let item = items.first(where: { $0.isrc == track.isrc }) {
-            track.appleMusicItem = item
-            MatchNotification().post()
-        } else {
-            track.inProgress.gettingAM = false
+        DispatchQueue.main.async {
+            if let item = items.first(where: { $0.isrc == track.isrc }) {
+                track.appleMusicItem = item
+            } else {
+                track.inProgress.gettingAM = false
+            }
         }
     }
     
