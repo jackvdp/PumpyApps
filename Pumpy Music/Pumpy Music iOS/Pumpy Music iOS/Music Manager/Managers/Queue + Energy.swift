@@ -34,13 +34,13 @@ extension QueueManager {
     
     private func analyseQueue(completion: @escaping ([PumpyAnalytics.Track])->()) {
         analysingEnergy = true
-        guard queueIndex + 1 < queueTracks.count && queueIndex >= 0 else { return }
-        guard let authManager = authManager else { return }
+        guard queueIndex + 1 < queueTracks.count && queueIndex >= 0,
+              let authManager = authManager else { return }
         let tracks = queueTracks[queueIndex+1..<queueTracks.count].compactMap { $0.analyticsTrack(authManager: authManager) }
         Task {
             await analyseController.analyseMediaPlayerTracks(tracks: tracks, authManager: authManager)
-            DispatchQueue.main.async { [weak self] in
-                self?.analysingEnergy = false
+            await MainActor.run {
+                analysingEnergy = false
             }
             completion(tracks)
         }

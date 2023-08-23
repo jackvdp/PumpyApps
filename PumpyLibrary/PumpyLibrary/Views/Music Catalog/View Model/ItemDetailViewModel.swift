@@ -90,7 +90,7 @@ class ItemDetailViewModel: ObservableObject {
     }
     
     enum PageState: Equatable {
-        case loading, success(PumpyAnalytics.Playlist), failed
+        case loading, success(AnalyticsPlaylist), failed
         
         static func == (lhs: ItemDetailViewModel.PageState, rhs: ItemDetailViewModel.PageState) -> Bool {
             switch (lhs, rhs) {

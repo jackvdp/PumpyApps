@@ -56,7 +56,7 @@ struct ItemDetailView<
     }
     
     @ViewBuilder
-    func successView(_ playlist: PumpyAnalytics.Playlist) -> some View {
+    func successView(_ playlist: AnalyticsPlaylist) -> some View {
         if let plist = playlist as? Playlist {
             PlaylistView<P,N,B,Q>(playlist: plist)
                 .transition(.opacity)

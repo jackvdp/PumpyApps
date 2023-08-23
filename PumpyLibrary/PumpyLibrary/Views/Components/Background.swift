@@ -50,13 +50,13 @@ private struct BackgroundView: View {
     }
 }
 
-class BackgroundColourHandler: ObservableObject {
-    static let shared = BackgroundColourHandler()
+public class BackgroundColourHandler: ObservableObject {
+    public static let shared = BackgroundColourHandler()
     private init() {}
     
     @Published private(set) var colour: UIColor?
     
-    func setColour(fromImage image: UIImage?) {
+    public func setColour(fromImage image: UIImage?) {
         colour = image?.averageColor
     }
 }

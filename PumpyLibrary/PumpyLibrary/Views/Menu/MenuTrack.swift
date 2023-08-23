@@ -77,8 +77,7 @@ public struct MenuTrackView<
     
     var artwork: ArtworkView {
         ArtworkView(
-            collection: nowPlayingManager.currentTrack,
-            setBackground: true,
+            playerArtwork: nowPlayingManager.currentArtwork,
             size: size
         )
     }

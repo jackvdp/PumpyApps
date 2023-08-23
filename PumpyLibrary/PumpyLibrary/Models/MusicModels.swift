@@ -96,7 +96,7 @@ public struct QueueTrack: Track, Equatable {
     }
 }
 
-// MARK: - Blocked
+// MARK: - Codable
 
 public struct CodableTrack: Codable, Hashable, MusicCollection {
     
@@ -154,6 +154,8 @@ public enum PlayButton: String {
 }
 
 // MARK: - Extend Anlaytics Models
+
+typealias AnalyticsPlaylist = PumpyAnalytics.Playlist
 
 extension AMPlaylist: PumpyLibrary.Playlist {
     

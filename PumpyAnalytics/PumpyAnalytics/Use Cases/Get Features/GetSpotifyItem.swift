@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import PumpyShared
 
 class GetSpotifyItem {
     
@@ -20,7 +21,7 @@ class GetSpotifyItem {
         await unmatchedTracks.asyncForEach { [weak self] track in
             guard let self, let isrc = track.isrc else { return }
             if let item = await self.gateway.getSpotifyTrackFromISRC(isrc: isrc, authManager: authManager) {
-                DispatchQueue.main.async { track.spotifyItem = item }
+                await MainActor.run { track.spotifyItem = item }
             }
         }
     }
@@ -54,17 +55,6 @@ class GetSpotifyItem {
     func getTracksWithoutSpotItem(tracks: [Track]) -> [Track] {
         tracks.filter { track in
             track.spotifyItem == nil
-        }
-    }
-}
-
-extension Sequence {
-    /// Will do each task sequentially
-    func asyncForEach(
-        _ operation: (Element) async throws -> Void
-    ) async rethrows {
-        for element in self {
-            try await operation(element)
         }
     }
 }

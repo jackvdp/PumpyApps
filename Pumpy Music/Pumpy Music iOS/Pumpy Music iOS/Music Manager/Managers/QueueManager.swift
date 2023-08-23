@@ -54,9 +54,9 @@ class QueueManager: QueueProtocol {
         conductQueuePerform { _ in
             return
         } completion: { [weak self] queue, error in
-            guard error == nil else { return }
-            self?.queueTracks = queue.items
-            self?.getIndex()
+            guard let self, error == nil else { return }
+            queueTracks = queue.items
+            getIndex()
         }
     }
     
@@ -66,9 +66,10 @@ class QueueManager: QueueProtocol {
             for item in items {
                 queue.remove(item)
             }
-        } completion: { [weak self] queue, _ in
-            self?.queueTracks = queue.items
-            self?.getIndex()
+        } completion: { [weak self] queue, error in
+            guard let self, error == nil else { return }
+            queueTracks = queue.items
+            getIndex()
         }
         
     }
@@ -86,15 +87,15 @@ class QueueManager: QueueProtocol {
         recieveDebouncer.handle() { [weak self] in
             guard let self else { return }
             let descriptor = MPMusicPlayerStoreQueueDescriptor(storeIDs: [id])
-            if !(self.queueTracks.isEmpty) {
-                self.controller.prepend(descriptor)
-                self.controller.skipToNextItem()
-                if self.controller.playbackState != .playing {
-                    self.controller.play()
+            if !(queueTracks.isEmpty) {
+                controller.prepend(descriptor)
+                controller.skipToNextItem()
+                if controller.playbackState != .playing {
+                    controller.play()
                 }
             } else {
-                self.controller.setQueue(with: descriptor)
-                self.controller.play()
+                controller.setQueue(with: descriptor)
+                controller.play()
             }
         }
     }

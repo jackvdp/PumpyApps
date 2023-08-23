@@ -12,24 +12,28 @@ import MediaPlayer
 public struct ArtworkView: View {
     
     public init(collection: MusicCollection? = nil,
-                setBackground: Bool = false,
                 size: CGFloat? = nil) {
         self.collection = collection
         self.size = max(1, size ?? 1)
-        self.setBackground = setBackground
     }
     
     public init(url: String? = nil,
                 size: CGFloat? = nil) {
         self.collection = ArtworkCollection(url)
         self.size = max(1, size ?? 1)
-        setBackground = false
     }
     
-    let collection: MusicCollection?
+    public init(playerArtwork: UIImage?,
+                size: CGFloat? = nil) {
+        self.playerArtwork = playerArtwork
+        self.size = max(1, size ?? 1)
+    }
+    
+    var collection: MusicCollection?
     let size: CGFloat
-    var setBackground: Bool
-    let backgroundHandler = BackgroundColourHandler.shared
+    
+    /// The artwork used for the player artwork
+    var playerArtwork: UIImage?
     
     public var body: some View {
         artwork
@@ -42,7 +46,9 @@ public struct ArtworkView: View {
     
     @ViewBuilder
     private var artwork: some View {
-        if let mpArtworkImage = attemptFetchImageOfMPArtwork() {
+        if let playerArtwork {
+            artwork(fromMediaPlayer: playerArtwork)
+        } else if let mpArtworkImage = attemptFetchImageOfMPArtwork() {
             artwork(fromMediaPlayer: mpArtworkImage)
         } else if let url = collection?.artworkURL  {
             artwork(fromURL: url)
@@ -54,9 +60,6 @@ public struct ArtworkView: View {
     private func artwork(fromMediaPlayer image: UIImage) -> some View {
         Image(uiImage: image)
             .resizable()
-            .onAppear() {
-                setBackgroundColour(image)
-            }
     }
     
     private func artwork(fromURL url: String) -> some View {
@@ -66,12 +69,6 @@ public struct ArtworkView: View {
             .placeholder { _ in
                 artworkDefault
             }
-            .onSuccess({ result in
-                setBackgroundColour(result.image)
-            })
-            .onFailure({ error in
-                setBackgroundColour(nil)
-            })
             .resizable()
     }
 
@@ -85,9 +82,6 @@ public struct ArtworkView: View {
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(.white.opacity(0.8))
                 .frame(width: size / 3)
-        }
-        .onAppear() {
-            setBackgroundColour(nil)
         }
     }
 
@@ -108,12 +102,6 @@ public struct ArtworkView: View {
             .image(at: CGSize(width: size, height: size)) ??
         (collection as? MPMediaPlaylist)?
             .artwork
-    }
-    
-    private func setBackgroundColour(_ image: UIImage?) {
-        if setBackground {
-            backgroundHandler.setColour(fromImage: image)
-        }
     }
 }
 
@@ -144,5 +132,3 @@ struct TrackArtworkView_Previews: PreviewProvider {
         .border(Color.blue)
     }
 }
-
-

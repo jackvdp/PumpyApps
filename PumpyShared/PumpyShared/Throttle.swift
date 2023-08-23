@@ -18,26 +18,27 @@ import Foundation
 
 // MARK: - THROTTLE
 
+/// Throttle reduces the number of calls executed. If there are e.g. 10 calls immeidatley after each other, it will execute the first one instantly **AND** the last one after the minimum delay.
 public class Throttle {
     // MARK: - PROPERTY
 
     /// Setup with these values to control the throttle behave
     /// - minimumDelay >= 0.5 second is suggested
-    public private(set) var minimumDelay: TimeInterval
-    public private(set) var workingQueue: DispatchQueue
+    private var minimumDelay: TimeInterval
+    private var workingQueue: DispatchQueue
 
     /// lock when dispatch job to execution
     private var executeLock = NSLock()
 
     /// These value controls throttle behavior
-    public private(set) var lastExecute: Date?
-    public private(set) var lastRequestWasCanceled: Bool = false
-    public private(set) var scheduled: Bool = false
+    private var lastExecute: Date?
+    private var lastRequestWasCanceled: Bool = false
+    private var scheduled: Bool = false
 
     /// Lock when setting jobs, required by thread safe design
     private var _assignmentLock = NSLock()
     private var _assignment: (() -> Void)?
-    public private(set) var assignment: (() -> Void)? {
+    private var assignment: (() -> Void)? {
         set {
             _assignmentLock.lock()
             defer { _assignmentLock.unlock() }

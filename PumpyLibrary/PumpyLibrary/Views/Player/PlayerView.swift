@@ -81,8 +81,7 @@ public struct PlayerView<P: PlaylistProtocol,
     }
 
     func artwork(size: CGFloat) -> some View {
-        ArtworkView(collection: nowPlayingManager.currentTrack,
-                    setBackground: true,
+        ArtworkView(playerArtwork: nowPlayingManager.currentArtwork,
                     size: size)
     }
     

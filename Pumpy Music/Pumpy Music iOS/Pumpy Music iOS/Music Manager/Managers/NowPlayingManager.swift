@@ -12,6 +12,7 @@ import MediaPlayer
 import PumpyLibrary
 import PumpyAnalytics
 import PumpyShared
+import Kingfisher
 
 class NowPlayingManager: NowPlayingProtocol {
     @Published var currentTrack: PumpyLibrary.Track? {
@@ -20,10 +21,11 @@ class NowPlayingManager: NowPlayingProtocol {
             currentAnalyticsTrack = currentTrack.analyticsTrack(authManager: authManager)
         }
     }
+    @Published var currentArtwork: UIImage?
     var currentAnalyticsTrack: PumpyAnalytics.Track?
     @Published var playButtonState: PlayButton = .notPlaying
     private let respondDebouncer = Debouncer()
-    private let itemDebouncer = Debouncer()
+    private let itemDebouncer = Throttle(minimumDelay: 0.5)
     private let musicPlayerController = MPMusicPlayerController.applicationQueuePlayer
     weak var authManager: AuthorisationManager?
     
@@ -37,28 +39,50 @@ class NowPlayingManager: NowPlayingProtocol {
     
     func updateTrackData() {
         currentTrack = musicPlayerController.nowPlayingItem
+        fetchArtwork()
         playButtonState = musicPlayerController.playbackState == .playing ? .playing : .notPlaying
     }
     
     func updateTrackOnline(for username: Username, playlist: String) {
         respondDebouncer.handle() { [weak self] in
             
-            guard let self,
-                  let currentTrack = self.currentTrack else { return }
+            guard let self, let currentTrack = currentTrack else { return }
             
-            let queueTrack = QueueTrack(title: currentTrack.name,
-                                        artist: currentTrack.artistName,
-                                        artworkURL: currentTrack.artworkURL,
-                                        playbackStoreID: currentTrack.amStoreID ?? "",
-                                        isExplicitItem: currentTrack.isExplicitItem)
+            let queueTrack = QueueTrack(
+                title: currentTrack.name,
+                artist: currentTrack.artistName,
+                artworkURL: currentTrack.artworkURL,
+                playbackStoreID: currentTrack.amStoreID ?? "",
+                isExplicitItem: currentTrack.isExplicitItem
+            )
+            
             PlaybackData
                 .shared
-                .updatePlaybackInfoOnline(for: username,
-                                          item: queueTrack,
-                                          index: self.musicPlayerController.indexOfNowPlayingItem,
-                                          playbackState: self.musicPlayerController.playbackState.rawValue,
-                                          playlistLabel: playlist)
+                .updatePlaybackInfoOnline(
+                    for: username,
+                    item: queueTrack,
+                    index: musicPlayerController.indexOfNowPlayingItem,
+                    playbackState: musicPlayerController.playbackState.rawValue,
+                    playlistLabel: playlist
+                )
         }
     }
     
+    func fetchArtwork() {
+        currentArtwork = musicPlayerController.nowPlayingItem?.artwork?.image(at: CGSize(width: 400, height: 400))
+        if currentArtwork == nil, let urlString = musicPlayerController.nowPlayingItem?.artworkURL, let url = URL(string: urlString)  {
+            KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .success(let value):
+                    currentArtwork = value.image
+                    BackgroundColourHandler.shared.setColour(fromImage: self.currentArtwork)
+                    objectWillChange.send()
+                case .failure(let error):
+                    print("Error \(error)")
+                }
+            }
+        }
+        BackgroundColourHandler.shared.setColour(fromImage: currentArtwork)
+    }
 }
