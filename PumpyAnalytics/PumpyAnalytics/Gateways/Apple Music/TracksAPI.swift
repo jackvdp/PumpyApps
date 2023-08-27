@@ -14,7 +14,10 @@ class AMTracksAPI {
     
     private let retryRequest = RetryRequest()
     
-    func getAppleItemFromISRCs(isrcs: String, authManager: AuthorisationManager) async -> [AppleMusicItem] {
+    func getAppleItemFromISRCs(
+        isrcs: String,
+        authManager: AuthorisationManager
+    ) async -> (items: [AppleMusicItem], errorCode: Int) {
         let storefront = authManager.storefront ?? "gb"
 
         let url = "https://api.music.apple.com/v1/catalog/\(storefront)/songs?filter[isrc]=\(isrcs)"
@@ -22,14 +25,18 @@ class AMTracksAPI {
         
         let res = await AF.request(url, headers: header).serializingData().response
         
-        guard let data = res.data else { return [] }
+        guard let data = res.data else {
+            print("Failed to get data whilst matching")
+            return ([], res.response?.statusCode ?? 400)
+        }
         
         guard res.response?.statusCode != 429  else {
+            print("Getting 429 whilst matching")
             await retryRequest.retryAsync()
             return await getAppleItemFromISRCs(isrcs: isrcs, authManager: authManager)
         }
         
-        return AMTrackParser().convertISRCFilterToItems(data)
+        return (AMTrackParser().convertISRCFilterToItems(data), res.response?.statusCode ?? 400)
     }
     
     func searchForID(formattedTrackForSearch: String, authManager: AuthorisationManager, completion: @escaping ([AppleMusicItem])->()) {

@@ -19,7 +19,7 @@ public class Track: Identifiable, Hashable, ObservableObject {
     public var sourceID: String
     public var id = UUID()
     public var authManager: AuthorisationManager
-    @Published public var inProgress = InProgress()
+    public var inProgress = InProgress()
     
     @Published public var spotifyItem: SpotifyItem? {
         didSet { DispatchQueue.main.async { self.inProgress.gettingSpotify = false } }

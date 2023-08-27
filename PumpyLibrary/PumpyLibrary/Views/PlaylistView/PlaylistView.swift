@@ -42,6 +42,11 @@ struct PlaylistView<
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { navBarButtons }
         .pumpyBackground()
+        .onDisappear() {
+            if let analyticsPlaylist = playlist as? AnalyticsPlaylist {
+                analyticsPlaylist.cancelTasks()
+            }
+        }
     }
     
     // MARK: - Components

@@ -12,11 +12,11 @@ class AMTrackParser {
     
     func convertISRCFilterToItems(_ data: Data) -> [AppleMusicItem] {
         guard let json = try? JSON(data: data) else {
-            print("Didn't get data: \(data)")
+            print("Didn't get data whilst matching: \(data)")
             return []
         }
         guard let jsonArray = json["data"].array else {
-            print("Didn't get array: \(json)")
+            print("Didn't get array whilst matching: \(json)")
             return []
         }
 
@@ -41,12 +41,12 @@ class AMTrackParser {
         return jsonArray.compactMap { jsonItem in
             
             guard let id = jsonItem["id"].string else {
-                print("Didn't get music item: \(jsonArray)")
+                print("Didn't get music item whilst matching: \(jsonArray)")
                 return nil
             }
             
             guard let isrc = jsonItem["attributes"]["isrc"].string else {
-                print("Didn't get isrc when finding music item: \(jsonArray)")
+                print("Didn't get isrc when finding music item whilst matching: \(jsonArray)")
                 return nil
             }
             

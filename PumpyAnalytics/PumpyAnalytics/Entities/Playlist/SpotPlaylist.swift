@@ -42,21 +42,31 @@ public class SpotifyPlaylist: Hashable, Identifiable, Playlist {
         removeDuplicates()
     }
     
+    private var matchTask: Task<(), Never>?
+    private var feautresTask: Task<(), Never>?
+    
     public func getTracksData() {
-        Task {
+        feautresTask = Task {
             await getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
         }
         matchToAM()
     }
     
     public func matchToAM() {
-        Task {
+        matchTask = Task {
             await matchToAMUseCase.execute(tracks: tracks, authManager: authManager)
         }
     }
         
     public func removeDuplicates() {
         tracks = tracks.removingDuplicates()
+    }
+    
+    public func cancelTasks() {
+        matchTask?.cancel()
+        feautresTask?.cancel()
+        matchTask = nil
+        feautresTask = nil
     }
 }
 

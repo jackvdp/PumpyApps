@@ -34,8 +34,10 @@ public class AMStation: Playlist {
         self.snapshot = .init(sourceID: sourceID, type: .am(id: sourceID))
     }
     
+    private var feautresTask: Task<(), Never>?
+    
     public func getTracksData() {
-        Task {
+        feautresTask = Task {
             await getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
         }
     }
@@ -43,5 +45,10 @@ public class AMStation: Playlist {
     public func matchToAM() {}
     
     public func removeDuplicates() {}
+    
+    public func cancelTasks() {
+        feautresTask?.cancel()
+        feautresTask = nil
+    }
     
 }

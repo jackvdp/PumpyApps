@@ -41,8 +41,10 @@ public class AMPlaylist: Hashable, Identifiable, Playlist {
         removeDuplicates()
     }
     
+    private var feautresTask: Task<(), Never>?
+    
     public func getTracksData() {
-        Task {
+        feautresTask = Task {
             await getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
         }
     }
@@ -51,6 +53,11 @@ public class AMPlaylist: Hashable, Identifiable, Playlist {
         
     public func removeDuplicates() {
         tracks = tracks.removingDuplicates()
+    }
+    
+    public func cancelTasks() {
+        feautresTask?.cancel()
+        feautresTask = nil
     }
 }
 

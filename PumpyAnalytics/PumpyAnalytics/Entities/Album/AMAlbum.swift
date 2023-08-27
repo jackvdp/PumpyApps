@@ -9,7 +9,6 @@ import Foundation
 
 public class AMAlbum: Playlist {
     
-    
     public var name: String?
     public var curator: String
     public var tracks: [Track]
@@ -36,8 +35,10 @@ public class AMAlbum: Playlist {
         self.snapshot = .init(sourceID: sourceID, type: .am(id: sourceID))
     }
     
+    private var feautresTask: Task<(), Never>?
+    
     public func getTracksData() {
-        Task {
+        feautresTask = Task {
             await getAudioFeaturesUseCase.forPlaylist(tracks: tracks, authManager: authManager)
         }
     }
@@ -46,4 +47,8 @@ public class AMAlbum: Playlist {
     
     public func removeDuplicates() {}
     
+    public func cancelTasks() {
+        feautresTask?.cancel()
+        feautresTask = nil
+    }
 }

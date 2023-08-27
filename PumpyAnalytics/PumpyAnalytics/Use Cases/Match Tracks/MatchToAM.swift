@@ -12,20 +12,40 @@ class MatchToAM {
      
     private let gateway = AMTracksAPI()
     
-    func execute(tracks: [Track], authManager: AuthorisationManager) async {
+    /// Match tracks to Apple Music
+    /// - Parameters:
+    ///   - tracks: Tracks to get matched to Apple Music.
+    ///   - authManager: AuthorisationManager object.
+    ///   - chunkSize: Max size of 25. 10 to reduce incidence of 504 errors
+    func execute(tracks: [Track], authManager: AuthorisationManager, chunkSize: Int = 10) async {
         let unmatchedTracks = tracks.filter { $0.appleMusicItem == nil }
         unmatchedTracks.forEach { $0.inProgress.gettingAM = true }
-        let trackPacks = unmatchedTracks.chunks(25)
+        let trackPacks = unmatchedTracks.chunks(chunkSize)
         
         await trackPacks.asyncForEach { pack in
+            guard !Task.isCancelled else { print("Matching task cancelled"); return }
+            
             let isrcs = pack.compactMap { $0.isrc }.joined(separator: ",")
             
-            let items = await gateway.getAppleItemFromISRCs(isrcs: isrcs, authManager: authManager)
+            let (items, code) = await gateway.getAppleItemFromISRCs(isrcs: isrcs, authManager: authManager)
             
-            for track in pack {
-                matchTrackToItem(track: track,
-                                 items: items,
-                                 authManager: authManager)
+            if code == 504 {
+                
+                // Gateway timeout error thrown when server is too slow to respond.
+                // Solution is to break it up into smaller chunks
+                // If it's two or less then assume issue with individual ISRC and give up
+                if chunkSize > 2 {
+                    await execute(tracks: pack, authManager: authManager, chunkSize: chunkSize / 2 + 1)
+                }
+                
+            } else {
+                
+                for track in pack {
+                    matchTrackToItem(track: track,
+                                     items: items,
+                                     authManager: authManager)
+                }
+                
             }
         }
     }
