@@ -40,3 +40,16 @@ struct PlaylistGrid<
               count: (playlists.count == 1 || oneRow) ? 1 : 2)
     }
 }
+
+struct PlaylistGrid_Previews: PreviewProvider {
+    static var previews: some View {
+        PlaylistGrid<
+            MockPlaylistManager,
+            MockNowPlayingManager,
+            MockBlockedTracks,
+            MockQueueManager
+        >(
+            playlists: PumpyAnalytics.MockData.snapshots
+        )
+    }
+}

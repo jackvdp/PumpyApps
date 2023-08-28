@@ -10,11 +10,13 @@ import SwiftyJSON
 
 class SearchSpotify {
     
+    private let gateway = SpotifySearchAPI()
+    
     func run(_ term: String,
              authManager: AuthorisationManager,
              completion: @escaping ([PlaylistSnapshot]?, ErrorMessage?) -> ()) {
         
-        SpotifySearchAPI().run(term, authManager: authManager) { data, error in
+        gateway.run(term, authManager: authManager) { data, error in
             
             if let err = error {
                 completion(nil, err)

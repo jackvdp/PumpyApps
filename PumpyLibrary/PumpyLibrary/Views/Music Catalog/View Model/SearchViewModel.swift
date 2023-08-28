@@ -53,6 +53,7 @@ class SearchViewModel: ObservableObject {
         var amSnapshots = [PlaylistSnapshot]()
         var spotifySnapshots = [PlaylistSnapshot]()
         var sybSnapshots = [PlaylistSnapshot]()
+        var artistStations = [PlaylistSnapshot]()
         var searchedTracks = [PumpyAnalytics.Track]()
         var done = 0
         
@@ -70,10 +71,11 @@ class SearchViewModel: ObservableObject {
             }
             amSnapshots = snapshots
             
-            if done == 4 {
+            if done == 5 {
                 self.pageState = .success(am: amSnapshots,
                                           spotify: spotifySnapshots,
                                           syb: sybSnapshots,
+                                          artistStations: artistStations,
                                           tracks: searchedTracks)
             }
         }
@@ -90,10 +92,11 @@ class SearchViewModel: ObservableObject {
             }
             searchedTracks = tracks
             
-            if done == 4 {
+            if done == 5 {
                 self.pageState = .success(am: amSnapshots,
                                           spotify: spotifySnapshots,
                                           syb: sybSnapshots,
+                                          artistStations: artistStations,
                                           tracks: searchedTracks)
             }
         }
@@ -111,10 +114,11 @@ class SearchViewModel: ObservableObject {
             
             spotifySnapshots = snapshots
             
-            if done == 4 {
+            if done == 5 {
                 self.pageState = .success(am: amSnapshots,
                                           spotify: spotifySnapshots,
                                           syb: sybSnapshots,
+                                          artistStations: artistStations,
                                           tracks: searchedTracks)
             }
         }
@@ -132,10 +136,33 @@ class SearchViewModel: ObservableObject {
             
             sybSnapshots = snapshots
             
-            if done == 4 {
+            if done == 5 {
                 self.pageState = .success(am: amSnapshots,
                                           spotify: spotifySnapshots,
                                           syb: sybSnapshots,
+                                          artistStations: artistStations,
+                                          tracks: searchedTracks)
+            }
+        }
+        
+        // MARK: - Artist Station
+        controller.searchArtistStation(searchText) { [weak self] snapshots, error in
+            done += 1
+            
+            guard let self = self else { return }
+            guard let snapshots = snapshots else {
+                print("Error conducting search \(error?.message ?? "")")
+                self.pageState = .failed
+                return
+            }
+            
+            artistStations = [snapshots]
+            
+            if done == 5 {
+                self.pageState = .success(am: amSnapshots,
+                                          spotify: spotifySnapshots,
+                                          syb: sybSnapshots,
+                                          artistStations: artistStations,
                                           tracks: searchedTracks)
             }
         }
@@ -167,6 +194,7 @@ class SearchViewModel: ObservableObject {
         case success(am: [PlaylistSnapshot],
                      spotify: [PlaylistSnapshot],
                      syb: [PlaylistSnapshot],
+                     artistStations: [PlaylistSnapshot],
                      tracks: [Track])
         case failed
         
@@ -176,7 +204,7 @@ class SearchViewModel: ObservableObject {
                 return true
             case (.loading, .loading):
                 return true
-            case (.success(let a, _, _, _), .success(let b, _, _, _)):
+            case (.success(let a, _, _, _, _), .success(let b, _, _, _, _)):
                 return a == b
             case (.failed, .failed):
                 return true

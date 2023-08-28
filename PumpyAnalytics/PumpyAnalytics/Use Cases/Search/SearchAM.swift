@@ -11,8 +11,10 @@ import SwiftyJSON
 
 class SearchAM {
     
+    let gateway = AMSearchAPI()
+    
     func run(_ term: String, getNext: Bool, next: String? = nil, authManager: AuthorisationManager, completion: @escaping ([PlaylistSnapshot]?, ErrorMessage?) -> ()) {
-        AMSearchAPI().run(term, next: next, authManager: authManager) { data, error in
+        gateway.run(term, next: next, authManager: authManager) { data, error in
             if let err = error {
                 completion(nil, err)
                 return

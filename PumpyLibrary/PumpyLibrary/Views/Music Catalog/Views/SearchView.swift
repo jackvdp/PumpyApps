@@ -32,10 +32,20 @@ struct SearchView<
                 loadingView
                     .transition(.opacity)
                     .id(screen)
-            case .success(am: let am, spotify: let spot, syb: let syb, tracks: let tracks):
-                searchResults(am, spot, syb, tracks)
-                    .transition(.opacity)
-                    .id(screen)
+            case .success(am: let am,
+                          spotify: let spot,
+                          syb: let syb,
+                          artistStations: let stations,
+                          tracks: let tracks):
+                searchResults(
+                    amPlaylists: am,
+                    spotPlaylists: spot,
+                    sybPlaylists: syb,
+                    artistStations: stations,
+                    tracks: tracks
+                )
+                .transition(.opacity)
+                .id(screen)
             case .failed:
                 failedView
             }
@@ -52,37 +62,60 @@ struct SearchView<
     
     // MARK: - Components
     
-    func searchResults(_ amPlaylists: [PlaylistSnapshot],
-                       _ spotPlaylists: [PlaylistSnapshot],
-                       _ sybPlaylists: [PlaylistSnapshot],
-                       _ tracks: [Track]) -> some View {
+    // MARK: Search Results View
+    
+    func searchResults(amPlaylists: [PlaylistSnapshot],
+                       spotPlaylists: [PlaylistSnapshot],
+                       sybPlaylists: [PlaylistSnapshot],
+                       artistStations: [PlaylistSnapshot],
+                       tracks: [Track]) -> some View {
         ScrollView {
-            if sybPlaylists.isNotEmpty {
+            filterButtons(
+                hasAmPlaylists: amPlaylists.isNotEmpty,
+                hasSpotPlaylists: spotPlaylists.isNotEmpty,
+                hasSybPlaylists: sybPlaylists.isNotEmpty,
+                hasArtistStations: artistStations.isNotEmpty,
+                hasTracks: tracks.isNotEmpty
+            )
+            if sybPlaylists.isNotEmpty &&
+                (filterSearch == .syb || filterSearch == nil) {
                 titleAndGrid(text: "Pumpy Playlists",
                              playlists: sybPlaylists)
             }
-            if amPlaylists.isNotEmpty {
+            if amPlaylists.isNotEmpty &&
+                (filterSearch == .am || filterSearch == nil) {
                 titleAndGrid(text: "Apple Music Playlists",
                              playlists: amPlaylists)
             }
-            if spotPlaylists.isNotEmpty {
+            if spotPlaylists.isNotEmpty &&
+                (filterSearch == .spotify || filterSearch == nil) {
                 titleAndGrid(text: "Spotify Playlists",
                              playlists: spotPlaylists)
             }
-            if tracks.isNotEmpty {
+            if artistStations.isNotEmpty &&
+                (filterSearch == .artist || filterSearch == nil) {
+                titleAndGrid(text: "Artist Stations",
+                             playlists: artistStations)
+            }
+            if tracks.isNotEmpty &&
+                (filterSearch == .tracks || filterSearch == nil) {
                 title("Tracks")
                 tracksList(tracks)  
             }
             if amPlaylists.isEmpty &&
                 spotPlaylists.isEmpty &&
                 sybPlaylists.isEmpty &&
+                artistStations.isEmpty &&
                 tracks.isEmpty {
                 emptySearch
             }
         }
     }
     
-    func titleAndGrid(text: String, playlists: [PlaylistSnapshot]) -> some View {
+    func titleAndGrid(
+        text: String,
+        playlists: [PlaylistSnapshot]
+    ) -> some View {
         VStack {
             title(text)
             PlaylistGrid<P,N,B,Q>(playlists: playlists)
@@ -104,6 +137,94 @@ struct SearchView<
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading)
     }
+    
+    // MARK: Filter Buttons
+    
+    enum FilterSearch: Equatable {
+        case am, syb, spotify, artist, tracks
+    }
+    @State var filterSearch: FilterSearch?
+    
+    @ViewBuilder
+    func filterButtons(hasAmPlaylists: Bool,
+                       hasSpotPlaylists: Bool,
+                       hasSybPlaylists: Bool,
+                       hasArtistStations: Bool,
+                       hasTracks: Bool) -> some View {
+        if !hasAmPlaylists &&
+            !hasSpotPlaylists &&
+            !hasSybPlaylists &&
+            !hasArtistStations &&
+            !hasTracks {
+            EmptyView()
+        } else {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    if hasSybPlaylists {
+                        capsule("Pumpy",
+                                selected: filterSearch == .syb) {
+                            if filterSearch == .syb { filterSearch = nil } else {
+                                filterSearch = .syb
+                            }
+                        }
+                    }
+                    if hasAmPlaylists {
+                        capsule("Apple Music",
+                                selected: filterSearch == .am) {
+                            if filterSearch == .am { filterSearch = nil } else {
+                                filterSearch = .am
+                            }
+                        }
+                    }
+                    if hasSpotPlaylists {
+                        capsule("Spotify",
+                                selected: filterSearch == .spotify) {
+                            if filterSearch == .spotify { filterSearch = nil } else {
+                                filterSearch = .spotify
+                            }
+                        }
+                    }
+                    if hasArtistStations {
+                        capsule("Artists",
+                                selected: filterSearch == .artist) {
+                            if filterSearch == .artist { filterSearch = nil } else {
+                                filterSearch = .artist
+                            }
+                        }
+                    }
+                    if hasTracks {
+                        capsule("Tracks",
+                                selected: filterSearch == .tracks) {
+                            if filterSearch == .tracks { filterSearch = nil } else {
+                                filterSearch = .tracks
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal)
+            }
+        }
+    }
+    
+    func capsule(_ title: String,
+                 selected: Bool,
+                 action: @escaping () -> ()) -> some View {
+        Button {
+            withAnimation { action() }
+        } label: {
+            Text(title)
+                .foregroundColor(.white.opacity(0.85))
+                .font(.subheadline)
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+        .background(Color.pumpyPink.opacity(selected ? 1 : 0.5))
+        .foregroundColor(.white)
+        .clipShape(Capsule())
+        .buttonStyle(.plain)
+    }
+    
+    // MARK: Empty/Failed/Loading View
     
     var emptySearch: some View {
         Text("**No Results**\nTry a new search")
@@ -165,11 +286,12 @@ struct SearchView<
         } label: {
             Label(item, systemImage: "magnifyingglass")
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }
     
-    // MARK: Methods
+    // MARK: - Methods
     
     func playFromPosition(tracks: [Track], index: Int) {
         let playlist = QueuePlaylist(title: viewModel.searchText,
@@ -208,26 +330,49 @@ struct CatalogSearchView_Previews: PreviewProvider {
     >()
     
     static var previews: some View {
-        Group {
-            searchView.searchResults(snapshots, snapshots, snapshots, tracks)
-            PumpyList {
-                searchView.searchResults([], [], [], [])
+//        Group {
+//            searchView.searchResults(
+//                amPlaylists: snapshots,
+//                spotPlaylists: snapshots,
+//                sybPlaylists: snapshots,
+//                artistStations: snapshots,
+//                tracks: tracks
+//            )
+//            PumpyList {
+//                searchView.searchResults(
+//                    amPlaylists: [],
+//                    spotPlaylists: [],
+//                    sybPlaylists: [],
+//                    artistStations: [],
+//                    tracks: []
+//                )
+//            }
+//            PumpyList {
+//                searchView.loadingView
+//            }
+//            PumpyList {
+//                searchView.failedView
+//            }
+//        }
+//        .listStyle(.plain)
+//        .preferredColorScheme(.dark)
+//        .environmentObject(MockPlaylistManager())
+//        .environmentObject(MockNowPlayingManager())
+//        .environmentObject(MockQueueManager())
+//        .environmentObject(MockBlockedTracks())
+//        .environmentObject(MockHomeVM())
+//        .environmentObject(AuthorisationManager())
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                searchView.capsule("Apple Music", selected: true, action: {})
+                searchView.capsule("Spotify", selected: false, action: {})
             }
-            PumpyList {
-                searchView.loadingView
-            }
-            PumpyList {
-                searchView.failedView
-            }
+            .padding(.horizontal)
+            .padding(.vertical, 8)
         }
-        .listStyle(.plain)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .pumpyBackground()
         .preferredColorScheme(.dark)
-        .environmentObject(MockPlaylistManager())
-        .environmentObject(MockNowPlayingManager())
-        .environmentObject(MockQueueManager())
-        .environmentObject(MockBlockedTracks())
-        .environmentObject(MockHomeVM())
-        .environmentObject(AuthorisationManager())
     }
 
     static var snapshots: [PlaylistSnapshot] {

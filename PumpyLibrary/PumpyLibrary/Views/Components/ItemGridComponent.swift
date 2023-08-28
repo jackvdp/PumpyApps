@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ItemGridComponent: View {
-    @State private var rect: CGRect = CGRect()
     let name: String
     let curator: String
     let itemArtworkURL: String
@@ -17,8 +16,8 @@ struct ItemGridComponent: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            artwork.background(GeometryGetter(rect: $rect))
-            text.frame(width: rect.width)
+            artwork
+            text.frame(width: CGFloat(size - 50))
         }
     }
     

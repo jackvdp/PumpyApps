@@ -11,7 +11,11 @@ public class SearchController {
     
     public init() {}
     
-    let searchAMTracksUseCase = SearchAMTracks()
+    private lazy var searchAMTracksUseCase = SearchAMTracks()
+    private lazy var searchSpotifyUseCase = SearchSpotify()
+    private lazy var searchAMPlaylistsUseCase = SearchAM()
+    private lazy var searchSYBUseCase = SearchSYB()
+    private lazy var searchArtistStationUseCase = SearchArtistStation()
     
     public func searchAll(_ term: String,
                           authManager: AuthorisationManager,
@@ -27,34 +31,34 @@ public class SearchController {
                               authManager: AuthorisationManager,
                               completion: @escaping ([PlaylistSnapshot]?, ErrorMessage?) -> ()) {
         
-        SearchSpotify().run(term,
-                            authManager: authManager,
-                            completion: completion)
+        searchSpotifyUseCase.run(term,
+                                 authManager: authManager,
+                                 completion: completion)
     }
     
     public func searchAppleMusic(_ term: String,
                                  getNext: Bool,
                                  authManager: AuthorisationManager,
                                  completion: @escaping ([PlaylistSnapshot]?, ErrorMessage?) -> ()) {
-        
-        SearchAM().run(term,
-                       getNext: getNext,
-                       authManager: authManager,
-                       completion: completion)
+
+        searchAMPlaylistsUseCase.run(
+            term,
+            getNext: getNext,
+            authManager: authManager,
+            completion: completion
+        )
     }
     
     public func searchSYB(_ term: String,
                           completion: @escaping ([PlaylistSnapshot]?, ErrorMessage?) -> ()) {
         
-        SearchSYB().run(term,
-                        completion: completion)
+        searchSYBUseCase.run(term, completion: completion)
     }
     
     public func searchArtistStation(_ term: String,
                                     completion: @escaping (PlaylistSnapshot?, ErrorMessage?) -> ()) {
         
-        SearchArtistStation().run(term,
-                                  completion: completion)
+        searchArtistStationUseCase.run(term, completion: completion)
     }
     
     public func searchAMTracks(_ term: String,
