@@ -24,6 +24,7 @@ public struct PumpyTabView<
     @State private var selectedTab = GenericTabs.home.rawValue
     @Namespace private var animation
     @Namespace private var capsule
+    @StateObject var tabContainer = TabContainer()
     
     public var body: some View {
         tabView
@@ -44,8 +45,15 @@ public struct PumpyTabView<
         HStack {
             ForEach(GenericTabs.allCases, id: \.rawValue) { tab in
                 Button {
-                    withAnimation {
-                        selectedTab = tab.rawValue
+                    if selectedTab == tab.rawValue {
+                        let controller = tabContainer.controller
+                        let selectedController = controller?.selectedViewController
+                        let navController = findFirstNavigationController(in: selectedController)
+                        navController?.popToRootViewController(animated: true)
+                    } else {
+                        withAnimation {
+                            selectedTab = tab.rawValue
+                        }
                     }
                 } label: {
                     Image(systemName: tab.icon).overlay(alignment: .bottom) {
@@ -63,12 +71,11 @@ public struct PumpyTabView<
             }
         }
         .padding()
-        .background(
-            Material.bar
-        )
+        .background(Material.bar)
     }
 
     func setTabAppearance(_ tabController: UITabBarController) {
+        tabContainer.controller = tabController
         let appearance = UITabBarAppearance()
         appearance.configureWithTransparentBackground()
         tabController.tabBar.scrollEdgeAppearance = appearance
@@ -77,6 +84,24 @@ public struct PumpyTabView<
             vc.view.backgroundColor = .clear
         })
     }
+    
+    func findFirstNavigationController(in viewController: UIViewController?) -> UINavigationController? {
+        guard let viewController else { return nil }
+        for childVC in viewController.children {
+            if let navigationController = childVC as? UINavigationController {
+                return navigationController
+            } else {
+                if let foundNavController = findFirstNavigationController(in: childVC) {
+                    return foundNavController
+                }
+            }
+        }
+        return nil
+    }
+}
+
+class TabContainer: ObservableObject {
+    weak var controller: UITabBarController?
 }
 
 enum Tabs<
