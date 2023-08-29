@@ -11,17 +11,15 @@ import PumpyAnalytics
 
 public struct PumpyTabView<
     A:AccountManagerProtocol,
-    H:HomeProtocol,
     P:PlaylistProtocol,
     N:NowPlayingProtocol,
     B:BlockedTracksProtocol,
-    Q:QueueProtocol,
-    U:UserProtocol
+    Q:QueueProtocol
 >: View {
     
     public init() {}
     
-    typealias GenericTabs = Tabs<A,H,P,N,B,Q>
+    typealias GenericTabs = Tabs<A,P,N,B,Q>
     
     @State private var selectedTab = GenericTabs.home.rawValue
     @Namespace private var animation
@@ -82,7 +80,6 @@ public struct PumpyTabView<
 
 enum Tabs<
     A:AccountManagerProtocol,
-    H:HomeProtocol,
     P:PlaylistProtocol,
     N:NowPlayingProtocol,
     B:BlockedTracksProtocol,
@@ -95,7 +92,7 @@ enum Tabs<
         NavigationView {
             switch self {
             case .home:
-                HomeView<A,H,P,N,B,Q>()
+                HomeView<A,P,N,B,Q>()
             case .library:
                 LibraryView<P,N,B,Q>()
             case .lab:
@@ -128,12 +125,10 @@ struct TabBarView_Previews: PreviewProvider {
         VStack(spacing:0) {
             PumpyTabView<
                 MockAccountManager,
-                MockHomeVM,
                 MockPlaylistManager,
                 MockNowPlayingManager,
                 MockBlockedTracks,
-                MockQueueManager,
-                MockUser
+                MockQueueManager
             >()
             MenuTrackView<
                 MockNowPlayingManager,

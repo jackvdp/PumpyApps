@@ -10,7 +10,6 @@ import PumpyAnalytics
 import PumpyShared
 
 public struct CatalogView<
-    H:HomeProtocol,
     P:PlaylistProtocol,
     N:NowPlayingProtocol,
     B:BlockedTracksProtocol,
@@ -109,8 +108,7 @@ struct CatalogView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            CatalogView<MockHomeVM,
-                        MockPlaylistManager,
+            CatalogView<MockPlaylistManager,
                         MockNowPlayingManager,
                         MockBlockedTracks,
                         MockQueueManager>()
@@ -118,8 +116,7 @@ struct CatalogView_Previews: PreviewProvider {
         .environmentObject(authManager)
         .preferredColorScheme(.dark)
         NavigationView {
-            CatalogView<MockHomeVM,
-                        MockPlaylistManager,
+            CatalogView<MockPlaylistManager,
                         MockNowPlayingManager,
                         MockBlockedTracks,
                         MockQueueManager>().loadingView

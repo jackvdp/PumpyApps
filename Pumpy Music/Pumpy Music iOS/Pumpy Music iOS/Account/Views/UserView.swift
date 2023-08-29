@@ -32,12 +32,10 @@ struct UserView: View {
         VStack(spacing: 0) {
             PumpyTabView<
                 AccountManager,
-                HomePlayerManager,
                 PlaylistManager,
                 NowPlayingManager,
                 BlockedTracksManager,
-                QueueManager,
-                User
+                QueueManager
             >()
             Divider()
             MenuTrackView<

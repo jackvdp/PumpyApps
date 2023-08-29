@@ -10,7 +10,6 @@ import PumpyAnalytics
 
 struct HomeView<
     A:AccountManagerProtocol,
-    H:HomeProtocol,
     P:PlaylistProtocol,
     N:NowPlayingProtocol,
     B:BlockedTracksProtocol,
@@ -22,7 +21,7 @@ struct HomeView<
             VStack(spacing: 0) {
                 rows
                 RecentlyPlayedView<P,N,B,Q>()
-                CatalogView<H,P,N,B,Q>()
+                CatalogView<P,N,B,Q>()
             }
         }
         .pumpyBackground()
@@ -78,7 +77,6 @@ struct NewHomeView_Previews: PreviewProvider {
         NavigationView {
             HomeView<
                 MockAccountManager,
-                MockHomeVM,
                 MockPlaylistManager,
                 MockNowPlayingManager,
                 MockBlockedTracks,
