@@ -79,7 +79,7 @@ struct PlaylistView<
     var playlistDescription: some View {
         let songCount = playlist.songs.count == 1 ? "1 song" : "\(playlist.songs.count) songs"
         let description = showPlaylistDescriptionSheet ? playlist.longDescription : playlist.shortDescription
-        let combinedText = description != nil ? songCount + " • " + description! : songCount
+        let combinedText = description?.first != nil ? songCount + " • " + description! : songCount
         return HTMLText(combinedText)
             .font(.footnote)
             .opacity(0.7)
