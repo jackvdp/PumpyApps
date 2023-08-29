@@ -11,7 +11,8 @@ class CreatePlaylistFromSeeding {
     
     let gateway = SpotifyRecommendPlaylistGateway()
     
-    func execute(seeding: PlaylistSeeding,
+    func execute(initialTracks: [Track],
+                 seeding: PlaylistSeeding,
                  playlistName: String,
                  artworkURL: String?,
                  authManager: AuthorisationManager,
@@ -27,7 +28,7 @@ class CreatePlaylistFromSeeding {
             }
             
             let playlist = RecommendedPlaylist(name: playlistName,
-                                               tracks: tracks,
+                                               tracks: initialTracks + tracks,
                                                artworkURL: artworkURL,
                                                authManager: authManager,
                                                sourceID: UUID().uuidString)

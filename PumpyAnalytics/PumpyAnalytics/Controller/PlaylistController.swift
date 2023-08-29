@@ -101,17 +101,20 @@ public class PlaylistController {
     
     /// Make playlist from seeding using Spotify's `/getRecommendations` endpoint
     /// - Parameters:
+    ///   - initialTracks: Tracks to be placed at the beginning of new playlist
     ///   - seeding: Tunable attributes for the returnign playlist
     ///   - playlistName: The name of the new playlist
     ///   - authManager: Authrosation manager
     ///   - completion: Returns either a playlist or an error
-    public func createFromSuggestions(seeding: PlaylistSeeding,
+    public func createFromSuggestions(initialTracks: [Track],
+                                      seeding: PlaylistSeeding,
                                       playlistName: String,
                                       artworkURL: String?,
                                       authManager: AuthorisationManager,
                                       completion: @escaping (RecommendedPlaylist?, ErrorMessage?) -> ()) {
         
-        createFromSeedingUseCase.execute(seeding: seeding,
+        createFromSeedingUseCase.execute(initialTracks: initialTracks,
+                                         seeding: seeding,
                                          playlistName: playlistName,
                                          artworkURL: artworkURL,
                                          authManager: authManager,

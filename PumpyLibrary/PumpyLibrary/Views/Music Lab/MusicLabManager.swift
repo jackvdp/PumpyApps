@@ -32,7 +32,8 @@ public class MusicLabManager: ObservableObject {
         }
         let artworkURL: String? = seedTracks.compactMap { $0.artworkURL }.first
         
-        playlistController.createFromSuggestions(seeding: seeding,
+        playlistController.createFromSuggestions(initialTracks: seedTracks,
+                                                 seeding: seeding,
                                                  playlistName: name,
                                                  artworkURL: artworkURL,
                                                  authManager: authManager) { playlist, error in
