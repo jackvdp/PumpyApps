@@ -56,9 +56,10 @@ public struct PumpyTabView<
                                 .matchedGeometryEffect(id: capsule, in: animation)
                         }
                     }
+                    .frame(maxWidth: .infinity)
+                    .contentShape(Rectangle())
                 }
                 .tint(selectedTab == tab.rawValue ? .pumpyPink : .gray)
-                .frame(maxWidth: .infinity)
             }
         }
         .padding()
