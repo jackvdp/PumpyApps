@@ -330,49 +330,49 @@ struct CatalogSearchView_Previews: PreviewProvider {
     >()
     
     static var previews: some View {
-//        Group {
-//            searchView.searchResults(
-//                amPlaylists: snapshots,
-//                spotPlaylists: snapshots,
-//                sybPlaylists: snapshots,
-//                artistStations: snapshots,
-//                tracks: tracks
-//            )
-//            PumpyList {
-//                searchView.searchResults(
-//                    amPlaylists: [],
-//                    spotPlaylists: [],
-//                    sybPlaylists: [],
-//                    artistStations: [],
-//                    tracks: []
-//                )
-//            }
-//            PumpyList {
-//                searchView.loadingView
-//            }
-//            PumpyList {
-//                searchView.failedView
-//            }
-//        }
-//        .listStyle(.plain)
-//        .preferredColorScheme(.dark)
-//        .environmentObject(MockPlaylistManager())
-//        .environmentObject(MockNowPlayingManager())
-//        .environmentObject(MockQueueManager())
-//        .environmentObject(MockBlockedTracks())
-//        .environmentObject(MockHomeVM())
-//        .environmentObject(AuthorisationManager())
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                searchView.capsule("Apple Music", selected: true, action: {})
-                searchView.capsule("Spotify", selected: false, action: {})
+        Group {
+            searchView.searchResults(
+                amPlaylists: snapshots,
+                spotPlaylists: snapshots,
+                sybPlaylists: snapshots,
+                artistStations: snapshots,
+                tracks: tracks
+            )
+            PumpyList {
+                searchView.searchResults(
+                    amPlaylists: [],
+                    spotPlaylists: [],
+                    sybPlaylists: [],
+                    artistStations: [],
+                    tracks: []
+                )
             }
-            .padding(.horizontal)
-            .padding(.vertical, 8)
+            PumpyList {
+                searchView.loadingView
+            }
+            PumpyList {
+                searchView.failedView
+            }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    searchView.capsule("Apple Music", selected: true, action: {})
+                    searchView.capsule("Spotify", selected: false, action: {})
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 8)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .pumpyBackground()
+            .preferredColorScheme(.dark)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .pumpyBackground()
+        .listStyle(.plain)
         .preferredColorScheme(.dark)
+        .environmentObject(MockPlaylistManager())
+        .environmentObject(MockNowPlayingManager())
+        .environmentObject(MockQueueManager())
+        .environmentObject(MockBlockedTracks())
+        .environmentObject(MockHomeVM())
+        .environmentObject(AuthorisationManager())
     }
 
     static var snapshots: [PlaylistSnapshot] {
