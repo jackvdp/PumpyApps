@@ -25,6 +25,7 @@ public struct PumpyTabView<
     @Namespace private var animation
     @Namespace private var capsule
     @StateObject var tabContainer = TabContainer()
+    @EnvironmentObject var labManager: MusicLabManager
     
     public var body: some View {
         tabView
@@ -56,16 +57,29 @@ public struct PumpyTabView<
                         }
                     }
                 } label: {
-                    Image(systemName: tab.icon).overlay(alignment: .bottom) {
-                        if selectedTab == tab.rawValue {
-                            Capsule()
-                                .frame(height: 2)
-                                .offset(y: 8)
-                                .matchedGeometryEffect(id: capsule, in: animation)
+                    Image(systemName: tab.icon)
+                        .overlay(alignment: .bottom) {
+                            if selectedTab == tab.rawValue {
+                                Capsule()
+                                    .frame(height: 2)
+                                    .offset(y: 8)
+                                    .matchedGeometryEffect(id: capsule, in: animation)
+                            }
                         }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .contentShape(Rectangle())
+                        .overlay(alignment: .topTrailing) {
+                            if tab == .lab, labManager.seedItemsTotal != 0 {
+                                Text(labManager.seedItemsTotal.description)
+                                    .font(.caption)
+                                    .frame(width:12)
+                                    .padding(4)
+                                    .background(Color.pumpyPink)
+                                    .foregroundColor(.white)
+                                    .clipShape(Circle())
+                                    .offset(x: 12, y: -12)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .contentShape(Rectangle())
                 }
                 .tint(selectedTab == tab.rawValue ? .pumpyPink : .gray)
             }
@@ -147,6 +161,18 @@ enum Tabs<
 // MARK: - Previews
 
 struct TabBarView_Previews: PreviewProvider {
+    
+    static var labManager: MusicLabManager {
+        let manager = MusicLabManager()
+        manager.selectedGenres.append("Pop")
+        manager.addTrack(PumpyAnalytics.MockData.track)
+        manager.addTrack(PumpyAnalytics.MockData.track)
+        manager.addTrack(PumpyAnalytics.MockData.track)
+        manager.addTrack(PumpyAnalytics.MockData.track)
+        
+        return manager
+    }
+    
     static var previews: some View {
         VStack(spacing:0) {
             PumpyTabView<
@@ -170,8 +196,9 @@ struct TabBarView_Previews: PreviewProvider {
         .environmentObject(MockBlockedTracks())
         .environmentObject(MockPlaylistManager())
         .environmentObject(MockHomeVM())
-        .environmentObject(MusicLabManager())
+        .environmentObject(labManager)
         .environmentObject(AuthorisationManager())
+        .environmentObject(RecentlyPlayedManager())
     }
 }
 
