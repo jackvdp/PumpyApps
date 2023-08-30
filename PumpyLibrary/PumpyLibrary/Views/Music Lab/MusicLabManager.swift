@@ -22,7 +22,7 @@ public class MusicLabManager: ObservableObject {
     // MARK: - Create
     
     func createMix(authManager: AuthorisationManager, completion: @escaping (RecommendedPlaylist?) -> ()) {
-        let seeding = properties.transformToAnalyticsSeeding(tracks: seedTracks, genres: selectedGenres)
+        let seeding = properties.transformToAnalyticsSeeding(tracks: seedTracks, genres: selectedGenres, playlistSize: playlistSize)
         
         var name: String  {
             if seedTracks.isEmpty && selectedGenres.isEmpty { return "Music Lab Mix" } else {
@@ -121,6 +121,10 @@ public class MusicLabManager: ObservableObject {
             }
         }
     }
+    
+    // MARK: - Playlist Size
+    
+    @Published var playlistSize = 10
     
     // MARK: - Set Attribute Sliders
     

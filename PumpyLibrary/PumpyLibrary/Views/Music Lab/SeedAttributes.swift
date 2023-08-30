@@ -148,7 +148,7 @@ extension Array where Element == SeedAttributes {
     ///   - tracks: The seed tracks used as part of the recommendations request.
     ///   - playlistSize: The size of the playlist. Defaults to 50
     /// - Returns: The `PlaylistSeeding` which can be given to the Analytics framework as part of the recommendations request
-    func transformToAnalyticsSeeding(tracks: [PumpyAnalytics.Track], genres: [String], playlistSize: Int = 50) -> PlaylistSeeding {
+    func transformToAnalyticsSeeding(tracks: [PumpyAnalytics.Track], genres: [String], playlistSize: Int) -> PlaylistSeeding {
         let spotIDs = tracks.compactMap { $0.spotifyItem?.id }
         
         let popularity = self.first(where:  { $0.keyPath == nil})
@@ -178,28 +178,30 @@ extension Array where Element == SeedAttributes {
         let acousticsHigherValue = acoustics?.actualHigher
         
         // Create seeding active ? value : nil
-        return PlaylistSeeding(trackIDs: spotIDs,
-                               artistIDs: [],
-                               genres: genres,
-                               playlistSize: playlistSize,
-                               seeding: AttributeSeeding(
-                                maxDanceability: danceableHigherValue,
-                                minDanceability: danceableLowerValue,
-                                maxEnergy: energyHigherValue,
-                                minEnergy: energyLowerValue,
-                                maxPopularity: popularityHigherValue == nil ? nil : Int(popularityHigherValue!),
-                                minPopularity: popularityLowerValue == nil ? nil : Int(popularityLowerValue!),
-                                maxBPM: tempoHigherValue == nil ? nil : Int(tempoHigherValue!),
-                                minBPM: tempoLowerValue == nil ? nil : Int(tempoLowerValue!),
-                                maxHappiness: moodHigherValue,
-                                minHappiness: moodLowerValue,
-                                maxLoudness: nil,
-                                minLoudness: nil,
-                                maxInstrumnetalness: vocalsHigherValue,
-                                minInstrumnetalness: vocalsLowerValue,
-                                maxAcoustic: acousticsHigherValue,
-                                minAcoustic: acousticsLowerValue
-                               ))
+        return PlaylistSeeding(
+            trackIDs: spotIDs,
+            artistIDs: [],
+            genres: genres,
+            playlistSize: playlistSize,
+            seeding: AttributeSeeding(
+             maxDanceability: danceableHigherValue,
+             minDanceability: danceableLowerValue,
+             maxEnergy: energyHigherValue,
+             minEnergy: energyLowerValue,
+             maxPopularity: popularityHigherValue == nil ? nil : Int(popularityHigherValue!),
+             minPopularity: popularityLowerValue == nil ? nil : Int(popularityLowerValue!),
+             maxBPM: tempoHigherValue == nil ? nil : Int(tempoHigherValue!),
+             minBPM: tempoLowerValue == nil ? nil : Int(tempoLowerValue!),
+             maxHappiness: moodHigherValue,
+             minHappiness: moodLowerValue,
+             maxLoudness: nil,
+             minLoudness: nil,
+             maxInstrumnetalness: vocalsHigherValue,
+             minInstrumnetalness: vocalsLowerValue,
+             maxAcoustic: acousticsHigherValue,
+             minAcoustic: acousticsLowerValue
+            )
+        )
     }
 }
 

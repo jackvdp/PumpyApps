@@ -24,6 +24,8 @@ public struct MusicLabView<N:NowPlayingProtocol,
             VStack {
                 tracks
                 Divider()
+                playlistSize
+                Divider()
                 genres
                 Divider()
                 sliders
@@ -60,6 +62,24 @@ public struct MusicLabView<N:NowPlayingProtocol,
         .sheet(isPresented: $showGenreSheet) {
             GenreList()
         }
+    }
+    
+    // MARK: - Playlist Size
+    
+    var sizes = [5, 10, 20, 50]
+    
+    var playlistSize: some View {
+        HStack {
+            Text("Playlist size:")
+            Spacer()
+            Picker("", selection: $labManager.playlistSize) {
+                ForEach(sizes, id: \.self) {
+                    Text($0.description + " tracks")
+                }
+            }
+        }
+        .font(.subheadline)
+        .tint(.pumpyPink)
     }
     
     // MARK: - Tracks
@@ -193,5 +213,6 @@ struct MusicLabView_Previews: PreviewProvider {
             .environmentObject(AlarmManager())
             .environmentObject(MockHomeVM())
             .environmentObject(AuthorisationManager())
+            .environmentObject(BookmarkedManager())
     }
 }
