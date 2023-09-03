@@ -53,6 +53,7 @@ public struct CatalogView<
     var loadingView: some View {
         ActivityView(activityIndicatorVisible: .constant(true)).noBackground
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(64)
     }
     
     @ViewBuilder
