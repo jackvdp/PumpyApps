@@ -59,7 +59,7 @@ final class SearchAMTracksTest: XCTestCase {
         let controller = SearchController()
         let promise = expectation(description: "Don't get error after call")
         var expectedResult: [Track]?
-        controller.searchAMTracksUseCase.gateway = MockSearchTracksGateway()
+//        controller.searchAMTracksUseCase.gateway = MockSearchTracksGateway()
         
         controller.searchAMTracks(term, authManager: AuthorisationManager()) { songs, error in
             expectedResult = songs

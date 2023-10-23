@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -374,7 +374,7 @@
 				6DEAAC5328C8B4870033ED19 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				6DEAAC5628C8B4950033ED19 /* XCRemoteSwiftPackageReference "Siren" */,
 				6DEAAC5928C8B4A30033ED19 /* XCRemoteSwiftPackageReference "swiftui-charts" */,
-				6DEAAC8B28C900760033ED19 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C0642EA92AE5AAE500D278B3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = C0D60C5823313D6A0010F653 /* Products */;
 			projectDirPath = "";
@@ -757,12 +757,12 @@
 				kind = branch;
 			};
 		};
-		6DEAAC8B28C900760033ED19 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		C0642EA92AE5AAE500D278B3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 9.0.0;
+				kind = exactVersion;
+				version = 10.15.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

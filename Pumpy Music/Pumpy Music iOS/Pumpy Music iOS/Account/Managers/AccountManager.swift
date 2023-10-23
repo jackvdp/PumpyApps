@@ -33,6 +33,9 @@ class AccountManager: AccountManagerProtocol {
         if let name = defaults.string(forKey: K.username), let password = defaults.string(forKey: K.password) {
             usernameTF = name
             passwordTF = password
+            if name != String() {
+                user = User(username: .account(name))
+            }
         }
     }
     
@@ -72,12 +75,16 @@ class AccountManager: AccountManagerProtocol {
     func respondToLogin(_ email: String?, _ error: Error?) {
         activityIndicatorVisible = false
         if let e = error {
+            user?.signOut()
+            user = nil
             errorAlert = e.localizedDescription
             showingAlert = true
         } else {
             if let email = email {
                 loginSucceed(email)
             } else {
+                user?.signOut()
+                user = nil
                 errorAlert = "Unknown Error"
                 showingAlert = true
             }
@@ -85,7 +92,15 @@ class AccountManager: AccountManagerProtocol {
     }
     
     func loginSucceed(_ email: String) {
-        user = User(username: .account(email.lowercased()))
+        
+        // If there is no user
+        // OR
+        // If there is a user but it's account name != user
+        // Then create user
+        
+        if user == nil || user?.username != .account(email.lowercased()) {
+            user = User(username: .account(email.lowercased()))
+        }
         defaults.set(usernameTF.lowercased(), forKey: K.username)
         defaults.set(passwordTF, forKey: K.password)
     }
@@ -104,7 +119,6 @@ class AccountManager: AccountManagerProtocol {
     }
     
     func deleteAccount(completion: @escaping (Bool)->()) {
-        
         FirebaseStore.shared.deleteAccount { [weak self] success in
             completion(success)
             guard let self = self else { return }
@@ -118,7 +132,6 @@ class AccountManager: AccountManagerProtocol {
     
     func changePassword(newPassword: String,
                         completion: @escaping (Bool)->()) {
-        
         FirebaseStore.shared.changePassword(newPassword: newPassword, completion: completion)
     }
 

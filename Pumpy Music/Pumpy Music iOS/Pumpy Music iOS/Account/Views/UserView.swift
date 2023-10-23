@@ -102,7 +102,6 @@ struct UserView: View {
                             playlistManager: playlistManager)
         bookmarkManager.setUp(username: user.username)
         (UIApplication.shared.delegate as! AppDelegate).remoteDataManager = remoteManager
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.user = user
     }
     
 }

@@ -19,6 +19,7 @@ class DownloadViewModel: ObservableObject {
     @Published var alertMessage = String()
     
     var authManager: AuthorisationManager
+    let playlistController = PlaylistController()
     
     @Published var matchedTracks = [Track]()
     @Published var unMatchedTracks = [Track]()
@@ -34,15 +35,18 @@ class DownloadViewModel: ObservableObject {
     func downloadPlaylist(completion: @escaping () -> ()) {
         
         guard playlistName != String() else {
-            self.alertMessage = "Please provide a name for the playlist."
-            self.showAlert = true
+            alertMessage = "Please provide a name for the playlist."
+            showAlert = true
             return
         }
         
         converting = true
-        PlaylistController().convertToAppleMusic(playlistName: playlistName,
-                                                 tracks: tracks,
-                                                 authManager: authManager) { errorMessage in
+        
+        playlistController.convertToAppleMusic(
+            playlistName: playlistName,
+            tracks: tracks,
+            authManager: authManager
+        ) { errorMessage in
 
             self.converting = false
             if errorMessage == nil {
@@ -57,8 +61,8 @@ class DownloadViewModel: ObservableObject {
     }
     
     func subscribeToUpdate() {
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(respondToMatch), name: .TracksMatchedToAppleMusic, object: nil)
+//        let nc = NotificationCenter.default
+//        nc.addObserver(self, selector: #selector(respondToMatch), name: .TracksMatchedToAppleMusic, object: nil)
     }
     
     @objc func respondToMatch() {

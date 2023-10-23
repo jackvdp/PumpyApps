@@ -16,7 +16,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     var additionalWindows = [UIWindow]()
-    weak var user: User?
     
     // MARK: - Initial view set up
     
@@ -46,9 +45,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: Scene Delegate Methods
     
     func sceneWillEnterForeground(_ scene: UIScene) {
-        if let username = user?.username {
-            ActiveInfo.save(.loggedIn, for: username)
-        }
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {

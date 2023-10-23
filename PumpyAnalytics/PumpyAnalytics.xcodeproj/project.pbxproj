@@ -94,6 +94,8 @@
 		6DECEF782860E6750020B2D2 /* RecommendedPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DECEF772860E6750020B2D2 /* RecommendedPlaylist.swift */; };
 		6DECEF7A2860EED60020B2D2 /* GetRecommendedPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DECEF792860EED60020B2D2 /* GetRecommendedPlaylist.swift */; };
 		6DECEF7C2860F0840020B2D2 /* SpotifyTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DECEF7B2860F0840020B2D2 /* SpotifyTracks.swift */; };
+		C0254B1F2AE5C4AD0042AE1F /* JWTToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0254B1E2AE5C4AD0042AE1F /* JWTToken.swift */; };
+		C0254B222AE5C59C0042AE1F /* JWTTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0254B212AE5C59C0042AE1F /* JWTTest.swift */; };
 		C044A50F2910757D00E17A09 /* TextPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C044A50E2910757D00E17A09 /* TextPlaylist.swift */; };
 		C06067F829F3D5B70042BEEF /* TestSearchSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06067F729F3D5B70042BEEF /* TestSearchSuggestions.swift */; };
 		C06067FA29F3D79F0042BEEF /* SearchSuggestionsGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06067F929F3D79F0042BEEF /* SearchSuggestionsGateway.swift */; };
@@ -225,6 +227,8 @@
 		6DECEF772860E6750020B2D2 /* RecommendedPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedPlaylist.swift; sourceTree = "<group>"; };
 		6DECEF792860EED60020B2D2 /* GetRecommendedPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecommendedPlaylist.swift; sourceTree = "<group>"; };
 		6DECEF7B2860F0840020B2D2 /* SpotifyTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyTracks.swift; sourceTree = "<group>"; };
+		C0254B1E2AE5C4AD0042AE1F /* JWTToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTToken.swift; sourceTree = "<group>"; };
+		C0254B212AE5C59C0042AE1F /* JWTTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTTest.swift; sourceTree = "<group>"; };
 		C044A50E2910757D00E17A09 /* TextPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPlaylist.swift; sourceTree = "<group>"; };
 		C06067F729F3D5B70042BEEF /* TestSearchSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSearchSuggestions.swift; sourceTree = "<group>"; };
 		C06067F929F3D79F0042BEEF /* SearchSuggestionsGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionsGateway.swift; sourceTree = "<group>"; };
@@ -290,6 +294,7 @@
 		6D341EDF285FD93E003EE110 /* PumpyAnalyticsTests */ = {
 			isa = PBXGroup;
 			children = (
+				C0254B202AE5C5830042AE1F /* JWT */,
 				C0BBDAFB28D3DB1200BB7AF1 /* Search */,
 				6DCB087F28996E8C0059EEBB /* IdFromURL */,
 				6D341EEA2860B96A003EE110 /* Recommend Playlist */,
@@ -489,6 +494,7 @@
 				6D549859283CDDF600F3DF59 /* Extensions.swift */,
 				6D6C35A32851F4E800FE2196 /* FeaturesHelper.swift */,
 				C09B72EA2A8A2642007AEBE5 /* AsyncRetry.swift */,
+				C0254B1E2AE5C4AD0042AE1F /* JWTToken.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -666,6 +672,14 @@
 				6DCB087D2899539D0059EEBB /* GetPlaylistFromURLtest.swift */,
 			);
 			path = IdFromURL;
+			sourceTree = "<group>";
+		};
+		C0254B202AE5C5830042AE1F /* JWT */ = {
+			isa = PBXGroup;
+			children = (
+				C0254B212AE5C59C0042AE1F /* JWTTest.swift */,
+			);
+			path = JWT;
 			sourceTree = "<group>";
 		};
 		C09B72DE2A866514007AEBE5 /* Get Station */ = {
@@ -873,6 +887,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DCB087E2899539D0059EEBB /* GetPlaylistFromURLtest.swift in Sources */,
+				C0254B222AE5C59C0042AE1F /* JWTTest.swift in Sources */,
 				C0CBCCF928D8F67400161660 /* AMAlbumTest.swift in Sources */,
 				6D467F8628C33A900042C2C8 /* SuggestionsTest.swift in Sources */,
 				C0BBDAFD28D3DB5C00BB7AF1 /* SearchAMTracksTest.swift in Sources */,
@@ -897,6 +912,7 @@
 				6D54984B283CDD0500F3DF59 /* GetCustomPlaylist.swift in Sources */,
 				6D549834283CDB8D00F3DF59 /* Playlist.swift in Sources */,
 				6D549844283CDC8300F3DF59 /* GetTracksFromManyPlaylists.swift in Sources */,
+				C0254B1F2AE5C4AD0042AE1F /* JWTToken.swift in Sources */,
 				6D549815283C1D9B00F3DF59 /* TrackParser.swift in Sources */,
 				C0BBDAFA28D3D60F00BB7AF1 /* SongSearch.swift in Sources */,
 				6D549855283CDD7200F3DF59 /* SearchSpotify.swift in Sources */,

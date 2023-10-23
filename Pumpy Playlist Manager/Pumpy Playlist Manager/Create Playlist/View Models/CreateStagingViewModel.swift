@@ -30,7 +30,8 @@ class CreateStagingViewModel: ObservableObject {
         let name: String  = "\(tracks.map { "\($0.artist)" }.joined(separator: "/")) Mix"
         let artworkURL: String? = tracks.compactMap { $0.artworkURL }.first
         
-        controller.createFromSuggestions(seeding: seeding,
+        controller.createFromSuggestions(initialTracks: tracks,
+                                         seeding: seeding,
                                          playlistName: name,
                                          artworkURL: artworkURL,
                                          authManager: authManager) { playlist, error in

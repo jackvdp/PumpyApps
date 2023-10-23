@@ -19,4 +19,6 @@ public protocol UserProtocol: ScheduledUser, ObservableObject {
     var musicManager: M? { get }
 }
 
-public enum Username { case guest, account(String) }
+public enum Username: Codable, Equatable {
+    case guest, account(String)
+}

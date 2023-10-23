@@ -8,6 +8,7 @@
 import Foundation
 import SwiftyJSON
 import StoreKit
+import Alamofire
 
 public class AuthorisationManager: ObservableObject {
     
@@ -71,7 +72,15 @@ public class AuthorisationManager: ObservableObject {
     }
     
     public func getAppleMusicToken() {
-        storeController.requestUserToken(forDeveloperToken: K.MusicStore.developerToken) { [weak self] (receivedToken, error) in
+        if JWTDecoder.isTokenValid(K.MusicStore.developerToken) {
+            requestAMTokenFromApple(with: K.MusicStore.developerToken)
+        } else {
+            getAMTokenFromServer()
+        }
+    }
+    
+    private func requestAMTokenFromApple(with token: String) {
+        storeController.requestUserToken(forDeveloperToken: token) { [weak self] (receivedToken, error) in
             guard let self else { return }
             guard error == nil else {
                 print(error.debugDescription)
@@ -98,5 +107,18 @@ public class AuthorisationManager: ObservableObject {
             }
         }
     }
-
+    
+    // MARK: Get AM Token from Server
+    
+    private func getAMTokenFromServer() {
+        let url = "https://pumpy-token-generator.vercel.app/api/token"
+        
+        AF.request(url).responseDecodable(of: JWTToken.self) { [weak self] response in
+            guard let self else { return }
+            guard let token = response.value else { print("Failed to get token from server"); return }
+            print("Got AM Token from server")
+            requestAMTokenFromApple(with: token.amToken)
+        }
+    }
+    
 }
