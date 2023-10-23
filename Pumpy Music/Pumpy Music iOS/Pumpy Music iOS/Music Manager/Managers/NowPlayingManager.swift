@@ -70,7 +70,9 @@ class NowPlayingManager: NowPlayingProtocol {
     
     func fetchArtwork() {
         currentArtwork = musicPlayerController.nowPlayingItem?.artwork?.image(at: CGSize(width: 400, height: 400))
-        if currentArtwork == nil, let urlString = musicPlayerController.nowPlayingItem?.artworkURL, let url = URL(string: urlString)  {
+        if currentArtwork == nil,
+           let urlString = musicPlayerController.nowPlayingItem?.artworkURL,
+           let url = ArtworkHandler.makeMusicStoreURL(urlString, size: 400) {
             KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
                 guard let self else { return }
                 switch result {
